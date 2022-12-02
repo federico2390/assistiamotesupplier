@@ -7,6 +7,7 @@ BottomNavigationBar bottomnBar(BuildContext context) {
   return BottomNavigationBar(
     currentIndex: context.watch<BottomBarProvider>().currentPageIndex,
     selectedItemColor: AppColors.primaryColor,
+    type: BottomNavigationBarType.fixed,
     selectedFontSize: 13,
     unselectedFontSize: 13,
     items: const [
@@ -23,6 +24,11 @@ BottomNavigationBar bottomnBar(BuildContext context) {
       BottomNavigationBarItem(
         label: 'Letture',
         icon: Icon(Icons.search_rounded),
+        tooltip: '',
+      ),
+      BottomNavigationBarItem(
+        label: 'Contabilità',
+        icon: Icon(Icons.payments_outlined),
         tooltip: '',
       ),
     ],

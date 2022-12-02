@@ -2,6 +2,7 @@ import 'package:adminpanel/configs/theme.dart';
 import 'package:adminpanel/providers/app_barr.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/login.dart';
+import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +20,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-         ChangeNotifierProvider<LoginProvider>(
-            create: (context) => LoginProvider()),
         ChangeNotifierProvider<AppBarProvider>(
             create: (context) => AppBarProvider()),
         ChangeNotifierProvider<BottomBarProvider>(
             create: (context) => BottomBarProvider()),
+        ChangeNotifierProvider<LoginProvider>(
+            create: (context) => LoginProvider()),
+        ChangeNotifierProvider<ReadingProvider>(
+            create: (context) => ReadingProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

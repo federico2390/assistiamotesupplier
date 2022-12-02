@@ -28,6 +28,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSCameraUsageDescription</key>
+		<string>Consenti all'app di accedere alla tua fotocamera per permetterti di inserire allegati.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Consenti all'app di accedere alla tuo microfono per permetterti di inserire allegati.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Consenti all'app di accedere alla tua galleria foto per permetterti di inserire allegati.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

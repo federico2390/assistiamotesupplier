@@ -5,9 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button({super.key, this.text, this.onPressed});
+  const Button({super.key, this.color, this.text, this.icon, this.onPressed});
 
+  final Color? color;
   final String? text;
+  final Icon? icon;
   final void Function()? onPressed;
 
   @override
@@ -15,31 +17,34 @@ class Button extends StatelessWidget {
     return Platform.isAndroid
         ? TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: AppColors.primaryColor,
+              backgroundColor: color ?? AppColors.primaryColor,
             ),
             onPressed: onPressed,
-            child: Text(
-              text!,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColors.labelLightColor,
-                fontSize: 15,
-              ),
-            ),
+            child: icon ??
+                Text(
+                  text!,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.labelLightColor,
+                    fontSize: 15,
+                  ),
+                ),
           )
         : CupertinoButton(
-            color: AppColors.primaryColor,
+            color: color ?? AppColors.primaryColor,
             onPressed: onPressed,
-            child: Text(
-              text!,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColors.labelLightColor,
-                fontSize: 15,
-              ),
-            ),
+            padding: icon != null ? EdgeInsets.zero : null,
+            child: icon ??
+                Text(
+                  text!,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.labelLightColor,
+                    fontSize: 15,
+                  ),
+                ),
           );
   }
 }

@@ -2,18 +2,12 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:flutter/material.dart';
 
-class Feed extends StatefulWidget {
-  const Feed({super.key});
+class FeedList extends StatelessWidget {
+  const FeedList({Key? key}) : super(key: key);
 
-  @override
-  State<Feed> createState() => _FeedState();
-}
-
-class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView.separated(
+    return ListView.separated(
       padding: EdgeInsets.all(AppConst.padding),
       itemCount: 10,
       separatorBuilder: (BuildContext context, int index) =>
@@ -34,6 +28,6 @@ class _FeedState extends State<Feed> {
           onTap: () {},
         );
       },
-    ));
+    );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/screens/feed.dart';
-import 'package:adminpanel/screens/operation.dart';
-import 'package:adminpanel/screens/reading.dart';
+import 'package:adminpanel/screens/accounting.dart';
+import 'package:adminpanel/screens/feed/feed.dart';
+import 'package:adminpanel/screens/operation/operation.dart';
+import 'package:adminpanel/screens/reading/reading.dart';
 import 'package:adminpanel/globals/app_bar.dart';
 import 'package:adminpanel/globals/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Central extends StatefulWidget {
   State<Central> createState() => _CentralState();
 }
 
-class _CentralState extends State<Central> {
+class _CentralState extends State<Central> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     StatefulWidget body() {
@@ -22,11 +23,13 @@ class _CentralState extends State<Central> {
           ? const Operation()
           : context.read<BottomBarProvider>().currentPageIndex == 1
               ? const Feed()
-              : const Reading();
+              : context.read<BottomBarProvider>().currentPageIndex == 2
+                  ? const Reading()
+                  : const Accounting();
     }
 
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(context),
       body: body(),
       bottomNavigationBar: bottomnBar(context),
     );
