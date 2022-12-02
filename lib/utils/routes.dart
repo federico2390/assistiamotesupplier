@@ -1,5 +1,5 @@
 import 'package:adminpanel/central.dart';
-import 'package:adminpanel/screens/accounting.dart';
+import 'package:adminpanel/screens/accounting/accounting.dart';
 import 'package:adminpanel/screens/feed/feed.dart';
 import 'package:adminpanel/screens/login/login.dart';
 import 'package:adminpanel/screens/operation/operation.dart';

@@ -1,5 +1,4 @@
 import 'package:adminpanel/screens/operation/widgets/operation_form.dart';
-import 'package:adminpanel/screens/operation/widgets/send_button.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +14,8 @@ class _OperationState extends State<Operation> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => hideKeyboard(context),
-      child: Scaffold(
+      child: const Scaffold(
         body: OperationForm(),
-        bottomNavigationBar: const SendButton(),
       ),
     );
   }

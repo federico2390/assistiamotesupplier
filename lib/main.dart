@@ -2,6 +2,7 @@ import 'package:adminpanel/configs/theme.dart';
 import 'package:adminpanel/providers/app_barr.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/login.dart';
+import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class App extends StatelessWidget {
             create: (context) => BottomBarProvider()),
         ChangeNotifierProvider<LoginProvider>(
             create: (context) => LoginProvider()),
+        ChangeNotifierProvider<OperationProvider>(
+            create: (context) => OperationProvider()),
         ChangeNotifierProvider<ReadingProvider>(
             create: (context) => ReadingProvider()),
       ],

@@ -1,5 +1,5 @@
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/screens/accounting.dart';
+import 'package:adminpanel/screens/accounting/accounting.dart';
 import 'package:adminpanel/screens/feed/feed.dart';
 import 'package:adminpanel/screens/operation/operation.dart';
 import 'package:adminpanel/screens/reading/reading.dart';

@@ -12,7 +12,9 @@ class SendButton extends StatelessWidget {
       padding: EdgeInsets.all(AppConst.padding),
       child: Button(
         text: 'Accedi',
-        onPressed: () => hideKeyboard(context),
+        onPressed: () {
+          hideKeyboard(context);
+        },
       ),
     );
   }

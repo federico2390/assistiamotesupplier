@@ -5,13 +5,28 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/utils/action_sheet.dart';
+import 'package:adminpanel/utils/hide_keyboard.dart';
+import 'package:adminpanel/utils/screen_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ReadingForm extends StatelessWidget {
-  ReadingForm({Key? key}) : super(key: key);
+class ReadingForm extends StatefulWidget {
+  const ReadingForm({super.key});
 
-  final TextEditingController valueController = TextEditingController(text: '');
+  @override
+  State<ReadingForm> createState() => _ReadingFormState();
+}
+
+class _ReadingFormState extends State<ReadingForm> {
+  final TextEditingController valueController = TextEditingController();
+
+  bool isValueIconVisible = false;
+
+  @override
+  void dispose() {
+    valueController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +57,8 @@ class ReadingForm extends StatelessWidget {
                         size: 44,
                         color: Colors.white,
                       ),
-                      onPressed: () => buildActionSheet(context),
+                      onPressed: () =>
+                          buildActionSheet(context, ReadingProvider),
                     );
                   }
                   return Stack(
@@ -61,7 +77,13 @@ class ReadingForm extends StatelessWidget {
                               height: 80, fit: BoxFit.cover),
                         ),
                         onTap: () {
-                          Navigator.pushNamed(context, '/viewer');
+                          Navigator.pushNamed(
+                            context,
+                            '/viewer',
+                            arguments: ScreenArguments(
+                              context.read<ReadingProvider>().images,
+                            ),
+                          );
                         },
                       ),
                       Positioned(
@@ -95,18 +117,39 @@ class ReadingForm extends StatelessWidget {
         TextFormField(
           controller: valueController,
           keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
           toolbarOptions: const ToolbarOptions(
               copy: true, cut: true, paste: true, selectAll: true),
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              setState(() {
+                isValueIconVisible = true;
+              });
+            } else {
+              setState(() {
+                isValueIconVisible = false;
+              });
+            }
+          },
           maxLines: null,
           decoration: InputDecoration(
             labelText: 'Valore',
             labelStyle: TextStyle(color: AppColors.secondaryColor),
             alignLabelWithHint: true,
-            suffix: GestureDetector(
-              child: const Icon(Icons.clear, size: 20),
-              onTap: () => valueController.clear(),
-            ),
+            suffixIcon: valueController.text.isNotEmpty
+                ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        valueController.clear();
+                        isValueIconVisible = false;
+                      });
+                    },
+                    child: Icon(
+                      Icons.cancel,
+                      color: AppColors.secondaryColor,
+                    ),
+                  )
+                : null,
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 2, color: AppColors.primaryColor),
               borderRadius: BorderRadius.circular(AppConst.borderRadius),
@@ -115,7 +158,23 @@ class ReadingForm extends StatelessWidget {
               borderSide: BorderSide(color: AppColors.secondaryColor),
               borderRadius: BorderRadius.circular(AppConst.borderRadius),
             ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.secondaryColor),
+            ),
           ),
+        ),
+        SizedBox(height: AppConst.padding * 2),
+        Button(
+          text: 'Invia lettura',
+          onPressed: () {
+            hideKeyboard(context);
+            print(
+              'valueController: ${valueController.text}\nimages: ${context.read<ReadingProvider>().images.length}',
+            );
+          },
         ),
       ],
     );

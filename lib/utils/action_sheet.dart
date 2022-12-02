@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:adminpanel/configs/colors.dart';
+import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:images_picker/images_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-buildActionSheet(BuildContext context) {
+buildActionSheet(BuildContext context, provider) {
   Platform.isAndroid
       ? showMaterialModalBottomSheet(
           context: context,
@@ -24,7 +25,13 @@ buildActionSheet(BuildContext context) {
                     maxSize: 100,
                   );
                   if (selectedImages!.isNotEmpty) {
-                    context.read<ReadingProvider>().addImages(selectedImages);
+                    if (provider == OperationProvider) {
+                      context
+                          .read<OperationProvider>()
+                          .addImages(selectedImages);
+                    } else if (provider == ReadingProvider) {
+                      context.read<ReadingProvider>().addImages(selectedImages);
+                    }
                     Navigator.pop(context);
                   } else {
                     return;
@@ -40,7 +47,13 @@ buildActionSheet(BuildContext context) {
                     maxSize: 100,
                   );
                   if (selectedImages!.isNotEmpty) {
-                    context.read<ReadingProvider>().addImages(selectedImages);
+                    if (provider == OperationProvider) {
+                      context
+                          .read<OperationProvider>()
+                          .addImages(selectedImages);
+                    } else if (provider == ReadingProvider) {
+                      context.read<ReadingProvider>().addImages(selectedImages);
+                    }
                     Navigator.pop(context);
                   } else {
                     return;
@@ -76,7 +89,13 @@ buildActionSheet(BuildContext context) {
                     maxSize: 100,
                   );
                   if (selectedImages!.isNotEmpty) {
-                    context.read<ReadingProvider>().addImages(selectedImages);
+                    if (provider == OperationProvider) {
+                      context
+                          .read<OperationProvider>()
+                          .addImages(selectedImages);
+                    } else if (provider == ReadingProvider) {
+                      context.read<ReadingProvider>().addImages(selectedImages);
+                    }
                     Navigator.pop(context);
                   } else {
                     return;
@@ -95,7 +114,13 @@ buildActionSheet(BuildContext context) {
                     maxSize: 100,
                   );
                   if (selectedImages!.isNotEmpty) {
-                    context.read<ReadingProvider>().addImages(selectedImages);
+                    if (provider == OperationProvider) {
+                      context
+                          .read<OperationProvider>()
+                          .addImages(selectedImages);
+                    } else if (provider == ReadingProvider) {
+                      context.read<ReadingProvider>().addImages(selectedImages);
+                    }
                     Navigator.pop(context);
                   } else {
                     return;
