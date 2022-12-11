@@ -59,13 +59,13 @@ class OperationFieldsState extends State<OperationFields> {
 
   _loadUser() {
     if (UserRepository().isLogged == true) {
-      String? palace = SharedPrefs.getString('palace_name');
-      String? tenantName = SharedPrefs.getString('user_name');
-      String? tenantSurname = SharedPrefs.getString('user_surname');
+      String? palace = SharedPrefs.getString('palace_name') ?? '';
+      String? tenantName = SharedPrefs.getString('user_name') ?? '';
+      String? tenantSurname = SharedPrefs.getString('user_surname') ?? '';
 
-      widget.palaceController.text = palace!;
+      widget.palaceController.text = palace;
       widget.tenantController.text =
-          '${tenantName!.capitalizeFirstLetter()} ${tenantSurname!.capitalizeFirstLetter()}';
+          '${tenantName.capitalizeFirstLetter()} ${tenantSurname.capitalizeFirstLetter()}';
     }
   }
 

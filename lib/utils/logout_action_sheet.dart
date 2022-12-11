@@ -31,7 +31,6 @@ buildLogoutActionSheet(BuildContext context) {
                       if (rememberData == 0 || rememberData == null) {
                         SharedPrefs.instance.clear();
                         SecureStorage.deleteAll();
-                        print('DON\'T SAVE');
                       } else {
                         SharedPrefs.instance.remove('user_id');
                         SharedPrefs.instance.remove('palace_id');
@@ -43,7 +42,7 @@ buildLogoutActionSheet(BuildContext context) {
                         SharedPrefs.instance.remove('user_surname');
                         SharedPrefs.instance.remove('user_cf');
                         SharedPrefs.instance.remove('user_token');
-                        print('SAVE');
+                        SharedPrefs.instance.remove('logged');
                       }
 
                       Navigator.pop(context);

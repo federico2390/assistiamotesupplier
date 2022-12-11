@@ -34,7 +34,10 @@ class _AccountingPageState extends State<AccountingPage> {
                 horizontalScrollBarEnabled: false,
                 verticalScrollBarEnabled: false,
               ),
-              android: AndroidInAppWebViewOptions(),
+              android: AndroidInAppWebViewOptions(
+                geolocationEnabled: false,
+                useWideViewPort: false,
+              ),
               ios: IOSInAppWebViewOptions(
                 // enableViewportScale: true,
                 automaticallyAdjustsScrollIndicatorInsets: true,
