@@ -16,6 +16,11 @@ class AppTheme {
           fontWeight: FontWeight.bold,
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.transparent,
+        ),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         elevation: 0,
         unselectedItemColor: AppColors.secondaryColor,

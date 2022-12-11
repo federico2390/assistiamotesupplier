@@ -35,22 +35,25 @@ class UserRepository {
         Alerts.hide;
 
         final jsonData = json.decode(response.body);
-        final user = User.fromJson(jsonData[0]);
+        final User user = User.fromJson(jsonData[0]);
 
-        await SharedPrefs.setString('id', user.id!);
-        await SharedPrefs.setString('email', user.email!);
-        await SharedPrefs.setString('name', user.name!);
-        await SharedPrefs.setString('surname', user.surname!);
-        await SharedPrefs.setString('cf', user.cf!);
-        await SharedPrefs.setString('token', user.token!);
+        await SharedPrefs.setString('user_id', user.userId!);
+        await SharedPrefs.setString('palace_id', user.palaceId!);
+        await SharedPrefs.setString('palace_name', user.palaceName!);
+        await SharedPrefs.setString('palace_cf', user.palacaceCf!);
+        await SharedPrefs.setString('palace_address', user.palaceAddress!);
+        await SharedPrefs.setString('user_email', user.userEmail!);
+        await SharedPrefs.setString('user_name', user.userName!);
+        await SharedPrefs.setString('user_surname', user.userSurname!);
+        await SharedPrefs.setString('user_cf', user.userCf!);
+        await SecureStorage.write('user_username', user.userUsername!);
+        await SecureStorage.write('user_password', user.userPassword!);
+        await SharedPrefs.setString('user_token', user.userToken!);
         await SharedPrefs.setInt('logged', 1);
-
-        await SecureStorage.write('username', user.username!);
-        await SecureStorage.write('password', user.password!);
 
         Alerts.successAlert(context,
                 title: 'Accesso riuscito!',
-                subtitle: 'Benvenuta/o ${user.name}')
+                subtitle: 'Benvenuta/o ${user.userName}')
             .whenComplete(() {
           Navigator.pushNamedAndRemoveUntil(
               context, '/', (Route<dynamic> route) => false);

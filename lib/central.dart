@@ -1,7 +1,7 @@
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/screens/feed/feed.dart';
-import 'package:adminpanel/screens/operation/operation.dart';
-import 'package:adminpanel/screens/reading/reading.dart';
+import 'package:adminpanel/screens/feed/feed_page.dart';
+import 'package:adminpanel/screens/operation/operation_page.dart';
+import 'package:adminpanel/screens/reading/reading_page.dart';
 import 'package:adminpanel/globals/app_bar.dart';
 import 'package:adminpanel/globals/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +19,11 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     body() {
       return context.read<BottomBarProvider>().currentPageIndex == 0
-          ? const Operation()
+          ? const OperationPage()
           : context.read<BottomBarProvider>().currentPageIndex == 1
-              ? const Feed()
+              ? const FeedPage()
               : context.read<BottomBarProvider>().currentPageIndex == 2
-                  ? const Reading()
+                  ? const ReadingPage()
                   : const SizedBox();
     }
 

@@ -2,14 +2,14 @@ import 'package:adminpanel/screens/operation/widgets/operation_form.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:flutter/material.dart';
 
-class Operation extends StatefulWidget {
-  const Operation({super.key});
+class OperationPage extends StatefulWidget {
+  const OperationPage({super.key});
 
   @override
-  State<Operation> createState() => _OperationState();
+  State<OperationPage> createState() => _OperationPageState();
 }
 
-class _OperationState extends State<Operation> {
+class _OperationPageState extends State<OperationPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

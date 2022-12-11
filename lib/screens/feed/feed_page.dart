@@ -1,14 +1,14 @@
 import 'package:adminpanel/screens/feed/widgets/feed_list.dart';
 import 'package:flutter/material.dart';
 
-class Feed extends StatefulWidget {
-  const Feed({super.key});
+class FeedPage extends StatefulWidget {
+  const FeedPage({super.key});
 
   @override
-  State<Feed> createState() => _FeedState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedState extends State<Feed> {
+class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

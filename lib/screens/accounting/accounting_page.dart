@@ -3,14 +3,14 @@ import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class Accounting extends StatefulWidget {
-  const Accounting({super.key});
+class AccountingPage extends StatefulWidget {
+  const AccountingPage({super.key});
 
   @override
-  State<Accounting> createState() => _AccountingState();
+  State<AccountingPage> createState() => _AccountingPageState();
 }
 
-class _AccountingState extends State<Accounting> {
+class _AccountingPageState extends State<AccountingPage> {
   @override
   Widget build(BuildContext context) {
     final arguments =

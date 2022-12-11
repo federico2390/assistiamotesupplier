@@ -11,14 +11,14 @@ import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -43,6 +43,7 @@ class _LoginState extends State<Login> {
     }
 
     context.read<LoginProvider>().loadRememberData();
+    setState(() {});
   }
 
   @override

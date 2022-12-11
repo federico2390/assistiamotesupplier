@@ -1,39 +1,62 @@
 class User {
-  String? id, email, username, name, surname, cf, password, token;
+  String? userId,
+      palaceId,
+      palaceName,
+      palacaceCf,
+      palaceAddress,
+      userEmail,
+      userName,
+      userSurname,
+      userCf,
+      userUsername,
+      userPassword,
+      userToken;
 
   User({
-    this.id,
-    this.email,
-    this.username,
-    this.name,
-    this.surname,
-    this.cf,
-    this.password,
-    this.token,
+    this.userId,
+    this.palaceId,
+    this.palaceName,
+    this.palacaceCf,
+    this.palaceAddress,
+    this.userEmail,
+    this.userName,
+    this.userSurname,
+    this.userCf,
+    this.userUsername,
+    this.userPassword,
+    this.userToken,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] ?? '',
-      email: json['email'] ?? '',
-      username: json['username'] ?? '',
-      name: json['name'] ?? '',
-      surname: json['surname'] ?? '',
-      cf: json['cf'] ?? '',
-      password: json['password'] ?? '',
-      token: json['token'] ?? '',
+      userId: json['user_id'] ?? '',
+      palaceId: json['palace_id'] ?? '',
+      palaceName: json['palace_name'] ?? '',
+      palacaceCf: json['palace_cf'] ?? '',
+      palaceAddress: json['palace_address'] ?? '',
+      userEmail: json['user_email'] ?? '',
+      userName: json['user_name'] ?? '',
+      userSurname: json['user_surname'] ?? '',
+      userCf: json['user_cf'] ?? '',
+      userUsername: json['user_username'] ?? '',
+      userPassword: json['user_password'] ?? '',
+      userToken: json['user_token'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id ?? '',
-      "email": email ?? '',
-      "username": username ?? '',
-      "name": name ?? '',
-      "surname": surname ?? '',
-      "password": password ?? '',
-      "token": token ?? '',
+      "user_id": userId ?? '',
+      "palace_id": palaceId ?? '',
+      "palace_name": palaceName ?? '',
+      "palace_cf": palacaceCf ?? '',
+      "palace_address": palaceAddress ?? '',
+      "user_email": userEmail ?? '',
+      "user_name": userName ?? '',
+      "user_surname": userSurname ?? '',
+      "user_username": userUsername ?? '',
+      "user_password": userPassword ?? '',
+      "user_token": userToken ?? '',
     };
   }
 }

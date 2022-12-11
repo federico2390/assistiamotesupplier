@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  drop_down_list: ^0.0.4
   http: ^0.13.5
   flutter_html: ^2.2.1
   images_picker: ^1.2.11

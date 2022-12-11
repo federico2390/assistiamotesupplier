@@ -5,6 +5,7 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/repository/user.dart';
+import 'package:adminpanel/screens/reading/widgets/reading_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/picker_action_sheet.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
@@ -21,8 +22,6 @@ class ReadingForm extends StatefulWidget {
 
 class _ReadingFormState extends State<ReadingForm> {
   final TextEditingController valueController = TextEditingController();
-
-  bool isValueIconVisible = false;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -138,77 +137,19 @@ class _ReadingFormState extends State<ReadingForm> {
             ],
           ),
           const SizedBox(height: AppConst.padding * 2),
-          TextFormField(
-            controller: valueController,
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.done,
-            toolbarOptions: const ToolbarOptions(
-                copy: true, cut: true, paste: true, selectAll: true),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Il campo non può essere vuoto';
-              }
-              return null;
-            },
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  isValueIconVisible = true;
-                });
-              } else {
-                setState(() {
-                  isValueIconVisible = false;
-                });
-              }
-            },
-            maxLines: null,
-            decoration: InputDecoration(
-              labelText: 'Valore',
-              labelStyle: TextStyle(color: AppColors.secondaryColor),
-              alignLabelWithHint: true,
-              suffixIcon: valueController.text.isNotEmpty
-                  ? GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          valueController.clear();
-                          isValueIconVisible = false;
-                        });
-                      },
-                      child: Icon(
-                        Icons.cancel,
-                        color: AppColors.secondaryColor,
-                      ),
-                    )
-                  : null,
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
-                borderRadius: BorderRadius.circular(AppConst.borderRadius),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.secondaryColor),
-                borderRadius: BorderRadius.circular(AppConst.borderRadius),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: AppColors.errorColor),
-                borderRadius: BorderRadius.circular(AppConst.borderRadius),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.errorColor),
-                borderRadius: BorderRadius.circular(AppConst.borderRadius),
-              ),
-            ),
-          ),
+          ReadingFields(valueController: valueController),
           const SizedBox(height: AppConst.padding * 2),
           Button(
             text: 'Invia lettura',
+            color: valueController.text.isNotEmpty &&
+                    context.read<ReadingProvider>().images.isNotEmpty
+                ? null
+                : AppColors.secondaryColor,
             onPressed: () {
               if (formKey.currentState!.validate() &&
                   context.read<ReadingProvider>().images.isNotEmpty &&
                   UserRepository().isLogged == true) {
                 hideKeyboard(context);
-                print(
-                  'valueController: ${valueController.text}\nimages: ${context.read<ReadingProvider>().images.length}',
-                );
               } else {
                 Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');
