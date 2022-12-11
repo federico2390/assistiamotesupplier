@@ -35,10 +35,10 @@ class _LoginPageState extends State<LoginPage> {
     print(rememberData);
 
     if (rememberData != 0 || rememberData != null) {
-      if (await SecureStorage.containsKey('username') &&
-          await SecureStorage.containsKey('password')) {
-        usernameController.text = (await SecureStorage.read('username'));
-        passwordController.text = (await SecureStorage.read('password'));
+      if (await SecureStorage.containsKey('user_username') &&
+          await SecureStorage.containsKey('user_password')) {
+        usernameController.text = (await SecureStorage.read('user_username'));
+        passwordController.text = (await SecureStorage.read('user_password'));
       }
     }
 

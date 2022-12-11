@@ -1,7 +1,10 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
+import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
+import 'package:adminpanel/utils/capitalize_first_letter.dart';
+import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
 
 class OperationFields extends StatefulWidget {
@@ -35,6 +38,12 @@ class OperationFieldsState extends State<OperationFields> {
   String? operation;
 
   @override
+  void initState() {
+    super.initState();
+    _loadUser();
+  }
+
+  @override
   void dispose() {
     widget.palaceController.dispose();
     widget.tenantController.dispose();
@@ -46,6 +55,18 @@ class OperationFieldsState extends State<OperationFields> {
     tenantFocusNode.dispose();
     descriptionFocusNode.dispose();
     super.dispose();
+  }
+
+  _loadUser() {
+    if (UserRepository().isLogged == true) {
+      String? palace = SharedPrefs.getString('palace_name');
+      String? tenantName = SharedPrefs.getString('user_name');
+      String? tenantSurname = SharedPrefs.getString('user_surname');
+
+      widget.palaceController.text = palace!;
+      widget.tenantController.text =
+          '${tenantName!.capitalizeFirstLetter()} ${tenantSurname!.capitalizeFirstLetter()}';
+    }
   }
 
   @override

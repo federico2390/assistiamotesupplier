@@ -55,6 +55,7 @@ class User {
       "user_name": userName ?? '',
       "user_surname": userSurname ?? '',
       "user_username": userUsername ?? '',
+      "user_cf": userCf ?? '',
       "user_password": userPassword ?? '',
       "user_token": userToken ?? '',
     };

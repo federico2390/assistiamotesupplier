@@ -22,7 +22,7 @@ buildLogoutActionSheet(BuildContext context) {
                 ),
                 onTap: () {
                   UserRepository()
-                      .logout(context, SharedPrefs.getString('id')!)
+                      .logout(context, SharedPrefs.getString('user_id')!)
                       .then((value) async {
                     if (value == true) {
                       logged = null;
@@ -33,13 +33,16 @@ buildLogoutActionSheet(BuildContext context) {
                         SecureStorage.deleteAll();
                         print('DON\'T SAVE');
                       } else {
-                        SharedPrefs.instance.remove('id');
-                        SharedPrefs.instance.remove('email');
-                        SharedPrefs.instance.remove('name');
-                        SharedPrefs.instance.remove('surname');
-                        SharedPrefs.instance.remove('cf');
-                        SharedPrefs.instance.remove('token');
-                        SharedPrefs.instance.remove('logged');
+                        SharedPrefs.instance.remove('user_id');
+                        SharedPrefs.instance.remove('palace_id');
+                        SharedPrefs.instance.remove('palace_name');
+                        SharedPrefs.instance.remove('palace_cf');
+                        SharedPrefs.instance.remove('palace_address');
+                        SharedPrefs.instance.remove('user_email');
+                        SharedPrefs.instance.remove('user_name');
+                        SharedPrefs.instance.remove('user_surname');
+                        SharedPrefs.instance.remove('user_cf');
+                        SharedPrefs.instance.remove('user_token');
                         print('SAVE');
                       }
 
@@ -66,7 +69,7 @@ buildLogoutActionSheet(BuildContext context) {
               CupertinoActionSheetAction(
                   onPressed: () {
                     UserRepository()
-                        .logout(context, SharedPrefs.getString('id')!)
+                        .logout(context, SharedPrefs.getString('user_id')!)
                         .then((value) async {
                       if (value == true) {
                         logged = null;
@@ -76,12 +79,16 @@ buildLogoutActionSheet(BuildContext context) {
                           SharedPrefs.instance.clear();
                           SecureStorage.deleteAll();
                         } else {
-                          SharedPrefs.instance.remove('id');
-                          SharedPrefs.instance.remove('email');
-                          SharedPrefs.instance.remove('name');
-                          SharedPrefs.instance.remove('surname');
-                          SharedPrefs.instance.remove('cf');
-                          SharedPrefs.instance.remove('token');
+                          SharedPrefs.instance.remove('user_id');
+                          SharedPrefs.instance.remove('palace_id');
+                          SharedPrefs.instance.remove('palace_name');
+                          SharedPrefs.instance.remove('palace_cf');
+                          SharedPrefs.instance.remove('palace_address');
+                          SharedPrefs.instance.remove('user_email');
+                          SharedPrefs.instance.remove('user_name');
+                          SharedPrefs.instance.remove('user_surname');
+                          SharedPrefs.instance.remove('user_cf');
+                          SharedPrefs.instance.remove('user_token');
                           SharedPrefs.instance.remove('logged');
                         }
 
