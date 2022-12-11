@@ -8,10 +8,10 @@ class FeedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.all(AppConst.padding),
+      padding: const EdgeInsets.all(AppConst.padding),
       itemCount: 10,
       separatorBuilder: (BuildContext context, int index) =>
-          SizedBox(height: AppConst.padding),
+          const SizedBox(height: AppConst.padding),
       itemBuilder: (context, index) {
         return GestureDetector(
           child: Card(

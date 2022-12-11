@@ -9,7 +9,7 @@ import 'package:images_picker/images_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-buildActionSheet(BuildContext context, provider) {
+buildPickerActionSheet(BuildContext context, provider) {
   Platform.isAndroid
       ? showMaterialModalBottomSheet(
           context: context,
@@ -73,13 +73,13 @@ buildActionSheet(BuildContext context, provider) {
       : showCupertinoModalPopup(
           context: context,
           builder: (BuildContext context) => CupertinoActionSheet(
-            title: const Text('Aggiungi allegato'),
-            message: const Text('Scegli un opzione'),
+            title: const Text('Seleziona un opzione'),
             actions: <CupertinoActionSheetAction>[
               CupertinoActionSheetAction(
-                child: const Text(
+                child: Text(
                   'Galleria',
-                  style: TextStyle(fontSize: 17),
+                  style:
+                      TextStyle(fontSize: 17, color: AppColors.labelDarkColor),
                 ),
                 onPressed: () async {
                   List<Media>? selectedImages = await ImagesPicker.pick(
@@ -103,9 +103,10 @@ buildActionSheet(BuildContext context, provider) {
                 },
               ),
               CupertinoActionSheetAction(
-                child: const Text(
+                child: Text(
                   'Camera',
-                  style: TextStyle(fontSize: 17),
+                  style:
+                      TextStyle(fontSize: 17, color: AppColors.labelDarkColor),
                 ),
                 onPressed: () async {
                   List<Media>? selectedImages = await ImagesPicker.openCamera(
@@ -127,17 +128,17 @@ buildActionSheet(BuildContext context, provider) {
                   }
                 },
               ),
-              CupertinoActionSheetAction(
-                isDestructiveAction: true,
-                child: const Text(
-                  'Annulla',
-                  style: TextStyle(fontSize: 17),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
             ],
+            cancelButton: CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              child: Text(
+                'Annulla',
+                style: TextStyle(fontSize: 17, color: AppColors.errorColor),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         );
 }

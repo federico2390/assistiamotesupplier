@@ -5,7 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button({super.key, this.color, this.text, this.icon, this.onPressed});
+  const Button({
+    super.key,
+    this.color,
+    this.text,
+    this.icon,
+    this.onPressed,
+  });
 
   final Color? color;
   final String? text;

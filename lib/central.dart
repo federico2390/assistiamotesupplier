@@ -1,5 +1,4 @@
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/screens/accounting/accounting.dart';
 import 'package:adminpanel/screens/feed/feed.dart';
 import 'package:adminpanel/screens/operation/operation.dart';
 import 'package:adminpanel/screens/reading/reading.dart';
@@ -18,20 +17,20 @@ class Central extends StatefulWidget {
 class _CentralState extends State<Central> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    StatefulWidget body() {
+    body() {
       return context.read<BottomBarProvider>().currentPageIndex == 0
           ? const Operation()
           : context.read<BottomBarProvider>().currentPageIndex == 1
               ? const Feed()
               : context.read<BottomBarProvider>().currentPageIndex == 2
                   ? const Reading()
-                  : const Accounting();
+                  : const SizedBox();
     }
 
     return Scaffold(
       appBar: appBar(context),
       body: body(),
-      bottomNavigationBar: bottomnBar(context),
+      bottomNavigationBar: bottomBar(context),
     );
   }
 }

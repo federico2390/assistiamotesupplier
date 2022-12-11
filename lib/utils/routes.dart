@@ -16,7 +16,7 @@ class Routes {
       '/feed': (context) => const Feed(),
       '/reading': (context) => const Reading(),
       '/accounting': (context) => const Accounting(),
-      '/viewer': (context) => const Gallery(),
+      '/gallery': (context) => const Gallery(),
     };
   }
 }

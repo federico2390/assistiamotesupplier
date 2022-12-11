@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/utils/screen_arguments.dart';
+import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -20,7 +20,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   @override
   Widget build(BuildContext context) {
     final arguments =
-        ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+        ModalRoute.of(context)!.settings.arguments as GalleryArguments;
 
     return Stack(
       children: [

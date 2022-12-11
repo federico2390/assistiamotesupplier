@@ -3,7 +3,7 @@ import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-BottomNavigationBar bottomnBar(BuildContext context) {
+BottomNavigationBar bottomBar(BuildContext context) {
   return BottomNavigationBar(
     currentIndex: context.watch<BottomBarProvider>().currentPageIndex,
     selectedItemColor: AppColors.primaryColor,
@@ -33,7 +33,7 @@ BottomNavigationBar bottomnBar(BuildContext context) {
       ),
     ],
     onTap: (index) {
-      context.read<BottomBarProvider>().currentPage(index);
+      context.read<BottomBarProvider>().currentPage(context, index);
     },
   );
 }

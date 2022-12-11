@@ -4,10 +4,12 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
-import 'package:adminpanel/utils/action_sheet.dart';
+import 'package:adminpanel/utils/alerts.dart';
+import 'package:adminpanel/utils/picker_action_sheet.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
-import 'package:adminpanel/utils/screen_arguments.dart';
+import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,8 @@ class OperationForm extends StatefulWidget {
 class OperationFormState extends State<OperationForm> {
   final TextEditingController palaceController = TextEditingController();
   final TextEditingController tenantController = TextEditingController();
-  final TextEditingController operationTypeController = TextEditingController();
+  final TextEditingController operationTypeController =
+      TextEditingController(text: 'Non specificato');
   final TextEditingController operationController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
@@ -57,7 +60,7 @@ class OperationFormState extends State<OperationForm> {
       key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
-        padding: EdgeInsets.all(AppConst.padding),
+        padding: const EdgeInsets.all(AppConst.padding),
         children: [
           TextFormField(
             controller: palaceController,
@@ -68,7 +71,7 @@ class OperationFormState extends State<OperationForm> {
                 copy: true, cut: true, paste: true, selectAll: true),
             validator: (value) {
               if (value!.isEmpty) {
-                return '';
+                return 'Il campo non può essere vuoto';
               }
               return null;
             },
@@ -102,7 +105,7 @@ class OperationFormState extends State<OperationForm> {
                     )
                   : null,
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: AppColors.primaryColor),
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
                 borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
               enabledBorder: OutlineInputBorder(
@@ -111,13 +114,15 @@ class OperationFormState extends State<OperationForm> {
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
               errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
             ),
           ),
-          SizedBox(height: AppConst.padding),
+          const SizedBox(height: AppConst.padding),
           TextFormField(
             controller: tenantController,
             focusNode: tenantFocusNode,
@@ -127,7 +132,7 @@ class OperationFormState extends State<OperationForm> {
                 copy: true, cut: true, paste: true, selectAll: true),
             validator: (value) {
               if (value!.isEmpty) {
-                return '';
+                return 'Il campo non può essere vuoto';
               }
               return null;
             },
@@ -161,7 +166,7 @@ class OperationFormState extends State<OperationForm> {
                     )
                   : null,
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: AppColors.primaryColor),
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
                 borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
               enabledBorder: OutlineInputBorder(
@@ -170,56 +175,30 @@ class OperationFormState extends State<OperationForm> {
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
               errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
             ),
           ),
-          SizedBox(height: AppConst.padding),
-          GestureDetector(
-            child: TextFormField(
-              enabled: false,
-              controller: operationTypeController,
-              keyboardType: TextInputType.text,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return '';
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: 'Scegli la tipologia',
-                labelStyle: TextStyle(color: AppColors.secondaryColor),
-                hintStyle: TextStyle(color: AppColors.secondaryColor),
-                alignLabelWithHint: true,
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(width: 2, color: AppColors.primaryColor),
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
-                ),
-                border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(width: 2, color: AppColors.primaryColor),
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.secondaryColor),
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2, color: AppColors.errorColor),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.errorColor),
-                ),
-              ),
-            ),
+          const SizedBox(height: AppConst.padding),
+          TextFormField(
+            readOnly: true,
+            controller: operationTypeController,
+            keyboardType: TextInputType.text,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Il campo non può essere vuoto';
+              }
+              return null;
+            },
             onTap: () {
               DropDownState(
                 DropDown(
                   bottomSheetTitle: const Text(
-                    'Tipologia di intervento',
+                    'Seleziona la tipologia di intervento',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -236,50 +215,44 @@ class OperationFormState extends State<OperationForm> {
                 ),
               ).showModal(context);
             },
-          ),
-          SizedBox(height: AppConst.padding),
-          GestureDetector(
-            child: TextFormField(
-              enabled: false,
-              controller: operationController,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return '';
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: 'Scegli il tipo di richiesta',
-                labelStyle: TextStyle(color: AppColors.secondaryColor),
-                hintStyle: TextStyle(color: AppColors.secondaryColor),
-                alignLabelWithHint: true,
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(width: 2, color: AppColors.primaryColor),
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
-                ),
-                border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(width: 2, color: AppColors.primaryColor),
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.secondaryColor),
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2, color: AppColors.errorColor),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.errorColor),
-                ),
+            decoration: InputDecoration(
+              labelText: 'Seleziona la tipologia di intervento',
+              labelStyle: TextStyle(color: AppColors.secondaryColor),
+              hintStyle: TextStyle(color: AppColors.secondaryColor),
+              alignLabelWithHint: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.secondaryColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
             ),
+          ),
+          const SizedBox(height: AppConst.padding),
+          TextFormField(
+            readOnly: true,
+            controller: operationController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Il campo non può essere vuoto';
+              }
+              return null;
+            },
             onTap: () {
               DropDownState(
                 DropDown(
                   bottomSheetTitle: const Text(
-                    'Tipo di richiesta',
+                    'Seleziona il richiedente',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -296,8 +269,30 @@ class OperationFormState extends State<OperationForm> {
                 ),
               ).showModal(context);
             },
+            decoration: InputDecoration(
+              labelText: 'Seleziona il richiedente',
+              labelStyle: TextStyle(color: AppColors.secondaryColor),
+              hintStyle: TextStyle(color: AppColors.secondaryColor),
+              alignLabelWithHint: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.secondaryColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+            ),
           ),
-          SizedBox(height: AppConst.padding),
+          const SizedBox(height: AppConst.padding),
           TextFormField(
             controller: descriptionController,
             focusNode: descriptionFocusNode,
@@ -307,7 +302,7 @@ class OperationFormState extends State<OperationForm> {
                 copy: true, cut: true, paste: true, selectAll: true),
             validator: (value) {
               if (value!.isEmpty) {
-                return '';
+                return 'Il campo non può essere vuoto';
               }
               return null;
             },
@@ -342,7 +337,7 @@ class OperationFormState extends State<OperationForm> {
                     )
                   : null,
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: AppColors.primaryColor),
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
                 borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
               enabledBorder: OutlineInputBorder(
@@ -351,18 +346,20 @@ class OperationFormState extends State<OperationForm> {
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
               errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
               ),
             ),
           ),
-          SizedBox(height: AppConst.padding),
+          const SizedBox(height: AppConst.padding),
           const Text(
             'Allegati',
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: AppConst.padding),
+          const SizedBox(height: AppConst.padding),
           GridView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -380,7 +377,7 @@ class OperationFormState extends State<OperationForm> {
                       color: Colors.white,
                     ),
                     onPressed: () =>
-                        buildActionSheet(context, OperationProvider),
+                        buildPickerActionSheet(context, OperationProvider),
                   );
                 }
                 return Stack(
@@ -401,8 +398,8 @@ class OperationFormState extends State<OperationForm> {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          '/viewer',
-                          arguments: ScreenArguments(
+                          '/gallery',
+                          arguments: GalleryArguments(
                             context.read<OperationProvider>().images,
                           ),
                         );
@@ -433,18 +430,36 @@ class OperationFormState extends State<OperationForm> {
               },
             ).toList(),
           ),
-          SizedBox(height: AppConst.padding * 2),
+          formKey.currentState != null
+              ? formKey.currentState!.validate() == false &&
+                      context.read<OperationProvider>().images.isEmpty
+                  ? const SizedBox(height: AppConst.padding / 2)
+                  : const SizedBox()
+              : const SizedBox(),
+          formKey.currentState != null
+              ? formKey.currentState!.validate() == false &&
+                      context.read<OperationProvider>().images.isEmpty
+                  ? Text(
+                      'Aggiungi almeno un allegato',
+                      style:
+                          TextStyle(fontSize: 12, color: AppColors.errorColor),
+                    )
+                  : const SizedBox()
+              : const SizedBox(),
+          const SizedBox(height: AppConst.padding * 2),
           Button(
             text: 'Invia richiesta',
             onPressed: () {
               if (formKey.currentState!.validate() &&
-                  context.read<OperationProvider>().images.isNotEmpty) {
+                  context.read<OperationProvider>().images.isNotEmpty &&
+                  UserRepository().isLogged == true) {
                 hideKeyboard(context);
                 print(
                   'palaceController: ${palaceController.text}\ntenantController: ${tenantController.text}\noperationTypeController: ${operationTypeController.text}\noperationController: ${operationController.text}\ndescriptionController: ${descriptionController.text}\nimages: ${context.read<OperationProvider>().images.length}',
                 );
               } else {
-                print('Completa tutti i campi');
+                Alerts.errorAlert(context,
+                    title: 'Ops!', subtitle: 'Completa tutti i campi');
               }
             },
           ),
