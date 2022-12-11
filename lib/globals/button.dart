@@ -24,6 +24,7 @@ class Button extends StatelessWidget {
         ? TextButton(
             style: TextButton.styleFrom(
               backgroundColor: color ?? AppColors.primaryColor,
+              padding: icon != null ? EdgeInsets.zero : null,
             ),
             onPressed: onPressed,
             child: icon ??
