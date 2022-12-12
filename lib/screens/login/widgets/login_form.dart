@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                         });
                       },
                       child: Icon(
-                        Icons.cancel,
+                        Icons.cancel_rounded,
                         color: AppColors.secondaryColor,
                       ),
                     )
@@ -158,8 +158,8 @@ class _LoginFormState extends State<LoginForm> {
                               context.read<LoginProvider>().hidePassword(),
                           child: Icon(
                             context.watch<LoginProvider>().hiddenPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded,
                             color: AppColors.secondaryColor,
                           ),
                         ),
@@ -177,7 +177,7 @@ class _LoginFormState extends State<LoginForm> {
                                   });
                                 },
                                 child: Icon(
-                                  Icons.cancel,
+                                  Icons.cancel_rounded,
                                   color: AppColors.secondaryColor,
                                 ),
                               ),

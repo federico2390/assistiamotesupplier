@@ -165,7 +165,7 @@ class OperationFieldsState extends State<OperationFields> {
       focusColor: AppColors.tertiaryColor,
       selectedItemHighlightColor: AppColors.tertiaryColor,
       icon: Icon(
-        Icons.arrow_drop_down_outlined,
+        Icons.arrow_drop_down_rounded,
         color: AppColors.secondaryColor,
       ),
       dropdownDecoration: BoxDecoration(
@@ -228,7 +228,7 @@ class OperationFieldsState extends State<OperationFields> {
       focusColor: AppColors.tertiaryColor,
       selectedItemHighlightColor: AppColors.tertiaryColor,
       icon: Icon(
-        Icons.arrow_drop_down_outlined,
+        Icons.arrow_drop_down_rounded,
         color: AppColors.secondaryColor,
       ),
       dropdownDecoration: BoxDecoration(
@@ -318,7 +318,7 @@ class OperationFieldsState extends State<OperationFields> {
                   });
                 },
                 child: Icon(
-                  Icons.cancel,
+                  Icons.cancel_rounded,
                   color: AppColors.secondaryColor,
                 ),
               )

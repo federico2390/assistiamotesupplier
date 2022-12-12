@@ -28,7 +28,7 @@ BottomNavigationBar bottomBar(BuildContext context) {
       ),
       BottomNavigationBarItem(
         label: 'Contabilità',
-        icon: Icon(Icons.payments_outlined),
+        icon: Icon(Icons.payments_rounded),
         tooltip: '',
       ),
     ],

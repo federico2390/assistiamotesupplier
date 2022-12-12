@@ -61,7 +61,7 @@ class ReadingFieldsState extends State<ReadingFields> {
                   });
                 },
                 child: Icon(
-                  Icons.cancel,
+                  Icons.cancel_rounded,
                   color: AppColors.secondaryColor,
                 ),
               )

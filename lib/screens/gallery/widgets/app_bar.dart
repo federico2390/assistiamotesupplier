@@ -9,7 +9,7 @@ AppBar appBar(BuildContext context) {
     elevation: 0,
     leading: GestureDetector(
       child: Icon(
-        Icons.close,
+        Icons.close_rounded,
         color: AppColors.backgroundColor,
       ),
       onTap: () => Navigator.of(context).pop(),

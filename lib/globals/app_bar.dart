@@ -9,6 +9,15 @@ AppBar appBar(BuildContext context) {
   return AppBar(
     centerTitle: true,
     elevation: 0,
+    leading: Ink(
+      padding: const EdgeInsets.only(right: AppConst.padding - 3),
+      child: InkWell(
+        child: const Icon(Icons.settings_rounded),
+        onTap: () {
+          buildLogoutActionSheet(context);
+        },
+      ),
+    ),
     title: Consumer<BottomBarProvider>(
       builder: (context, bottomBar, child) {
         return bottomBar.currentPageIndex == 0
@@ -23,7 +32,7 @@ AppBar appBar(BuildContext context) {
             Ink(
               padding: const EdgeInsets.only(right: AppConst.padding - 3),
               child: InkWell(
-                child: const Icon(Icons.logout),
+                child: const Icon(Icons.logout_rounded),
                 onTap: () {
                   buildLogoutActionSheet(context);
                 },

@@ -62,7 +62,7 @@ class OperationFormState extends State<OperationForm> {
                       return Button(
                         color: AppColors.secondaryColor.withOpacity(.5),
                         icon: const Icon(
-                          Icons.add,
+                          Icons.add_rounded,
                           size: 44,
                           color: Colors.white,
                         ),
@@ -104,7 +104,7 @@ class OperationFormState extends State<OperationForm> {
                             child: Button(
                                 color: AppColors.errorColor,
                                 icon: const Icon(
-                                  Icons.close,
+                                  Icons.close_rounded,
                                   color: Colors.white,
                                   size: 20,
                                 ),

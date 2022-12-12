@@ -60,7 +60,7 @@ class _ReadingFormState extends State<ReadingForm> {
                       return Button(
                         color: AppColors.secondaryColor.withOpacity(.5),
                         icon: const Icon(
-                          Icons.add,
+                          Icons.add_rounded,
                           size: 44,
                           color: Colors.white,
                         ),
@@ -102,7 +102,7 @@ class _ReadingFormState extends State<ReadingForm> {
                             child: Button(
                                 color: AppColors.errorColor,
                                 icon: const Icon(
-                                  Icons.close,
+                                  Icons.close_rounded,
                                   color: Colors.white,
                                   size: 20,
                                 ),
