@@ -36,10 +36,10 @@ class _AccountingPageState extends State<AccountingPage> {
               ),
               android: AndroidInAppWebViewOptions(
                 geolocationEnabled: false,
-                useWideViewPort: false,
+                initialScale: -1,
               ),
               ios: IOSInAppWebViewOptions(
-                // enableViewportScale: true,
+                enableViewportScale: true,
                 automaticallyAdjustsScrollIndicatorInsets: true,
               ),
             ),
@@ -55,6 +55,7 @@ class _AccountingPageState extends State<AccountingPage> {
                 if (window.location.href.includes("ReturnUrl")) {
                   window.location.assign("${arguments.url}");
                 }
+
                 document.getElementById('studiopa-header-container').style.display = "none";
                 document.getElementById('HomeSlider').style.display = "none";
                 document.getElementById('Username').value = "VNM29P";

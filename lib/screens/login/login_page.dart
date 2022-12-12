@@ -2,11 +2,11 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/login.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/login/widgets/login_form.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
-import 'package:adminpanel/utils/secure_storage.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,13 +32,12 @@ class _LoginPageState extends State<LoginPage> {
 
   void _loadRememberData() async {
     int? rememberData = SharedPrefs.getInt('rememberData');
-    print(rememberData);
 
     if (rememberData != 0 || rememberData != null) {
-      if (await SecureStorage.containsKey('user_username') &&
-          await SecureStorage.containsKey('user_password')) {
-        usernameController.text = (await SecureStorage.read('user_username'));
-        passwordController.text = (await SecureStorage.read('user_password'));
+      final user = await context.read<UserProvider>().getUser();
+      if (user.userUsername != null && user.userPassword != null) {
+        usernameController.text = user.userUsername!;
+        passwordController.text = user.userPassword!;
       }
     }
 

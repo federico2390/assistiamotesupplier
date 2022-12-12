@@ -1,13 +1,15 @@
 import 'dart:convert';
 
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/database/user.dart';
 import 'package:adminpanel/models/user.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/secure_storage.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class UserRepository {
   bool get isLogged => SharedPrefs.getInt('logged') != null ? true : false;
@@ -37,18 +39,23 @@ class UserRepository {
         final jsonData = json.decode(response.body);
         final User user = User.fromJson(jsonData[0]);
 
-        await SharedPrefs.setString('user_id', user.userId!);
-        await SharedPrefs.setString('palace_id', user.palaceId!);
-        await SharedPrefs.setString('palace_name', user.palaceName!);
-        await SharedPrefs.setString('palace_cf', user.palacaceCf!);
-        await SharedPrefs.setString('palace_address', user.palaceAddress!);
-        await SharedPrefs.setString('user_email', user.userEmail!);
-        await SharedPrefs.setString('user_name', user.userName!);
-        await SharedPrefs.setString('user_surname', user.userSurname!);
-        await SharedPrefs.setString('user_cf', user.userCf!);
-        await SecureStorage.write('user_username', user.userUsername!);
-        await SecureStorage.write('user_password', user.userPassword!);
-        await SharedPrefs.setString('user_token', user.userToken!);
+        context.read<UserProvider>().addUser(
+              UserDatabase(
+                userId: user.userId!,
+                palaceId: user.palaceId!,
+                palaceName: user.palaceName!,
+                palaceCf: user.palaceCf!,
+                palaceAddress: user.palaceAddress!,
+                userEmail: user.userEmail!,
+                userName: user.userName!,
+                userSurname: user.userSurname!,
+                userCf: user.userCf!,
+                userUsername: user.userUsername!,
+                userPassword: user.userPassword!,
+                userToken: user.userToken!,
+              ),
+            );
+
         await SharedPrefs.setInt('logged', 1);
 
         Alerts.successAlert(context,

@@ -1,11 +1,12 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
 import 'package:adminpanel/utils/capitalize_first_letter.dart';
-import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OperationFields extends StatefulWidget {
   final TextEditingController palaceController;
@@ -24,14 +25,10 @@ class OperationFields extends StatefulWidget {
 }
 
 class OperationFieldsState extends State<OperationFields> {
-  final FocusNode palaceFocusNode = FocusNode();
   final FocusNode operationTypeFocusNode = FocusNode();
   final FocusNode operationFocusNode = FocusNode();
-  final FocusNode tenantFocusNode = FocusNode();
   final FocusNode descriptionFocusNode = FocusNode();
 
-  bool isPalaceIconVisible = false;
-  bool isTenantIconVisible = false;
   bool isDescriptionIconVisible = false;
 
   String? operationType;
@@ -49,23 +46,25 @@ class OperationFieldsState extends State<OperationFields> {
     widget.tenantController.dispose();
     widget.descriptionController.dispose();
 
-    palaceFocusNode.dispose();
     operationTypeFocusNode.dispose();
     operationFocusNode.dispose();
-    tenantFocusNode.dispose();
     descriptionFocusNode.dispose();
     super.dispose();
   }
 
-  _loadUser() {
+  _loadUser() async {
     if (UserRepository().isLogged == true) {
-      String? palace = SharedPrefs.getString('palace_name') ?? '';
-      String? tenantName = SharedPrefs.getString('user_name') ?? '';
-      String? tenantSurname = SharedPrefs.getString('user_surname') ?? '';
+      final user = await context.read<UserProvider>().getUser();
+      widget.palaceController.text =
+          user.palaceName != null ? user.palaceName! : '';
 
-      widget.palaceController.text = palace;
-      widget.tenantController.text =
-          '${tenantName.capitalizeFirstLetter()} ${tenantSurname.capitalizeFirstLetter()}';
+      String userName = user.userName != null
+          ? '${user.userName!.capitalizeFirstLetter()!} '
+          : '';
+      String userSurname = user.userSurname != null
+          ? user.userSurname!.capitalizeFirstLetter()!
+          : '';
+      widget.tenantController.text = userName + userSurname;
     }
   }
 
@@ -88,49 +87,20 @@ class OperationFieldsState extends State<OperationFields> {
 
   TextFormField palaceField() {
     return TextFormField(
+      readOnly: true,
       controller: widget.palaceController,
-      focusNode: palaceFocusNode,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      toolbarOptions: const ToolbarOptions(
-          copy: true, cut: true, paste: true, selectAll: true),
       validator: (value) {
         if (value!.isEmpty) {
           return 'Il campo non può essere vuoto';
         }
         return null;
       },
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          setState(() {
-            isPalaceIconVisible = true;
-          });
-        } else {
-          setState(() {
-            isPalaceIconVisible = false;
-          });
-        }
-      },
       decoration: InputDecoration(
-        labelText: 'Condominio',
-        labelStyle: TextStyle(color: AppColors.secondaryColor),
+        hintText: 'Condominio',
+        hintStyle: TextStyle(color: AppColors.secondaryColor),
         alignLabelWithHint: true,
-        suffixIcon: isPalaceIconVisible == true
-            ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.palaceController.clear();
-                    isPalaceIconVisible = false;
-                  });
-                },
-                child: Icon(
-                  Icons.cancel,
-                  color: AppColors.secondaryColor,
-                ),
-              )
-            : null,
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
+          borderSide: BorderSide(width: 1, color: AppColors.secondaryColor),
           borderRadius: BorderRadius.circular(AppConst.borderRadius),
         ),
         enabledBorder: OutlineInputBorder(
@@ -151,49 +121,20 @@ class OperationFieldsState extends State<OperationFields> {
 
   TextFormField tenantField() {
     return TextFormField(
+      readOnly: true,
       controller: widget.tenantController,
-      focusNode: tenantFocusNode,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      toolbarOptions: const ToolbarOptions(
-          copy: true, cut: true, paste: true, selectAll: true),
       validator: (value) {
         if (value!.isEmpty) {
           return 'Il campo non può essere vuoto';
         }
         return null;
       },
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          setState(() {
-            isTenantIconVisible = true;
-          });
-        } else {
-          setState(() {
-            isTenantIconVisible = false;
-          });
-        }
-      },
       decoration: InputDecoration(
-        labelText: 'Inquilino',
-        labelStyle: TextStyle(color: AppColors.secondaryColor),
+        hintText: 'Inquilino',
+        hintStyle: TextStyle(color: AppColors.secondaryColor),
         alignLabelWithHint: true,
-        suffixIcon: isTenantIconVisible == true
-            ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.tenantController.clear();
-                    isTenantIconVisible = false;
-                  });
-                },
-                child: Icon(
-                  Icons.cancel,
-                  color: AppColors.secondaryColor,
-                ),
-              )
-            : null,
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
+          borderSide: BorderSide(width: 1, color: AppColors.secondaryColor),
           borderRadius: BorderRadius.circular(AppConst.borderRadius),
         ),
         enabledBorder: OutlineInputBorder(
@@ -236,13 +177,13 @@ class OperationFieldsState extends State<OperationFields> {
                 child: Text(item),
               ))
           .toList(),
+      onChanged: (value) {},
       validator: (value) {
         if (value == null) {
           return 'Il campo non può essere vuoto';
         }
         return null;
       },
-      onChanged: (value) {},
       onSaved: (value) {
         operationType = value.toString();
       },
@@ -299,13 +240,13 @@ class OperationFieldsState extends State<OperationFields> {
                 child: Text(item),
               ))
           .toList(),
+      onChanged: (value) {},
       validator: (value) {
         if (value == null) {
           return 'Il campo non può essere vuoto';
         }
         return null;
       },
-      onChanged: (value) {},
       onSaved: (value) {
         operation = value.toString();
       },
@@ -343,7 +284,7 @@ class OperationFieldsState extends State<OperationFields> {
       controller: widget.descriptionController,
       focusNode: descriptionFocusNode,
       keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       toolbarOptions: const ToolbarOptions(
           copy: true, cut: true, paste: true, selectAll: true),
       validator: (value) {

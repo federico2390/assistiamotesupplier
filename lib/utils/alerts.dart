@@ -24,7 +24,7 @@ class Alerts {
       duration: const Duration(seconds: 30),
       title: title,
       subtitle: subtitle,
-      configuration: const IconConfiguration(icon: Icons.downloading),
+      configuration: const IconConfiguration(icon: Icons.update_rounded),
       maxWidth: 260,
     );
   }
@@ -33,11 +33,10 @@ class Alerts {
       {String? title, String? subtitle}) async {
     return StatusAlert.show(
       context,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       title: title,
       subtitle: subtitle,
-      configuration:
-          const IconConfiguration(icon: Icons.error_outline_outlined),
+      configuration: const IconConfiguration(icon: Icons.error_outline_rounded),
       maxWidth: 260,
     );
   }
