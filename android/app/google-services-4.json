@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "121054669898",
+    "project_id": "admin-panel-d87df",
+    "storage_bucket": "admin-panel-d87df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121054669898:android:3f88438aecb5be86facab3",
+        "android_client_info": {
+          "package_name": "it.federicodesalvatore.adminpanel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121054669898-2or6iq0hbrmcln35tkal329vr5ue6sv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3ev_tPN2PNGtJIZZSm2dGWt_shnEC3E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121054669898-2or6iq0hbrmcln35tkal329vr5ue6sv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "121054669898-o1ev4lubag0ippm3m6dilnf7sc89729e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "it.federicodesalvatore.adminpanel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

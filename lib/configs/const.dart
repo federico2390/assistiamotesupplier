@@ -1,23 +1,27 @@
 class AppConst {
+  /// UI
   static const double padding = 16.0;
   static const double borderRadius = 16.0;
 
+  /// Service
+  static const String serviceBase = 'https://studiopa.cedhousesuite.it';
   static const Map<String, String> accountingItems = {
-    'Fatture': 'https://studiopa.cedhousesuite.it/Contabilita/Fatture',
-    'Consuntivo':
-        'https://studiopa.cedhousesuite.it/Contabilita/ComparazionePreventivoConsuntivo',
-    'Rate Personali':
-        'https://studiopa.cedhousesuite.it/Rate/SituazionePersonale',
-    'Rate Inquilini':
-        'https://studiopa.cedhousesuite.it/Rate/SituazioneInquilini',
+    'Fatture': '$serviceBase/Contabilita/Fatture',
+    'Consuntivo': '$serviceBase/Contabilita/ComparazionePreventivoConsuntivo',
+    'Rate Personali': '$serviceBase/Rate/SituazionePersonale',
+    'Rate Inquilini': '$serviceBase/Rate/SituazioneInquilini',
   };
 
-  static const String base = 'https://adminpanel.buuumit.com';
-  static const String login = '/service/auth/login.php';
-  static const String logout = '/service/auth/logout.php';
-  static const String postOperation = '/service/misc/postOperation.php';
-  static const String getFeed = '/service/misc/getFeed.php';
-  static const String postReading = '/service/misc/postReading.php';
+  /// Backend
+  static const String backendBase = 'https://adminpanel.buuumit.com';
+  static const String login = '$backendBase/service/auth/login.php';
+  static const String logout = '$backendBase/service/auth/logout.php';
+  static const String operation = '$backendBase/service/misc/operation.php';
+  static const String feed = '$backendBase/service/misc/feed.php';
+  static const String reading = '$backendBase/service/misc/reading.php';
+  static const String notification = '$backendBase/service/misc/notification.php';
 
+  /// App
   static const String appId = 'it.federicodesalvatore.adminpanel';
+  static const String appName = 'Studio PA';
 }

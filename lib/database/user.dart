@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:hive/hive.dart';
 
 part 'user.g.dart';
@@ -46,47 +44,37 @@ class UserDatabase {
     this.userToken,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'userId': userId,
-      'palaceId': palaceId,
-      'palaceName': palaceName,
-      'palaceCf': palaceCf,
-      'palaceAddress': palaceAddress,
-      'userEmail': userEmail,
-      'userName': userName,
-      'userSurname': userSurname,
-      'userCf': userCf,
-      'userUsername': userUsername,
-      'userPassword': userPassword,
-      'userToken': userToken,
+      'user_id': userId,
+      'palace_id': palaceId,
+      'palace_name': palaceName,
+      'palace_cf': palaceCf,
+      'palace_Address': palaceAddress,
+      'user_email': userEmail,
+      'user_name': userName,
+      'user_surname': userSurname,
+      'user_cf': userCf,
+      'user_username': userUsername,
+      'user_password': userPassword,
+      'user_token': userToken,
     };
   }
 
-  factory UserDatabase.fromMap(Map<String, dynamic> map) {
+  factory UserDatabase.fromJson(Map<String, dynamic> map) {
     return UserDatabase(
-      userId: map['userId'] != null ? map['userId'] as String : null,
-      palaceId: map['palaceId'] != null ? map['palaceId'] as String : null,
-      palaceName:
-          map['palaceName'] != null ? map['palaceName'] as String : null,
-      palaceCf: map['palaceCf'] != null ? map['palaceCf'] as String : null,
-      palaceAddress:
-          map['palaceAddress'] != null ? map['palaceAddress'] as String : null,
-      userEmail: map['userEmail'] != null ? map['userEmail'] as String : null,
-      userName: map['userName'] != null ? map['userName'] as String : null,
-      userSurname:
-          map['userSurname'] != null ? map['userSurname'] as String : null,
-      userCf: map['userCf'] != null ? map['userCf'] as String : null,
-      userUsername:
-          map['userUsername'] != null ? map['userUsername'] as String : null,
-      userPassword:
-          map['userPassword'] != null ? map['userPassword'] as String : null,
-      userToken: map['userToken'] != null ? map['userToken'] as String : null,
+      userId: map['user_id'] ?? '',
+      palaceId: map['palace_id'] ?? '',
+      palaceName: map['palace_name'] ?? '',
+      palaceCf: map['palace_cf'] ?? '',
+      palaceAddress: map['palace_address'] ?? '',
+      userEmail: map['user_email'] ?? '',
+      userName: map['user_name'] ?? '',
+      userSurname: map['user_surname'] ?? '',
+      userCf: map['user_cf'] ?? '',
+      userUsername: map['user_username'] ?? '',
+      userPassword: map['user_password'] ?? '',
+      userToken: map['user_token'] ?? '',
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserDatabase.fromJson(String source) =>
-      UserDatabase.fromMap(json.decode(source) as Map<String, dynamic>);
 }

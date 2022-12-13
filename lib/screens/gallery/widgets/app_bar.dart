@@ -6,7 +6,6 @@ AppBar appBar(BuildContext context) {
   return AppBar(
     systemOverlayStyle: SystemUiOverlayStyle.light,
     backgroundColor: Colors.transparent,
-    elevation: 0,
     leading: GestureDetector(
       child: Icon(
         Icons.close_rounded,

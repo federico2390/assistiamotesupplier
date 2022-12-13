@@ -1,20 +1,17 @@
+import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/utils/logout_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 AppBar appBar(BuildContext context) {
   return AppBar(
-    centerTitle: true,
-    elevation: 0,
     leading: Ink(
-      padding: const EdgeInsets.only(right: AppConst.padding - 3),
       child: InkWell(
         child: const Icon(Icons.settings_rounded),
         onTap: () {
-          buildLogoutActionSheet(context);
+          Navigator.pushNamed(context, '/setting');
         },
       ),
     ),
@@ -27,10 +24,10 @@ AppBar appBar(BuildContext context) {
                 : const Text('Lettura acqua');
       },
     ),
-    actions: UserRepository().isLogged == true
+    actions: User().isLogged == true
         ? <Widget>[
             Ink(
-              padding: const EdgeInsets.only(right: AppConst.padding - 3),
+              padding: const EdgeInsets.only(right: AppConst.padding),
               child: InkWell(
                 child: const Icon(Icons.logout_rounded),
                 onTap: () {

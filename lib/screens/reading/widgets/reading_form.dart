@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/reading.dart';
-import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/reading/widgets/reading_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/picker_action_sheet.dart';
@@ -148,7 +148,7 @@ class _ReadingFormState extends State<ReadingForm> {
             onPressed: () {
               if (formKey.currentState!.validate() &&
                   context.read<ReadingProvider>().images.isNotEmpty &&
-                  UserRepository().isLogged == true) {
+                  User().isLogged == true) {
                 hideKeyboard(context);
               } else {
                 Alerts.errorAlert(context,

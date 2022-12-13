@@ -8,6 +8,8 @@ class AppTheme {
       splashColor: AppColors.transparentColor,
       highlightColor: AppColors.transparentColor,
       appBarTheme: AppBarTheme(
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: AppColors.backgroundColor,
         foregroundColor: AppColors.labelDarkColor,
         titleTextStyle: TextStyle(

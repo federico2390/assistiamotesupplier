@@ -1,8 +1,8 @@
+import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
 import 'package:adminpanel/providers/user.dart';
-import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
 import 'package:adminpanel/utils/capitalize_first_letter.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class OperationFieldsState extends State<OperationFields> {
   }
 
   _loadUser() async {
-    if (UserRepository().isLogged == true) {
+    if (User().isLogged == true) {
       final user = await context.read<UserProvider>().getUser();
       widget.palaceController.text =
           user.palaceName != null ? user.palaceName! : '';

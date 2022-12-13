@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:adminpanel/api/logout.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/database/user.dart';
 import 'package:adminpanel/main.dart';
+import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
-import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,7 +27,7 @@ buildLogoutActionSheet(BuildContext context) async {
                     style: TextStyle(color: AppColors.errorColor),
                   ),
                   onTap: () {
-                    UserRepository()
+                    Logout()
                         .logout(
                             context, user.userId != null ? user.userId! : '')
                         .then((value) {
@@ -37,6 +38,7 @@ buildLogoutActionSheet(BuildContext context) async {
                         if (rememberData == 0 || rememberData == null) {
                           SharedPrefs.instance.clear();
                           context.read<UserProvider>().deleteUser();
+                          context.read<SettingProvider>().deleteNotification();
                         } else {
                           context.read<UserProvider>().updateUser(
                                 UserDatabase(
@@ -80,7 +82,7 @@ buildLogoutActionSheet(BuildContext context) async {
               actions: <CupertinoActionSheetAction>[
                 CupertinoActionSheetAction(
                     onPressed: () {
-                      UserRepository()
+                      Logout()
                           .logout(
                               context, user.userId != null ? user.userId! : '')
                           .then((value) {
@@ -92,6 +94,9 @@ buildLogoutActionSheet(BuildContext context) async {
                           if (rememberData == 0 || rememberData == null) {
                             SharedPrefs.instance.clear();
                             context.read<UserProvider>().deleteUser();
+                            context
+                                .read<SettingProvider>()
+                                .deleteNotification();
                           } else {
                             context.read<UserProvider>().updateUser(
                                   UserDatabase(

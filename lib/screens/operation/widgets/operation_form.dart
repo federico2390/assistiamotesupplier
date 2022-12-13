@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/repository/user.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/picker_action_sheet.dart';
@@ -150,7 +150,7 @@ class OperationFormState extends State<OperationForm> {
             onPressed: () {
               if (formKey.currentState!.validate() &&
                   context.read<OperationProvider>().images.isNotEmpty &&
-                  UserRepository().isLogged == true) {
+                  User().isLogged == true) {
                 hideKeyboard(context);
               } else {
                 Alerts.errorAlert(context,

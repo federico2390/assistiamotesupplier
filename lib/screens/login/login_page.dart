@@ -1,9 +1,10 @@
+import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/user.dart';
-import 'package:adminpanel/repository/user.dart';
+import 'package:adminpanel/api/login.dart';
 import 'package:adminpanel/screens/login/widgets/login_form.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
@@ -66,9 +67,9 @@ class _LoginPageState extends State<LoginPage> {
                 : AppColors.secondaryColor,
             onPressed: () {
               if (formKey.currentState!.validate() &&
-                  UserRepository().isLogged == false) {
+                  User().isLogged == false) {
                 hideKeyboard(context);
-                UserRepository().login(
+                Login().login(
                     context, usernameController.text, passwordController.text);
               } else {
                 Alerts.errorAlert(context,

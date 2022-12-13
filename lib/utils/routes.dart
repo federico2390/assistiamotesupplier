@@ -5,6 +5,7 @@ import 'package:adminpanel/screens/login/login_page.dart';
 import 'package:adminpanel/screens/operation/operation_page.dart';
 import 'package:adminpanel/screens/reading/reading_page.dart';
 import 'package:adminpanel/screens/gallery/gallery_page.dart';
+import 'package:adminpanel/screens/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -17,6 +18,7 @@ class Routes {
       '/reading': (context) => const ReadingPage(),
       '/accounting': (context) => const AccountingPage(),
       '/gallery': (context) => const GalleryPage(),
+      '/setting': (context) => const SettingPage(),
     };
   }
 }

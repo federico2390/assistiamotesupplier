@@ -17,8 +17,6 @@ class _AccountingPageState extends State<AccountingPage> {
         ModalRoute.of(context)!.settings.arguments as AccountingArguments;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
         title: Text(arguments.title),
       ),
       body: Stack(
