@@ -5,7 +5,7 @@ part 'notification.g.dart';
 @HiveType(typeId: 1)
 class NotificationDatabase {
   @HiveField(0)
-  final bool? notification;
+  bool? notification;
 
   NotificationDatabase({
     this.notification,

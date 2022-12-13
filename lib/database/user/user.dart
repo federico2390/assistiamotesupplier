@@ -5,9 +5,9 @@ part 'user.g.dart';
 @HiveType(typeId: 0)
 class UserDatabase {
   @HiveField(0)
-  final String? userId;
+  String? userId;
   @HiveField(1)
-  final String? palaceId;
+  String? palaceId;
   @HiveField(2)
   String? palaceName;
   @HiveField(3)
@@ -43,23 +43,6 @@ class UserDatabase {
     this.userPassword,
     this.userToken,
   });
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'user_id': userId,
-      'palace_id': palaceId,
-      'palace_name': palaceName,
-      'palace_cf': palaceCf,
-      'palace_Address': palaceAddress,
-      'user_email': userEmail,
-      'user_name': userName,
-      'user_surname': userSurname,
-      'user_cf': userCf,
-      'user_username': userUsername,
-      'user_password': userPassword,
-      'user_token': userToken,
-    };
-  }
 
   factory UserDatabase.fromJson(Map<String, dynamic> map) {
     return UserDatabase(

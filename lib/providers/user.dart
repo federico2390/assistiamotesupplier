@@ -1,4 +1,4 @@
-import 'package:adminpanel/database/user.dart';
+import 'package:adminpanel/database/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

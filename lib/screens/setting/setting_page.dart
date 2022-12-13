@@ -1,5 +1,5 @@
 import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/database/notification.dart';
+import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:flutter/material.dart';

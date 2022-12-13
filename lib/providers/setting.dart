@@ -1,5 +1,5 @@
 import 'package:adminpanel/api/notification.dart' as notifications;
-import 'package:adminpanel/database/notification.dart';
+import 'package:adminpanel/database/notification/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

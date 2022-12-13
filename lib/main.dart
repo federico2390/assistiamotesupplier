@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:adminpanel/configs/theme.dart';
-import 'package:adminpanel/database/notification.dart';
-import 'package:adminpanel/database/user.dart';
+import 'package:adminpanel/database/notification/notification.dart';
+import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/app_bar.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/login.dart';

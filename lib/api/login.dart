@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/database/user.dart';
+import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';

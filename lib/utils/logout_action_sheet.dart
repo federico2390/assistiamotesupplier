@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:adminpanel/api/logout.dart';
 import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/database/user.dart';
+import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
