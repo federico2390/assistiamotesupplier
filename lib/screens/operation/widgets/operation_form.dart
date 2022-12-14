@@ -6,7 +6,6 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/picker_action_sheet.dart';
@@ -160,16 +159,12 @@ class OperationFormState extends State<OperationForm> {
                   context.read<OperationProvider>().images.isNotEmpty &&
                   User().isLogged == true) {
                 hideKeyboard(context);
-                final user = await context.read<UserProvider>().getUser();
 
                 postOperation(
-                  user.userId!,
-                  palaceController.text,
-                  tenantController.text,
+                  context,
                   operationTypeController.text,
                   operationController.text,
                   descriptionController.text,
-                  context.read<OperationProvider>().images,
                 );
               } else {
                 Alerts.errorAlert(context,
