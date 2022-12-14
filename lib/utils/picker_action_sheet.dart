@@ -21,6 +21,7 @@ buildPickerActionSheet(BuildContext context, provider) {
                   List<Media>? selectedImages = await ImagesPicker.pick(
                     count: 3,
                     pickType: PickType.image,
+                    gif: false,
                     quality: 0.8,
                     maxSize: 100,
                   );
@@ -85,6 +86,7 @@ buildPickerActionSheet(BuildContext context, provider) {
                   List<Media>? selectedImages = await ImagesPicker.pick(
                     count: 3,
                     pickType: PickType.image,
+                    gif: false,
                     quality: 0.8,
                     maxSize: 100,
                   );

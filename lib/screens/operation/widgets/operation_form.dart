@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/picker_action_sheet.dart';
@@ -23,6 +25,8 @@ class OperationForm extends StatefulWidget {
 class OperationFormState extends State<OperationForm> {
   final TextEditingController palaceController = TextEditingController();
   final TextEditingController tenantController = TextEditingController();
+  final TextEditingController operationTypeController = TextEditingController();
+  final TextEditingController operationController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -38,6 +42,8 @@ class OperationFormState extends State<OperationForm> {
           OperationFields(
             palaceController: palaceController,
             tenantController: tenantController,
+            operationTypeController: operationTypeController,
+            operationController: operationController,
             descriptionController: descriptionController,
           ),
           const SizedBox(height: AppConst.padding),
@@ -143,15 +149,28 @@ class OperationFormState extends State<OperationForm> {
             text: 'Invia richiesta',
             color: palaceController.text.isNotEmpty &&
                     tenantController.text.isNotEmpty &&
+                    operationTypeController.text.isNotEmpty &&
+                    operationController.text.isNotEmpty &&
                     descriptionController.text.isNotEmpty &&
                     context.read<OperationProvider>().images.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState!.validate() &&
                   context.read<OperationProvider>().images.isNotEmpty &&
                   User().isLogged == true) {
                 hideKeyboard(context);
+                final user = await context.read<UserProvider>().getUser();
+
+                postOperation(
+                  user.userId!,
+                  palaceController.text,
+                  tenantController.text,
+                  operationTypeController.text,
+                  operationController.text,
+                  descriptionController.text,
+                  context.read<OperationProvider>().images,
+                );
               } else {
                 Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');

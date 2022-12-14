@@ -1,6 +1,7 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ReadingFields extends StatefulWidget {
   final TextEditingController valueController;
@@ -28,6 +29,8 @@ class ReadingFieldsState extends State<ReadingFields> {
       controller: widget.valueController,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      maxLength: 1000,
       toolbarOptions: const ToolbarOptions(
           copy: true, cut: true, paste: true, selectAll: true),
       validator: (value) {

@@ -1,22 +1,25 @@
-import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
-import 'package:adminpanel/providers/user.dart';
+import 'package:adminpanel/screens/operation/utils/load_user.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
-import 'package:adminpanel/utils/capitalize_first_letter.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class OperationFields extends StatefulWidget {
   final TextEditingController palaceController;
   final TextEditingController tenantController;
+  final TextEditingController operationTypeController;
+  final TextEditingController operationController;
   final TextEditingController descriptionController;
 
   const OperationFields({
     super.key,
     required this.palaceController,
     required this.tenantController,
+    required this.operationTypeController,
+    required this.operationController,
     required this.descriptionController,
   });
 
@@ -31,13 +34,10 @@ class OperationFieldsState extends State<OperationFields> {
 
   bool isDescriptionIconVisible = false;
 
-  String? operationType;
-  String? operation;
-
   @override
   void initState() {
     super.initState();
-    _loadUser();
+    loadUser(context, widget.palaceController, widget.tenantController);
   }
 
   @override
@@ -50,22 +50,6 @@ class OperationFieldsState extends State<OperationFields> {
     operationFocusNode.dispose();
     descriptionFocusNode.dispose();
     super.dispose();
-  }
-
-  _loadUser() async {
-    if (User().isLogged == true) {
-      final user = await context.read<UserProvider>().getUser();
-      widget.palaceController.text =
-          user.palaceName != null ? user.palaceName! : '';
-
-      String userName = user.userName != null
-          ? '${user.userName!.capitalizeFirstLetter()!} '
-          : '';
-      String userSurname = user.userSurname != null
-          ? user.userSurname!.capitalizeFirstLetter()!
-          : '';
-      widget.tenantController.text = userName + userSurname;
-    }
   }
 
   @override
@@ -160,9 +144,9 @@ class OperationFieldsState extends State<OperationFields> {
       buttonHighlightColor: AppColors.transparentColor,
       isExpanded: true,
       dropdownElevation: 9,
-      itemSplashColor: AppColors.tertiaryColor,
-      itemHighlightColor: AppColors.tertiaryColor,
-      focusColor: AppColors.tertiaryColor,
+      itemSplashColor: AppColors.transparentColor,
+      itemHighlightColor: AppColors.transparentColor,
+      focusColor: AppColors.transparentColor,
       selectedItemHighlightColor: AppColors.tertiaryColor,
       icon: Icon(
         Icons.arrow_drop_down_rounded,
@@ -177,7 +161,9 @@ class OperationFieldsState extends State<OperationFields> {
                 child: Text(item),
               ))
           .toList(),
-      onChanged: (value) {},
+      onChanged: (value) {
+        widget.operationTypeController.text = value.toString();
+      },
       validator: (value) {
         if (value == null) {
           return 'Il campo non può essere vuoto';
@@ -185,7 +171,7 @@ class OperationFieldsState extends State<OperationFields> {
         return null;
       },
       onSaved: (value) {
-        operationType = value.toString();
+        widget.operationTypeController.text = value.toString();
       },
       dropdownPadding: EdgeInsets.zero,
       itemPadding: EdgeInsets.zero,
@@ -223,9 +209,9 @@ class OperationFieldsState extends State<OperationFields> {
       buttonHighlightColor: AppColors.transparentColor,
       isExpanded: true,
       dropdownElevation: 9,
-      itemSplashColor: AppColors.tertiaryColor,
-      itemHighlightColor: AppColors.tertiaryColor,
-      focusColor: AppColors.tertiaryColor,
+      itemSplashColor: AppColors.transparentColor,
+      itemHighlightColor: AppColors.transparentColor,
+      focusColor: AppColors.transparentColor,
       selectedItemHighlightColor: AppColors.tertiaryColor,
       icon: Icon(
         Icons.arrow_drop_down_rounded,
@@ -240,7 +226,9 @@ class OperationFieldsState extends State<OperationFields> {
                 child: Text(item),
               ))
           .toList(),
-      onChanged: (value) {},
+      onChanged: (value) {
+        widget.operationController.text = value.toString();
+      },
       validator: (value) {
         if (value == null) {
           return 'Il campo non può essere vuoto';
@@ -248,7 +236,7 @@ class OperationFieldsState extends State<OperationFields> {
         return null;
       },
       onSaved: (value) {
-        operation = value.toString();
+        widget.operationController.text = value.toString();
       },
       dropdownPadding: EdgeInsets.zero,
       itemPadding: EdgeInsets.zero,
@@ -285,6 +273,8 @@ class OperationFieldsState extends State<OperationFields> {
       focusNode: descriptionFocusNode,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      maxLength: 1000,
       toolbarOptions: const ToolbarOptions(
           copy: true, cut: true, paste: true, selectAll: true),
       validator: (value) {

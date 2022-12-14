@@ -19,7 +19,10 @@ class AppConst {
   static const String operation = '$backendBase/service/misc/operation.php';
   static const String feed = '$backendBase/service/misc/feed.php';
   static const String reading = '$backendBase/service/misc/reading.php';
-  static const String notification = '$backendBase/service/misc/notification.php';
+  static const String notification =
+      '$backendBase/service/misc/notification.php';
+  static const String operationMediaFolder = '$backendBase/media/operation.php';
+  static const String readingMediaFolder = '$backendBase/media/reading.php';
 
   /// App
   static const String appId = 'it.federicodesalvatore.adminpanel';
