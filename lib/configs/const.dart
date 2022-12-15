@@ -2,6 +2,9 @@ class AppConst {
   /// UI
   static const double padding = 16.0;
   static const double borderRadius = 16.0;
+  static const int imagePickerQuality = 70;
+  static const double imagePickerHeight = 1280;
+  static const double imagePickerWidth = 1280;
 
   /// Service
   static const String serviceBase = 'https://studiopa.cedhousesuite.it';

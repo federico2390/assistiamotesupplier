@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:adminpanel/utils/get_image_path.dart';
 
 Future postOperation(
   BuildContext context,
@@ -24,12 +23,10 @@ Future postOperation(
         title: 'Attendi...', subtitle: 'Invio la richiesta');
 
     for (var image in imageList) {
-      final imagePath = await getImagePath(image);
-
       MultipartFile multipartFile = MultipartFile.fromFileSync(
-        imagePath!,
-        contentType: MediaType('image', imagePath.split('.').last),
-        filename: '${uuid.v1()}.${imagePath.split('.').last}',
+        image.path,
+        contentType: MediaType('image', image.path.split('.').last),
+        filename: '${uuid.v1()}.${image.path.split('.').last}',
       );
 
       FormData formData = FormData.fromMap({

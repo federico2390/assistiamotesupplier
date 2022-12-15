@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
-import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -29,11 +30,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
               key: ValueKey(arguments.gallery[index]),
-              imageProvider: AssetThumbImageProvider(
-                arguments.gallery[index],
-                width: arguments.gallery[index].originalWidth!,
-                height: arguments.gallery[index].originalHeight!,
-              ),
+              imageProvider: FileImage(File(arguments.gallery[index].path)),
               initialScale: PhotoViewComputedScale.contained,
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.covered * 2.5,

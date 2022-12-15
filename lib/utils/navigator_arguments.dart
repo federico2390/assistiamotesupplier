@@ -1,7 +1,7 @@
-import 'package:multiple_images_picker/multiple_images_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GalleryArguments {
-  final List<Asset> gallery;
+  final List<XFile> gallery;
 
   GalleryArguments(this.gallery);
 }

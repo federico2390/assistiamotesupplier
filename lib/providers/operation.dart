@@ -1,18 +1,27 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:multiple_images_picker/multiple_images_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OperationProvider extends ChangeNotifier {
-  List<Asset> _images = [];
-  List<Asset> get images => _images;
+  XFile? _image;
+  XFile get image => _image!;
 
-  void addImages(List<Asset> selectedImages) {
+  List<XFile> _images = [];
+  List<XFile> get images => _images;
+
+  void addImage(XFile selectedImage) {
+    _image = selectedImage;
+    _images.add(_image!);
+    notifyListeners();
+  }
+
+  void addImages(List<XFile> selectedImages) {
     _images.addAll(selectedImages);
     notifyListeners();
   }
 
-  void removeImage(Asset image) {
+  void removeImage(XFile image) {
     _images.removeWhere((i) => i == image);
     notifyListeners();
   }
