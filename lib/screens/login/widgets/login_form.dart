@@ -61,6 +61,7 @@ class _LoginFormState extends State<LoginForm> {
             focusNode: usernameFocusNode,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.next,
+            enableInteractiveSelection: true,
             toolbarOptions: const ToolbarOptions(
                 copy: true, cut: true, paste: true, selectAll: true),
             validator: (value) {

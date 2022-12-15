@@ -30,6 +30,7 @@ class ReadingFieldsState extends State<ReadingFields> {
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      textCapitalization: TextCapitalization.sentences,
       maxLength: 1000,
       toolbarOptions: const ToolbarOptions(
           copy: true, cut: true, paste: true, selectAll: true),

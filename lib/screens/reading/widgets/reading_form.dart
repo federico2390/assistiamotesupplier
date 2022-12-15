@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
@@ -7,10 +5,11 @@ import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/screens/reading/widgets/reading_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/picker_action_sheet.dart';
+import 'package:adminpanel/utils/image_picker.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
+import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:provider/provider.dart';
 
 class ReadingForm extends StatefulWidget {
@@ -65,7 +64,7 @@ class _ReadingFormState extends State<ReadingForm> {
                           color: Colors.white,
                         ),
                         onPressed: () =>
-                            buildPickerActionSheet(context, ReadingProvider),
+                            buildImagePicker(context, ReadingProvider),
                       );
                     }
                     return Stack(
@@ -80,8 +79,11 @@ class _ReadingFormState extends State<ReadingForm> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Image.file(File(image.path),
-                                height: 80, fit: BoxFit.cover),
+                            child: AssetThumb(
+                              asset: image,
+                              width: 80,
+                              height: 80,
+                            ),
                           ),
                           onTap: () {
                             Navigator.pushNamed(

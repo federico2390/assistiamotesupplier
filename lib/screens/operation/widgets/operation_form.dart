@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
@@ -8,10 +6,11 @@ import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/picker_action_sheet.dart';
+import 'package:adminpanel/utils/image_picker.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
+import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:provider/provider.dart';
 
 class OperationForm extends StatefulWidget {
@@ -72,7 +71,7 @@ class OperationFormState extends State<OperationForm> {
                           color: Colors.white,
                         ),
                         onPressed: () =>
-                            buildPickerActionSheet(context, OperationProvider),
+                            buildImagePicker(context, OperationProvider),
                       );
                     }
                     return Stack(
@@ -87,8 +86,11 @@ class OperationFormState extends State<OperationForm> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Image.file(File(image.path),
-                                height: 80, fit: BoxFit.cover),
+                            child: AssetThumb(
+                              asset: image,
+                              width: 80,
+                              height: 80,
+                            ),
                           ),
                           onTap: () {
                             Navigator.pushNamed(
