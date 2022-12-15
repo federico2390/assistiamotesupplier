@@ -7,8 +7,24 @@ import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:provider/provider.dart';
 
 buildImagePicker(BuildContext context, provider) async {
+  int imageCount = provider == OperationProvider
+      ? context.read<OperationProvider>().images.isEmpty
+          ? 3
+          : context.read<OperationProvider>().images.length == 1
+              ? 2
+              : context.read<OperationProvider>().images.length == 2
+                  ? 1
+                  : 0
+      : context.read<ReadingProvider>().images.isEmpty
+          ? 3
+          : context.read<ReadingProvider>().images.length == 1
+              ? 2
+              : context.read<ReadingProvider>().images.length == 2
+                  ? 1
+                  : 0;
+
   List<Asset>? selectedImages = await MultipleImagesPicker.pickImages(
-    maxImages: 3,
+    maxImages: imageCount,
     enableCamera: true,
     cupertinoOptions: const CupertinoOptions(
       takePhotoIcon: "chat",

@@ -6,24 +6,29 @@ import 'package:multiple_images_picker/multiple_images_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<String?> getImagePath(Asset image) async {
-  /// Get Temporary Directory
-  final tempDir = await getTemporaryDirectory();
+  try {
+    /// Get Temporary Directory
+    final tempDir = await getTemporaryDirectory();
 
-  /// Get Image Path
-  final imagePath =
-      await LecleFlutterAbsolutePath.getAbsolutePath(uri: image.identifier!);
+    /// Get Image Path
+    final imagePath =
+        await LecleFlutterAbsolutePath.getAbsolutePath(uri: image.identifier!);
 
-  /// Compress Image
-  CompressObject compressImage = CompressObject(
-    imageFile: File(imagePath!),
-    path: tempDir.path,
-    mode: CompressMode.AUTO,
-    quality: 80,
-    step: 6,
-    autoRatio: true,
-  );
-  final result = Luban.compressImage(compressImage);
+    /// Compress Image
+    CompressObject compressImage = CompressObject(
+      imageFile: File(imagePath!),
+      path: tempDir.path,
+      mode: CompressMode.AUTO,
+      quality: 80,
+      step: 6,
+      autoRatio: true,
+    );
 
-  /// Return Compressed Image
-  return result;
+    /// Return Compressed Image
+    final result = Luban.compressImage(compressImage);
+    return result;
+  } catch (error) {
+    print(error);
+  }
+  return null;
 }
