@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adminpanel/configs/theme.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
+import 'package:adminpanel/providers/accounting.dart';
 import 'package:adminpanel/providers/app_bar.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/login.dart';
@@ -73,6 +74,8 @@ class App extends StatelessWidget {
             create: (context) => UserProvider()),
         ChangeNotifierProvider<SettingProvider>(
             create: (context) => SettingProvider()),
+        ChangeNotifierProvider<AccountingProvider>(
+            create: (context) => AccountingProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

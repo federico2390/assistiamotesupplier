@@ -1,23 +1,18 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
-import 'package:adminpanel/screens/operation/utils/load_user.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class OperationFields extends StatefulWidget {
-  final TextEditingController palaceController;
-  final TextEditingController tenantController;
   final TextEditingController operationTypeController;
   final TextEditingController operationController;
   final TextEditingController descriptionController;
 
   const OperationFields({
     super.key,
-    required this.palaceController,
-    required this.tenantController,
     required this.operationTypeController,
     required this.operationController,
     required this.descriptionController,
@@ -37,13 +32,11 @@ class OperationFieldsState extends State<OperationFields> {
   @override
   void initState() {
     super.initState();
-    loadUser(context, widget.palaceController, widget.tenantController);
+    // loadUser(context, widget.palaceController, widget.tenantController);
   }
 
   @override
   void dispose() {
-    widget.palaceController.dispose();
-    widget.tenantController.dispose();
     widget.descriptionController.dispose();
 
     operationTypeFocusNode.dispose();
@@ -56,84 +49,12 @@ class OperationFieldsState extends State<OperationFields> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        palaceField(),
-        const SizedBox(height: AppConst.padding),
-        tenantField(),
-        const SizedBox(height: AppConst.padding),
         operationTypeField(context),
         const SizedBox(height: AppConst.padding),
         operationField(context),
         const SizedBox(height: AppConst.padding),
         descriptionField(),
       ],
-    );
-  }
-
-  TextFormField palaceField() {
-    return TextFormField(
-      readOnly: true,
-      controller: widget.palaceController,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Il campo non può essere vuoto';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        hintText: 'Condominio',
-        hintStyle: TextStyle(color: AppColors.secondaryColor),
-        alignLabelWithHint: true,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.secondaryColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.secondaryColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: AppColors.errorColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.errorColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-      ),
-    );
-  }
-
-  TextFormField tenantField() {
-    return TextFormField(
-      readOnly: true,
-      controller: widget.tenantController,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Il campo non può essere vuoto';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        hintText: 'Inquilino',
-        hintStyle: TextStyle(color: AppColors.secondaryColor),
-        alignLabelWithHint: true,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: AppColors.secondaryColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.secondaryColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: AppColors.errorColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.errorColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-      ),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adminpanel/api/reading.dart';
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
@@ -158,6 +159,11 @@ class _ReadingFormState extends State<ReadingForm> {
                   context.read<ReadingProvider>().images.isNotEmpty &&
                   User().isLogged == true) {
                 hideKeyboard(context);
+
+                postReading(
+                  context,
+                  valueController.text,
+                );
               } else {
                 Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');

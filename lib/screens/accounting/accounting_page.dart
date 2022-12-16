@@ -1,7 +1,10 @@
+import 'package:adminpanel/providers/accounting.dart';
+import 'package:adminpanel/screens/accounting/widgets/bottom_bar.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:provider/provider.dart';
 
 class AccountingPage extends StatefulWidget {
   const AccountingPage({super.key});
@@ -31,6 +34,7 @@ class _AccountingPageState extends State<AccountingPage> {
                 preferredContentMode: UserPreferredContentMode.DESKTOP,
                 horizontalScrollBarEnabled: false,
                 verticalScrollBarEnabled: false,
+                clearCache: true,
               ),
               android: AndroidInAppWebViewOptions(
                 geolocationEnabled: false,
@@ -66,6 +70,7 @@ class _AccountingPageState extends State<AccountingPage> {
           ),
         ],
       ),
+      bottomNavigationBar: bottomBar(context),
     );
   }
 }

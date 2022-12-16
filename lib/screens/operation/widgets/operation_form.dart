@@ -22,8 +22,6 @@ class OperationForm extends StatefulWidget {
 }
 
 class OperationFormState extends State<OperationForm> {
-  final TextEditingController palaceController = TextEditingController();
-  final TextEditingController tenantController = TextEditingController();
   final TextEditingController operationTypeController = TextEditingController();
   final TextEditingController operationController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -39,8 +37,6 @@ class OperationFormState extends State<OperationForm> {
         padding: const EdgeInsets.all(AppConst.padding),
         children: [
           OperationFields(
-            palaceController: palaceController,
-            tenantController: tenantController,
             operationTypeController: operationTypeController,
             operationController: operationController,
             descriptionController: descriptionController,
@@ -156,9 +152,7 @@ class OperationFormState extends State<OperationForm> {
           const SizedBox(height: AppConst.padding * 2),
           Button(
             text: 'Invia richiesta',
-            color: palaceController.text.isNotEmpty &&
-                    tenantController.text.isNotEmpty &&
-                    operationTypeController.text.isNotEmpty &&
+            color: operationTypeController.text.isNotEmpty &&
                     operationController.text.isNotEmpty &&
                     descriptionController.text.isNotEmpty &&
                     context.read<OperationProvider>().images.isNotEmpty

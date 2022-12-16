@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/user.dart';
@@ -24,35 +22,34 @@ Future postOperation(
     Alerts.loadingAlert(context,
         title: 'Attendi...', subtitle: 'Invio la richiesta');
 
-    for (var image in imageList) {
-      log(image.path);
+    List<MultipartFile> multipartImageList = imageList
+        .map((image) => MultipartFile.fromFileSync(
+              image.path,
+              contentType: MediaType('image', image.path.split('.').last),
+              filename: '${uuid.v1()}.${image.path.split('.').last}',
+            ))
+        .toList();
 
-      MultipartFile multipartFile = MultipartFile.fromFileSync(
-        image.path,
-        contentType: MediaType('image', image.path.split('.').last),
-        filename: '${uuid.v1()}.${image.path.split('.').last}',
-      );
+    FormData formData = FormData.fromMap({
+      'user_id': user.userId!.trim(),
+      'palace_id': user.palaceId!.trim(),
+      'operation_type': operationType.trim(),
+      'operation': operation.trim(),
+      'description': description.trim(),
+      'media_1': multipartImageList[0],
+      'media_2': multipartImageList[1],
+      'media_3': multipartImageList[2]
+    });
 
-      FormData formData = FormData.fromMap({
-        'user_id': user.userId!.trim(),
-        'palace_id': user.palaceId!.trim(),
-        'operation_type': operationType.trim(),
-        'operation': operation.trim(),
-        'description': description.trim(),
-        "media": multipartFile,
-      });
+    var response = await Dio().post(
+      AppConst.operation,
+      data: formData,
+    );
 
-      var response = await Dio().post(
-        AppConst.operation,
-        data: formData,
-      );
-
-      if (response.statusCode == 200) {
-        print('Operation uploaded - server response: ${response.statusCode}');
-      } else {
-        print(
-            'Operation not uploaded - server response: ${response.statusCode}');
-      }
+    if (response.statusCode == 200) {
+      print('Operation uploaded - server response: ${response.statusCode}');
+    } else {
+      print('Operation not uploaded - server response: ${response.statusCode}');
     }
   } catch (error) {
     print(error);
