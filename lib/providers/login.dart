@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class LoginProvider extends ChangeNotifier {
   bool hiddenPassword = true;
+
   void hidePassword() {
     hiddenPassword = !hiddenPassword;
     notifyListeners();
   }
 
   bool rememberData = false;
+
   void loadRememberData() {
     var remeber = SharedPrefs.getInt('rememberData');
     rememberData = remeber == 0 || remeber == null ? false : true;
@@ -17,7 +19,6 @@ class LoginProvider extends ChangeNotifier {
 
   void rememberMyData() {
     rememberData = !rememberData;
-
     var remember = rememberData == true ? 1 : 0;
     SharedPrefs.setInt('rememberData', remember);
     notifyListeners();

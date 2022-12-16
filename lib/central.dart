@@ -1,4 +1,5 @@
 import 'package:adminpanel/providers/bottom_bar.dart';
+import 'package:adminpanel/screens/accounting/accounting_page.dart';
 import 'package:adminpanel/screens/feed/feed_page.dart';
 import 'package:adminpanel/screens/operation/operation_page.dart';
 import 'package:adminpanel/screens/reading/reading_page.dart';
@@ -60,7 +61,7 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
               ? const FeedPage()
               : context.read<BottomBarProvider>().currentPageIndex == 2
                   ? const ReadingPage()
-                  : const SizedBox();
+                  : const AccountingPage();
     }
 
     return Scaffold(

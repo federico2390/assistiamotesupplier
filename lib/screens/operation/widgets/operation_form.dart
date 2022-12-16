@@ -5,6 +5,7 @@ import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
+import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -74,7 +75,11 @@ class OperationFormState extends State<OperationForm> {
                                     .length ==
                                 3) {
                               Alerts.errorAlert(context,
-                                  title: 'Attenzione', subtitle: 'Max 3 foto');
+                                      title: 'Attenzione',
+                                      subtitle: 'Max 3 foto')
+                                  .whenComplete(() => context
+                                      .read<CentralProvider>()
+                                      .isLoading(false));
                               return;
                             } else {
                               buildImagePicker(context, OperationProvider);
@@ -166,9 +171,9 @@ class OperationFormState extends State<OperationForm> {
 
                 postOperation(
                   context,
-                  operationTypeController.text,
-                  operationController.text,
-                  descriptionController.text,
+                  operationTypeController,
+                  operationController,
+                  descriptionController,
                 );
               } else {
                 Alerts.errorAlert(context,

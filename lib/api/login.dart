@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
+import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -32,6 +33,7 @@ class Login {
 
       if (response.statusCode == 200) {
         Alerts.hide;
+        context.read<CentralProvider>().isLoading(false);
 
         final jsonData = json.decode(response.body);
         final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
@@ -68,5 +70,7 @@ class Login {
     } catch (error) {
       print('ERROR_login: $error');
     }
+    Alerts.hide;
+    context.read<CentralProvider>().isLoading(false);
   }
 }

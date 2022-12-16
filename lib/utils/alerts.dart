@@ -1,4 +1,6 @@
+import 'package:adminpanel/providers/central.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
 
 class Alerts {
@@ -7,6 +9,10 @@ class Alerts {
 
   static Future successAlert(BuildContext context,
       {String? title, String? subtitle}) async {
+    context.read<CentralProvider>().isLoading(true);
+    Future.delayed(const Duration(seconds: 2), () {
+      context.read<CentralProvider>().isLoading(false);
+    });
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 2),
@@ -19,6 +25,7 @@ class Alerts {
 
   static Future loadingAlert(BuildContext context,
       {String? title, String? subtitle}) async {
+    context.read<CentralProvider>().isLoading(true);
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 30),
@@ -31,6 +38,10 @@ class Alerts {
 
   static Future errorAlert(BuildContext context,
       {String? title, String? subtitle}) async {
+    context.read<CentralProvider>().isLoading(true);
+    Future.delayed(const Duration(seconds: 3), () {
+      context.read<CentralProvider>().isLoading(false);
+    });
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 3),

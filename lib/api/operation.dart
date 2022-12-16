@@ -1,4 +1,5 @@
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -10,9 +11,9 @@ import 'package:uuid/uuid.dart';
 
 Future postOperation(
   BuildContext context,
-  String operationType,
-  String operation,
-  String description,
+  TextEditingController operationTypeController,
+  TextEditingController operationController,
+  TextEditingController descriptionController,
 ) async {
   try {
     var uuid = const Uuid();
@@ -33,9 +34,9 @@ Future postOperation(
     FormData formData = FormData.fromMap({
       'user_id': user.userId!.trim(),
       'palace_id': user.palaceId!.trim(),
-      'operation_type': operationType.trim(),
-      'operation': operation.trim(),
-      'description': description.trim(),
+      'operation_type': operationTypeController.text.trim(),
+      'operation': operationController.text.trim(),
+      'description': descriptionController.text.trim(),
       'media_1': multipartImageList[0],
       'media_2': multipartImageList[1],
       'media_3': multipartImageList[2]
@@ -48,6 +49,10 @@ Future postOperation(
 
     if (response.statusCode == 200) {
       print('Operation uploaded - server response: ${response.statusCode}');
+      operationTypeController.clear();
+      operationController.clear();
+      descriptionController.clear();
+      context.read<OperationProvider>().removeAllImage();
     } else {
       print('Operation not uploaded - server response: ${response.statusCode}');
     }
@@ -55,4 +60,5 @@ Future postOperation(
     print(error);
   }
   Alerts.hide;
+  context.read<CentralProvider>().isLoading(false);
 }

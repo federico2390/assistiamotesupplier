@@ -162,7 +162,7 @@ class _ReadingFormState extends State<ReadingForm> {
 
                 postReading(
                   context,
-                  valueController.text,
+                  valueController,
                 );
               } else {
                 Alerts.errorAlert(context,

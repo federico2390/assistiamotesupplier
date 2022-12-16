@@ -1,4 +1,5 @@
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -10,7 +11,7 @@ import 'package:uuid/uuid.dart';
 
 Future postReading(
   BuildContext context,
-  String valueController,
+  TextEditingController valueController,
 ) async {
   try {
     var uuid = const Uuid();
@@ -31,7 +32,7 @@ Future postReading(
     FormData formData = FormData.fromMap({
       'user_id': user.userId!.trim(),
       'palace_id': user.palaceId!.trim(),
-      'value': valueController.trim(),
+      'value': valueController.text.trim(),
       'media_1': multipartImageList[0],
       'media_2': multipartImageList[1],
       'media_3': multipartImageList[2]
@@ -44,6 +45,8 @@ Future postReading(
 
     if (response.statusCode == 200) {
       print('Operation uploaded - server response: ${response.statusCode}');
+      valueController.clear();
+      context.read<ReadingProvider>().removeAllImage();
     } else {
       print('Operation not uploaded - server response: ${response.statusCode}');
     }
@@ -51,4 +54,5 @@ Future postReading(
     print(error);
   }
   Alerts.hide;
+  context.read<CentralProvider>().isLoading(false);
 }

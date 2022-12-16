@@ -14,7 +14,6 @@ class Logout {
         body: {"user_id": userId},
       );
       if (response.body == 'Success') {
-        Alerts.hide;
         return true;
       }
     } catch (error) {

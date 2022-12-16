@@ -5,10 +5,3 @@ class GalleryArguments {
 
   GalleryArguments(this.gallery);
 }
-
-class AccountingArguments {
-  final String title;
-  final String url;
-
-  AccountingArguments(this.title, this.url);
-}

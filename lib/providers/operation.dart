@@ -7,14 +7,14 @@ class OperationProvider extends ChangeNotifier {
   XFile? _image;
   XFile get image => _image!;
 
-  List<XFile> _images = [];
-  List<XFile> get images => _images;
-
   void addImage(XFile selectedImage) {
     _image = selectedImage;
     _images.add(_image!);
     notifyListeners();
   }
+
+  List<XFile> _images = [];
+  List<XFile> get images => _images;
 
   void addImages(List<XFile> selectedImages) {
     _images.addAll(selectedImages);
@@ -23,6 +23,12 @@ class OperationProvider extends ChangeNotifier {
 
   void removeImage(XFile image) {
     _images.removeWhere((i) => i == image);
+    notifyListeners();
+  }
+
+  void removeAllImage() {
+    _image = null;
+    _images.clear();
     notifyListeners();
   }
 }

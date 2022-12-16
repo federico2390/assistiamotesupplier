@@ -4,8 +4,8 @@ import 'package:adminpanel/configs/theme.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/accounting.dart';
-import 'package:adminpanel/providers/app_bar.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
+import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/reading.dart';
@@ -60,8 +60,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppBarProvider>(
-            create: (context) => AppBarProvider()),
         ChangeNotifierProvider<BottomBarProvider>(
             create: (context) => BottomBarProvider()),
         ChangeNotifierProvider<LoginProvider>(
@@ -76,6 +74,8 @@ class App extends StatelessWidget {
             create: (context) => SettingProvider()),
         ChangeNotifierProvider<AccountingProvider>(
             create: (context) => AccountingProvider()),
+        ChangeNotifierProvider<CentralProvider>(
+            create: (context) => CentralProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
