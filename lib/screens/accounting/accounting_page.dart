@@ -1,10 +1,8 @@
-import 'package:adminpanel/providers/accounting.dart';
 import 'package:adminpanel/screens/accounting/widgets/bottom_bar.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:provider/provider.dart';
 
 class AccountingPage extends StatefulWidget {
   const AccountingPage({super.key});

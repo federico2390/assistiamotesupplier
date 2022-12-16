@@ -30,12 +30,6 @@ class OperationFieldsState extends State<OperationFields> {
   bool isDescriptionIconVisible = false;
 
   @override
-  void initState() {
-    super.initState();
-    // loadUser(context, widget.palaceController, widget.tenantController);
-  }
-
-  @override
   void dispose() {
     widget.descriptionController.dispose();
 
