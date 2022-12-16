@@ -84,12 +84,6 @@ buildImagePicker(BuildContext context, provider) async {
                       print('ERROR_pickImage: $error');
                     });
 
-                    // if (selectedImages.length > 3) {
-                    //   Alerts.errorAlert(context,
-                    //       title: 'Attenzione', subtitle: 'Max 3 foto');
-                    //   return;
-                    // }
-
                     if (selectedImages != null) {
                       if (provider == OperationProvider) {
                         context
@@ -194,15 +188,7 @@ buildImagePicker(BuildContext context, provider) async {
                     )
                         .catchError((error) {
                       print('ERROR_pickImage: $error');
-                    }).catchError((error) {
-                      print('ERROR_pickImage: $error');
                     });
-
-                    // if (selectedImages.length > 3) {
-                    //   Alerts.errorAlert(context,
-                    //       title: 'Attenzione', subtitle: 'Max 3 foto');
-                    //   return;
-                    // }
 
                     if (selectedImages != null) {
                       if (provider == OperationProvider) {
