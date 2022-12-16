@@ -14,7 +14,6 @@ import UserNotifications
             UNUserNotificationCenter.current().delegate = self
         }
         FirebaseApp.configure()
-        
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

@@ -1,0 +1,27 @@
+EDIT FILE: "image_picker_ios/ios/Classi/FLTPHPickerSaveImageToPathOperation.m"
+
+COMMENT:
+// if ([self.result.itemProvider hasItemConformingToTypeIdentifier:UTTypeWebP.identifier]) {
+//   [self.result.itemProvider
+//       loadDataRepresentationForTypeIdentifier:UTTypeWebP.identifier
+//                             completionHandler:^(NSData *_Nullable data,
+//                                                 NSError *_Nullable error) {
+//                               UIImage *image = [[UIImage alloc] initWithData:data];
+//                               [self processImage:image];
+//                             }];
+//   return;
+// }
+
+PASTE:
+if ([self.result.itemProvider hasItemConformingToTypeIdentifier:UTTypeRAWImage.identifier]) {
+    [self.result.itemProvider loadFileRepresentationForTypeIdentifier:UTTypeImage.identifier completionHandler:^(NSURL * _Nullable url, NSError * _Nullable error) {
+        if (url) {
+          NSData *data = [NSData dataWithContentsOfURL:url];
+          CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+          CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+          UIImage *image = [UIImage imageWithCGImage:cgImage];
+          [self processImage:image];
+        }
+    }];
+    return;
+}

@@ -20,71 +20,90 @@ buildImagePicker(BuildContext context, provider) async {
           builder: (BuildContext context) => Wrap(
             children: [
               ListTile(
-                title: const Text('Galleria'),
-                onTap: () async {
-                  final List<XFile> selectedImages =
-                      await picker.pickMultiImage(
-                    maxHeight: AppConst.imagePickerHeight,
-                    maxWidth: AppConst.imagePickerWidth,
-                    imageQuality: AppConst.imagePickerQuality,
-                    requestFullMetadata: false,
-                  );
-                  if (provider == OperationProvider) {
-                    if (context.read<OperationProvider>().images.length +
-                            selectedImages.length >
-                        3) {
+                  title: const Text('Galleria'),
+                  onTap: () async {
+                    try {
+                      List<XFile>? selectedImages = await picker
+                          .pickMultiImage(
+                        maxHeight: AppConst.imagePickerHeight,
+                        maxWidth: AppConst.imagePickerWidth,
+                        imageQuality: AppConst.imagePickerQuality,
+                        requestFullMetadata: false,
+                      )
+                          .catchError((error) {
+                        print('ERROR_pickImage: $error');
+                      });
+
+                      if (provider == OperationProvider) {
+                        if (context.read<OperationProvider>().images.length +
+                                selectedImages.length >
+                            3) {
+                          Navigator.pop(context);
+                          Alerts.errorAlert(context,
+                              title: 'Attenzione', subtitle: 'Max 3 foto');
+                          return;
+                        }
+                        if (selectedImages.isNotEmpty) {
+                          context
+                              .read<OperationProvider>()
+                              .addImages(selectedImages);
+                        }
+                      } else {
+                        if (context.read<ReadingProvider>().images.length +
+                                selectedImages.length >
+                            3) {
+                          Navigator.pop(context);
+                          Alerts.errorAlert(context,
+                              title: 'Attenzione', subtitle: 'Max 3 foto');
+                          return;
+                        }
+                        if (selectedImages.isNotEmpty) {
+                          context
+                              .read<ReadingProvider>()
+                              .addImages(selectedImages);
+                        }
+                      }
                       Navigator.pop(context);
-                      Alerts.errorAlert(context,
-                          title: 'Attenzione', subtitle: 'Max 3 foto');
-                      return;
+                    } catch (error) {
+                      print('ERROR_pickImage: $error');
                     }
-                    if (selectedImages.isNotEmpty) {
-                      context
-                          .read<OperationProvider>()
-                          .addImages(selectedImages);
-                    }
-                  } else {
-                    if (context.read<ReadingProvider>().images.length +
-                            selectedImages.length >
-                        3) {
-                      Navigator.pop(context);
-                      Alerts.errorAlert(context,
-                          title: 'Attenzione', subtitle: 'Max 3 foto');
-                      return;
-                    }
-                    if (selectedImages.isNotEmpty) {
-                      context.read<ReadingProvider>().addImages(selectedImages);
-                    }
-                  }
-                  Navigator.pop(context);
-                },
-              ),
+                  }),
               ListTile(
                 title: const Text('Camera'),
                 onTap: () async {
-                  final XFile? selectedImages = await picker.pickImage(
-                    source: ImageSource.camera,
-                    maxHeight: AppConst.imagePickerHeight,
-                    maxWidth: AppConst.imagePickerWidth,
-                    imageQuality: AppConst.imagePickerQuality,
-                    requestFullMetadata: false,
-                  );
-                  // if (selectedImages.length > 3) {
-                  //   Alerts.errorAlert(context,
-                  //       title: 'Attenzione', subtitle: 'Max 3 foto');
-                  //   return;
-                  // }
-                  if (selectedImages != null) {
-                    if (provider == OperationProvider) {
-                      context
-                          .read<OperationProvider>()
-                          .addImage(selectedImages);
-                    } else {
-                      context.read<ReadingProvider>().addImage(selectedImages);
+                  try {
+                    XFile? selectedImages = await picker
+                        .pickImage(
+                      source: ImageSource.camera,
+                      maxHeight: AppConst.imagePickerHeight,
+                      maxWidth: AppConst.imagePickerWidth,
+                      imageQuality: AppConst.imagePickerQuality,
+                      requestFullMetadata: false,
+                    )
+                        .catchError((error) {
+                      print('ERROR_pickImage: $error');
+                    });
+
+                    // if (selectedImages.length > 3) {
+                    //   Alerts.errorAlert(context,
+                    //       title: 'Attenzione', subtitle: 'Max 3 foto');
+                    //   return;
+                    // }
+
+                    if (selectedImages != null) {
+                      if (provider == OperationProvider) {
+                        context
+                            .read<OperationProvider>()
+                            .addImage(selectedImages);
+                      } else {
+                        context
+                            .read<ReadingProvider>()
+                            .addImage(selectedImages);
+                      }
+                      Navigator.pop(context);
                     }
-                    Navigator.pop(context);
-                  } else {
-                    Navigator.pop(context);
+                  } catch (error) {
+                    print('ERROR_pickImage: $error');
                   }
                 },
               ),
@@ -110,42 +129,51 @@ buildImagePicker(BuildContext context, provider) async {
                       TextStyle(fontSize: 17, color: AppColors.labelDarkColor),
                 ),
                 onPressed: () async {
-                  final List<XFile> selectedImages =
-                      await picker.pickMultiImage(
-                    maxHeight: AppConst.imagePickerHeight,
-                    maxWidth: AppConst.imagePickerWidth,
-                    imageQuality: AppConst.imagePickerQuality,
-                    requestFullMetadata: false,
-                  );
+                  try {
+                    List<XFile>? selectedImages = await picker
+                        .pickMultiImage(
+                      maxHeight: AppConst.imagePickerHeight,
+                      maxWidth: AppConst.imagePickerWidth,
+                      imageQuality: AppConst.imagePickerQuality,
+                      requestFullMetadata: false,
+                    )
+                        .catchError((error) {
+                      print('ERROR_pickImage: $error');
+                    });
 
-                  if (provider == OperationProvider) {
-                    if (context.read<OperationProvider>().images.length +
-                            selectedImages.length >
-                        3) {
-                      Navigator.pop(context);
-                      Alerts.errorAlert(context,
-                          title: 'Attenzione', subtitle: 'Max 3 foto');
-                      return;
+                    if (provider == OperationProvider) {
+                      if (context.read<OperationProvider>().images.length +
+                              selectedImages.length >
+                          3) {
+                        Navigator.pop(context);
+                        Alerts.errorAlert(context,
+                            title: 'Attenzione', subtitle: 'Max 3 foto');
+                        return;
+                      }
+                      if (selectedImages.isNotEmpty) {
+                        context
+                            .read<OperationProvider>()
+                            .addImages(selectedImages);
+                      }
+                    } else {
+                      if (context.read<ReadingProvider>().images.length +
+                              selectedImages.length >
+                          3) {
+                        Navigator.pop(context);
+                        Alerts.errorAlert(context,
+                            title: 'Attenzione', subtitle: 'Max 3 foto');
+                        return;
+                      }
+                      if (selectedImages.isNotEmpty) {
+                        context
+                            .read<ReadingProvider>()
+                            .addImages(selectedImages);
+                      }
                     }
-                    if (selectedImages.isNotEmpty) {
-                      context
-                          .read<OperationProvider>()
-                          .addImages(selectedImages);
-                    }
-                  } else {
-                    if (context.read<ReadingProvider>().images.length +
-                            selectedImages.length >
-                        3) {
-                      Navigator.pop(context);
-                      Alerts.errorAlert(context,
-                          title: 'Attenzione', subtitle: 'Max 3 foto');
-                      return;
-                    }
-                    if (selectedImages.isNotEmpty) {
-                      context.read<ReadingProvider>().addImages(selectedImages);
-                    }
+                    Navigator.pop(context);
+                  } catch (error) {
+                    print('ERROR_pickImage: $error');
                   }
-                  Navigator.pop(context);
                 },
               ),
               CupertinoActionSheetAction(
@@ -155,29 +183,41 @@ buildImagePicker(BuildContext context, provider) async {
                       TextStyle(fontSize: 17, color: AppColors.labelDarkColor),
                 ),
                 onPressed: () async {
-                  final XFile? selectedImages = await picker.pickImage(
-                    source: ImageSource.camera,
-                    maxHeight: AppConst.imagePickerHeight,
-                    maxWidth: AppConst.imagePickerWidth,
-                    imageQuality: AppConst.imagePickerQuality,
-                    requestFullMetadata: false,
-                  );
-                  // if (selectedImages.length > 3) {
-                  //   Alerts.errorAlert(context,
-                  //       title: 'Attenzione', subtitle: 'Max 3 foto');
-                  //   return;
-                  // }
-                  if (selectedImages != null) {
-                    if (provider == OperationProvider) {
-                      context
-                          .read<OperationProvider>()
-                          .addImage(selectedImages);
-                    } else {
-                      context.read<ReadingProvider>().addImage(selectedImages);
+                  try {
+                    XFile? selectedImages = await picker
+                        .pickImage(
+                      source: ImageSource.camera,
+                      maxHeight: AppConst.imagePickerHeight,
+                      maxWidth: AppConst.imagePickerWidth,
+                      imageQuality: AppConst.imagePickerQuality,
+                      requestFullMetadata: false,
+                    )
+                        .catchError((error) {
+                      print('ERROR_pickImage: $error');
+                    }).catchError((error) {
+                      print('ERROR_pickImage: $error');
+                    });
+
+                    // if (selectedImages.length > 3) {
+                    //   Alerts.errorAlert(context,
+                    //       title: 'Attenzione', subtitle: 'Max 3 foto');
+                    //   return;
+                    // }
+
+                    if (selectedImages != null) {
+                      if (provider == OperationProvider) {
+                        context
+                            .read<OperationProvider>()
+                            .addImage(selectedImages);
+                      } else {
+                        context
+                            .read<ReadingProvider>()
+                            .addImage(selectedImages);
+                      }
+                      Navigator.pop(context);
                     }
-                    Navigator.pop(context);
-                  } else {
-                    Navigator.pop(context);
+                  } catch (error) {
+                    print('ERROR_pickImage: $error');
                   }
                 },
               ),

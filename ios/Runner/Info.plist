@@ -24,16 +24,26 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
+	<key>FirebaseScreenReportingEnabled</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Consenti all'app di accedere alla tua fotocamera per permetterti di inserire allegati.</string>
+	<string>Consenti all'app di accedere alla fotocamera per permetterti di inserire allegati.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Consenti all'app di accedere alla tuo microfono per permetterti di inserire allegati.</string>
+	<string>Consenti all'app di accedere al microfono per permetterti di inserire allegati.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Consenti all'app di accedere alla tua galleria foto per permetterti di inserire allegati.</string>
+	<string>Consenti all'app di accedere alla galleria foto per permetterti di inserire allegati.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>

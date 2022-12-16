@@ -6,7 +6,6 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/image_picker.dart';

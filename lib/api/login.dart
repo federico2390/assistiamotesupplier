@@ -25,8 +25,8 @@ class Login {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: {
-          'username': username,
-          'password': password,
+          'username': username.trim(),
+          'password': password.trim(),
         },
       );
 
@@ -38,18 +38,18 @@ class Login {
 
         context.read<UserProvider>().addUser(
               UserDatabase(
-                userId: user.userId!,
-                palaceId: user.palaceId!,
-                palaceName: user.palaceName!,
-                palaceCf: user.palaceCf!,
-                palaceAddress: user.palaceAddress!,
-                userEmail: user.userEmail!,
-                userName: user.userName!,
-                userSurname: user.userSurname!,
-                userCf: user.userCf!,
-                userUsername: user.userUsername!,
-                userPassword: user.userPassword!,
-                userToken: user.userToken!,
+                userId: user.userId!.trim(),
+                palaceId: user.palaceId!.trim(),
+                palaceName: user.palaceName!.trim(),
+                palaceCf: user.palaceCf!.trim(),
+                palaceAddress: user.palaceAddress!.trim(),
+                userEmail: user.userEmail!.trim(),
+                userName: user.userName!.trim(),
+                userSurname: user.userSurname!.trim(),
+                userCf: user.userCf!.trim(),
+                userUsername: user.userUsername!.trim(),
+                userPassword: user.userPassword!.trim(),
+                userToken: user.userToken!.trim(),
               ),
             );
 

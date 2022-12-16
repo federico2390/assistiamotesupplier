@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/user.dart';
@@ -23,6 +25,8 @@ Future postOperation(
         title: 'Attendi...', subtitle: 'Invio la richiesta');
 
     for (var image in imageList) {
+      log(image.path);
+
       MultipartFile multipartFile = MultipartFile.fromFileSync(
         image.path,
         contentType: MediaType('image', image.path.split('.').last),
@@ -30,11 +34,11 @@ Future postOperation(
       );
 
       FormData formData = FormData.fromMap({
-        'user_id': user.userId!,
-        'palace_id': user.palaceId!,
-        'operation_type': operationType,
-        'operation': operation,
-        'description': description,
+        'user_id': user.userId!.trim(),
+        'palace_id': user.palaceId!.trim(),
+        'operation_type': operationType.trim(),
+        'operation': operation.trim(),
+        'description': description.trim(),
         "media": multipartFile,
       });
 
