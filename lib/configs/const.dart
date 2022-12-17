@@ -15,6 +15,11 @@ class AppConst {
     'Rate Inquilini': '$serviceBase/Rate/SituazioneInquilini',
   };
 
+  /// Setting
+  static const String servicePrivacyPolicy =
+      'https://www.cedhousesuite.com/privacy-policy';
+  static const String serviceWebsite = 'https://studiopedico.it';
+
   /// Backend
   static const String backendBase = 'https://adminpanel.buuumit.com';
   static const String login = '$backendBase/service/auth/login.php';

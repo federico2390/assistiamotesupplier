@@ -36,7 +36,7 @@ class _AccountingPageState extends State<AccountingPage> {
                   preferredContentMode: UserPreferredContentMode.DESKTOP,
                   horizontalScrollBarEnabled: false,
                   verticalScrollBarEnabled: false,
-                  clearCache: true,
+                  // clearCache: true,
                 ),
                 android: AndroidInAppWebViewOptions(
                   geolocationEnabled: false,

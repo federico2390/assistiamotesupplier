@@ -1,8 +1,10 @@
 import 'package:adminpanel/configs/colors.dart';
+import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
+import 'package:adminpanel/utils/launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -55,10 +57,16 @@ class _SettingPageState extends State<SettingPage> {
                 SettingsTile.navigation(
                   leading: const Icon(Icons.lock_outline_rounded),
                   title: const Text('Informativa privacy'),
+                  onPressed: (context) {
+                    launchUrls(AppConst.servicePrivacyPolicy);
+                  },
                 ),
                 SettingsTile.navigation(
                   leading: const Icon(Icons.web_rounded),
                   title: const Text('Sito web'),
+                  onPressed: (context) {
+                    launchUrls(AppConst.serviceWebsite);
+                  },
                 ),
               ],
             ),
