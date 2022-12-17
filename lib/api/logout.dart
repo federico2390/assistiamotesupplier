@@ -1,7 +1,9 @@
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Logout {
   Future<bool> logout(BuildContext context, String userId) async {
@@ -14,6 +16,7 @@ class Logout {
         body: {"user_id": userId},
       );
       if (response.body == 'Success') {
+        context.read<CentralProvider>().isLoading(false);
         return true;
       }
     } catch (error) {

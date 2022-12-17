@@ -13,7 +13,13 @@ class ReadingFields extends StatefulWidget {
 }
 
 class ReadingFieldsState extends State<ReadingFields> {
-  bool isValueIconVisible = false;
+  @override
+  void initState() {
+    widget.valueController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +46,6 @@ class ReadingFieldsState extends State<ReadingFields> {
         }
         return null;
       },
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          setState(() {
-            isValueIconVisible = true;
-          });
-        } else {
-          setState(() {
-            isValueIconVisible = false;
-          });
-        }
-      },
       maxLines: null,
       decoration: InputDecoration(
         labelText: 'Valore',
@@ -61,7 +56,6 @@ class ReadingFieldsState extends State<ReadingFields> {
                 onTap: () {
                   setState(() {
                     widget.valueController.clear();
-                    isValueIconVisible = false;
                   });
                 },
                 child: Icon(

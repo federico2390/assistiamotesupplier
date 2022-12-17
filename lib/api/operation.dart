@@ -11,10 +11,17 @@ import 'package:uuid/uuid.dart';
 
 Future postOperation(
   BuildContext context,
+  GlobalKey<FormState> formKey,
   TextEditingController operationTypeController,
   TextEditingController operationController,
   TextEditingController descriptionController,
 ) async {
+  formKey.currentState!.reset();
+  operationTypeController.clear();
+  operationController.clear();
+  descriptionController.clear();
+  context.read<OperationProvider>().removeAllImage();
+
   try {
     var uuid = const Uuid();
     final user = await context.read<UserProvider>().getUser();
@@ -49,6 +56,7 @@ Future postOperation(
 
     if (response.statusCode == 200) {
       print('Operation uploaded - server response: ${response.statusCode}');
+      formKey.currentState!.reset();
       operationTypeController.clear();
       operationController.clear();
       descriptionController.clear();

@@ -27,7 +27,13 @@ class OperationFieldsState extends State<OperationFields> {
   final FocusNode operationFocusNode = FocusNode();
   final FocusNode descriptionFocusNode = FocusNode();
 
-  bool isDescriptionIconVisible = false;
+  @override
+  void initState() {
+    widget.descriptionController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -199,28 +205,16 @@ class OperationFieldsState extends State<OperationFields> {
         }
         return null;
       },
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          setState(() {
-            isDescriptionIconVisible = true;
-          });
-        } else {
-          setState(() {
-            isDescriptionIconVisible = false;
-          });
-        }
-      },
       maxLines: null,
       decoration: InputDecoration(
         labelText: 'Descrivi il problema',
         labelStyle: TextStyle(color: AppColors.secondaryColor),
         alignLabelWithHint: true,
-        suffixIcon: isDescriptionIconVisible == true
+        suffixIcon: widget.descriptionController.text.isNotEmpty
             ? GestureDetector(
                 onTap: () {
                   setState(() {
                     widget.descriptionController.clear();
-                    isDescriptionIconVisible = false;
                   });
                 },
                 child: Icon(

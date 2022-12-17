@@ -60,9 +60,14 @@ buildLogoutActionSheet(BuildContext context) async {
                           SharedPrefs.instance.remove('logged');
                         }
 
-                        Navigator.pop(context);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/login', ModalRoute.withName('/'));
+                        Future.delayed(const Duration(seconds: 3), () {
+                          Navigator.pop(context);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/login',
+                            ModalRoute.withName('/'),
+                          );
+                        });
                       }
                     });
                   },
@@ -118,9 +123,14 @@ buildLogoutActionSheet(BuildContext context) async {
                             SharedPrefs.instance.remove('logged');
                           }
 
-                          Navigator.pop(context);
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/login', ModalRoute.withName('/'));
+                          Future.delayed(const Duration(seconds: 3), () {
+                            Navigator.pop(context);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/login',
+                              ModalRoute.withName('/'),
+                            );
+                          });
                         }
                       });
                     },

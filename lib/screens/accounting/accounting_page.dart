@@ -1,6 +1,7 @@
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/accounting.dart';
 import 'package:adminpanel/providers/central.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -57,26 +58,24 @@ class _AccountingPageState extends State<AccountingPage> {
                 );
               },
               onLoadStop: (InAppWebViewController controller, Uri? url) async {
+                final user = await context.read<UserProvider>().getUser();
                 await controller.getUrl().then((value) {
                   print(value);
 
-                  if (value!.path.contains("/Utente/Autenticazione")) {
+                  if (value!.path.contains("/Utente/Autenticazione") == true) {
                     controller.evaluateJavascript(source: '''
                   document.getElementsByTagName("body")[0].style.display = "none";
                   document.getElementById('studiopa-header-container').style.display = "none";
                   document.getElementById('HomeSlider').style.display = "none";
-                  document.getElementById('Username').value = "VNM29P";
-                  document.getElementById('Password').value = "95173479";
+                  document.getElementById('Username').value = '${user.userUsername!}';
+                  document.getElementById('Password').value = '${user.userPassword!}';
                   document.getElementById('loginForm').submit();
                   ''');
                   } else if (value == Uri.parse('${AppConst.serviceBase}/')) {
                     controller.evaluateJavascript(source: '''
                   document.getElementsByTagName("body")[0].style.display = "none";
                   ''');
-                  } else if (value != Uri.parse(AppConst.serviceBase) &&
-                      value !=
-                          Uri.parse(
-                              'https://studiopa.cedhousesuite.it/Utente/Autenticazione?ReturnUrl=%2F')) {
+                  } else {
                     controller.evaluateJavascript(source: '''
                   document.getElementById('studiopa-header-container').style.display = "none";
                   document.getElementById('HomeSlider').style.display = "none";

@@ -171,6 +171,7 @@ class OperationFormState extends State<OperationForm> {
 
                 postOperation(
                   context,
+                  formKey,
                   operationTypeController,
                   operationController,
                   descriptionController,
