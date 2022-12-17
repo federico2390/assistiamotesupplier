@@ -20,57 +20,59 @@ class Login {
         subtitle: 'Effettuo l\'accesso',
       );
 
-      var response = await http.post(
-        Uri.parse(AppConst.login),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: {
-          'username': username.trim(),
-          'password': password.trim(),
-        },
-      );
+      Future.delayed(const Duration(seconds: 3), () async {
+        var response = await http.post(
+          Uri.parse(AppConst.login),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: {
+            'username': username.trim(),
+            'password': password.trim(),
+          },
+        );
 
-      if (response.statusCode == 200) {
-        Alerts.hide;
-        context.read<CentralProvider>().isLoading(false);
+        if (response.statusCode == 200) {
+          final jsonData = json.decode(response.body);
+          final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
 
-        final jsonData = json.decode(response.body);
-        final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
+          context.read<UserProvider>().addUser(
+                UserDatabase(
+                  userId: user.userId!.trim(),
+                  palaceId: user.palaceId!.trim(),
+                  palaceName: user.palaceName!.trim(),
+                  palaceCf: user.palaceCf!.trim(),
+                  palaceAddress: user.palaceAddress!.trim(),
+                  userEmail: user.userEmail!.trim(),
+                  userName: user.userName!.trim(),
+                  userSurname: user.userSurname!.trim(),
+                  userCf: user.userCf!.trim(),
+                  userUsername: user.userUsername!.trim(),
+                  userPassword: user.userPassword!.trim(),
+                  userToken: user.userToken!.trim(),
+                ),
+              );
 
-        context.read<UserProvider>().addUser(
-              UserDatabase(
-                userId: user.userId!.trim(),
-                palaceId: user.palaceId!.trim(),
-                palaceName: user.palaceName!.trim(),
-                palaceCf: user.palaceCf!.trim(),
-                palaceAddress: user.palaceAddress!.trim(),
-                userEmail: user.userEmail!.trim(),
-                userName: user.userName!.trim(),
-                userSurname: user.userSurname!.trim(),
-                userCf: user.userCf!.trim(),
-                userUsername: user.userUsername!.trim(),
-                userPassword: user.userPassword!.trim(),
-                userToken: user.userToken!.trim(),
-              ),
-            );
+          await SharedPrefs.setInt('logged', 1);
 
-        await SharedPrefs.setInt('logged', 1);
-
-        Alerts.successAlert(context,
+          Future.delayed(const Duration(seconds: 2), () {
+            Alerts.hide;
+            Alerts.successAlert(context,
                 title: 'Accesso riuscito!',
-                subtitle: 'Benvenuta/o ${user.userName}')
-            .whenComplete(() {
-          Navigator.pushNamedAndRemoveUntil(
-              context, '/', (Route<dynamic> route) => false);
-        });
-      }
+                subtitle: 'Benvenuta/o ${user.userName}');
+            Future.delayed(const Duration(seconds: 2), () {
+              Alerts.hide;
+              context.read<CentralProvider>().isLoading(false);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/', (Route<dynamic> route) => false);
+            });
+          });
+        }
+      });
     } on PlatformException catch (error) {
       print('PlatformException_login: $error');
     } catch (error) {
       print('ERROR_login: $error');
     }
-    Alerts.hide;
-    context.read<CentralProvider>().isLoading(false);
   }
 }

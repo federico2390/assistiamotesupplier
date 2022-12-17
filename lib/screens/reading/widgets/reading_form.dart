@@ -27,12 +27,6 @@ class _ReadingFormState extends State<ReadingForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
-  void dispose() {
-    valueController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,

@@ -22,6 +22,12 @@ class ReadingFieldsState extends State<ReadingFields> {
   }
 
   @override
+  void dispose() {
+    widget.valueController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
