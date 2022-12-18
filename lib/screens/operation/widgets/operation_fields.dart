@@ -28,17 +28,7 @@ class OperationFieldsState extends State<OperationFields> {
   final FocusNode descriptionFocusNode = FocusNode();
 
   @override
-  void initState() {
-    widget.descriptionController.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
   void dispose() {
-    widget.descriptionController.dispose();
-
     operationTypeFocusNode.dispose();
     operationFocusNode.dispose();
     descriptionFocusNode.dispose();

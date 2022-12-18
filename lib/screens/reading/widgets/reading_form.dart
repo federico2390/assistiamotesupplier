@@ -27,6 +27,20 @@ class _ReadingFormState extends State<ReadingForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    valueController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    valueController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
@@ -122,14 +136,12 @@ class _ReadingFormState extends State<ReadingForm> {
                 ).toList(),
               ),
               formKey.currentState != null
-                  ? formKey.currentState!.validate() == false &&
-                          context.read<ReadingProvider>().images.isEmpty
+                  ? context.watch<ReadingProvider>().images.isEmpty
                       ? const SizedBox(height: AppConst.padding / 2)
                       : const SizedBox()
                   : const SizedBox(),
               formKey.currentState != null
-                  ? formKey.currentState!.validate() == false &&
-                          context.read<ReadingProvider>().images.isEmpty
+                  ? context.watch<ReadingProvider>().images.isEmpty
                       ? Text(
                           'Aggiungi almeno un allegato',
                           style: TextStyle(
@@ -145,7 +157,7 @@ class _ReadingFormState extends State<ReadingForm> {
           Button(
             text: 'Invia lettura',
             color: valueController.text.isNotEmpty &&
-                    context.read<ReadingProvider>().images.isNotEmpty
+                    context.watch<ReadingProvider>().images.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () {

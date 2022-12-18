@@ -30,6 +30,28 @@ class OperationFormState extends State<OperationForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    operationTypeController.addListener(() {
+      setState(() {});
+    });
+    operationController.addListener(() {
+      setState(() {});
+    });
+    descriptionController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    operationTypeController.dispose();
+    operationController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
@@ -137,14 +159,12 @@ class OperationFormState extends State<OperationForm> {
                 ).toList(),
               ),
               formKey.currentState != null
-                  ? formKey.currentState!.validate() == false &&
-                          context.read<OperationProvider>().images.isEmpty
+                  ? context.watch<OperationProvider>().images.isEmpty
                       ? const SizedBox(height: AppConst.padding / 2)
                       : const SizedBox()
                   : const SizedBox(),
               formKey.currentState != null
-                  ? formKey.currentState!.validate() == false &&
-                          context.read<OperationProvider>().images.isEmpty
+                  ? context.watch<OperationProvider>().images.isEmpty
                       ? Text(
                           'Aggiungi almeno un allegato',
                           style: TextStyle(
@@ -160,7 +180,7 @@ class OperationFormState extends State<OperationForm> {
             color: operationTypeController.text.isNotEmpty &&
                     operationController.text.isNotEmpty &&
                     descriptionController.text.isNotEmpty &&
-                    context.read<OperationProvider>().images.isNotEmpty
+                    context.watch<OperationProvider>().images.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () async {

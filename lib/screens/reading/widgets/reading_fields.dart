@@ -14,20 +14,6 @@ class ReadingFields extends StatefulWidget {
 
 class ReadingFieldsState extends State<ReadingFields> {
   @override
-  void initState() {
-    widget.valueController.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.valueController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
