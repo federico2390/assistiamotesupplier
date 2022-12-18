@@ -169,7 +169,7 @@ class OperationFormState extends State<OperationForm> {
                   User().isLogged == true) {
                 hideKeyboard(context);
 
-                postOperation(
+                Operation().postOperation(
                   context,
                   formKey,
                   operationTypeController,

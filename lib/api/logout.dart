@@ -1,27 +1,63 @@
-import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/database/user/user.dart';
+import 'package:adminpanel/main.dart';
 import 'package:adminpanel/providers/central.dart';
+import 'package:adminpanel/providers/setting.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
+import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class Logout {
-  Future<bool> logout(BuildContext context, String userId) async {
-    try {
-      Alerts.errorAlert(context,
-          title: 'Un momento...', subtitle: 'Esco dall\'account');
+  Future<bool> logout(BuildContext context) async {
+    final user = await context.read<UserProvider>().getUser();
+    if (user.userId != null) {
+      try {
+        Alerts.errorAlert(context,
+            title: 'Un momento...', subtitle: 'Esco dall\'account');
 
-      var response = await http.post(
-        Uri.parse(AppConst.logout),
-        body: {"user_id": userId},
-      );
-      if (response.body == 'Success') {
-        context.read<CentralProvider>().isLoading(false);
-        return true;
+        logged = null;
+
+        int? rememberData = SharedPrefs.getInt('rememberData');
+        if (rememberData == 0 || rememberData == null) {
+          SharedPrefs.instance.clear();
+          context.read<UserProvider>().deleteUser();
+          context.read<SettingProvider>().deleteNotification();
+        } else {
+          context.read<UserProvider>().updateUser(
+                UserDatabase(
+                  userId: null,
+                  palaceId: null,
+                  palaceName: null,
+                  palaceCf: null,
+                  palaceAddress: null,
+                  userEmail: null,
+                  userName: null,
+                  userSurname: null,
+                  userCf: null,
+                  userUsername: user.userUsername!,
+                  userPassword: user.userPassword!,
+                  userToken: null,
+                ),
+              );
+
+          SharedPrefs.instance.remove('logged');
+        }
+
+        Future.delayed(const Duration(seconds: 3), () {
+          context.read<CentralProvider>().isLoading(false);
+          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/login', (Route<dynamic> route) => false);
+        });
+      } catch (error) {
+        print('ERROR_logout: ${error.toString()}');
       }
-    } catch (error) {
-      print('ERROR_logout: ${error.toString()}');
+      return false;
+    } else {
+      Alerts.errorAlert(context,
+          title: 'Errore', subtitle: 'Per favore contatta l\'amministratore.');
+      return false;
     }
-    return false;
   }
 }

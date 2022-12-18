@@ -26,6 +26,9 @@ class Alerts {
   static Future loadingAlert(BuildContext context,
       {String? title, String? subtitle}) async {
     context.read<CentralProvider>().isLoading(true);
+    Future.delayed(const Duration(seconds: 2), () {
+      context.read<CentralProvider>().isLoading(false);
+    });
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 30),

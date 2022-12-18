@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:adminpanel/api/first_time_logged.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/central.dart';
@@ -35,6 +36,7 @@ class Login {
         if (response.statusCode == 200) {
           final jsonData = json.decode(response.body);
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
+          await FirstTimeLogged().firstTimeLogged(context, user.userId!);
 
           context.read<UserProvider>().addUser(
                 UserDatabase(

@@ -154,7 +154,7 @@ class _ReadingFormState extends State<ReadingForm> {
                   User().isLogged == true) {
                 hideKeyboard(context);
 
-                postReading(
+                Reading().postReading(
                   context,
                   valueController,
                 );
