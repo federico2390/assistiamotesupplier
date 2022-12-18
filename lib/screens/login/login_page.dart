@@ -29,7 +29,20 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     _loadRememberData();
+    usernameController.addListener(() {
+      setState(() {});
+    });
+    passwordController.addListener(() {
+      setState(() {});
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   void _loadRememberData() async {

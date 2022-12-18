@@ -26,14 +26,8 @@ class _LoginFormState extends State<LoginForm> {
   final FocusNode usernameFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
-  bool isUsernameIconVisible = false;
-  bool isPasswordIconVisible = false;
-
   @override
   void dispose() {
-    widget.usernameController.dispose();
-    widget.passwordController.dispose();
-
     usernameFocusNode.dispose();
     passwordFocusNode.dispose();
     super.dispose();
@@ -70,27 +64,15 @@ class _LoginFormState extends State<LoginForm> {
               }
               return null;
             },
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  isUsernameIconVisible = true;
-                });
-              } else {
-                setState(() {
-                  isUsernameIconVisible = false;
-                });
-              }
-            },
             decoration: InputDecoration(
               labelText: 'Nome Utente',
               labelStyle: TextStyle(color: AppColors.secondaryColor),
               alignLabelWithHint: true,
-              suffixIcon: isUsernameIconVisible == true
+              suffixIcon: widget.usernameController.text.isNotEmpty
                   ? GestureDetector(
                       onTap: () {
                         setState(() {
                           widget.usernameController.clear();
-                          isUsernameIconVisible = false;
                         });
                       },
                       child: Icon(
@@ -132,17 +114,6 @@ class _LoginFormState extends State<LoginForm> {
               }
               return null;
             },
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  isPasswordIconVisible = true;
-                });
-              } else {
-                setState(() {
-                  isPasswordIconVisible = false;
-                });
-              }
-            },
             decoration: InputDecoration(
               labelText: 'Password',
               labelStyle: TextStyle(color: AppColors.secondaryColor),
@@ -167,14 +138,13 @@ class _LoginFormState extends State<LoginForm> {
                         const SizedBox(width: AppConst.padding),
                       ],
                     ),
-                    isPasswordIconVisible == true
+                    widget.passwordController.text.isNotEmpty
                         ? Row(
                             children: [
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     widget.passwordController.clear();
-                                    isPasswordIconVisible = false;
                                   });
                                 },
                                 child: Icon(
