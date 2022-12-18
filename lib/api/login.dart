@@ -61,7 +61,7 @@ class Login {
             Alerts.hide;
             Alerts.successAlert(context,
                 title: 'Accesso riuscito!',
-                subtitle: 'Benvenuta/o ${user.userName}');
+                subtitle: 'Benvenuta/o ${user.userName ?? ''}');
             Future.delayed(const Duration(seconds: 2), () {
               Alerts.hide;
               context.read<CentralProvider>().isLoading(false);
