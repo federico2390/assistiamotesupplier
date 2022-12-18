@@ -1,3 +1,4 @@
+import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/central.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

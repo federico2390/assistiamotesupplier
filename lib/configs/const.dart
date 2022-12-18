@@ -16,21 +16,24 @@ class AppConst {
   };
 
   /// Setting
-  static const String servicePrivacyPolicy =
+  static const String serviceHostPrivacyPolicy =
       'https://www.cedhousesuite.com/privacy-policy';
   static const String serviceWebsite = 'https://studiopedico.it';
+  static const String servicePrivacyPolicy =
+      '$serviceWebsite/privacy-policy-app';
 
   /// Backend
   static const String backendBase = 'https://adminpanel.buuumit.com';
-  static const String login = '$backendBase/service/auth/login.php';
-  static const String logout = '$backendBase/service/auth/logout.php';
-  static const String operation = '$backendBase/service/misc/operation.php';
-  static const String feed = '$backendBase/service/misc/feed.php';
-  static const String reading = '$backendBase/service/misc/reading.php';
+  static const String login = '$backendBase/user/service/auth/login.php';
+  static const String logout = '$backendBase/user/service/auth/logout.php';
+  static const String operation =
+      '$backendBase/user/service/misc/operation.php';
+  static const String feed = '$backendBase/user/service/misc/feed.php';
+  static const String reading = '$backendBase/user/service/misc/reading.php';
   static const String notification =
-      '$backendBase/service/misc/notification.php';
-  static const String operationMediaFolder = '$backendBase/media/';
-  static const String readingMediaFolder = '$backendBase/media/';
+      '$backendBase/user/service/misc/notification.php';
+  static const String operationMediaFolder = '$backendBase/user/media/';
+  static const String readingMediaFolder = '$backendBase/user/media/';
 
   /// App
   static const String appId = 'it.federicodesalvatore.adminpanel';

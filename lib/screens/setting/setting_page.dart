@@ -5,6 +5,7 @@ import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:adminpanel/utils/launcher.dart';
+import 'package:adminpanel/utils/privacy_policy_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(Icons.lock_outline_rounded),
                   title: const Text('Informativa privacy'),
                   onPressed: (context) {
-                    launchUrls(AppConst.servicePrivacyPolicy);
+                    buildPrivacyPolicyActionSheet(context);
                   },
                 ),
                 SettingsTile.navigation(

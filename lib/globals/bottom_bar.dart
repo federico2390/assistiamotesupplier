@@ -35,10 +35,11 @@ BottomNavigationBar bottomBar(BuildContext context) {
       ),
     ],
     onTap: (index) {
-      context.read<CentralProvider>().isLoading(false);
-      Alerts.hide;
-
-      context.read<BottomBarProvider>().currentPage(context, index);
+      if (Alerts.isVisible == true) {
+        context.read<CentralProvider>().isLoading(false);
+        Alerts.hide;
+      }
+      context.read<BottomBarProvider>().currentPage(index);
     },
   );
 }
