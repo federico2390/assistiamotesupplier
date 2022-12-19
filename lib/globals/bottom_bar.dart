@@ -15,22 +15,22 @@ BottomNavigationBar bottomBar(BuildContext context) {
     items: const [
       BottomNavigationBarItem(
         label: 'Interventi',
-        icon: Icon(Icons.engineering_rounded),
+        icon: Icon(Icons.build_rounded),
         tooltip: '',
       ),
       BottomNavigationBarItem(
         label: 'Bacheca',
-        icon: Icon(Icons.list_rounded),
+        icon: Icon(Icons.dashboard_rounded),
         tooltip: '',
       ),
       BottomNavigationBarItem(
         label: 'Letture',
-        icon: Icon(Icons.search_rounded),
+        icon: Icon(Icons.event_note_rounded),
         tooltip: '',
       ),
       BottomNavigationBarItem(
         label: 'Contabilità',
-        icon: Icon(Icons.payments_rounded),
+        icon: Icon(Icons.assignment_rounded),
         tooltip: '',
       ),
     ],
