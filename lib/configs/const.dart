@@ -25,7 +25,6 @@ class AppConst {
   /// Backend
   static const String backendBase = 'https://adminpanel.buuumit.com';
   static const String login = '$backendBase/user/service/auth/login.php';
-  static const String logout = '$backendBase/user/service/auth/logout.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
   static const String feed = '$backendBase/user/service/misc/feed.php';

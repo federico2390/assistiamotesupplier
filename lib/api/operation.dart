@@ -17,12 +17,6 @@ class Operation {
     TextEditingController operationController,
     TextEditingController descriptionController,
   ) async {
-    formKey.currentState!.reset();
-    operationTypeController.clear();
-    operationController.clear();
-    descriptionController.clear();
-    context.read<OperationProvider>().removeAllImage();
-
     try {
       var uuid = const Uuid();
       final user = await context.read<UserProvider>().getUser();
@@ -45,9 +39,9 @@ class Operation {
         'operation_type': operationTypeController.text.trim(),
         'operation': operationController.text.trim(),
         'description': descriptionController.text.trim(),
-        'media_1': multipartImageList[0],
-        'media_2': multipartImageList[1],
-        'media_3': multipartImageList[2]
+        'media_1': multipartImageList.isNotEmpty ? multipartImageList[0] : '',
+        'media_2': multipartImageList.length == 2 ? multipartImageList[1] : '',
+        'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
       });
 
       var response = await Dio().post(

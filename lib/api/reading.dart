@@ -34,9 +34,9 @@ class Reading {
         'user_id': user.userId!.trim(),
         'palace_id': user.palaceId!.trim(),
         'value': valueController.text.trim(),
-        'media_1': multipartImageList[0],
-        'media_2': multipartImageList[1],
-        'media_3': multipartImageList[2]
+        'media_1': multipartImageList.isNotEmpty ? multipartImageList[0] : '',
+        'media_2': multipartImageList.length == 2 ? multipartImageList[1] : '',
+        'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
       });
 
       var response = await Dio().post(
