@@ -28,7 +28,9 @@ class Button extends StatelessWidget {
           ? TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: color ?? AppColors.primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: icon != null
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.symmetric(horizontal: 8),
               ),
               onPressed: onPressed,
               child: icon ??
@@ -45,7 +47,9 @@ class Button extends StatelessWidget {
           : CupertinoButton(
               color: color ?? AppColors.primaryColor,
               onPressed: onPressed,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: icon != null
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.symmetric(horizontal: 8),
               child: icon ??
                   Text(
                     text!,

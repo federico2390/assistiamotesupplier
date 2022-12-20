@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/operation.dart';
@@ -46,7 +48,11 @@ class Operation {
             ? descriptionController.text.trim()
             : '',
         'media_1': multipartImageList.isNotEmpty ? multipartImageList[0] : '',
-        'media_2': multipartImageList.length == 2 ? multipartImageList[1] : '',
+        'media_2': multipartImageList.length == 2
+            ? multipartImageList[1]
+            : multipartImageList.length == 3
+                ? multipartImageList[1]
+                : '',
         'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
       });
 

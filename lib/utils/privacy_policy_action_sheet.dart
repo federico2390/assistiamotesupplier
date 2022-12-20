@@ -66,7 +66,7 @@ buildPrivacyPolicyActionSheet(BuildContext context) async {
                   launchUrls(AppConst.serviceHostPrivacyPolicy);
                 },
                 child: Text(
-                  'edhousesuite.com',
+                  'cedhousesuite.com',
                   style:
                       TextStyle(fontSize: 17, color: AppColors.labelDarkColor),
                 ),
