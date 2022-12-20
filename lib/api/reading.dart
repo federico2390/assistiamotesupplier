@@ -31,9 +31,10 @@ class Reading {
           .toList();
 
       FormData formData = FormData.fromMap({
-        'user_id': user.userId!.trim(),
-        'palace_id': user.palaceId!.trim(),
-        'value': valueController.text.trim(),
+        'user_id': user.userId!.isNotEmpty ? user.userId!.trim() : '',
+        'palace_id': user.palaceId!.isNotEmpty ? user.palaceId!.trim() : '',
+        'value':
+            valueController.text.isNotEmpty ? valueController.text.trim() : '',
         'media_1': multipartImageList.isNotEmpty ? multipartImageList[0] : '',
         'media_2': multipartImageList.length == 2 ? multipartImageList[1] : '',
         'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',

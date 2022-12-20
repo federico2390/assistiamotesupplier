@@ -34,11 +34,17 @@ class Operation {
           .toList();
 
       FormData formData = FormData.fromMap({
-        'user_id': user.userId!.trim(),
-        'palace_id': user.palaceId!.trim(),
-        'operation_type': operationTypeController.text.trim(),
-        'operation': operationController.text.trim(),
-        'description': descriptionController.text.trim(),
+        'user_id': user.userId!.isNotEmpty ? user.userId!.trim() : '',
+        'palace_id': user.palaceId!.isNotEmpty ? user.palaceId!.trim() : '',
+        'operation_type': operationTypeController.text.isNotEmpty
+            ? operationTypeController.text.trim()
+            : '',
+        'operation': operationController.text.isNotEmpty
+            ? operationController.text.trim()
+            : '',
+        'description': descriptionController.text.isNotEmpty
+            ? descriptionController.text.trim()
+            : '',
         'media_1': multipartImageList.isNotEmpty ? multipartImageList[0] : '',
         'media_2': multipartImageList.length == 2 ? multipartImageList[1] : '',
         'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
