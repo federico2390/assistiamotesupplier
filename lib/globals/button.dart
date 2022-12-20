@@ -8,7 +8,7 @@ class Button extends StatelessWidget {
   const Button({
     super.key,
     this.color,
-    this.text,
+    this.text = '',
     this.icon,
     this.onPressed,
     this.accounting = false,
@@ -22,46 +22,41 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isAndroid
-        ? TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: color ?? AppColors.primaryColor,
-              padding: accounting == true
-                  ? const EdgeInsets.symmetric(horizontal: 8)
-                  : icon != null
-                      ? EdgeInsets.zero
-                      : null,
+    return SizedBox(
+      height: 44,
+      child: Platform.isAndroid
+          ? TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: color ?? AppColors.primaryColor,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+              ),
+              onPressed: onPressed,
+              child: icon ??
+                  Text(
+                    text!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.labelLightColor,
+                      fontSize: accounting == true ? 12 : 15,
+                    ),
+                  ),
+            )
+          : CupertinoButton(
+              color: color ?? AppColors.primaryColor,
+              onPressed: onPressed,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: icon ??
+                  Text(
+                    text!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.labelLightColor,
+                      fontSize: accounting == true ? 12 : 15,
+                    ),
+                  ),
             ),
-            onPressed: onPressed,
-            child: icon ??
-                Text(
-                  text!,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.labelLightColor,
-                    fontSize: accounting == true ? 12 : 15,
-                  ),
-                ),
-          )
-        : CupertinoButton(
-            color: color ?? AppColors.primaryColor,
-            onPressed: onPressed,
-            padding: accounting == true
-                ? const EdgeInsets.symmetric(horizontal: 8)
-                : icon != null
-                    ? EdgeInsets.zero
-                    : null,
-            child: icon ??
-                Text(
-                  text!,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.labelLightColor,
-                    fontSize: accounting == true ? 12 : 15,
-                  ),
-                ),
-          );
+    );
   }
 }

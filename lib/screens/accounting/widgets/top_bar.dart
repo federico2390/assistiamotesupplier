@@ -6,41 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
 
-ListView topBar(BuildContext context) {
-  return ListView.separated(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    scrollDirection: Axis.horizontal,
-    itemCount: AppConst.accountingItems.length,
-    separatorBuilder: (BuildContext context, int index) =>
-        const SizedBox(width: 8),
-    padding: const EdgeInsets.symmetric(horizontal: AppConst.padding),
-    itemBuilder: (context, index) {
-      return Column(
+Column topBar(BuildContext context) {
+  return Column(
+    children: [
+      const Spacer(),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Spacer(),
-          SizedBox(
-            height: 40,
-            width: ScreenSize.width(context) / 4 - 14,
-            child: Button(
-              accounting: true,
-              text: AppConst.accountingItems.keys.toList()[index],
-              onPressed: () {
-                context
-                    .read<AccountingProvider>()
-                    .inAppWebViewController!
-                    .loadUrl(
-                      urlRequest: URLRequest(
-                        url: Uri.parse(
-                          AppConst.accountingItems.values.toList()[index],
-                        ),
-                      ),
-                    );
-              },
+          const SizedBox(width: AppConst.padding / 2),
+          for (var i = 0; i < AppConst.accountingItems.length; i++)
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: SizedBox(
+                  height: 40,
+                  width: ScreenSize.width(context) /
+                      AppConst.accountingItems.length,
+                  child: Button(
+                    accounting: true,
+                    text: AppConst.accountingItems.keys.toList()[i],
+                    onPressed: () {
+                      context
+                          .read<AccountingProvider>()
+                          .inAppWebViewController!
+                          .loadUrl(
+                            urlRequest: URLRequest(
+                              url: Uri.parse(
+                                AppConst.accountingItems.values.toList()[i],
+                              ),
+                            ),
+                          );
+                    },
+                  ),
+                ),
+              ),
             ),
-          ),
+          const SizedBox(width: AppConst.padding / 2),
         ],
-      );
-    },
+      )
+    ],
   );
 }

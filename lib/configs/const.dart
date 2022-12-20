@@ -11,8 +11,8 @@ class AppConst {
   static const Map<String, String> accountingItems = {
     'Fatture': '$serviceBase/Contabilita/Fatture',
     'Consuntivo': '$serviceBase/Contabilita/ComparazionePreventivoConsuntivo',
-    'Rate Personali': '$serviceBase/Rate/SituazionePersonale',
-    'Rate Inquilini': '$serviceBase/Rate/SituazioneInquilini',
+    // 'Rate Personali': '$serviceBase/Rate/SituazionePersonale',
+    // 'Rate Inquilini': '$serviceBase/Rate/SituazioneInquilini',
   };
 
   /// Setting

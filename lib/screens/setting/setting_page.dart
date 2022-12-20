@@ -21,7 +21,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   Future<String> getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return '${packageInfo.version}-${packageInfo.buildNumber}';
+    return '${packageInfo.version} (${packageInfo.buildNumber})';
   }
 
   @override
@@ -33,9 +33,9 @@ class _SettingPageState extends State<SettingPage> {
       child: Scaffold(
         appBar: appBar(context),
         body: SettingsList(
-          applicationType: ApplicationType.both,
           sections: [
             SettingsSection(
+              margin: EdgeInsetsDirectional.zero,
               title: const Text('Generali'),
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
@@ -53,6 +53,7 @@ class _SettingPageState extends State<SettingPage> {
               ],
             ),
             SettingsSection(
+              margin: EdgeInsetsDirectional.zero,
               title: const Text('Legale'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
@@ -72,17 +73,25 @@ class _SettingPageState extends State<SettingPage> {
               ],
             ),
             SettingsSection(
+              margin: EdgeInsetsDirectional.zero,
               tiles: <SettingsTile>[
                 SettingsTile(
                   enabled: false,
-                  title: const Text('Versione'),
-                  trailing: FutureBuilder(
-                    future: getAppVersion(),
-                    builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) =>
-                        Text(snapshot.hasData ? snapshot.data! : 'Non trovata',
-                            style: TextStyle(color: AppColors.secondaryColor)),
-                  ),
+                  title: FutureBuilder(
+                      future: getAppVersion(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                          return Text(
+                            'Versione ${snapshot.data!}',
+                            style: TextStyle(color: AppColors.secondaryColor),
+                          );
+                        }
+                        return Text(
+                          '',
+                          style: TextStyle(color: AppColors.secondaryColor),
+                        );
+                      }),
                 ),
               ],
             ),
