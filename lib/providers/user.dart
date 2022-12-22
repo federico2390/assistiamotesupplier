@@ -22,9 +22,11 @@ class UserProvider extends ChangeNotifier {
 
   updateUser(UserDatabase user) {
     final box = Hive.box<UserDatabase>('user');
-    box.putAll({'user': user});
-    getUser();
-    notifyListeners();
+    box.clear().whenComplete(() {
+      box.putAll({'user': user});
+      getUser();
+      notifyListeners();
+    });
   }
 
   Future deleteUser() async {

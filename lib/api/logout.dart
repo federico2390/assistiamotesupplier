@@ -26,18 +26,18 @@ class Logout {
         } else {
           context.read<UserProvider>().updateUser(
                 UserDatabase(
-                  userId: null,
-                  palaceId: null,
-                  palaceName: null,
-                  palaceCf: null,
-                  palaceAddress: null,
-                  userEmail: null,
-                  userName: null,
-                  userSurname: null,
-                  userCf: null,
+                  userId: '',
+                  palaceId: '',
+                  palaceName: '',
+                  palaceCf: '',
+                  palaceAddress: '',
+                  userEmail: '',
+                  userName: '',
+                  userSurname: '',
+                  userCf: '',
                   userUsername: user.userUsername!,
                   userPassword: user.userPassword!,
-                  userToken: null,
+                  userToken: '',
                 ),
               );
 

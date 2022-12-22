@@ -14,13 +14,13 @@ BottomNavigationBar bottomBar(BuildContext context) {
     unselectedFontSize: 13,
     items: const [
       BottomNavigationBarItem(
-        label: 'Interventi',
-        icon: Icon(Icons.build_rounded),
+        label: 'Bacheca',
+        icon: Icon(Icons.dashboard_rounded),
         tooltip: '',
       ),
       BottomNavigationBarItem(
-        label: 'Bacheca',
-        icon: Icon(Icons.dashboard_rounded),
+        label: 'Interventi',
+        icon: Icon(Icons.build_rounded),
         tooltip: '',
       ),
       BottomNavigationBarItem(

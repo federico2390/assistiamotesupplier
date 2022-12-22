@@ -1,3 +1,4 @@
+import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/accounting.dart';
@@ -25,7 +26,11 @@ Column topBar(BuildContext context) {
                   child: Button(
                     accounting: true,
                     text: AppConst.accountingItems.keys.toList()[i],
+                    color: context.watch<AccountingProvider>().selected == i
+                        ? AppColors.primaryColor
+                        : AppColors.secondaryColor,
                     onPressed: () {
+                      context.read<AccountingProvider>().selectedPage(i);
                       context
                           .read<AccountingProvider>()
                           .inAppWebViewController!

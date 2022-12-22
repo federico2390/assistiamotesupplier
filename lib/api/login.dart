@@ -59,15 +59,9 @@ class Login {
 
           Future.delayed(const Duration(seconds: 2), () {
             Alerts.hide;
-            Alerts.successAlert(context,
-                title: 'Accesso riuscito!',
-                subtitle: 'Benvenuta/o ${user.userName ?? ''}');
-            Future.delayed(const Duration(seconds: 2), () {
-              Alerts.hide;
-              context.read<CentralProvider>().isLoading(false);
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/', (Route<dynamic> route) => false);
-            });
+            context.read<CentralProvider>().isLoading(false);
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/welcome', (Route<dynamic> route) => false);
           });
         }
       });

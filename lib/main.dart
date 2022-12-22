@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:adminpanel/configs/theme.dart';
+import 'package:adminpanel/globals/theme.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/accounting.dart';

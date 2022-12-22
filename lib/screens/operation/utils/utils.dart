@@ -1,6 +1,6 @@
 final List<String> operationTypeList = [
-  'Elettrico',
-  'Ascensore',
+  'Elettricista',
+  'Ascensorista',
   'Fabbro',
   'Idraulico',
   'Ferramentista',

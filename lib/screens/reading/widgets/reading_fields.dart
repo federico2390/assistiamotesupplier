@@ -29,7 +29,7 @@ class ReadingFieldsState extends State<ReadingFields> {
       textInputAction: TextInputAction.done,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       textCapitalization: TextCapitalization.sentences,
-      maxLength: 1000,
+      maxLength: 50,
       toolbarOptions: const ToolbarOptions(
           copy: true, cut: true, paste: true, selectAll: true),
       validator: (value) {
