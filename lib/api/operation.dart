@@ -6,6 +6,7 @@ import 'package:adminpanel/utils/alerts.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,6 +20,7 @@ class Operation {
   ) async {
     try {
       var uuid = const Uuid();
+      var dateFormat = DateFormat('dd/MM/yyyy');
       final user = await context.read<UserProvider>().getUser();
       final imageList = context.read<OperationProvider>().images;
 
@@ -52,6 +54,7 @@ class Operation {
                 ? multipartImageList[1]
                 : '',
         'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
+        'operation_date': dateFormat.format(DateTime.now()),
       });
 
       var response = await Dio().post(
