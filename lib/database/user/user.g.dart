@@ -24,18 +24,17 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       palaceAddress: fields[4] as String?,
       userEmail: fields[5] as String?,
       userName: fields[6] as String?,
-      userSurname: fields[7] as String?,
-      userCf: fields[8] as String?,
-      userUsername: fields[9] as String?,
-      userPassword: fields[10] as String?,
-      userToken: fields[11] as String?,
+      userCf: fields[7] as String?,
+      userUsername: fields[8] as String?,
+      userPassword: fields[9] as String?,
+      userToken: fields[10] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserDatabase obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -51,14 +50,12 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       ..writeByte(6)
       ..write(obj.userName)
       ..writeByte(7)
-      ..write(obj.userSurname)
-      ..writeByte(8)
       ..write(obj.userCf)
-      ..writeByte(9)
+      ..writeByte(8)
       ..write(obj.userUsername)
-      ..writeByte(10)
+      ..writeByte(9)
       ..write(obj.userPassword)
-      ..writeByte(11)
+      ..writeByte(10)
       ..write(obj.userToken);
   }
 

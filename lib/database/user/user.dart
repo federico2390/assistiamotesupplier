@@ -19,14 +19,12 @@ class UserDatabase {
   @HiveField(6)
   String? userName;
   @HiveField(7)
-  String? userSurname;
-  @HiveField(8)
   String? userCf;
-  @HiveField(9)
+  @HiveField(8)
   String? userUsername;
-  @HiveField(10)
+  @HiveField(9)
   String? userPassword;
-  @HiveField(11)
+  @HiveField(10)
   String? userToken;
 
   UserDatabase({
@@ -37,7 +35,6 @@ class UserDatabase {
     this.palaceAddress,
     this.userEmail,
     this.userName,
-    this.userSurname,
     this.userCf,
     this.userUsername,
     this.userPassword,
@@ -53,7 +50,6 @@ class UserDatabase {
       palaceAddress: map['palace_address'] ?? '',
       userEmail: map['user_email'] ?? '',
       userName: map['user_name'] ?? '',
-      userSurname: map['user_surname'] ?? '',
       userCf: map['user_cf'] ?? '',
       userUsername: map['user_username'] ?? '',
       userPassword: map['user_password'] ?? '',

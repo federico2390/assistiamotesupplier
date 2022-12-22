@@ -33,7 +33,6 @@ class Logout {
                   palaceAddress: '',
                   userEmail: '',
                   userName: '',
-                  userSurname: '',
                   userCf: '',
                   userUsername: user.userUsername!,
                   userPassword: user.userPassword!,

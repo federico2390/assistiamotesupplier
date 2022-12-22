@@ -47,7 +47,6 @@ class Login {
                   palaceAddress: user.palaceAddress!.trim(),
                   userEmail: user.userEmail!.trim(),
                   userName: user.userName!.trim(),
-                  userSurname: user.userSurname!.trim(),
                   userCf: user.userCf!.trim(),
                   userUsername: user.userUsername!.trim(),
                   userPassword: user.userPassword!.trim(),
