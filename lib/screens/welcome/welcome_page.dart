@@ -1,6 +1,5 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/size.dart';
