@@ -26,9 +26,9 @@ appBar(BuildContext context) {
           title: Consumer<BottomBarProvider>(
             builder: (context, bottomBar, child) {
               return bottomBar.currentPageIndex == 0
-                  ? const Text('Nuovo intervento')
+                  ? const Text('Bacheca')
                   : bottomBar.currentPageIndex == 1
-                      ? const Text('Bacheca')
+                      ? const Text('Nuovo intervento')
                       : bottomBar.currentPageIndex == 2
                           ? const Text('Lettura acqua')
                           : const SizedBox();

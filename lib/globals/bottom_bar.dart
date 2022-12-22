@@ -24,8 +24,8 @@ BottomNavigationBar bottomBar(BuildContext context) {
         tooltip: '',
       ),
       BottomNavigationBarItem(
-        label: 'Letture',
-        icon: Icon(Icons.event_note_rounded),
+        label: 'Letture acqua',
+        icon: Icon(Icons.water_drop_rounded),
         tooltip: '',
       ),
       BottomNavigationBarItem(

@@ -56,9 +56,9 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     body() {
       return context.read<BottomBarProvider>().currentPageIndex == 0
-          ? const OperationPage()
+          ? const FeedPage()
           : context.read<BottomBarProvider>().currentPageIndex == 1
-              ? const FeedPage()
+              ? const OperationPage()
               : context.read<BottomBarProvider>().currentPageIndex == 2
                   ? const ReadingPage()
                   : const AccountingPage();
