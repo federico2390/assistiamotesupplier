@@ -52,7 +52,7 @@ class Reading {
         data: formData,
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('Operation uploaded - server response: ${response.statusCode}');
         valueController.clear();
         context.read<ReadingProvider>().removeAllImage();

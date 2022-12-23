@@ -33,7 +33,7 @@ class Login {
           },
         );
 
-        if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
           final jsonData = json.decode(response.body);
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
           await FirstTimeLogged().firstTimeLogged(context, user.userId!);

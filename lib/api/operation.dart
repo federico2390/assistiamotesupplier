@@ -62,7 +62,7 @@ class Operation {
         data: formData,
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('Operation uploaded - server response: ${response.statusCode}');
         formKey.currentState!.reset();
         operationTypeController.clear();

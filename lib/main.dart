@@ -60,22 +60,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<BottomBarProvider>(
-            create: (context) => BottomBarProvider()),
-        ChangeNotifierProvider<LoginProvider>(
-            create: (context) => LoginProvider()),
-        ChangeNotifierProvider<OperationProvider>(
-            create: (context) => OperationProvider()),
-        ChangeNotifierProvider<ReadingProvider>(
-            create: (context) => ReadingProvider()),
-        ChangeNotifierProvider<UserProvider>(
-            create: (context) => UserProvider()),
-        ChangeNotifierProvider<SettingProvider>(
-            create: (context) => SettingProvider()),
-        ChangeNotifierProvider<AccountingProvider>(
-            create: (context) => AccountingProvider()),
-        ChangeNotifierProvider<CentralProvider>(
-            create: (context) => CentralProvider()),
+        ChangeNotifierProvider(create: (context) => BottomBarProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => OperationProvider()),
+        ChangeNotifierProvider(create: (context) => ReadingProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => SettingProvider()),
+        ChangeNotifierProvider(create: (context) => AccountingProvider()),
+        ChangeNotifierProvider(create: (context) => CentralProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
