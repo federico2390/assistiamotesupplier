@@ -1,5 +1,4 @@
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -76,7 +75,6 @@ class Operation {
     } catch (error) {
       print(error);
     }
-    Alerts.hide;
-    context.read<CentralProvider>().isLoading(false);
+    Alerts.hideAlert();
   }
 }

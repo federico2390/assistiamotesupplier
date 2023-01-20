@@ -1,20 +1,19 @@
-import 'package:adminpanel/providers/central.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
 
 class Alerts {
   static get hide => StatusAlert.hide();
   static get isVisible => StatusAlert.isVisible;
 
+  static hideAlert() async {
+    if (Alerts.isVisible == true) {
+      return Alerts.hide;
+    }
+  }
+
   static Future successAlert(BuildContext context,
       {String? title, String? subtitle}) async {
-    context.read<CentralProvider>().isLoading(true);
-    if (isVisible == true) {
-      Future.delayed(const Duration(seconds: 2), () {
-        context.read<CentralProvider>().isLoading(false);
-      });
-    }
+    Alerts.hideAlert();
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 2),
@@ -27,12 +26,7 @@ class Alerts {
 
   static Future loadingAlert(BuildContext context,
       {String? title, String? subtitle}) async {
-    context.read<CentralProvider>().isLoading(true);
-    if (isVisible == true) {
-      Future.delayed(const Duration(seconds: 2), () {
-        context.read<CentralProvider>().isLoading(false);
-      });
-    }
+    Alerts.hideAlert();
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 30),
@@ -45,12 +39,7 @@ class Alerts {
 
   static Future errorAlert(BuildContext context,
       {String? title, String? subtitle}) async {
-    context.read<CentralProvider>().isLoading(true);
-    if (isVisible == true) {
-      Future.delayed(const Duration(seconds: 3), () {
-        context.read<CentralProvider>().isLoading(false);
-      });
-    }
+    Alerts.hideAlert();
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 3),

@@ -1,9 +1,12 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/models/supplier.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
+import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class OperationFields extends StatefulWidget {
   final TextEditingController operationTypeController;
@@ -47,68 +50,139 @@ class OperationFieldsState extends State<OperationFields> {
     );
   }
 
-  DropdownButtonFormField2 operationTypeField(BuildContext context) {
-    return DropdownButtonFormField2(
-      focusNode: operationTypeFocusNode,
-      buttonSplashColor: AppColors.transparentColor,
-      buttonHighlightColor: AppColors.transparentColor,
-      isExpanded: true,
-      dropdownElevation: 1,
-      itemSplashColor: AppColors.transparentColor,
-      itemHighlightColor: AppColors.transparentColor,
-      focusColor: AppColors.transparentColor,
-      selectedItemHighlightColor: AppColors.tertiaryColor,
-      icon: Icon(
-        Icons.arrow_drop_down_rounded,
-        color: AppColors.secondaryColor,
-      ),
-      dropdownDecoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppConst.borderRadius),
-      ),
-      items: operationTypeList
-          .map((item) => DropdownMenuItem<String>(
-                value: item,
-                child: Text(item),
-              ))
-          .toList(),
-      onChanged: (value) {
-        widget.operationTypeController.text = value.toString();
-      },
-      validator: (value) {
-        if (value == null) {
-          return 'Il campo non può essere vuoto';
+  FutureBuilder operationTypeField(BuildContext context) {
+    return FutureBuilder(
+      future: context.read<SupplierProvider>().getSupplierType(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<Supplier> suppliersType = snapshot.data!;
+          return DropdownButtonFormField2(
+            focusNode: operationTypeFocusNode,
+            buttonSplashColor: AppColors.transparentColor,
+            buttonHighlightColor: AppColors.transparentColor,
+            isExpanded: true,
+            dropdownElevation: 1,
+            itemSplashColor: AppColors.transparentColor,
+            itemHighlightColor: AppColors.transparentColor,
+            focusColor: AppColors.transparentColor,
+            selectedItemHighlightColor: AppColors.tertiaryColor,
+            icon: Icon(
+              Icons.arrow_drop_down_rounded,
+              color: AppColors.secondaryColor,
+            ),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppConst.borderRadius),
+            ),
+            items: suppliersType
+                .map((item) => DropdownMenuItem<String>(
+                      value: item.supplierType,
+                      child: Text(item.supplierType!),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              widget.operationTypeController.text = value.toString();
+            },
+            validator: (value) {
+              if (value == null) {
+                return 'Il campo non può essere vuoto';
+              }
+              return null;
+            },
+            onSaved: (value) {
+              widget.operationTypeController.text = value.toString();
+            },
+            dropdownPadding: EdgeInsets.zero,
+            itemPadding: EdgeInsets.zero,
+            buttonHeight: 60,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+              labelText: 'Seleziona la tipologia di intervento',
+              labelStyle: TextStyle(color: AppColors.secondaryColor),
+              hintStyle: TextStyle(color: AppColors.secondaryColor),
+              alignLabelWithHint: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.secondaryColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+            ),
+          );
+        } else {
+          return DropdownButtonFormField2(
+            focusNode: operationTypeFocusNode,
+            buttonSplashColor: AppColors.transparentColor,
+            buttonHighlightColor: AppColors.transparentColor,
+            isExpanded: true,
+            dropdownElevation: 1,
+            itemSplashColor: AppColors.transparentColor,
+            itemHighlightColor: AppColors.transparentColor,
+            focusColor: AppColors.transparentColor,
+            selectedItemHighlightColor: AppColors.tertiaryColor,
+            icon: Icon(
+              Icons.arrow_drop_down_rounded,
+              color: AppColors.secondaryColor,
+            ),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppConst.borderRadius),
+            ),
+            items: ['']
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              widget.operationTypeController.text = value.toString();
+            },
+            validator: (value) {
+              if (value == null) {
+                return 'Il campo non può essere vuoto';
+              }
+              return null;
+            },
+            onSaved: (value) {
+              widget.operationTypeController.text = value.toString();
+            },
+            dropdownPadding: EdgeInsets.zero,
+            itemPadding: EdgeInsets.zero,
+            buttonHeight: 60,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+              labelText: 'Seleziona la tipologia di intervento',
+              labelStyle: TextStyle(color: AppColors.secondaryColor),
+              hintStyle: TextStyle(color: AppColors.secondaryColor),
+              alignLabelWithHint: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.secondaryColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.errorColor),
+                borderRadius: BorderRadius.circular(AppConst.borderRadius),
+              ),
+            ),
+          );
         }
-        return null;
       },
-      onSaved: (value) {
-        widget.operationTypeController.text = value.toString();
-      },
-      dropdownPadding: EdgeInsets.zero,
-      itemPadding: EdgeInsets.zero,
-      buttonHeight: 60,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-        labelText: 'Seleziona la tipologia di intervento',
-        labelStyle: TextStyle(color: AppColors.secondaryColor),
-        hintStyle: TextStyle(color: AppColors.secondaryColor),
-        alignLabelWithHint: true,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: AppColors.focusedColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.secondaryColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: AppColors.errorColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.errorColor),
-          borderRadius: BorderRadius.circular(AppConst.borderRadius),
-        ),
-      ),
     );
   }
 

@@ -3,16 +3,11 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ReadingFields extends StatefulWidget {
+class ReadingFields extends StatelessWidget {
   final TextEditingController valueController;
 
   const ReadingFields({super.key, required this.valueController});
 
-  @override
-  State<ReadingFields> createState() => ReadingFieldsState();
-}
-
-class ReadingFieldsState extends State<ReadingFields> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +19,7 @@ class ReadingFieldsState extends State<ReadingFields> {
 
   TextFormField palaceField() {
     return TextFormField(
-      controller: widget.valueController,
+      controller: valueController,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -43,12 +38,10 @@ class ReadingFieldsState extends State<ReadingFields> {
         labelText: 'Valore',
         labelStyle: TextStyle(color: AppColors.secondaryColor),
         alignLabelWithHint: true,
-        suffixIcon: widget.valueController.text.isNotEmpty
+        suffixIcon: valueController.text.isNotEmpty
             ? GestureDetector(
                 onTap: () {
-                  setState(() {
-                    widget.valueController.clear();
-                  });
+                  valueController.clear();
                 },
                 child: Icon(
                   Icons.cancel_rounded,

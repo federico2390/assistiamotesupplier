@@ -135,20 +135,6 @@ class _ReadingFormState extends State<ReadingForm> {
                   },
                 ).toList(),
               ),
-              formKey.currentState != null
-                  ? context.watch<ReadingProvider>().images.isEmpty
-                      ? const SizedBox(height: AppConst.padding / 2)
-                      : const SizedBox()
-                  : const SizedBox(),
-              formKey.currentState != null
-                  ? context.watch<ReadingProvider>().images.isEmpty
-                      ? Text(
-                          'Aggiungi almeno un allegato',
-                          style: TextStyle(
-                              fontSize: 12, color: AppColors.errorColor),
-                        )
-                      : const SizedBox()
-                  : const SizedBox(),
             ],
           ),
           const SizedBox(height: AppConst.padding * 2),
@@ -156,16 +142,12 @@ class _ReadingFormState extends State<ReadingForm> {
           const SizedBox(height: AppConst.padding * 2),
           Button(
             text: 'Invia lettura',
-            color: valueController.text.isNotEmpty &&
-                    context.watch<ReadingProvider>().images.isNotEmpty
+            color: valueController.text.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () {
-              if (formKey.currentState!.validate() &&
-                  context.read<ReadingProvider>().images.isNotEmpty &&
-                  User().isLogged == true) {
+              if (formKey.currentState!.validate() && User().isLogged == true) {
                 hideKeyboard(context);
-
                 Reading().postReading(
                   context,
                   valueController,

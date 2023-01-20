@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:adminpanel/api/first_time_logged.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -33,7 +32,7 @@ class Login {
           },
         );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
           final jsonData = json.decode(response.body);
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
           await FirstTimeLogged().firstTimeLogged(context, user.userId!);
@@ -57,8 +56,7 @@ class Login {
           await SharedPrefs.setInt('logged', 1);
 
           Future.delayed(const Duration(seconds: 2), () {
-            Alerts.hide;
-            context.read<CentralProvider>().isLoading(false);
+            Alerts.hideAlert();
             Navigator.pushNamedAndRemoveUntil(
                 context, '/welcome', (Route<dynamic> route) => false);
           });

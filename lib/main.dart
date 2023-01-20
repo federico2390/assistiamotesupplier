@@ -5,11 +5,11 @@ import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/accounting.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/setting.dart';
+import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/routes.dart';
 import 'package:adminpanel/utils/scroll_behavior.dart';
@@ -67,7 +67,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => SettingProvider()),
         ChangeNotifierProvider(create: (context) => AccountingProvider()),
-        ChangeNotifierProvider(create: (context) => CentralProvider()),
+        ChangeNotifierProvider(create: (context) => SupplierProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

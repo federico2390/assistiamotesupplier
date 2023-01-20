@@ -1,6 +1,5 @@
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -44,7 +43,6 @@ class Logout {
         }
 
         Future.delayed(const Duration(seconds: 3), () {
-          context.read<CentralProvider>().isLoading(false);
           Navigator.pop(context);
           Navigator.pushNamedAndRemoveUntil(
               context, '/login', (Route<dynamic> route) => false);

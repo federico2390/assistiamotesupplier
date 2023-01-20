@@ -5,7 +5,6 @@ import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -97,11 +96,7 @@ class OperationFormState extends State<OperationForm> {
                                     .length ==
                                 3) {
                               Alerts.errorAlert(context,
-                                      title: 'Attenzione',
-                                      subtitle: 'Max 3 foto')
-                                  .whenComplete(() => context
-                                      .read<CentralProvider>()
-                                      .isLoading(false));
+                                  title: 'Attenzione', subtitle: 'Max 3 foto');
                               return;
                             } else {
                               buildImagePicker(context, OperationProvider);
@@ -158,20 +153,6 @@ class OperationFormState extends State<OperationForm> {
                   },
                 ).toList(),
               ),
-              formKey.currentState != null
-                  ? context.watch<OperationProvider>().images.isEmpty
-                      ? const SizedBox(height: AppConst.padding / 2)
-                      : const SizedBox()
-                  : const SizedBox(),
-              formKey.currentState != null
-                  ? context.watch<OperationProvider>().images.isEmpty
-                      ? Text(
-                          'Aggiungi almeno un allegato',
-                          style: TextStyle(
-                              fontSize: 12, color: AppColors.errorColor),
-                        )
-                      : const SizedBox()
-                  : const SizedBox(),
             ],
           ),
           const SizedBox(height: AppConst.padding * 2),
@@ -179,14 +160,11 @@ class OperationFormState extends State<OperationForm> {
             text: 'Invia richiesta',
             color: operationTypeController.text.isNotEmpty &&
                     operationController.text.isNotEmpty &&
-                    descriptionController.text.isNotEmpty &&
-                    context.watch<OperationProvider>().images.isNotEmpty
+                    descriptionController.text.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () async {
-              if (formKey.currentState!.validate() &&
-                  context.read<OperationProvider>().images.isNotEmpty &&
-                  User().isLogged == true) {
+              if (formKey.currentState!.validate() && User().isLogged == true) {
                 hideKeyboard(context);
 
                 Operation().postOperation(

@@ -2,7 +2,6 @@ import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/api/login.dart';
@@ -62,37 +61,34 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AbsorbPointer(
-      absorbing: context.watch<CentralProvider>().loading,
-      child: GestureDetector(
-        onTap: () => hideKeyboard(context),
-        child: Scaffold(
-          body: LoginForm(
-            formKey: formKey,
-            usernameController: usernameController,
-            passwordController: passwordController,
-          ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(
-                left: AppConst.padding, right: AppConst.padding, bottom: 45),
-            child: Button(
-              text: 'Accedi',
-              color: usernameController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty
-                  ? null
-                  : AppColors.secondaryColor,
-              onPressed: () {
-                if (formKey.currentState!.validate() &&
-                    User().isLogged == false) {
-                  hideKeyboard(context);
-                  Login().login(context, usernameController.text,
-                      passwordController.text);
-                } else {
-                  Alerts.errorAlert(context,
-                      title: 'Ops!', subtitle: 'Completa tutti i campi');
-                }
-              },
-            ),
+    return GestureDetector(
+      onTap: () => hideKeyboard(context),
+      child: Scaffold(
+        body: LoginForm(
+          formKey: formKey,
+          usernameController: usernameController,
+          passwordController: passwordController,
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+              left: AppConst.padding, right: AppConst.padding, bottom: 45),
+          child: Button(
+            text: 'Accedi',
+            color: usernameController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty
+                ? null
+                : AppColors.secondaryColor,
+            onPressed: () {
+              if (formKey.currentState!.validate() &&
+                  User().isLogged == false) {
+                hideKeyboard(context);
+                Login().login(
+                    context, usernameController.text, passwordController.text);
+              } else {
+                Alerts.errorAlert(context,
+                    title: 'Ops!', subtitle: 'Completa tutti i campi');
+              }
+            },
           ),
         ),
       ),

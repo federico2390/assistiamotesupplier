@@ -29,6 +29,7 @@ class AppConst {
       '$backendBase/user/service/misc/operation.php';
   static const String feed = '$backendBase/user/service/misc/feed.php';
   static const String reading = '$backendBase/user/service/misc/reading.php';
+  static const String supplier = '$backendBase/user/service/misc/supplier.php';
   static const String notification =
       '$backendBase/user/service/misc/notification.php';
   static const String operationMediaFolder = '$backendBase/user/media/';

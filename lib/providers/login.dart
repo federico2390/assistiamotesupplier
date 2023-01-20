@@ -12,8 +12,8 @@ class LoginProvider extends ChangeNotifier {
   bool rememberData = false;
 
   void loadRememberData() {
-    var remeber = SharedPrefs.getInt('rememberData');
-    rememberData = remeber == 0 || remeber == null ? false : true;
+    var remember = SharedPrefs.getInt('rememberData');
+    rememberData = remember == 0 || remember == null ? false : true;
     notifyListeners();
   }
 

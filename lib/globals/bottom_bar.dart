@@ -1,6 +1,5 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/providers/central.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,10 +34,7 @@ BottomNavigationBar bottomBar(BuildContext context) {
       ),
     ],
     onTap: (index) {
-      if (Alerts.isVisible == true) {
-        context.read<CentralProvider>().isLoading(false);
-        Alerts.hide;
-      }
+      Alerts.hideAlert();
       context.read<BottomBarProvider>().currentPage(index);
     },
   );
