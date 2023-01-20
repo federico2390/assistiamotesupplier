@@ -29,9 +29,12 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
     NotificationService.initialize();
 
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    firebaseMessaging.getToken().then((token) {
+    firebaseMessaging.getToken().then((token) async {
       if (token != null) {
         notifications.Notification().token(context, token);
+
+        /// Subscribe to topic for receiving push notification if admin send it to all his users
+        await firebaseMessaging.subscribeToTopic("allpalace");
       }
     });
 
