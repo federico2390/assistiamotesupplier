@@ -40,5 +40,5 @@ class AppConst {
   static const String appName = 'Studio PA';
 
   /// Push Notifications
-  static const String firebaseTopic = '/users';
+  static const String firebaseTopic = '/topics/allusers';
 }
