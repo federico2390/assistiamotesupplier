@@ -38,4 +38,7 @@ class AppConst {
   /// App
   static const String appId = 'it.federicodesalvatore.adminpanel';
   static const String appName = 'Studio PA';
+
+  /// Push Notifications
+  static const String firebaseTopic = '/users';
 }

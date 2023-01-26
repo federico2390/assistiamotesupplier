@@ -1,3 +1,4 @@
+import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/screens/accounting/accounting_page.dart';
 import 'package:adminpanel/screens/feed/feed_page.dart';
@@ -34,7 +35,7 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
         notifications.Notification().token(context, token);
 
         /// Subscribe to topic for receiving push notification if admin send it to all his users
-        await firebaseMessaging.subscribeToTopic("allpalace");
+        await firebaseMessaging.subscribeToTopic(AppConst.firebaseTopic);
       }
     });
 
