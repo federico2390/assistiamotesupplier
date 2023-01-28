@@ -33,8 +33,8 @@ BottomNavigationBar bottomBar(BuildContext context) {
         tooltip: '',
       ),
     ],
-    onTap: (index) {
-      Alerts.hideAlert();
+    onTap: (index) async {
+      await Alerts.hideAlert();
       context.read<BottomBarProvider>().currentPage(index);
     },
   );

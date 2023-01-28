@@ -14,13 +14,13 @@ import 'package:provider/provider.dart';
 class Login {
   Future login(BuildContext context, String username, String password) async {
     try {
-      Alerts.loadingAlert(
+      await Alerts.loadingAlert(
         context,
         title: 'Un momento...',
         subtitle: 'Effettuo l\'accesso',
       );
 
-      Future.delayed(const Duration(seconds: 3), () async {
+      await Future.delayed(const Duration(seconds: 3), () async {
         var response = await http.post(
           Uri.parse(AppConst.login),
           headers: {
@@ -37,7 +37,7 @@ class Login {
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
           await FirstTimeLogged().firstTimeLogged(context, user.userId!);
 
-          context.read<UserProvider>().addUser(
+          await context.read<UserProvider>().addUser(
                 UserDatabase(
                   userId: user.userId!.trim(),
                   palaceId: user.palaceId!.trim(),
@@ -55,9 +55,9 @@ class Login {
 
           await SharedPrefs.setInt('logged', 1);
 
-          Future.delayed(const Duration(seconds: 2), () {
-            Alerts.hideAlert();
-            Navigator.pushNamedAndRemoveUntil(
+          await Future.delayed(const Duration(seconds: 2), () async {
+            await Alerts.hideAlert();
+            await Navigator.pushNamedAndRemoveUntil(
                 context, '/welcome', (Route<dynamic> route) => false);
           });
         }

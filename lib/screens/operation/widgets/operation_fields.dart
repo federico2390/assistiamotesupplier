@@ -260,8 +260,8 @@ class OperationFieldsState extends State<OperationFields> {
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       textCapitalization: TextCapitalization.sentences,
       maxLength: 1000,
-      toolbarOptions: const ToolbarOptions(
-          copy: true, cut: true, paste: true, selectAll: true),
+      enableInteractiveSelection: true,
+      selectionControls: MaterialTextSelectionControls(),
       validator: (value) {
         if (value!.isEmpty) {
           return 'Il campo non può essere vuoto';

@@ -13,7 +13,7 @@ class Alerts {
 
   static Future successAlert(BuildContext context,
       {String? title, String? subtitle}) async {
-    Alerts.hideAlert();
+    await Alerts.hideAlert();
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 2),
@@ -26,7 +26,7 @@ class Alerts {
 
   static Future loadingAlert(BuildContext context,
       {String? title, String? subtitle}) async {
-    Alerts.hideAlert();
+    await Alerts.hideAlert();
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 30),
@@ -39,7 +39,7 @@ class Alerts {
 
   static Future errorAlert(BuildContext context,
       {String? title, String? subtitle}) async {
-    Alerts.hideAlert();
+    await Alerts.hideAlert();
     return StatusAlert.show(
       context,
       duration: const Duration(seconds: 3),

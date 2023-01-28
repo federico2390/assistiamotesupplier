@@ -6,6 +6,7 @@
 */
 
 import 'dart:math' as math;
+import 'package:adminpanel/configs/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -49,9 +50,6 @@ class _DropdownMenuPainter extends CustomPainter {
                 )
                 .createBoxPainter() ??
             BoxDecoration(
-              // If you add an image here, you must provide a real
-              // configuration in the paint() function and you must provide some sort
-              // of onChanged callback here.
               color: color,
               borderRadius: const BorderRadius.all(Radius.circular(2.0)),
               boxShadow: kElevationToShadow[elevation],
@@ -1064,7 +1062,7 @@ class DropdownButton2<T> extends StatefulWidget {
   /// If [value] is null and the button is disabled, [disabledHint] will be displayed
   /// if it is non-null. If [disabledHint] is null, then [hint] will be displayed
   /// if it is non-null.
-  DropdownButton2({
+  const DropdownButton2({
     super.key,
     required this.items,
     this.selectedItemBuilder,
@@ -1122,31 +1120,12 @@ class DropdownButton2<T> extends StatefulWidget {
     this.searchController,
     this.searchInnerWidget,
     this.searchMatchFn,
+    this.formFieldCallBack,
     // When adding new arguments, consider adding similar arguments to
     // DropdownButtonFormField.
-  })  : assert(
-          items == null ||
-              items.isEmpty ||
-              value == null ||
-              items.where((DropdownMenuItem<T> item) {
-                    return item.value == value;
-                  }).length ==
-                  1,
-          "There should be exactly one item with [DropdownButton]'s value: "
-          '$value. \n'
-          'Either zero or 2 or more [DropdownMenuItem]s were detected '
-          'with the same value',
-        ),
-        assert(
-          customItemsHeights == null ||
-              items == null ||
-              items.isEmpty ||
-              customItemsHeights.length == items.length,
-          "customItemsHeights list should have the same length of items list",
-        ),
-        formFieldCallBack = null;
+  });
 
-  DropdownButton2._formField({
+  const DropdownButton2._formField({
     super.key,
     required this.items,
     this.selectedItemBuilder,
@@ -1205,19 +1184,7 @@ class DropdownButton2<T> extends StatefulWidget {
     this.searchInnerWidget,
     this.searchMatchFn,
     this.formFieldCallBack,
-  }) : assert(
-          items == null ||
-              items.isEmpty ||
-              value == null ||
-              items.where((DropdownMenuItem<T> item) {
-                    return item.value == value;
-                  }).length ==
-                  1,
-          "There should be exactly one item with [DropdownButtonFormField]'s value: "
-          '$value. \n'
-          'Either zero or 2 or more [DropdownMenuItem]s were detected '
-          'with the same value',
-        );
+  });
 
   // Parameters added By Me
 
@@ -1612,10 +1579,6 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
       return;
     }
 
-    assert(widget.items!
-            .where((DropdownMenuItem<T> item) => item.value == widget.value)
-            .length ==
-        1);
     for (int itemIndex = 0; itemIndex < widget.items!.length; itemIndex++) {
       if (widget.items![itemIndex].value == widget.value) {
         _selectedIndex = itemIndex;
@@ -1635,8 +1598,7 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
   }
 
   TextStyle? get _textStyle =>
-      widget.style ?? Theme.of(context).textTheme.subtitle1;
-
+      widget.style ?? TextStyle(fontSize: 16, color: AppColors.labelDarkColor);
   Rect _getRect() {
     final TextDirection? textDirection = Directionality.maybeOf(context);
     const EdgeInsetsGeometry menuMargin = EdgeInsets.zero;
@@ -1750,7 +1712,8 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
   double get _denseButtonHeight {
     final double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final double fontSize = _textStyle!.fontSize ??
-        Theme.of(context).textTheme.subtitle1!.fontSize!;
+        TextStyle(fontSize: 16, color: AppColors.labelDarkColor).fontSize!;
+
     final double scaledFontSize = textScaleFactor * fontSize;
     return math.max(
         scaledFontSize, math.max(widget.iconSize, _kDenseButtonHeight));
@@ -1995,7 +1958,7 @@ class DropdownButtonFormField2<T> extends FormField<T> {
   DropdownButtonFormField2({
     super.key,
     this.dropdownButtonKey,
-    required List<DropdownMenuItem<T>>? items,
+    List<DropdownMenuItem<T>>? items,
     DropdownButtonBuilder? selectedItemBuilder,
     T? value,
     Widget? hint,
@@ -2054,20 +2017,7 @@ class DropdownButtonFormField2<T> extends FormField<T> {
     Widget? searchInnerWidget,
     SearchMatchFn? searchMatchFn,
     OnMenuStateChangeFn? onMenuStateChange,
-  })  : assert(
-          items == null ||
-              items.isEmpty ||
-              value == null ||
-              items.where((DropdownMenuItem<T> item) {
-                    return item.value == value;
-                  }).length ==
-                  1,
-          "There should be exactly one item with [DropdownButton]'s value: "
-          '$value. \n'
-          'Either zero or 2 or more [DropdownMenuItem]s were detected '
-          'with the same value',
-        ),
-        decoration = decoration ?? InputDecoration(focusColor: focusColor),
+  })  : decoration = decoration ?? InputDecoration(focusColor: focusColor),
         super(
           initialValue: value,
           autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,

@@ -20,6 +20,8 @@ class Central extends StatefulWidget {
 }
 
 class _CentralState extends State<Central> with TickerProviderStateMixin {
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
   @override
   void initState() {
     initializeNotifications();
@@ -29,7 +31,6 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
   Future<void> initializeNotifications() async {
     NotificationService.initialize();
 
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
     firebaseMessaging.getToken().then((token) async {
       if (token != null) {
         notifications.Notification().token(context, token);
@@ -40,7 +41,7 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
     });
 
     /// The app is killed
-    FirebaseMessaging.instance.getInitialMessage();
+    firebaseMessaging.getInitialMessage();
 
     /// The app is open
     FirebaseMessaging.onMessage.listen((message) async {

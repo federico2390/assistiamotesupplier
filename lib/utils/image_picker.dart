@@ -31,7 +31,7 @@ buildImagePicker(BuildContext context, provider) async {
                         requestFullMetadata: false,
                       )
                           .catchError((error) {
-                        print('ERROR_pickImage: $error');
+                        throw error;
                       });
 
                       if (provider == OperationProvider) {
@@ -39,7 +39,7 @@ buildImagePicker(BuildContext context, provider) async {
                                 selectedImages.length >
                             3) {
                           Navigator.pop(context);
-                          Alerts.errorAlert(context,
+                          await Alerts.errorAlert(context,
                               title: 'Attenzione', subtitle: 'Max 3 foto');
                           return;
                         }
@@ -53,7 +53,7 @@ buildImagePicker(BuildContext context, provider) async {
                                 selectedImages.length >
                             3) {
                           Navigator.pop(context);
-                          Alerts.errorAlert(context,
+                          await Alerts.errorAlert(context,
                               title: 'Attenzione', subtitle: 'Max 3 foto');
                           return;
                         }
@@ -81,7 +81,7 @@ buildImagePicker(BuildContext context, provider) async {
                       requestFullMetadata: false,
                     )
                         .catchError((error) {
-                      print('ERROR_pickImage: $error');
+                      throw error;
                     });
 
                     if (selectedImages != null) {
@@ -132,7 +132,7 @@ buildImagePicker(BuildContext context, provider) async {
                       requestFullMetadata: false,
                     )
                         .catchError((error) {
-                      print('ERROR_pickImage: $error');
+                      throw error;
                     });
 
                     if (provider == OperationProvider) {
@@ -140,7 +140,7 @@ buildImagePicker(BuildContext context, provider) async {
                               selectedImages.length >
                           3) {
                         Navigator.pop(context);
-                        Alerts.errorAlert(context,
+                        await Alerts.errorAlert(context,
                             title: 'Attenzione', subtitle: 'Max 3 foto');
                         return;
                       }
@@ -154,7 +154,7 @@ buildImagePicker(BuildContext context, provider) async {
                               selectedImages.length >
                           3) {
                         Navigator.pop(context);
-                        Alerts.errorAlert(context,
+                        await Alerts.errorAlert(context,
                             title: 'Attenzione', subtitle: 'Max 3 foto');
                         return;
                       }
@@ -187,7 +187,7 @@ buildImagePicker(BuildContext context, provider) async {
                       requestFullMetadata: false,
                     )
                         .catchError((error) {
-                      print('ERROR_pickImage: $error');
+                      throw error;
                     });
 
                     if (selectedImages != null) {

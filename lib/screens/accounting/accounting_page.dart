@@ -37,21 +37,19 @@ class AccountingPage extends StatelessWidget {
                 automaticallyAdjustsScrollIndicatorInsets: true,
               ),
             ),
-            onWebViewCreated: (controller) {
+            onWebViewCreated: (controller) async {
               context.read<AccountingProvider>().currentController(controller);
-              Alerts.loadingAlert(
+              await Alerts.loadingAlert(
                 context,
                 title: 'Un momento...',
-                subtitle: 'Stiamo recuperando i dati del tuo condominio.',
+                subtitle: 'Stiamo recuperando i dati del tuo condominio',
               );
             },
             onLoadStop: (InAppWebViewController controller, Uri? url) async {
               final user = await context.read<UserProvider>().getUser();
-              await controller.getUrl().then((value) {
-                print(value);
-
+              await controller.getUrl().then((value) async {
                 if (value!.path.contains("/Utente/Autenticazione") == true) {
-                  controller.evaluateJavascript(source: '''
+                  await controller.evaluateJavascript(source: '''
                 document.getElementsByTagName("body")[0].style.display = "none";
                 document.getElementById('studiopa-header-container').style.display = "none";
                 document.getElementById('HomeSlider').style.display = "none";
@@ -60,24 +58,24 @@ class AccountingPage extends StatelessWidget {
                 document.getElementById('loginForm').submit();
                 ''');
                 } else if (value == Uri.parse('${AppConst.serviceBase}/')) {
-                  controller.evaluateJavascript(source: '''
+                  await controller.evaluateJavascript(source: '''
                 document.getElementsByTagName("body")[0].style.display = "none";
                 ''');
                 } else {
-                  controller.evaluateJavascript(source: '''
+                  await controller.evaluateJavascript(source: '''
                 document.getElementById('studiopa-header-container').style.display = "none";
                 document.getElementById('HomeSlider').style.display = "none";
                 ''');
                 }
               });
 
-              Alerts.hideAlert();
+              await Alerts.hideAlert();
             },
-            onUpdateVisitedHistory: (controller, url, androidIsReload) {
-              Alerts.loadingAlert(
+            onUpdateVisitedHistory: (controller, url, androidIsReload) async {
+              await Alerts.loadingAlert(
                 context,
                 title: 'Un momento...',
-                subtitle: 'Stiamo recuperando i dati del tuo condominio.',
+                subtitle: 'Stiamo recuperando i dati del tuo condominio',
               );
             },
           ),

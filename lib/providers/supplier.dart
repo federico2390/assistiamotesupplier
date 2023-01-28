@@ -11,7 +11,6 @@ class SupplierProvider extends ChangeNotifier {
     suppliersTypeList
         .sort((a, b) => a.supplierType!.compareTo(b.supplierType!));
     _suppliersType = suppliersTypeList;
-    print(DateTime.now());
 
     notifyListeners();
     return _suppliersType;

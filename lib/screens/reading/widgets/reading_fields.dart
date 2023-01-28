@@ -25,8 +25,8 @@ class ReadingFields extends StatelessWidget {
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       textCapitalization: TextCapitalization.sentences,
       maxLength: 50,
-      toolbarOptions: const ToolbarOptions(
-          copy: true, cut: true, paste: true, selectAll: true),
+      enableInteractiveSelection: true,
+      selectionControls: MaterialTextSelectionControls(),
       validator: (value) {
         if (value!.isEmpty) {
           return 'Il campo non può essere vuoto';

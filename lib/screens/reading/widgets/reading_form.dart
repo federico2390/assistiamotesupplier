@@ -73,10 +73,10 @@ class _ReadingFormState extends State<ReadingForm> {
                           size: 44,
                           color: Colors.white,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (context.read<ReadingProvider>().images.length ==
                               3) {
-                            Alerts.errorAlert(context,
+                            await Alerts.errorAlert(context,
                                 title: 'Attenzione', subtitle: 'Max 3 foto');
                             return;
                           } else {
@@ -145,15 +145,15 @@ class _ReadingFormState extends State<ReadingForm> {
             color: valueController.text.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState!.validate() && User().isLogged == true) {
                 hideKeyboard(context);
-                Reading().postReading(
+                await Reading().postReading(
                   context,
                   valueController,
                 );
               } else {
-                Alerts.errorAlert(context,
+                await Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');
               }
             },

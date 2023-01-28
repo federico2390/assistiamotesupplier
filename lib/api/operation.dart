@@ -19,11 +19,11 @@ class Operation {
   ) async {
     try {
       var uuid = const Uuid();
-      var dateFormat = DateFormat('dd/MM/yyyy');
+      var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
       final user = await context.read<UserProvider>().getUser();
       final imageList = context.read<OperationProvider>().images;
 
-      Alerts.loadingAlert(context,
+      await Alerts.loadingAlert(context,
           title: 'Attendi...', subtitle: 'Invio la richiesta');
 
       List<MultipartFile> multipartImageList = imageList
@@ -53,7 +53,7 @@ class Operation {
                 ? multipartImageList[1]
                 : '',
         'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
-        'operation_date': dateFormat.format(DateTime.now()),
+        'operation_datetime': datetimeFormat.format(DateTime.now()),
       });
 
       var response = await Dio().post(
@@ -62,12 +62,17 @@ class Operation {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Operation uploaded - server response: ${response.statusCode}');
         formKey.currentState!.reset();
         operationTypeController.clear();
         operationController.clear();
         descriptionController.clear();
         context.read<OperationProvider>().removeAllImage();
+        await Alerts.hideAlert();
+        await Alerts.successAlert(
+          context,
+          title: 'Aggiunto',
+          subtitle: 'L\'intervento è stato aggiunto',
+        );
       } else {
         print(
             'Operation not uploaded - server response: ${response.statusCode}');
@@ -75,6 +80,5 @@ class Operation {
     } catch (error) {
       print(error);
     }
-    Alerts.hideAlert();
   }
 }

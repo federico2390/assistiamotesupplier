@@ -12,7 +12,6 @@ import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/routes.dart';
-import 'package:adminpanel/utils/scroll_behavior.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,6 +30,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -71,12 +71,6 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        builder: (context, child) {
-          return ScrollConfiguration(
-            behavior: CustomScrollBehavior(),
-            child: child!,
-          );
-        },
         theme: AppTheme.theme(),
         routes: Routes.buildRoutes(),
         initialRoute: (logged == 0 || logged == null) ? '/login' : '/',

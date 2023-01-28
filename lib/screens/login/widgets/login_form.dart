@@ -1,3 +1,7 @@
+import 'package:adminpanel/api/login.dart';
+import 'package:adminpanel/api/user.dart';
+import 'package:adminpanel/utils/alerts.dart';
+import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: ScreenSize.height(context) / 4),
           Center(
             child: Image.asset(
-              'assets/logo.jpg',
+              AppConst.appLogo,
               fit: BoxFit.contain,
               height: ScreenSize.width(context) / 3,
             ),
@@ -56,8 +60,7 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.next,
             enableInteractiveSelection: true,
-            toolbarOptions: const ToolbarOptions(
-                copy: true, cut: true, paste: true, selectAll: true),
+            selectionControls: MaterialTextSelectionControls(),
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Il campo non può essere vuoto';
@@ -106,13 +109,24 @@ class _LoginFormState extends State<LoginForm> {
             obscureText: context.watch<LoginProvider>().hiddenPassword,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
-            toolbarOptions: const ToolbarOptions(
-                copy: true, cut: true, paste: true, selectAll: true),
+            enableInteractiveSelection: true,
+            selectionControls: MaterialTextSelectionControls(),
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Il campo non può essere vuoto';
               }
               return null;
+            },
+            onFieldSubmitted: (value) async {
+              if (widget.formKey.currentState!.validate() &&
+                  User().isLogged == false) {
+                hideKeyboard(context);
+                await Login().login(context, widget.usernameController.text,
+                    widget.passwordController.text);
+              } else {
+                await Alerts.errorAlert(context,
+                    title: 'Ops!', subtitle: 'Completa tutti i campi');
+              }
             },
             decoration: InputDecoration(
               labelText: 'Password',

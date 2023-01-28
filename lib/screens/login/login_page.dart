@@ -78,14 +78,14 @@ class _LoginPageState extends State<LoginPage> {
                     passwordController.text.isNotEmpty
                 ? null
                 : AppColors.secondaryColor,
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState!.validate() &&
                   User().isLogged == false) {
                 hideKeyboard(context);
-                Login().login(
+                await Login().login(
                     context, usernameController.text, passwordController.text);
               } else {
-                Alerts.errorAlert(context,
+                await Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');
               }
             },

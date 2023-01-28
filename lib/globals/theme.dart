@@ -5,7 +5,6 @@ class AppTheme {
   static ThemeData theme() {
     return ThemeData(
       scaffoldBackgroundColor: AppColors.backgroundColor,
-      backgroundColor: AppColors.backgroundColor,
       splashColor: AppColors.transparentColor,
       highlightColor: AppColors.transparentColor,
       appBarTheme: AppBarTheme(

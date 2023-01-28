@@ -16,11 +16,11 @@ class Reading {
   ) async {
     try {
       var uuid = const Uuid();
-      var dateFormat = DateFormat('dd/MM/yyyy');
+      var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
       final user = await context.read<UserProvider>().getUser();
       final imageList = context.read<ReadingProvider>().images;
 
-      Alerts.loadingAlert(context,
+      await Alerts.loadingAlert(context,
           title: 'Attendi...', subtitle: 'Invio la richiesta');
 
       List<MultipartFile> multipartImageList = imageList
@@ -43,7 +43,7 @@ class Reading {
                 ? multipartImageList[1]
                 : '',
         'media_3': multipartImageList.length == 3 ? multipartImageList[2] : '',
-        'reading_date': dateFormat.format(DateTime.now()),
+        'reading_datetime': datetimeFormat.format(DateTime.now()),
       });
 
       var response = await Dio().post(
@@ -52,9 +52,14 @@ class Reading {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Operation uploaded - server response: ${response.statusCode}');
         valueController.clear();
         context.read<ReadingProvider>().removeAllImage();
+        await Alerts.hideAlert();
+        await Alerts.successAlert(
+          context,
+          title: 'Aggiunta',
+          subtitle: 'La lettura è stata aggiunta',
+        );
       } else {
         print(
             'Operation not uploaded - server response: ${response.statusCode}');
@@ -62,6 +67,5 @@ class Reading {
     } catch (error) {
       print(error);
     }
-    Alerts.hideAlert();
   }
 }

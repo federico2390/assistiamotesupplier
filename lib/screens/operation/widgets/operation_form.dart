@@ -89,13 +89,13 @@ class OperationFormState extends State<OperationForm> {
                             size: 44,
                             color: Colors.white,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (context
                                     .read<OperationProvider>()
                                     .images
                                     .length ==
                                 3) {
-                              Alerts.errorAlert(context,
+                              await Alerts.errorAlert(context,
                                   title: 'Attenzione', subtitle: 'Max 3 foto');
                               return;
                             } else {
@@ -167,7 +167,7 @@ class OperationFormState extends State<OperationForm> {
               if (formKey.currentState!.validate() && User().isLogged == true) {
                 hideKeyboard(context);
 
-                Operation().postOperation(
+                await Operation().postOperation(
                   context,
                   formKey,
                   operationTypeController,
@@ -175,7 +175,7 @@ class OperationFormState extends State<OperationForm> {
                   descriptionController,
                 );
               } else {
-                Alerts.errorAlert(context,
+                await Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');
               }
             },

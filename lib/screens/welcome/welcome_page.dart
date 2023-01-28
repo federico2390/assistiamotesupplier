@@ -20,7 +20,7 @@ class WelcomePage extends StatelessWidget {
             SizedBox(height: ScreenSize.height(context) / 3),
             Center(
               child: Image.asset(
-                'assets/logo.jpg',
+                AppConst.appLogo,
                 fit: BoxFit.contain,
                 height: ScreenSize.width(context) / 3,
               ),

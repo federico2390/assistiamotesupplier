@@ -68,20 +68,21 @@ class SettingPage extends StatelessWidget {
               SettingsTile(
                 enabled: false,
                 title: FutureBuilder(
-                    future: getAppVersion(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                        return Text(
-                          'Versione ${snapshot.data!}',
-                          style: TextStyle(color: AppColors.secondaryColor),
-                        );
-                      }
+                  future: getAppVersion(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return Text(
-                        '',
+                        'Versione ${snapshot.data!}',
                         style: TextStyle(color: AppColors.secondaryColor),
                       );
-                    }),
+                    }
+                    return Text(
+                      '',
+                      style: TextStyle(color: AppColors.secondaryColor),
+                    );
+                  },
+                ),
               ),
             ],
           ),
