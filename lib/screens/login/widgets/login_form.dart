@@ -119,9 +119,9 @@ class _LoginFormState extends State<LoginForm> {
             },
             onFieldSubmitted: (value) async {
               if (widget.formKey.currentState!.validate() &&
-                  User().isLogged == false) {
+                  UserApi().isLogged == false) {
                 hideKeyboard(context);
-                await Login().login(context, widget.usernameController.text,
+                await LoginApi().login(context, widget.usernameController.text,
                     widget.passwordController.text);
               } else {
                 await Alerts.errorAlert(context,

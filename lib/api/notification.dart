@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class Notification {
+class NotificationApi {
   Future notification(BuildContext context, bool notification) async {
     final user = await context.read<UserProvider>().getUser();
 

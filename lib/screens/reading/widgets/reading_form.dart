@@ -146,9 +146,9 @@ class _ReadingFormState extends State<ReadingForm> {
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () async {
-              if (formKey.currentState!.validate() && User().isLogged == true) {
+              if (formKey.currentState!.validate() && UserApi().isLogged == true) {
                 hideKeyboard(context);
-                await Reading().postReading(
+                await ReadingApi().postReading(
                   context,
                   valueController,
                 );

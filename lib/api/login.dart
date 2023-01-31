@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class Login {
+class LoginApi {
   Future login(BuildContext context, String username, String password) async {
     try {
       await Alerts.loadingAlert(

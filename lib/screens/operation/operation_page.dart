@@ -10,9 +10,7 @@ class OperationPage extends StatelessWidget {
     return Scaffold(
       body: GestureDetector(
         onTap: () => hideKeyboard(context),
-        child: const Scaffold(
-          body: OperationForm(),
-        ),
+        child: const OperationForm(),
       ),
     );
   }

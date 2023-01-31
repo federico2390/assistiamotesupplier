@@ -1,33 +1,19 @@
-import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/providers/feed.dart';
+import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/all.dart';
+import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/comunication.dart';
+import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/operation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FeedList extends StatelessWidget {
   const FeedList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(AppConst.padding),
-      itemCount: 10,
-      separatorBuilder: (BuildContext context, int index) =>
-          const SizedBox(height: AppConst.padding),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          child: Card(
-            elevation: 7,
-            shadowColor: AppColors.secondaryColor.withOpacity(.15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppConst.borderRadius),
-            ),
-            child: const ListTile(
-              title: Text('Titolo di esempio'),
-              subtitle: Text('Sottotitolo di esempio'),
-            ),
-          ),
-          onTap: () {},
-        );
-      },
-    );
+    return context.watch<FeedProvider>().selectedSegment == 1
+        ? const AllSegmentedPage()
+        : context.watch<FeedProvider>().selectedSegment == 2
+            ? const ComunicationSegmentedPage()
+            : const OperationSegmentedPage();
   }
 }

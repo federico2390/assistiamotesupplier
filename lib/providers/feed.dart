@@ -1,0 +1,39 @@
+import 'package:adminpanel/api/feed.dart';
+import 'package:adminpanel/models/feed.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
+class FeedProvider extends ChangeNotifier {
+  List<Feed> _feeds = [];
+  List<Feed> get feeds => _feeds;
+
+  Future<List<Feed>> getFeeds(BuildContext context) async {
+    List<Feed> feedList = await FeedApi().getFeeds(context);
+
+    feedList.sort(
+      (a, b) => DateTime.parse(
+        DateFormat('dd/MM/yyyy HH:mm:ss')
+            .parse(b.notificationDatetime!)
+            .toIso8601String(),
+      ).compareTo(
+        DateTime.parse(
+          DateFormat('dd/MM/yyyy HH:mm:ss')
+              .parse(a.notificationDatetime!)
+              .toIso8601String(),
+        ),
+      ),
+    );
+
+    _feeds = feedList;
+    notifyListeners();
+    return _feeds;
+  }
+
+  int _selectedSegment = 1;
+  int get selectedSegment => _selectedSegment;
+
+  void setSelectedSegment(int index) {
+    _selectedSegment = index;
+    notifyListeners();
+  }
+}

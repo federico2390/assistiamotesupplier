@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-class Reading {
+class ReadingApi {
   Future postReading(
     BuildContext context,
     TextEditingController valueController,

@@ -74,9 +74,11 @@ class OperationFieldsState extends State<OperationFields> {
               borderRadius: BorderRadius.circular(AppConst.borderRadius),
             ),
             items: suppliersType
+                .map((e) => e.supplierType)
+                .toSet()
                 .map((item) => DropdownMenuItem<String>(
-                      value: item.supplierType,
-                      child: Text(item.supplierType!),
+                      value: item,
+                      child: Text(item!),
                     ))
                 .toList(),
             onChanged: (value) {
@@ -227,7 +229,7 @@ class OperationFieldsState extends State<OperationFields> {
       buttonHeight: 60,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-        labelText: 'Seleziona il richiedente',
+        labelText: 'Tipo di richiesta',
         labelStyle: TextStyle(color: AppColors.secondaryColor),
         hintStyle: TextStyle(color: AppColors.secondaryColor),
         alignLabelWithHint: true,

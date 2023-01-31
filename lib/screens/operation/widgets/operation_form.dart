@@ -164,10 +164,11 @@ class OperationFormState extends State<OperationForm> {
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () async {
-              if (formKey.currentState!.validate() && User().isLogged == true) {
+              if (formKey.currentState!.validate() &&
+                  UserApi().isLogged == true) {
                 hideKeyboard(context);
 
-                await Operation().postOperation(
+                await OperationApi().postOperation(
                   context,
                   formKey,
                   operationTypeController,

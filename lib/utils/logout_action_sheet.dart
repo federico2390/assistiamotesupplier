@@ -18,7 +18,7 @@ buildLogoutActionSheet(BuildContext context) async {
                   style: TextStyle(color: AppColors.errorColor),
                 ),
                 onTap: () {
-                  Logout().logout(context);
+                  LogoutApi().logout(context);
                 },
               ),
               ListTile(
@@ -36,7 +36,7 @@ buildLogoutActionSheet(BuildContext context) async {
             actions: <CupertinoActionSheetAction>[
               CupertinoActionSheetAction(
                   onPressed: () {
-                    Logout().logout(context);
+                    LogoutApi().logout(context);
                   },
                   child: Text(
                     'Esci',

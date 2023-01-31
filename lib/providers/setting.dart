@@ -18,7 +18,7 @@ class SettingProvider extends ChangeNotifier {
   updateNotification(BuildContext context, NotificationDatabase enabled) {
     final box = Hive.box<NotificationDatabase>('notification');
     box.putAll({'notification': enabled});
-    notifications.Notification().notification(context, enabled.notification!);
+    notifications.NotificationApi().notification(context, enabled.notification!);
     getNotification();
     notifyListeners();
   }

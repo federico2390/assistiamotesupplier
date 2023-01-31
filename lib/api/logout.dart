@@ -9,7 +9,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Logout {
+class LogoutApi {
   Future<bool> logout(BuildContext context) async {
     final user = await context.read<UserProvider>().getUser();
     if (user.userId != null) {

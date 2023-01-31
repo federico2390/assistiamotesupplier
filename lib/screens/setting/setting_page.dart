@@ -4,6 +4,7 @@ import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:adminpanel/utils/launcher.dart';
+import 'package:adminpanel/utils/logout_action_sheet.dart';
 import 'package:adminpanel/utils/privacy_policy_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -27,8 +28,6 @@ class SettingPage extends StatelessWidget {
       body: SettingsList(
         sections: [
           SettingsSection(
-            margin: EdgeInsetsDirectional.zero,
-            title: const Text('Generali'),
             tiles: <SettingsTile>[
               SettingsTile.switchTile(
                 onToggle: (value) {
@@ -43,8 +42,6 @@ class SettingPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            margin: EdgeInsetsDirectional.zero,
-            title: const Text('Legale'),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 leading: const Icon(Icons.lock_outline_rounded),
@@ -63,7 +60,17 @@ class SettingPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            margin: EdgeInsetsDirectional.zero,
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                leading: const Icon(Icons.logout_rounded),
+                title: const Text('Esci'),
+                onPressed: (context) {
+                  buildLogoutActionSheet(context);
+                },
+              ),
+            ],
+          ),
+          SettingsSection(
             tiles: <SettingsTile>[
               SettingsTile(
                 enabled: false,

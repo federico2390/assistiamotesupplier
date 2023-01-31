@@ -80,9 +80,9 @@ class _LoginPageState extends State<LoginPage> {
                 : AppColors.secondaryColor,
             onPressed: () async {
               if (formKey.currentState!.validate() &&
-                  User().isLogged == false) {
+                  UserApi().isLogged == false) {
                 hideKeyboard(context);
-                await Login().login(
+                await LoginApi().login(
                     context, usernameController.text, passwordController.text);
               } else {
                 await Alerts.errorAlert(context,

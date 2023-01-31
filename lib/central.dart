@@ -1,3 +1,4 @@
+import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/screens/accounting/accounting_page.dart';
@@ -31,14 +32,16 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
   Future<void> initializeNotifications() async {
     NotificationService.initialize();
 
-    firebaseMessaging.getToken().then((token) async {
-      if (token != null) {
-        notifications.Notification().token(context, token);
+    if (UserApi().isLogged == true) {
+      firebaseMessaging.getToken().then((token) async {
+        if (token != null) {
+          notifications.NotificationApi().token(context, token);
 
-        /// Subscribe to topic for receiving push notification if admin send it to all his users
-        await firebaseMessaging.subscribeToTopic(AppConst.firebaseTopic);
-      }
-    });
+          /// Subscribe to topic for receiving push notification if admin send it to all his users
+          await firebaseMessaging.subscribeToTopic(AppConst.firebaseTopic);
+        }
+      });
+    }
 
     /// The app is killed
     firebaseMessaging.getInitialMessage();
@@ -52,8 +55,10 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
     /// The notification is clicked
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
       print('The notification is clicked');
-      if (!mounted) return;
-      NotificationService.display(message);
+
+      /// THIS CAUSE DOUBLE NOTIFICATION DISPLAYED
+      // if (!mounted) return;
+      // NotificationService.display(message);
     });
   }
 

@@ -5,9 +5,12 @@ import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/accounting.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
+import 'package:adminpanel/providers/feed.dart';
+import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/reading.dart';
+import 'package:adminpanel/providers/search.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/providers/user.dart';
@@ -42,9 +45,9 @@ void main() async {
   await SharedPrefs.init();
   logged = SharedPrefs.getInt('logged');
 
-  FlutterAppBadger.isAppBadgeSupported().then((isSupported) {
+  await FlutterAppBadger.isAppBadgeSupported().then((isSupported) async {
     if (isSupported == true) {
-      FlutterAppBadger.removeBadge();
+      await FlutterAppBadger.removeBadge();
     }
   });
 
@@ -62,12 +65,15 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => BottomBarProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => FeedProvider()),
         ChangeNotifierProvider(create: (context) => OperationProvider()),
         ChangeNotifierProvider(create: (context) => ReadingProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => SettingProvider()),
         ChangeNotifierProvider(create: (context) => AccountingProvider()),
         ChangeNotifierProvider(create: (context) => SupplierProvider()),
+        ChangeNotifierProvider(create: (context) => LoaderProvider()),
+        ChangeNotifierProvider(create: (context) => SearchProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
