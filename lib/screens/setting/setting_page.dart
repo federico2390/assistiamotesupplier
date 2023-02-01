@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/notification/notification.dart';
@@ -26,6 +28,10 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: appBar(context),
       body: SettingsList(
+        brightness: Brightness.light,
+        applicationType: Platform.isAndroid
+            ? ApplicationType.material
+            : ApplicationType.cupertino,
         sections: [
           SettingsSection(
             tiles: <SettingsTile>[

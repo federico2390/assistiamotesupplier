@@ -41,5 +41,6 @@ class AppConst {
   static const String appLogo = 'assets/logo.png';
 
   /// Push Notifications
+  static const String firebaseChannelId = 'studio_pa';
   static const String firebaseTopic = 'allusers';
 }

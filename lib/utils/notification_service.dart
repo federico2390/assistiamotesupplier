@@ -22,7 +22,7 @@ class NotificationService {
 
       const NotificationDetails notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
-          AppConst.appName,
+          AppConst.firebaseChannelId,
           AppConst.appName,
           channelDescription: AppConst.appName,
           ticker: "Push Notification",

@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData theme() {
+    MaterialColor primaryColor =
+        MaterialColor(0xFF880404, AppColors.materialPrimaryColor);
+
     return ThemeData(
+      primarySwatch: primaryColor,
       scaffoldBackgroundColor: AppColors.backgroundColor,
       splashColor: AppColors.transparentColor,
       highlightColor: AppColors.transparentColor,
