@@ -1,7 +1,3 @@
-import 'package:adminpanel/api/login.dart';
-import 'package:adminpanel/api/user.dart';
-import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -116,17 +112,6 @@ class _LoginFormState extends State<LoginForm> {
                 return 'Il campo non può essere vuoto';
               }
               return null;
-            },
-            onFieldSubmitted: (value) async {
-              if (widget.formKey.currentState!.validate() &&
-                  UserApi().isLogged == false) {
-                hideKeyboard(context);
-                await LoginApi().login(context, widget.usernameController.text,
-                    widget.passwordController.text);
-              } else {
-                await Alerts.errorAlert(context,
-                    title: 'Ops!', subtitle: 'Completa tutti i campi');
-              }
             },
             decoration: InputDecoration(
               labelText: 'Password',

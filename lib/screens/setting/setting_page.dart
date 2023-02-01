@@ -28,6 +28,9 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: appBar(context),
       body: SettingsList(
+        lightTheme: SettingsThemeData(
+          settingsListBackground: AppColors.backgroundColor,
+        ),
         brightness: Brightness.light,
         applicationType: Platform.isAndroid
             ? ApplicationType.material
