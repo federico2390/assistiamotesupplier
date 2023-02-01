@@ -5,6 +5,7 @@ import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
+import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/screens/operation/widgets/operation_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -119,6 +120,12 @@ class OperationFormState extends State<OperationForm> {
                                 height: 80, fit: BoxFit.cover),
                           ),
                           onTap: () {
+                            context.read<GalleryProvider>().currentMediaIndex(
+                                context
+                                    .read<OperationProvider>()
+                                    .images
+                                    .indexOf(image));
+
                             Navigator.pushNamed(
                               context,
                               '/gallery',

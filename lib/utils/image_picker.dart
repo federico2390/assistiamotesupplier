@@ -8,15 +8,15 @@ import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 buildImagePicker(BuildContext context, provider) async {
   final ImagePicker picker = ImagePicker();
 
   Platform.isAndroid
-      ? showMaterialModalBottomSheet(
+      ? showModalBottomSheet(
           context: context,
+          useRootNavigator: true,
           builder: (BuildContext context) => Wrap(
             children: [
               ListTile(
@@ -113,6 +113,7 @@ buildImagePicker(BuildContext context, provider) async {
         )
       : showCupertinoModalPopup(
           context: context,
+          useRootNavigator: true,
           builder: (BuildContext context) => CupertinoActionSheet(
             title: const Text('Seleziona un opzione'),
             actions: <CupertinoActionSheetAction>[

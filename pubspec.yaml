@@ -24,11 +24,6 @@ dependencies:
   image_picker: ^0.8.6+1
   image_picker_ios: ^0.8.6+1
   intl: ^0.18.0
-  # modal_bottom_sheet: ^2.1.2
-  modal_bottom_sheet:
-    git:
-      url: https://github.com/danReynolds/modal_bottom_sheet.git
-      path: modal_bottom_sheet
   package_info_plus:
   path_provider: ^2.0.12
   photo_view: ^0.14.0

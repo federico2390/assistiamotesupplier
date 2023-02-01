@@ -1,6 +1,7 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
+import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
@@ -101,6 +102,9 @@ class _OperationDetailState extends State<OperationDetail> {
                           ),
                         ),
                         onTap: () {
+                          context
+                              .read<GalleryProvider>()
+                              .currentMediaIndex(userMin);
                           Navigator.pushNamed(
                             context,
                             '/gallery',
@@ -112,21 +116,16 @@ class _OperationDetailState extends State<OperationDetail> {
                         },
                       ),
                       const SizedBox(height: AppConst.padding),
-                      Positioned(
-                        left: AppConst.padding,
-                        right: AppConst.padding,
-                        child: Center(
-                          child: AnimatedSmoothIndicator(
-                            activeIndex: userMin,
-                            count: operationArguments.operation.media!.length,
-                            effect: WormEffect(
-                              dotWidth: 8,
-                              dotHeight: 8,
-                              activeDotColor:
-                                  AppColors.labelDarkColor.withOpacity(.85),
-                              dotColor:
-                                  AppColors.secondaryColor.withOpacity(.5),
-                            ),
+                      Center(
+                        child: AnimatedSmoothIndicator(
+                          activeIndex: userMin,
+                          count: operationArguments.operation.media!.length,
+                          effect: WormEffect(
+                            dotWidth: 8,
+                            dotHeight: 8,
+                            activeDotColor:
+                                AppColors.labelDarkColor.withOpacity(.85),
+                            dotColor: AppColors.secondaryColor.withOpacity(.5),
                           ),
                         ),
                       ),

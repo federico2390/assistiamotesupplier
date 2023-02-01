@@ -4,12 +4,12 @@ import 'package:adminpanel/api/logout.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 buildLogoutActionSheet(BuildContext context) async {
   Platform.isAndroid
-      ? showMaterialModalBottomSheet(
+      ? showModalBottomSheet(
           context: context,
+          useRootNavigator: true,
           builder: (BuildContext context) => Wrap(
             children: [
               ListTile(

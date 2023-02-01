@@ -5,12 +5,12 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 buildPrivacyPolicyActionSheet(BuildContext context) async {
   Platform.isAndroid
-      ? showMaterialModalBottomSheet(
+      ? showModalBottomSheet(
           context: context,
+          useRootNavigator: true,
           builder: (BuildContext context) => Wrap(
             children: [
               ListTile(

@@ -6,6 +6,7 @@ import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/accounting.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/feed.dart';
+import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/operation.dart';
@@ -74,6 +75,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SupplierProvider()),
         ChangeNotifierProvider(create: (context) => LoaderProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
+        ChangeNotifierProvider(create: (context) => GalleryProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

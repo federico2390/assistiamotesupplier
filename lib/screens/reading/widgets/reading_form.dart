@@ -5,6 +5,7 @@ import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
+import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/screens/reading/widgets/reading_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -101,6 +102,12 @@ class _ReadingFormState extends State<ReadingForm> {
                                 height: 80, fit: BoxFit.cover),
                           ),
                           onTap: () {
+                            context.read<GalleryProvider>().currentMediaIndex(
+                                context
+                                    .read<ReadingProvider>()
+                                    .images
+                                    .indexOf(image));
+
                             Navigator.pushNamed(
                               context,
                               '/gallery',
@@ -146,7 +153,8 @@ class _ReadingFormState extends State<ReadingForm> {
                 ? null
                 : AppColors.secondaryColor,
             onPressed: () async {
-              if (formKey.currentState!.validate() && UserApi().isLogged == true) {
+              if (formKey.currentState!.validate() &&
+                  UserApi().isLogged == true) {
                 hideKeyboard(context);
                 await ReadingApi().postReading(
                   context,
