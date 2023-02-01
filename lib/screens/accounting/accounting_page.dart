@@ -41,8 +41,8 @@ class AccountingPage extends StatelessWidget {
               context.read<AccountingProvider>().currentController(controller);
               await Alerts.loadingAlert(
                 context,
-                title: 'Un momento...',
-                subtitle: 'Stiamo recuperando i dati del tuo condominio',
+                title: 'Caricamento in corso',
+                subtitle: 'Non cambiare sezione',
               );
             },
             onLoadStop: (InAppWebViewController controller, Uri? url) async {
@@ -74,8 +74,8 @@ class AccountingPage extends StatelessWidget {
             onUpdateVisitedHistory: (controller, url, androidIsReload) async {
               await Alerts.loadingAlert(
                 context,
-                title: 'Un momento...',
-                subtitle: 'Stiamo recuperando i dati del tuo condominio',
+                title: 'Caricamento in corso',
+                subtitle: 'Non cambiare sezione',
               );
             },
           ),

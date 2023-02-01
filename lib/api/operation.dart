@@ -97,7 +97,7 @@ class OperationApi {
       final imageList = context.read<OperationProvider>().images;
 
       await Alerts.loadingAlert(context,
-          title: 'Attendi...', subtitle: 'Invio la richiesta');
+          title: 'Attendi...', subtitle: 'Invio l\'intervento');
 
       List<MultipartFile> multipartImageList = imageList
           .map((image) => MultipartFile.fromFileSync(
@@ -143,8 +143,8 @@ class OperationApi {
         await Alerts.hideAlert();
         await Alerts.successAlert(
           context,
-          title: 'Aggiunto',
-          subtitle: 'L\'intervento è stato aggiunto',
+          title: 'Inviato',
+          subtitle: 'Inviato correttamente',
         );
       } else {
         print(

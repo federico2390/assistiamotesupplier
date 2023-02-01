@@ -21,7 +21,7 @@ class ReadingApi {
       final imageList = context.read<ReadingProvider>().images;
 
       await Alerts.loadingAlert(context,
-          title: 'Attendi...', subtitle: 'Invio la richiesta');
+          title: 'Attendi...', subtitle: 'Invio la lettura');
 
       List<MultipartFile> multipartImageList = imageList
           .map((image) => MultipartFile.fromFileSync(
@@ -57,8 +57,8 @@ class ReadingApi {
         await Alerts.hideAlert();
         await Alerts.successAlert(
           context,
-          title: 'Aggiunta',
-          subtitle: 'La lettura è stata aggiunta',
+          title: 'Inviata',
+          subtitle: 'Inviata correttamente',
         );
       } else {
         print(
