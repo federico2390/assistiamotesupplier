@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 class FeedApi {
   Future<List<Feed>> getFeeds(BuildContext context) async {
     List<Feed> feed = [];
-
     try {
       final user = context.read<UserProvider>().user;
 
