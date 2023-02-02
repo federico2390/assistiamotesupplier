@@ -48,6 +48,9 @@ class LogoutApi {
                   userUsername: user.userUsername!,
                   userPassword: user.userPassword!,
                   userToken: '',
+                  notification: '',
+                  generalNotification: '',
+                  firstTimeLogged: '',
                 ),
               );
           await SharedPrefs.instance.remove('logged');

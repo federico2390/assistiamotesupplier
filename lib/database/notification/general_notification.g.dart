@@ -9,7 +9,7 @@ part of 'general_notification.dart';
 class GeneralNotificationDatabaseAdapter
     extends TypeAdapter<GeneralNotificationDatabase> {
   @override
-  final int typeId = 4;
+  final int typeId = 2;
 
   @override
   GeneralNotificationDatabase read(BinaryReader reader) {
