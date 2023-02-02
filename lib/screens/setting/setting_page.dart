@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/database/notification/general_notification.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
@@ -24,6 +25,7 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<SettingProvider>().getNotification();
+    context.read<SettingProvider>().getGeneralNotification();
 
     return Scaffold(
       appBar: appBar(context),
@@ -48,7 +50,24 @@ class SettingPage extends StatelessWidget {
                 initialValue:
                     context.watch<SettingProvider>().notification.notification,
                 leading: const Icon(Icons.notifications_outlined),
-                title: const Text('Ricevi notifiche'),
+                title: const Text('Comunicazioni'),
+                description: const Text(
+                    'Abilitalo se vuoi ricevere tutte le comunicazioni che riguardano te e il tuo condominio.'),
+              ),
+              SettingsTile.switchTile(
+                onToggle: (value) {
+                  context.read<SettingProvider>().updateGeneralNotification(
+                      context,
+                      GeneralNotificationDatabase(generalNotification: value));
+                },
+                initialValue: context
+                    .watch<SettingProvider>()
+                    .generalNotification
+                    .generalNotification,
+                leading: const Icon(Icons.notifications_outlined),
+                title: const Text('Generali'),
+                description: const Text(
+                    'Abilitalo se vuoi ricevere comunicazioni a tema generale (es: Chiusura per ponte festività)'),
               ),
             ],
           ),

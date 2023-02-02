@@ -26,6 +26,12 @@ class UserDatabase {
   String? userPassword;
   @HiveField(10)
   String? userToken;
+  @HiveField(11)
+  String? notification;
+  @HiveField(12)
+  String? generalNotification;
+  @HiveField(13)
+  String? firstTimeLogged;
 
   UserDatabase({
     this.userId,
@@ -39,6 +45,9 @@ class UserDatabase {
     this.userUsername,
     this.userPassword,
     this.userToken,
+    this.notification,
+    this.generalNotification,
+    this.firstTimeLogged,
   });
 
   factory UserDatabase.fromJson(Map<String, dynamic> map) {
@@ -54,6 +63,9 @@ class UserDatabase {
       userUsername: map['user_username'] ?? '',
       userPassword: map['user_password'] ?? '',
       userToken: map['user_token'] ?? '',
+      notification: map['notification'] ?? '',
+      generalNotification: map['general_notification'] ?? '',
+      firstTimeLogged: map['first_time_logged'] ?? '',
     );
   }
 }

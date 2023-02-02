@@ -1,5 +1,6 @@
-import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/database/notification/general_notification.dart';
+import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
 import 'package:adminpanel/providers/setting.dart';
@@ -11,12 +12,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LogoutApi {
-  Future<bool> logout(BuildContext context) async {
+  Future logout(BuildContext context) async {
     final user = await context.read<UserProvider>().getUser();
     if (user.userId != null) {
       try {
         await Alerts.errorAlert(context,
             title: 'Un momento...', subtitle: 'Esco dall\'account');
+
+        await context.read<SettingProvider>().updateNotification(
+            context, NotificationDatabase(notification: false));
+        await context.read<SettingProvider>().updateGeneralNotification(
+            context, GeneralNotificationDatabase(generalNotification: false));
+        await FirebaseMessaging.instance
+            .unsubscribeFromTopic(AppConst.firebaseTopic);
 
         logged = null;
 
@@ -25,6 +33,7 @@ class LogoutApi {
           await SharedPrefs.instance.clear();
           await context.read<UserProvider>().deleteUser();
           await context.read<SettingProvider>().deleteNotification();
+          await context.read<SettingProvider>().deleteGeneralNotification();
         } else {
           await context.read<UserProvider>().updateUser(
                 UserDatabase(
@@ -41,26 +50,22 @@ class LogoutApi {
                   userToken: '',
                 ),
               );
+          await SharedPrefs.instance.remove('logged');
         }
 
-        await SharedPrefs.instance.remove('logged');
-        await SettingApi.notificationSwitch(context, false);
-        await FirebaseMessaging.instance
-            .unsubscribeFromTopic(AppConst.firebaseTopic);
-
-        await Future.delayed(const Duration(seconds: 3), () async {
-          Navigator.pop(context);
+        Navigator.pop(
+          context,
           await Navigator.pushNamedAndRemoveUntil(
-              context, '/login', (Route<dynamic> route) => false);
-        });
+              context, '/login', (Route<dynamic> route) => false),
+        );
       } catch (error) {
         print('ERROR_logout: ${error.toString()}');
       }
-      return false;
     } else {
+      print('ERROR User not found');
+
       await Alerts.errorAlert(context,
-          title: 'Errore', subtitle: 'Per favore contatta l\'amministratore.');
-      return false;
+          title: 'Errore', subtitle: 'Per favore riprova');
     }
   }
 }
