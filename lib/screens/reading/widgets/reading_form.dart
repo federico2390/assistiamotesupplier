@@ -49,6 +49,13 @@ class _ReadingFormState extends State<ReadingForm> {
       child: ListView(
         padding: const EdgeInsets.all(AppConst.padding),
         children: [
+          const Text(
+            'Inserisci una lettura',
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: AppConst.padding),
+          ReadingFields(valueController: valueController),
+          const SizedBox(height: AppConst.padding),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -144,8 +151,6 @@ class _ReadingFormState extends State<ReadingForm> {
               ),
             ],
           ),
-          const SizedBox(height: AppConst.padding * 2),
-          ReadingFields(valueController: valueController),
           const SizedBox(height: AppConst.padding * 2),
           Button(
             text: 'Invia lettura',

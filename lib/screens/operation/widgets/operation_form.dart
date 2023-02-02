@@ -59,6 +59,11 @@ class OperationFormState extends State<OperationForm> {
       child: ListView(
         padding: const EdgeInsets.all(AppConst.padding),
         children: [
+          const Text(
+            'Inserisci un intervento',
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: AppConst.padding),
           OperationFields(
             operationTypeController: operationTypeController,
             operationController: operationController,

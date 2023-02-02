@@ -41,7 +41,7 @@ class AccountingPage extends StatelessWidget {
               context.read<AccountingProvider>().currentController(controller);
               await Alerts.loadingAlert(
                 context,
-                title: 'Caricamento in corso',
+                title: 'Caricamento',
                 subtitle: 'Non cambiare sezione',
               );
             },
@@ -74,7 +74,7 @@ class AccountingPage extends StatelessWidget {
             onUpdateVisitedHistory: (controller, url, androidIsReload) async {
               await Alerts.loadingAlert(
                 context,
-                title: 'Caricamento in corso',
+                title: 'Caricamento',
                 subtitle: 'Non cambiare sezione',
               );
             },

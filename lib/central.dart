@@ -11,7 +11,7 @@ import 'package:adminpanel/utils/notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:adminpanel/api/notification.dart' as notifications;
+import 'package:adminpanel/api/setting.dart';
 
 class Central extends StatefulWidget {
   const Central({super.key});
@@ -35,7 +35,7 @@ class _CentralState extends State<Central> with TickerProviderStateMixin {
     if (UserApi().isLogged == true) {
       firebaseMessaging.getToken().then((token) async {
         if (token != null) {
-          notifications.NotificationApi().token(context, token);
+          await SettingApi.token(context, token);
 
           /// Subscribe to topic for receiving push notification if admin send it to all his users
           await firebaseMessaging.subscribeToTopic(AppConst.firebaseTopic);

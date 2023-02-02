@@ -108,7 +108,7 @@ appBar(BuildContext context) {
                           ),
                           Positioned(
                             top: -5,
-                            left: (ScreenSize.width(context) / 2 - 11.5) + 50,
+                            left: (ScreenSize.width(context) / 2 - 11.5) + 43,
                             child: Consumer<FeedProvider>(
                               builder: (context, feedProvider, child) {
                                 return FutureBuilder(
@@ -126,7 +126,15 @@ appBar(BuildContext context) {
                                           height: 23,
                                           width: 23,
                                           decoration: BoxDecoration(
-                                            color: AppColors.errorColor,
+                                            border: Border.all(
+                                                width: 1,
+                                                color: AppColors.primaryColor),
+                                            color: context
+                                                        .read<FeedProvider>()
+                                                        .selectedSegment !=
+                                                    2
+                                                ? AppColors.primaryColor
+                                                : AppColors.backgroundColor,
                                             borderRadius: BorderRadius.circular(
                                                 AppConst.borderRadius * 2),
                                           ),
@@ -139,8 +147,14 @@ appBar(BuildContext context) {
                                                   .toList()
                                                   .length
                                                   .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.white,
+                                              style: TextStyle(
+                                                color: context
+                                                            .read<
+                                                                FeedProvider>()
+                                                            .selectedSegment !=
+                                                        2
+                                                    ? AppColors.backgroundColor
+                                                    : AppColors.primaryColor,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13,
                                               ),
@@ -179,7 +193,15 @@ appBar(BuildContext context) {
                                           height: 23,
                                           width: 23,
                                           decoration: BoxDecoration(
-                                            color: AppColors.errorColor,
+                                            border: Border.all(
+                                                width: 1,
+                                                color: AppColors.primaryColor),
+                                            color: context
+                                                        .read<FeedProvider>()
+                                                        .selectedSegment !=
+                                                    3
+                                                ? AppColors.primaryColor
+                                                : AppColors.backgroundColor,
                                             borderRadius: BorderRadius.circular(
                                                 AppConst.borderRadius * 2),
                                           ),
@@ -192,8 +214,14 @@ appBar(BuildContext context) {
                                                   .toList()
                                                   .length
                                                   .toString(),
-                                              style: const TextStyle(
-                                                color: Colors.white,
+                                              style: TextStyle(
+                                                color: context
+                                                            .read<
+                                                                FeedProvider>()
+                                                            .selectedSegment !=
+                                                        3
+                                                    ? AppColors.backgroundColor
+                                                    : AppColors.primaryColor,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13,
                                               ),

@@ -31,6 +31,10 @@ class OperationProvider extends ChangeNotifier {
       ),
     );
 
+    operationList.sort((a, b) =>
+        (a.operationOpened == 'false' ? 0 : 1) -
+        (b.operationOpened == 'false' ? 0 : 1));
+
     _operations = operationList;
     notifyListeners();
     return _operations;

@@ -10,6 +10,15 @@ class FeedProvider extends ChangeNotifier {
   Future<List<Feed>> getFeeds(BuildContext context) async {
     List<Feed> feedList = await FeedApi().getFeeds(context);
 
+    for (int i = 0; i < feedList.length; i++) {
+      if (feedList[i].notificationExpiration!.isNotEmpty &&
+          DateFormat('dd/MM/yyyy HH:mm:ss')
+              .parse(feedList[i].notificationExpiration!)
+              .isBefore(DateTime.now())) {
+        feedList.remove(feedList[i]);
+      }
+    }
+
     feedList.sort(
       (a, b) => DateTime.parse(
         DateFormat('dd/MM/yyyy HH:mm:ss')
@@ -23,6 +32,10 @@ class FeedProvider extends ChangeNotifier {
         ),
       ),
     );
+
+    feedList.sort((a, b) =>
+        (a.notificationOpened == 'false' ? 0 : 1) -
+        (b.notificationOpened == 'false' ? 0 : 1));
 
     _feeds = feedList;
     notifyListeners();

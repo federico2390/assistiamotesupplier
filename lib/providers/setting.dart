@@ -1,4 +1,4 @@
-import 'package:adminpanel/api/notification.dart' as notifications;
+import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,17 +15,17 @@ class SettingProvider extends ChangeNotifier {
     return _notification;
   }
 
-  updateNotification(BuildContext context, NotificationDatabase enabled) {
+  updateNotification(BuildContext context, NotificationDatabase enabled) async {
     final box = Hive.box<NotificationDatabase>('notification');
     box.putAll({'notification': enabled});
-    notifications.NotificationApi().notification(context, enabled.notification!);
-    getNotification();
+    await SettingApi.notificationSwitch(context, enabled.notification!);
+    await getNotification();
     notifyListeners();
   }
 
   Future deleteNotification() async {
     final box = Hive.box<NotificationDatabase>('notification');
-    box.deleteFromDisk().then((value) {
+    await box.deleteFromDisk().then((value) {
       _notification = NotificationDatabase();
       getNotification();
       notifyListeners();

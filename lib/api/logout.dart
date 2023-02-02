@@ -1,3 +1,4 @@
+import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
@@ -40,11 +41,12 @@ class LogoutApi {
                   userToken: '',
                 ),
               );
-
-          await SharedPrefs.instance.remove('logged');
-          FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-          await firebaseMessaging.unsubscribeFromTopic(AppConst.firebaseTopic);
         }
+
+        await SharedPrefs.instance.remove('logged');
+        await SettingApi.notificationSwitch(context, false);
+        await FirebaseMessaging.instance
+            .unsubscribeFromTopic(AppConst.firebaseTopic);
 
         await Future.delayed(const Duration(seconds: 3), () async {
           Navigator.pop(context);
