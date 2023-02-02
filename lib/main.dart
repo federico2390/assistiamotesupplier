@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:adminpanel/database/notification/general_notification.dart';
 import 'package:adminpanel/globals/theme.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
@@ -37,13 +36,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   Directory directory = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(UserDatabaseAdapter());
   Hive.registerAdapter(NotificationDatabaseAdapter());
-  Hive.registerAdapter(GeneralNotificationDatabaseAdapter());
 
   await SharedPrefs.init();
   logged = SharedPrefs.getInt('logged');

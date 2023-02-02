@@ -51,7 +51,6 @@ class LoginApi {
                   userPassword: user.userPassword!.trim(),
                   userToken: user.userToken!.trim(),
                   notification: user.notification!.trim(),
-                  generalNotification: user.generalNotification!.trim(),
                   firstTimeLogged: user.firstTimeLogged!.trim(),
                 ),
               );

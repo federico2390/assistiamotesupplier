@@ -19,20 +19,6 @@ class SettingApi {
     );
   }
 
-  static Future generalNotificationSwitch(
-      BuildContext context, bool? generalNotification) async {
-    final user = await context.read<UserProvider>().getUser();
-
-    await http.post(
-      Uri.parse(AppConst.setting),
-      body: {
-        "general_notification_switch": "general_notification_switch",
-        "user_id": user.userId,
-        "general_notification": generalNotification.toString(),
-      },
-    );
-  }
-
   static Future token(BuildContext context, String token) async {
     final user = await context.read<UserProvider>().getUser();
 

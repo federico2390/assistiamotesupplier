@@ -29,15 +29,14 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       userPassword: fields[9] as String?,
       userToken: fields[10] as String?,
       notification: fields[11] as String?,
-      generalNotification: fields[12] as String?,
-      firstTimeLogged: fields[13] as String?,
+      firstTimeLogged: fields[12] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserDatabase obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -63,8 +62,6 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       ..writeByte(11)
       ..write(obj.notification)
       ..writeByte(12)
-      ..write(obj.generalNotification)
-      ..writeByte(13)
       ..write(obj.firstTimeLogged);
   }
 

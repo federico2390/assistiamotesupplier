@@ -29,8 +29,6 @@ class UserDatabase {
   @HiveField(11)
   String? notification;
   @HiveField(12)
-  String? generalNotification;
-  @HiveField(13)
   String? firstTimeLogged;
 
   UserDatabase({
@@ -46,7 +44,6 @@ class UserDatabase {
     this.userPassword,
     this.userToken,
     this.notification,
-    this.generalNotification,
     this.firstTimeLogged,
   });
 
@@ -64,7 +61,6 @@ class UserDatabase {
       userPassword: map['user_password'] ?? '',
       userToken: map['user_token'] ?? '',
       notification: map['notification'] ?? '',
-      generalNotification: map['general_notification'] ?? '',
       firstTimeLogged: map['first_time_logged'] ?? '',
     );
   }

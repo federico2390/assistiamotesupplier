@@ -1,5 +1,4 @@
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/database/notification/general_notification.dart';
 import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
@@ -21,8 +20,6 @@ class LogoutApi {
 
         await context.read<SettingProvider>().updateNotification(
             context, NotificationDatabase(notification: false));
-        await context.read<SettingProvider>().updateGeneralNotification(
-            context, GeneralNotificationDatabase(generalNotification: false));
         await FirebaseMessaging.instance
             .unsubscribeFromTopic(AppConst.firebaseTopic);
 
@@ -33,7 +30,6 @@ class LogoutApi {
           await SharedPrefs.instance.clear();
           await context.read<UserProvider>().deleteUser();
           await context.read<SettingProvider>().deleteNotification();
-          await context.read<SettingProvider>().deleteGeneralNotification();
         } else {
           await context.read<UserProvider>().updateUser(
                 UserDatabase(
@@ -49,7 +45,6 @@ class LogoutApi {
                   userPassword: user.userPassword!,
                   userToken: '',
                   notification: '',
-                  generalNotification: '',
                   firstTimeLogged: '',
                 ),
               );

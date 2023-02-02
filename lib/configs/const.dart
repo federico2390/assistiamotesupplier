@@ -41,5 +41,6 @@ class AppConst {
 
   /// Push Notifications
   static const String firebaseChannelId = 'studio_pa';
+  static const String firebaseChannelName = 'studio_pa';
   static const String firebaseTopic = 'allusers';
 }
