@@ -106,9 +106,13 @@ appBar(BuildContext context) {
                               },
                             ),
                           ),
+
+                          /// FIRST CIRCLE
                           Positioned(
                             top: -5,
-                            left: (ScreenSize.width(context) / 2 - 11.5) + 43,
+                            right: ScreenSize.width(context) / 3 +
+                                ScreenSize.width(context) / 9 -
+                                AppConst.padding * 2,
                             child: Consumer<FeedProvider>(
                               builder: (context, feedProvider, child) {
                                 return FutureBuilder(
@@ -172,9 +176,13 @@ appBar(BuildContext context) {
                               },
                             ),
                           ),
+
+                          /// SECOND CIRCLE
                           Positioned(
                             top: -5,
-                            left: (ScreenSize.width(context) - 11.5) - 33,
+                            right: ScreenSize.width(context) / 3 -
+                                ScreenSize.width(context) / 3 +
+                                AppConst.padding * 1.5,
                             child: Consumer<OperationProvider>(
                               builder: (context, operationProvider, child) {
                                 return FutureBuilder(
