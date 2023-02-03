@@ -1,41 +1,46 @@
+import 'package:adminpanel/providers/setting.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/configs/const.dart';
+import 'package:provider/provider.dart';
 
 class NotificationManager {
-  static void requestPermisison() async {
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  static FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  static Future requestPermisison(BuildContext context) async {
     NotificationSettings settings = await firebaseMessaging.requestPermission();
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional) {
       print('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
+      await SettingApi().editNotificationSetting(context, true);
+      context.read<SettingProvider>().setNotificationStatus(true);
     } else {
       print('User declined or hat not accepted permission');
+      await SettingApi().editNotificationSetting(context, false);
+      context.read<SettingProvider>().setNotificationStatus(false);
     }
   }
 
   static void getToken(BuildContext context) async {
-    await FirebaseMessaging.instance.getToken().then((token) async {
-      await SettingApi.token(context, token!);
-      await FirebaseMessaging.instance.subscribeToTopic(AppConst.firebaseTopic);
+    await firebaseMessaging.getToken().then((token) async {
+      await SettingApi().saveToken(context, token!);
+      await firebaseMessaging.getInitialMessage();
     });
   }
 
   static void initInfo() {
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+    final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-    var androidInitialize =
-        const AndroidInitializationSettings("@mipmap/ic_launcher");
-    var iOSInitialize = const DarwinInitializationSettings();
-    var initializeSettings =
+    const androidInitialize =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
+    const iOSInitialize = DarwinInitializationSettings();
+    const initializeSettings =
         InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
-    flutterLocalNotificationsPlugin.initialize(initializeSettings);
+    FlutterLocalNotificationsPlugin().initialize(initializeSettings);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
@@ -57,16 +62,24 @@ class NotificationManager {
 
       NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: const DarwinNotificationDetails(),
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
       );
 
-      await flutterLocalNotificationsPlugin.show(
-        0,
-        message.notification?.title,
-        message.notification?.body,
-        platformChannelSpecifics,
-        // payload: message.data['title'],
-      );
+      try {
+        await FlutterLocalNotificationsPlugin().show(
+          0,
+          message.notification!.title,
+          message.notification!.body,
+          platformChannelSpecifics,
+          // payload: message.data['title'],
+        );
+      } catch (error) {
+        print('ERROR_initInfo: $error');
+      }
     });
   }
 }

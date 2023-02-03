@@ -1,45 +1,52 @@
-import 'package:adminpanel/api/setting.dart';
-import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/database/notification/notification.dart';
-import 'package:adminpanel/utils/notification_manager.dart';
+import 'package:adminpanel/utils/modal_popup.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:adminpanel/api/setting.dart';
+import 'package:adminpanel/models/setting.dart';
 
 class SettingProvider extends ChangeNotifier {
-  NotificationDatabase _notification = NotificationDatabase();
-  NotificationDatabase get notification => _notification;
+  Setting _setting = Setting();
+  Setting get setting => _setting;
 
-  Future<NotificationDatabase> getNotification() async {
-    final box = await Hive.openBox<NotificationDatabase>('notification');
-    _notification =
-        box.values.isNotEmpty ? box.values.first : NotificationDatabase();
+  Future<Setting> getSetting(BuildContext context) async {
+    Setting getNotificationSetting =
+        await SettingApi().getNotificationSetting(context);
+    _setting = getNotificationSetting;
     notifyListeners();
-    return _notification;
+    return _setting;
   }
 
-  updateNotification(BuildContext context, NotificationDatabase enabled) async {
-    final box = Hive.box<NotificationDatabase>('notification');
-    box.putAll({'notification': enabled});
-    await SettingApi.notificationSwitch(context, enabled.notification!);
-    if (enabled.notification == true) {
-      NotificationManager.requestPermisison();
-      NotificationManager.getToken(context);
-      NotificationManager.initInfo();
+  updateNotification(BuildContext context, bool enabled) async {
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await firebaseMessaging.requestPermission();
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional) {
+      print('User granted OS permission');
+      await SettingApi().editNotificationSetting(context, enabled);
+      if (enabled == true) {
+        print('User subscribed to topic');
+        setNotificationStatus(true);
+      } else {
+        print('User unsubscribed from topic');
+        setNotificationStatus(false);
+      }
     } else {
-      FirebaseMessaging.instance.unsubscribeFromTopic(AppConst.firebaseTopic);
+      print('User declined or hat not accepted permission');
+      buildModalPopup(
+        context,
+        'Attenzione',
+        'Per ricevere tutte le comunicazioni che riguardano te e il tuo condominio vai in impostazioni e attiva la ricezione delle notifiche.',
+        'Impostazioni',
+      );
     }
-    await getNotification();
+
     notifyListeners();
   }
 
-  Future deleteNotification() async {
-    final box = Hive.box<NotificationDatabase>('notification');
-    await box.deleteFromDisk().then((value) {
-      _notification = NotificationDatabase();
-      getNotification();
-      notifyListeners();
-      return _notification;
-    });
+  void setNotificationStatus(bool status) {
+    _setting.notification = status == true ? 'true' : 'false';
+    notifyListeners();
   }
 }

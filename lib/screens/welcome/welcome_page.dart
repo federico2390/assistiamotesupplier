@@ -1,23 +1,37 @@
+import 'dart:io';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
+import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
+import 'package:adminpanel/utils/notification_manager.dart';
 import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:settings_ui/settings_ui.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
+
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ListView(
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(AppConst.padding),
+        child: Column(
           children: [
-            SizedBox(height: ScreenSize.height(context) / 3),
+            const Spacer(),
+            const Spacer(),
             Center(
               child: Image.asset(
                 AppConst.appLogo,
@@ -25,7 +39,7 @@ class WelcomePage extends StatelessWidget {
                 height: ScreenSize.width(context) / 3,
               ),
             ),
-            const SizedBox(height: AppConst.padding * 2),
+            const Spacer(),
             Text(
               'Benvenuta/o\n${context.read<UserProvider>().user.userName}',
               textAlign: TextAlign.center,
@@ -33,7 +47,52 @@ class WelcomePage extends StatelessWidget {
                 fontSize: 20,
                 color: AppColors.labelDarkColor,
               ),
-            )
+            ),
+            const Spacer(),
+            Consumer<SettingProvider>(
+              builder: (context, settingProvider, child) {
+                return FutureBuilder(
+                  future: Future.wait([
+                    NotificationManager.requestPermisison(context),
+                    settingProvider.getSetting(context),
+                  ]),
+                  builder: (context, snapshot) {
+                    return SettingsList(
+                      shrinkWrap: true,
+                      contentPadding: EdgeInsets.zero,
+                      lightTheme: SettingsThemeData(
+                        settingsListBackground: AppColors.backgroundColor,
+                      ),
+                      brightness: Brightness.light,
+                      applicationType: Platform.isAndroid
+                          ? ApplicationType.material
+                          : ApplicationType.cupertino,
+                      sections: [
+                        SettingsSection(
+                          tiles: <SettingsTile>[
+                            SettingsTile.switchTile(
+                              onToggle: (value) {
+                                settingProvider.updateNotification(
+                                    context, value);
+                              },
+                              initialValue:
+                                  settingProvider.setting.notification == 'true'
+                                      ? true
+                                      : false,
+                              leading: const Icon(Icons.notifications_outlined),
+                              title: const Text('Comunicazioni'),
+                              description: const Text(
+                                  'Abilitalo se vuoi ricevere tutte le comunicazioni che riguardano te e il tuo condominio.'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+            const Spacer(),
           ],
         ),
       ),

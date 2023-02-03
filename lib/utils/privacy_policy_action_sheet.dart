@@ -36,7 +36,7 @@ buildPrivacyPolicyActionSheet(BuildContext context) async {
               ListTile(
                 title: Text(
                   'Annulla',
-                  style: TextStyle(color: AppColors.errorColor),
+                  style: TextStyle(color: AppColors.secondaryColor),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -47,6 +47,7 @@ buildPrivacyPolicyActionSheet(BuildContext context) async {
         )
       : showCupertinoModalPopup(
           context: context,
+          useRootNavigator: true,
           builder: (BuildContext context) => CupertinoActionSheet(
             actions: <CupertinoActionSheetAction>[
               CupertinoActionSheetAction(
@@ -76,7 +77,7 @@ buildPrivacyPolicyActionSheet(BuildContext context) async {
               isDestructiveAction: true,
               child: Text(
                 'Annulla',
-                style: TextStyle(fontSize: 17, color: AppColors.errorColor),
+                style: TextStyle(fontSize: 17, color: AppColors.secondaryColor),
               ),
               onPressed: () {
                 Navigator.pop(context);

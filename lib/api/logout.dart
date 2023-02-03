@@ -1,8 +1,6 @@
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/database/notification/notification.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
-import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -17,9 +15,6 @@ class LogoutApi {
       try {
         await Alerts.errorAlert(context,
             title: 'Un momento...', subtitle: 'Esco dall\'account');
-
-        await context.read<SettingProvider>().updateNotification(
-            context, NotificationDatabase(notification: false));
         await FirebaseMessaging.instance
             .unsubscribeFromTopic(AppConst.firebaseTopic);
 
@@ -29,7 +24,6 @@ class LogoutApi {
         if (rememberData == 0 || rememberData == null) {
           await SharedPrefs.instance.clear();
           await context.read<UserProvider>().deleteUser();
-          await context.read<SettingProvider>().deleteNotification();
         } else {
           await context.read<UserProvider>().updateUser(
                 UserDatabase(

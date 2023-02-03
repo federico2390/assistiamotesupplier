@@ -22,7 +22,10 @@ buildLogoutActionSheet(BuildContext context) async {
                 },
               ),
               ListTile(
-                title: const Text('Annulla'),
+                title: Text(
+                  'Annulla',
+                  style: TextStyle(color: AppColors.secondaryColor),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -32,6 +35,7 @@ buildLogoutActionSheet(BuildContext context) async {
         )
       : showCupertinoModalPopup(
           context: context,
+          useRootNavigator: true,
           builder: (BuildContext context) => CupertinoActionSheet(
             actions: <CupertinoActionSheetAction>[
               CupertinoActionSheetAction(
@@ -47,7 +51,7 @@ buildLogoutActionSheet(BuildContext context) async {
               isDestructiveAction: true,
               child: Text(
                 'Annulla',
-                style: TextStyle(fontSize: 17, color: AppColors.labelDarkColor),
+                style: TextStyle(fontSize: 17, color: AppColors.secondaryColor),
               ),
               onPressed: () {
                 Navigator.pop(context);
