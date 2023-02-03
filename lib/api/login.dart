@@ -33,6 +33,8 @@ class LoginApi {
         );
 
         if (response.statusCode == 200 || response.statusCode == 201) {
+          print('fdsfsdfs______ ${response.body}');
+
           final jsonData = json.decode(response.body);
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
           await FirstTimeLogged().firstTimeLogged(context, user.userId!);
@@ -68,6 +70,9 @@ class LoginApi {
       print('PlatformException_login: $error');
     } catch (error) {
       print('ERROR_login: $error');
+      await Alerts.hideAlert();
+      await Alerts.errorAlert(context,
+          title: 'Errore', subtitle: 'Username o password errati');
     }
   }
 }
