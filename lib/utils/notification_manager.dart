@@ -71,7 +71,7 @@ class NotificationManager {
 
       try {
         await FlutterLocalNotificationsPlugin().show(
-          0,
+          id,
           message.notification!.title,
           message.notification!.body,
           platformChannelSpecifics,

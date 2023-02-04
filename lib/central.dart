@@ -1,7 +1,7 @@
 import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/globals/body.dart';
 
-import 'package:adminpanel/globals/app_bar.dart';
+import 'package:adminpanel/globals/app_bar/app_bar.dart';
 import 'package:adminpanel/globals/bottom_bar.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/utils/notification_manager.dart';

@@ -33,23 +33,35 @@ appBar(BuildContext context) {
                       ),
                     )
                   : const SizedBox(),
-              title: FutureBuilder(
-                future: context.read<UserProvider>().getUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.data!.palaceAddress!.isNotEmpty) {
-                    UserDatabase user = snapshot.data!;
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.apartment_rounded, size: 20),
-                        const SizedBox(width: AppConst.padding / 2),
-                        Text(user.palaceAddress!),
-                      ],
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
+              title: Consumer<UserProvider>(
+                builder: (context, userProvider, child) {
+                  return FutureBuilder(
+                    future: userProvider.getUser(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.data!.palaceAddress!.isNotEmpty) {
+                        UserDatabase user = snapshot.data!;
+                        return // palaceDropdownButton(context, user);
+                            Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.apartment_rounded, size: 20),
+                            const SizedBox(width: AppConst.padding / 2),
+                            Text(
+                              user.palaceAddress!,
+                              style: TextStyle(
+                                color: AppColors.labelDarkColor,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  );
                 },
               ),
               actions: [

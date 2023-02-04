@@ -10,6 +10,7 @@ class Button extends StatelessWidget {
     this.color,
     this.text = '',
     this.icon,
+    this.width,
     this.onPressed,
     this.accounting = false,
   });
@@ -17,6 +18,7 @@ class Button extends StatelessWidget {
   final Color? color;
   final String? text;
   final Icon? icon;
+  final double? width;
   final void Function()? onPressed;
   final bool? accounting;
 
@@ -24,6 +26,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 44,
+      width: width,
       child: Platform.isAndroid
           ? TextButton(
               style: TextButton.styleFrom(

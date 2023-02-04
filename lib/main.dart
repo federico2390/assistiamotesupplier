@@ -9,6 +9,7 @@ import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/search.dart';
 import 'package:adminpanel/providers/setting.dart';
@@ -74,6 +75,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LoaderProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
         ChangeNotifierProvider(create: (context) => GalleryProvider()),
+        ChangeNotifierProvider(create: (context) => PalaceProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
