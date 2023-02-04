@@ -49,11 +49,12 @@ class LogoutApi {
           await SharedPrefs.instance.remove('logged');
         }
 
-        Navigator.pop(
-          context,
+        await Future.delayed(const Duration(seconds: 2), () async {
+          Navigator.pop(context);
+          await Alerts.hideAlert();
           await Navigator.pushNamedAndRemoveUntil(
-              context, '/login', (Route<dynamic> route) => false),
-        );
+              context, '/login', (Route<dynamic> route) => false);
+        });
       } catch (error) {
         print('ERROR_logout: ${error.toString()}');
       }
