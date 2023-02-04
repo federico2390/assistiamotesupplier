@@ -1,6 +1,8 @@
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
+import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -17,6 +19,8 @@ class LogoutApi {
             title: 'Un momento...', subtitle: 'Esco dall\'account');
         await FirebaseMessaging.instance
             .unsubscribeFromTopic(AppConst.firebaseTopic);
+        context.read<OperationProvider>().removeAllImage();
+        context.read<ReadingProvider>().removeAllImage();
 
         logged = null;
 
