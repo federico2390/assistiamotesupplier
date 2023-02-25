@@ -1,3 +1,4 @@
+import 'package:adminpanel/screens/info/info_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adminpanel/providers/bottom_bar.dart';
@@ -14,5 +15,7 @@ body(BuildContext context) {
           ? const OperationPage()
           : context.read<BottomBarProvider>().currentPageIndex == 2
               ? const ReadingPage()
-              : const AccountingPage();
+              : context.read<BottomBarProvider>().currentPageIndex == 3
+                  ? const AccountingPage()
+                  : const InfoPage();
 }

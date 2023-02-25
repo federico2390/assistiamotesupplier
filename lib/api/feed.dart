@@ -1,5 +1,7 @@
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/feed.dart';
+import 'package:adminpanel/models/palace.dart';
+import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,16 +11,20 @@ class FeedApi {
   Future<List<Feed>> getFeeds(BuildContext context) async {
     List<Feed> feed = [];
     try {
-      final user = context.read<UserProvider>().user;
+      final user = context.read<UserProvider>().localuser;
+      Palace palace = context
+          .read<PalaceProvider>()
+          .palaces[context.read<PalaceProvider>().selectedPalace];
 
       var response = await http.post(
         Uri.parse(AppConst.feed),
         body: {
           "get_notification": 'get_notification',
           'user_id': user.userId,
-          'palace_id': user.palaceId,
+          'palace_id': palace.palaceId,
         },
       );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         feed = feedFromJson(response.body);
       } else {
@@ -39,6 +45,7 @@ class FeedApi {
           'feed_id': feed.notificationId,
         },
       );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
       } else {
         print('Can\'t mark as opened Notification');

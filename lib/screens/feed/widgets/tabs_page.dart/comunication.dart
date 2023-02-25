@@ -18,141 +18,127 @@ class ComunicationSegmentedPage extends StatelessWidget {
     var startDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
     var endDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm');
 
-    return Column(
-      children: [
-        Expanded(
-          child: Consumer<FeedProvider>(
-            builder: (context, feedProvider, child) {
-              if (feedProvider.feeds.isNotEmpty) {
-                List<Feed> feeds = feedProvider.feeds;
-                return ListView.separated(
-                  shrinkWrap: true,
-                  clipBehavior: Clip.none,
-                  padding: const EdgeInsets.fromLTRB(
-                    AppConst.padding - 5,
-                    AppConst.padding,
-                    AppConst.padding - 5,
-                    AppConst.padding * 2,
-                  ),
-                  itemCount: feeds.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(height: AppConst.padding),
-                  itemBuilder: (context, index) {
-                    Feed feed = feeds[index];
+    return Consumer<FeedProvider>(
+      builder: (context, feedProvider, child) {
+        if (feedProvider.feeds.isNotEmpty) {
+          List<Feed> feeds = feedProvider.feeds;
+          return ListView.separated(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(
+              AppConst.padding - 5,
+              AppConst.padding,
+              AppConst.padding - 5,
+              AppConst.padding * 2,
+            ),
+            itemCount: feeds.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(height: AppConst.padding),
+            itemBuilder: (context, index) {
+              Feed feed = feeds[index];
 
-                    return TapDebouncer(
-                      onTap: () async {
-                        await FeedApi()
-                            .markNotificationAsOpened(feed)
-                            .whenComplete(() {
-                          Navigator.pushNamed(
-                            context,
-                            '/feed_detail',
-                            arguments: FeedArguments(
-                              feed,
+              return TapDebouncer(
+                onTap: () async {
+                  await FeedApi()
+                      .markNotificationAsOpened(feed)
+                      .whenComplete(() {
+                    Navigator.pushNamed(
+                      context,
+                      '/feed_detail',
+                      arguments: FeedArguments(
+                        feed,
+                      ),
+                    );
+                  });
+                },
+                builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                  return GestureDetector(
+                    onTap: onTap,
+                    child: Card(
+                      elevation: 7,
+                      shadowColor: AppColors.secondaryColor.withOpacity(.15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(AppConst.borderRadius),
+                      ),
+                      color: feed.notificationOpened == 'false'
+                          ? AppColors.primaryColor
+                          : AppColors.backgroundColor,
+                      child: ListTile(
+                        leading: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.mail_outline_rounded,
+                              color: feed.notificationOpened == 'false'
+                                  ? AppColors.labelLightColor
+                                  : AppColors.primaryColor,
                             ),
-                          );
-                        });
-                      },
-                      builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                        return GestureDetector(
-                          onTap: onTap,
-                          child: Card(
-                            elevation: 7,
-                            shadowColor:
-                                AppColors.secondaryColor.withOpacity(.15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppConst.borderRadius),
-                            ),
+                          ],
+                        ),
+                        minLeadingWidth: 0,
+                        isThreeLine: feed.notificationExpiration!.isNotEmpty
+                            ? true
+                            : false,
+                        title: Text(
+                          feed.notificationTitle!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             color: feed.notificationOpened == 'false'
-                                ? AppColors.primaryColor
-                                : AppColors.backgroundColor,
-                            child: ListTile(
-                              leading: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                ? AppColors.labelLightColor
+                                : AppColors.labelDarkColor,
+                          ),
+                        ),
+                        subtitle: feed.notificationExpiration!.isNotEmpty
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    Icons.mail_outline_rounded,
-                                    color: feed.notificationOpened == 'false'
-                                        ? AppColors.labelLightColor
-                                        : AppColors.primaryColor,
+                                  Text(
+                                    feed.notificationMessage!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: feed.notificationOpened == 'false'
+                                          ? AppColors.labelLightColor
+                                          : AppColors.secondaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    endDateTimeFormat.format(startDateTimeFormat
+                                        .parse(feed.notificationExpiration!)),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: feed.notificationOpened == 'false'
+                                          ? AppColors.labelLightColor
+                                          : AppColors.primaryColor,
+                                    ),
                                   ),
                                 ],
-                              ),
-                              minLeadingWidth: 0,
-                              isThreeLine:
-                                  feed.notificationExpiration!.isNotEmpty
-                                      ? true
-                                      : false,
-                              title: Text(
-                                feed.notificationTitle!,
+                              )
+                            : Text(
+                                feed.notificationMessage!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
                                   color: feed.notificationOpened == 'false'
                                       ? AppColors.labelLightColor
-                                      : AppColors.labelDarkColor,
+                                      : AppColors.secondaryColor,
                                 ),
                               ),
-                              subtitle: feed.notificationExpiration!.isNotEmpty
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          feed.notificationMessage!,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: feed.notificationOpened ==
-                                                    'false'
-                                                ? AppColors.labelLightColor
-                                                : AppColors.secondaryColor,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          endDateTimeFormat.format(
-                                              startDateTimeFormat.parse(feed
-                                                  .notificationExpiration!)),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: feed.notificationOpened ==
-                                                    'false'
-                                                ? AppColors.labelLightColor
-                                                : AppColors.primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : Text(
-                                      feed.notificationMessage!,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color:
-                                            feed.notificationOpened == 'false'
-                                                ? AppColors.labelLightColor
-                                                : AppColors.secondaryColor,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                );
-              } else {
-                return const Loader();
-              }
+                      ),
+                    ),
+                  );
+                },
+              );
             },
-          ),
-        ),
-      ],
+          );
+        } else {
+          return const Loader();
+        }
+      },
     );
   }
 }

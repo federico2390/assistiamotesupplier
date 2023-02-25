@@ -10,8 +10,8 @@ class OperationProvider extends ChangeNotifier {
   List<Operation> _operations = [];
   List<Operation> get operations => _operations;
 
-  Future<List<Operation>> getOperations() async {
-    List<Operation> operationList = await OperationApi().getOperations();
+  Future<List<Operation>> getOperations(BuildContext context) async {
+    List<Operation> operationList = await OperationApi().getOperations(context);
 
     operationList.sort(
       (a, b) => DateTime.parse(

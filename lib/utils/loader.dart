@@ -1,16 +1,12 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/providers/loader.dart';
+import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Loader extends StatefulWidget {
+class Loader extends StatelessWidget {
   const Loader({Key? key}) : super(key: key);
 
-  @override
-  State<Loader> createState() => _LoaderState();
-}
-
-class _LoaderState extends State<Loader> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LoaderProvider>(
@@ -39,6 +35,24 @@ class _LoaderState extends State<Loader> {
                 ),
               );
       },
+    );
+  }
+}
+
+class AppBarLoader extends StatelessWidget {
+  const AppBarLoader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        height: 3,
+        width: ScreenSize.width(context) / 5,
+        child: LinearProgressIndicator(
+          color: AppColors.primaryColor,
+          backgroundColor: AppColors.tertiaryColor,
+        ),
+      ),
     );
   }
 }

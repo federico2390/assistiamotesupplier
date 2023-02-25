@@ -1,9 +1,10 @@
 import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/globals/body.dart';
 
-import 'package:adminpanel/globals/app_bar/app_bar.dart';
+import 'package:adminpanel/globals/app_bar.dart';
 import 'package:adminpanel/globals/bottom_bar.dart';
 import 'package:adminpanel/providers/setting.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/notification_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
     NotificationManager.initInfo();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    context.read<UserProvider>().getUser();
   }
 
   @override

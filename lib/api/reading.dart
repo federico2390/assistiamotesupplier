@@ -1,4 +1,6 @@
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/models/palace.dart';
+import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -17,7 +19,11 @@ class ReadingApi {
     try {
       var uuid = const Uuid();
       var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
-      final user = await context.read<UserProvider>().getUser();
+      final user = await context.read<UserProvider>().getLocalUser();
+      Palace palace = context
+          .read<PalaceProvider>()
+          .palaces[context.read<PalaceProvider>().selectedPalace];
+
       final imageList = context.read<ReadingProvider>().images;
 
       await Alerts.loadingAlert(context,
@@ -33,7 +39,7 @@ class ReadingApi {
 
       FormData formData = FormData.fromMap({
         'user_id': user.userId!.isNotEmpty ? user.userId!.trim() : '',
-        'palace_id': user.palaceId!.isNotEmpty ? user.palaceId!.trim() : '',
+        'palace_id': palace.palaceId!.isNotEmpty ? palace.palaceId : '',
         'value':
             valueController.text.isNotEmpty ? valueController.text.trim() : '',
         'media_1': multipartImageList.isNotEmpty ? multipartImageList[0] : '',

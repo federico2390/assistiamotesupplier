@@ -37,13 +37,9 @@ class LoginApi {
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
           await FirstTimeLogged().firstTimeLogged(context, user.userId!);
 
-          await context.read<UserProvider>().addUser(
+          await context.read<UserProvider>().addLocalUser(
                 UserDatabase(
                   userId: user.userId!.trim(),
-                  palaceId: user.palaceId!.trim(),
-                  palaceName: user.palaceName!.trim(),
-                  palaceCf: user.palaceCf!.trim(),
-                  palaceAddress: user.palaceAddress!.trim(),
                   userEmail: user.userEmail!.trim(),
                   userName: user.userName!.trim(),
                   userCf: user.userCf!.trim(),

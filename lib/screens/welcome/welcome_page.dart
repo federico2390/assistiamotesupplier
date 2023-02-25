@@ -11,18 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
-
-  @override
-  State<WelcomePage> createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class Welcome extends StatelessWidget {
+  const Welcome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +31,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
             const Spacer(),
             Text(
-              'Benvenuta/o\n${context.read<UserProvider>().user.userName}',
+              'Benvenuta/o\n${context.read<UserProvider>().localuser.userName}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,

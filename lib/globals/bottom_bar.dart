@@ -1,5 +1,6 @@
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
+import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ BottomNavigationBar bottomBar(BuildContext context) {
         tooltip: '',
       ),
       BottomNavigationBarItem(
-        label: 'Letture acqua',
+        label: 'Letture',
         icon: Icon(Icons.water_drop_rounded),
         tooltip: '',
       ),
@@ -32,10 +33,16 @@ BottomNavigationBar bottomBar(BuildContext context) {
         icon: Icon(Icons.assignment_rounded),
         tooltip: '',
       ),
+      BottomNavigationBarItem(
+        label: 'Info',
+        icon: Icon(Icons.info_rounded),
+        tooltip: '',
+      ),
     ],
     onTap: (index) async {
       await Alerts.hideAlert();
       context.read<BottomBarProvider>().currentPage(index);
+      context.read<LoaderProvider>().setShowLabel(false);
     },
   );
 }

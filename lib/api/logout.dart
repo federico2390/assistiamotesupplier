@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class LogoutApi {
   Future logout(BuildContext context) async {
-    final user = await context.read<UserProvider>().getUser();
+    final user = await context.read<UserProvider>().getLocalUser();
     if (user.userId != null) {
       try {
         await Alerts.errorAlert(context,
@@ -27,15 +27,11 @@ class LogoutApi {
         int? rememberData = SharedPrefs.getInt('rememberData');
         if (rememberData == 0 || rememberData == null) {
           await SharedPrefs.instance.clear();
-          await context.read<UserProvider>().deleteUser();
+          await context.read<UserProvider>().deleteLocalUser();
         } else {
-          await context.read<UserProvider>().updateUser(
+          await context.read<UserProvider>().updateLocalUser(
                 UserDatabase(
                   userId: '',
-                  palaceId: '',
-                  palaceName: '',
-                  palaceCf: '',
-                  palaceAddress: '',
                   userEmail: '',
                   userName: '',
                   userCf: '',

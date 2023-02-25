@@ -4,6 +4,7 @@ import 'package:adminpanel/models/supplier.dart';
 import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
 import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
+import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -66,6 +67,8 @@ class OperationFieldsState extends State<OperationFields> {
             itemHighlightColor: AppColors.transparentColor,
             focusColor: AppColors.transparentColor,
             selectedItemHighlightColor: AppColors.tertiaryColor,
+            isDense: true,
+            dropdownMaxHeight: ScreenSize.height(context) / 2,
             icon: Icon(
               Icons.arrow_drop_down_rounded,
               color: AppColors.secondaryColor,
@@ -131,6 +134,8 @@ class OperationFieldsState extends State<OperationFields> {
             itemHighlightColor: AppColors.transparentColor,
             focusColor: AppColors.transparentColor,
             selectedItemHighlightColor: AppColors.tertiaryColor,
+            isDense: true,
+            dropdownMaxHeight: ScreenSize.height(context) / 2,
             icon: Icon(
               Icons.arrow_drop_down_rounded,
               color: AppColors.secondaryColor,
@@ -199,6 +204,8 @@ class OperationFieldsState extends State<OperationFields> {
       itemHighlightColor: AppColors.transparentColor,
       focusColor: AppColors.transparentColor,
       selectedItemHighlightColor: AppColors.tertiaryColor,
+      isDense: true,
+      dropdownMaxHeight: ScreenSize.height(context) / 2,
       icon: Icon(
         Icons.arrow_drop_down_rounded,
         color: AppColors.secondaryColor,

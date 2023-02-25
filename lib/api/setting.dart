@@ -13,7 +13,7 @@ class SettingApi {
     Setting setting = Setting();
 
     try {
-      final user = await context.read<UserProvider>().getUser();
+      final user = await context.read<UserProvider>().getLocalUser();
 
       var response = await http.post(
         Uri.parse(AppConst.setting),
@@ -37,7 +37,7 @@ class SettingApi {
   Future editNotificationSetting(
       BuildContext context, bool? notification) async {
     try {
-      final user = await context.read<UserProvider>().getUser();
+      final user = await context.read<UserProvider>().getLocalUser();
 
       if (notification == true) {
         FirebaseMessaging.instance.subscribeToTopic(AppConst.firebaseTopic);
@@ -60,7 +60,7 @@ class SettingApi {
 
   Future saveToken(BuildContext context, String token) async {
     try {
-      final user = await context.read<UserProvider>().getUser();
+      final user = await context.read<UserProvider>().getLocalUser();
 
       await http.post(
         Uri.parse(AppConst.setting),

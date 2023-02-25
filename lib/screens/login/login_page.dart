@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     int? rememberData = SharedPrefs.getInt('rememberData');
 
     if (rememberData != 0 || rememberData != null) {
-      final user = await context.read<UserProvider>().getUser();
+      final user = await context.read<UserProvider>().getLocalUser();
       if (user.userUsername != null && user.userPassword != null) {
         usernameController.text = user.userUsername!;
         passwordController.text = user.userPassword!;

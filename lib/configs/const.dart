@@ -27,8 +27,10 @@ class AppConst {
   static const String login = '$backendBase/user/service/auth/login.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
+  static const String user = '$backendBase/user/service/misc/user.php';
   static const String feed = '$backendBase/user/service/misc/feed.php';
   static const String reading = '$backendBase/user/service/misc/reading.php';
+  static const String palace = '$backendBase/user/service/misc/palace.php';
   static const String supplier = '$backendBase/user/service/misc/supplier.php';
   static const String setting = '$backendBase/user/service/misc/setting.php';
   static const String operationMediaFolder = '$backendBase/user/media/';

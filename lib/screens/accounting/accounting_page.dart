@@ -46,7 +46,7 @@ class AccountingPage extends StatelessWidget {
               );
             },
             onLoadStop: (InAppWebViewController controller, Uri? url) async {
-              final user = await context.read<UserProvider>().getUser();
+              final user = await context.read<UserProvider>().getLocalUser();
               await controller.getUrl().then((value) async {
                 if (value!.path.contains("/Utente/Autenticazione") == true) {
                   await controller.evaluateJavascript(source: '''

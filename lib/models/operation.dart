@@ -29,6 +29,7 @@ class Operation {
     this.palaceName,
     this.palaceCf,
     this.palaceAddress,
+    this.palaceDescription,
     this.userEmail,
     this.userUsername,
     this.userName,
@@ -66,6 +67,7 @@ class Operation {
   String? palaceName;
   String? palaceCf;
   String? palaceAddress;
+  String? palaceDescription;
   String? userEmail;
   String? userUsername;
   String? userName;
@@ -104,6 +106,7 @@ class Operation {
         palaceName: json["palace_name"] ?? '',
         palaceCf: json["palace_cf"] ?? '',
         palaceAddress: json["palace_address"] ?? '',
+        palaceDescription: json["palace_description"] ?? '',
         userEmail: json["user_email"] ?? '',
         userUsername: json["user_username"] ?? '',
         userName: json["user_name"] ?? '',
@@ -140,6 +143,7 @@ class Operation {
         "palace_name": palaceName ?? '',
         "palace_cf": palaceCf ?? '',
         "palace_address": palaceAddress ?? '',
+        "palace_description": palaceDescription ?? '',
         "user_email": userEmail ?? '',
         "user_username": userUsername ?? '',
         "user_name": userName ?? '',

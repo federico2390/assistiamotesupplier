@@ -1,6 +1,8 @@
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/operation.dart';
+import 'package:adminpanel/models/palace.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:dio/dio.dart';
@@ -12,70 +14,79 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 class OperationApi {
-  Future<List<Operation>> getOperations() async {
+  Future<List<Operation>> getOperations(BuildContext context) async {
     List<Operation> operations = [];
 
     try {
-      var response = await http.post(
-        Uri.parse(AppConst.operation).replace(host: "adminpanel.buuumit.com"),
-        body: {
-          'get_operation': 'get_operation',
-        },
-      );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        List<Operation> operationsList = [];
-        for (var operation in operationFromJson(response.body)) {
-          Operation media = Operation(
-            operationId: operation.operationId,
-            palaceId: operation.palaceId,
-            userId: operation.userId,
-            operationType: operation.operationType,
-            operation: operation.operation,
-            description: operation.description,
-            supplierId: operation.supplierId,
-            supplierDescription: operation.supplierDescription,
-            operationDatetime: operation.operationDatetime,
-            palaceName: operation.palaceName,
-            palaceCf: operation.palaceCf,
-            palaceAddress: operation.palaceAddress,
-            userEmail: operation.userEmail,
-            userUsername: operation.userUsername,
-            userName: operation.userName,
-            userCf: operation.userCf,
-            userPassword: operation.userPassword,
-            userToken: operation.userToken,
-            notification: operation.notification,
-            firstTimeLogged: operation.firstTimeLogged,
-            supplierName: operation.supplierName,
-            supplierType: operation.supplierType,
-            supplierCf: operation.supplierCf,
-            operationState: operation.operationState,
-            operationViewed: operation.operationViewed,
-            operationWorking: operation.operationWorking,
-            operationOpened: operation.operationOpened,
-            operationLastUpdate: operation.operationLastUpdate,
-            media: [
-              operation.media1!,
-              operation.media2!,
-              operation.media3!,
-            ],
-            supplierMedia: [
-              operation.supplierMedia1!,
-              operation.supplierMedia2!,
-            ],
-          );
-          operationsList.add(media);
-        }
+      final user = context.read<UserProvider>().localuser;
+      if (user.userId != null && user.userId!.isNotEmpty) {
+        Palace palace = context
+            .read<PalaceProvider>()
+            .palaces[context.read<PalaceProvider>().selectedPalace];
 
-        for (var element in operationsList) {
-          for (var i = 0; i < element.media!.length; i++) {
-            element.media!.removeWhere((item) => item.isEmpty);
+        var response = await http.post(
+          Uri.parse(AppConst.operation).replace(host: "adminpanel.buuumit.com"),
+          body: {
+            'get_operation': 'get_operation',
+            'user_id': palace.userId,
+          },
+        );
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          List<Operation> operationsList = [];
+          for (var operation in operationFromJson(response.body)) {
+            Operation media = Operation(
+              operationId: operation.operationId,
+              palaceId: operation.palaceId,
+              userId: operation.userId,
+              operationType: operation.operationType,
+              operation: operation.operation,
+              description: operation.description,
+              supplierId: operation.supplierId,
+              supplierDescription: operation.supplierDescription,
+              operationDatetime: operation.operationDatetime,
+              palaceName: operation.palaceName,
+              palaceCf: operation.palaceCf,
+              palaceAddress: operation.palaceAddress,
+              palaceDescription: operation.palaceDescription,
+              userEmail: operation.userEmail,
+              userUsername: operation.userUsername,
+              userName: operation.userName,
+              userCf: operation.userCf,
+              userPassword: operation.userPassword,
+              userToken: operation.userToken,
+              notification: operation.notification,
+              firstTimeLogged: operation.firstTimeLogged,
+              supplierName: operation.supplierName,
+              supplierType: operation.supplierType,
+              supplierCf: operation.supplierCf,
+              operationState: operation.operationState,
+              operationViewed: operation.operationViewed,
+              operationWorking: operation.operationWorking,
+              operationOpened: operation.operationOpened,
+              operationLastUpdate: operation.operationLastUpdate,
+              media: [
+                operation.media1!,
+                operation.media2!,
+                operation.media3!,
+              ],
+              supplierMedia: [
+                operation.supplierMedia1!,
+                operation.supplierMedia2!,
+              ],
+            );
+            operationsList.add(media);
           }
-        }
 
-        operations = operationsList;
-      } else {
-        print('Can\'t get Operations');
+          for (var element in operationsList) {
+            for (var i = 0; i < element.media!.length; i++) {
+              element.media!.removeWhere((item) => item.isEmpty);
+            }
+          }
+
+          operations = operationsList;
+        } else {
+          print('Can\'t get Operations');
+        }
       }
     } catch (error) {
       print('ERROR_getOperations: $error');
@@ -93,7 +104,11 @@ class OperationApi {
     try {
       var uuid = const Uuid();
       var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
-      final user = await context.read<UserProvider>().getUser();
+      final user = await context.read<UserProvider>().getLocalUser();
+      Palace palace = context
+          .read<PalaceProvider>()
+          .palaces[context.read<PalaceProvider>().selectedPalace];
+
       final imageList = context.read<OperationProvider>().images;
 
       await Alerts.loadingAlert(context,
@@ -108,8 +123,9 @@ class OperationApi {
           .toList();
 
       FormData formData = FormData.fromMap({
+        'add_operation': 'add_operation',
         'user_id': user.userId!.isNotEmpty ? user.userId!.trim() : '',
-        'palace_id': user.palaceId!.isNotEmpty ? user.palaceId!.trim() : '',
+        'palace_id': palace.palaceId!.isNotEmpty ? palace.palaceId : '',
         'operation_type': operationTypeController.text.isNotEmpty
             ? operationTypeController.text.trim()
             : '',

@@ -7,13 +7,6 @@ class UserDatabase {
   @HiveField(0)
   String? userId;
   @HiveField(1)
-  String? palaceId;
-  @HiveField(2)
-  String? palaceName;
-  @HiveField(3)
-  String? palaceCf;
-  @HiveField(4)
-  String? palaceAddress;
   @HiveField(5)
   String? userEmail;
   @HiveField(6)
@@ -33,10 +26,6 @@ class UserDatabase {
 
   UserDatabase({
     this.userId,
-    this.palaceId,
-    this.palaceName,
-    this.palaceCf,
-    this.palaceAddress,
     this.userEmail,
     this.userName,
     this.userCf,
@@ -50,10 +39,6 @@ class UserDatabase {
   factory UserDatabase.fromJson(Map<String, dynamic> map) {
     return UserDatabase(
       userId: map['user_id'] ?? '',
-      palaceId: map['palace_id'] ?? '',
-      palaceName: map['palace_name'] ?? '',
-      palaceCf: map['palace_cf'] ?? '',
-      palaceAddress: map['palace_address'] ?? '',
       userEmail: map['user_email'] ?? '',
       userName: map['user_name'] ?? '',
       userCf: map['user_cf'] ?? '',

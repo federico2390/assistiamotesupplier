@@ -21,332 +21,325 @@ class AllSegmentedPage extends StatelessWidget {
     var startDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
     var endDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm');
 
-    return Column(
+    return ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.fromLTRB(
+        AppConst.padding - 5,
+        AppConst.padding,
+        AppConst.padding - 5,
+        AppConst.padding * 2,
+      ),
       children: [
-        Expanded(
-          child: ListView(
-            shrinkWrap: true,
-            clipBehavior: Clip.none,
-            padding: const EdgeInsets.fromLTRB(
-              AppConst.padding - 5,
-              AppConst.padding,
-              AppConst.padding - 5,
-              AppConst.padding * 2,
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Row(
-                  children: [
-                    const Text(
-                      'Comunicazioni',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: GestureDetector(
-                        child: const Text(
-                          'Mostra tutti',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        onTap: () {
-                          context.read<FeedProvider>().setSelectedSegment(2);
-                        },
-                      ),
-                    ),
-                  ],
+              const Text(
+                'Comunicazioni',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
                 ),
               ),
-              const SizedBox(height: AppConst.padding / 1.5),
-              Consumer<FeedProvider>(
-                builder: (context, feedProvider, child) {
-                  if (feedProvider.feeds.isNotEmpty) {
-                    List<Feed> feeds = feedProvider.feeds;
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      clipBehavior: Clip.none,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: feeds.length >= 2 ? 2 : feeds.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(height: AppConst.padding),
-                      itemBuilder: (context, index) {
-                        Feed feed = feeds[index];
-        
-                        return TapDebouncer(
-                          onTap: () async {
-                            await FeedApi()
-                                .markNotificationAsOpened(feed)
-                                .whenComplete(() {
-                              Navigator.pushNamed(
-                                context,
-                                '/feed_detail',
-                                arguments: FeedArguments(
-                                  feed,
-                                ),
-                              );
-                            });
-                          },
-                          builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                            return GestureDetector(
-                              onTap: onTap,
-                              child: Card(
-                                elevation: 7,
-                                shadowColor:
-                                    AppColors.secondaryColor.withOpacity(.15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(AppConst.borderRadius),
-                                ),
-                                color: feed.notificationOpened == 'false'
-                                    ? AppColors.primaryColor
-                                    : AppColors.backgroundColor,
-                                child: ListTile(
-                                  leading: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.mail_outline_rounded,
-                                        color: feed.notificationOpened == 'false'
-                                            ? AppColors.labelLightColor
-                                            : AppColors.primaryColor,
-                                      ),
-                                    ],
-                                  ),
-                                  minLeadingWidth: 0,
-                                  isThreeLine: feed.notificationExpiration!.isNotEmpty
-                                      ? true
-                                      : false,
-                                  title: Text(
-                                    feed.notificationTitle!,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: feed.notificationOpened == 'false'
-                                          ? AppColors.labelLightColor
-                                          : AppColors.labelDarkColor,
-                                    ),
-                                  ),
-                                  subtitle: feed.notificationExpiration!.isNotEmpty
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              feed.notificationMessage!,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color:
-                                                    feed.notificationOpened == 'false'
-                                                        ? AppColors.labelLightColor
-                                                        : AppColors.secondaryColor,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              endDateTimeFormat.format(
-                                                  startDateTimeFormat.parse(
-                                                      feed.notificationExpiration!)),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color:
-                                                    feed.notificationOpened == 'false'
-                                                        ? AppColors.labelLightColor
-                                                        : AppColors.primaryColor,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Text(
-                                          feed.notificationMessage!,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: feed.notificationOpened == 'false'
-                                                ? AppColors.labelLightColor
-                                                : AppColors.secondaryColor,
-                                          ),
-                                        ),
-                                ),
-                              ),
-                            );
-                          },
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: GestureDetector(
+                  child: const Text(
+                    'Mostra tutti',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onTap: () {
+                    context.read<FeedProvider>().setSelectedSegment(2);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppConst.padding / 1.5),
+        Consumer<FeedProvider>(
+          builder: (context, feedProvider, child) {
+            if (feedProvider.feeds.isNotEmpty) {
+              List<Feed> feeds = feedProvider.feeds;
+              return ListView.separated(
+                shrinkWrap: true,
+                clipBehavior: Clip.none,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: feeds.length >= 2 ? 2 : feeds.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(height: AppConst.padding),
+                itemBuilder: (context, index) {
+                  Feed feed = feeds[index];
+
+                  return TapDebouncer(
+                    onTap: () async {
+                      await FeedApi()
+                          .markNotificationAsOpened(feed)
+                          .whenComplete(() {
+                        Navigator.pushNamed(
+                          context,
+                          '/feed_detail',
+                          arguments: FeedArguments(
+                            feed,
+                          ),
                         );
-                      },
-                    );
-                  } else {
-                    return const Loader();
-                  }
-                },
-              ),
-              const SizedBox(height: AppConst.padding),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Row(
-                  children: [
-                    const Text(
-                      'Interventi',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: GestureDetector(
-                        child: const Text(
-                          'Mostra tutti',
-                          style: TextStyle(
-                            fontSize: 12,
+                      });
+                    },
+                    builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                      return GestureDetector(
+                        onTap: onTap,
+                        child: Card(
+                          elevation: 7,
+                          shadowColor:
+                              AppColors.secondaryColor.withOpacity(.15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(AppConst.borderRadius),
                           ),
-                        ),
-                        onTap: () {
-                          context.read<FeedProvider>().setSelectedSegment(3);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppConst.padding / 1.5),
-              Consumer<OperationProvider>(
-                builder: (context, operationProvider, child) {
-                  if (operationProvider.operations.isNotEmpty) {
-                    List<Operation> operations = operationProvider.operations;
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      clipBehavior: Clip.none,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: operations.length >= 3 ? 3 : operations.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(height: AppConst.padding),
-                      itemBuilder: (context, index) {
-                        Operation operation = operations[index];
-        
-                        return TapDebouncer(
-                          onTap: () async {
-                            await OperationApi()
-                                .markOperationAsOpened(operation)
-                                .whenComplete(() {
-                              Navigator.pushNamed(
-                                context,
-                                '/operation_detail',
-                                arguments: OperationArguments(
-                                  operation,
+                          color: feed.notificationOpened == 'false'
+                              ? AppColors.primaryColor
+                              : AppColors.backgroundColor,
+                          child: ListTile(
+                            leading: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.mail_outline_rounded,
+                                  color: feed.notificationOpened == 'false'
+                                      ? AppColors.labelLightColor
+                                      : AppColors.primaryColor,
                                 ),
-                              );
-                            });
-                          },
-                          builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                            return GestureDetector(
-                              onTap: onTap,
-                              child: Card(
-                                elevation: 7,
-                                shadowColor:
-                                    AppColors.secondaryColor.withOpacity(.15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(AppConst.borderRadius),
-                                ),
-                                color: operation.operationOpened == 'false'
-                                    ? AppColors.primaryColor
-                                    : AppColors.backgroundColor,
-                                child: ListTile(
-                                  leading: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.build_rounded,
-                                        color: operation.operationOpened == 'false'
-                                            ? AppColors.labelLightColor
-                                            : AppColors.primaryColor,
-                                      ),
-                                    ],
-                                  ),
-                                  minLeadingWidth: 0,
-                                  title: Row(
+                              ],
+                            ),
+                            minLeadingWidth: 0,
+                            isThreeLine: feed.notificationExpiration!.isNotEmpty
+                                ? true
+                                : false,
+                            title: Text(
+                              feed.notificationTitle!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: feed.notificationOpened == 'false'
+                                    ? AppColors.labelLightColor
+                                    : AppColors.labelDarkColor,
+                              ),
+                            ),
+                            subtitle: feed.notificationExpiration!.isNotEmpty
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        operation.operation!,
+                                        feed.notificationMessage!,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: operation.operationOpened == 'false'
-                                              ? AppColors.labelLightColor
-                                              : AppColors.labelDarkColor,
+                                          color:
+                                              feed.notificationOpened == 'false'
+                                                  ? AppColors.labelLightColor
+                                                  : AppColors.secondaryColor,
                                         ),
                                       ),
-                                      const Spacer(),
-                                      Container(
-                                        alignment: Alignment.topRight,
-                                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: AppConst.padding / 1.5,
-                                          vertical: AppConst.padding / 7,
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        endDateTimeFormat.format(
+                                            startDateTimeFormat.parse(
+                                                feed.notificationExpiration!)),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color:
+                                              feed.notificationOpened == 'false'
+                                                  ? AppColors.labelLightColor
+                                                  : AppColors.primaryColor,
                                         ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              AppConst.padding / 3),
-                                          color: operation.operationOpened == 'false'
-                                              ? AppColors.labelLightColor
-                                              : AppColors.primaryColor,
-                                        ),
-                                        child: Text(
-                                          operation.operationLastUpdate!.isNotEmpty
-                                              ? 'Aggiornato'
-                                              : operation.operationState == 'false'
-                                                  ? 'Aperto'
-                                                  : 'Chiuso',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                operation.operationOpened == 'false'
-                                                    ? AppColors.primaryColor
-                                                    : AppColors.backgroundColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
+                                      ),
                                     ],
-                                  ),
-                                  subtitle: Text(
-                                    operation.description!,
+                                  )
+                                : Text(
+                                    feed.notificationMessage!,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      color: operation.operationOpened == 'false'
+                                      color: feed.notificationOpened == 'false'
                                           ? AppColors.labelLightColor
                                           : AppColors.secondaryColor,
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  } else {
-                    return const Loader();
-                  }
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
+              );
+            } else {
+              return const Loader();
+            }
+          },
+        ),
+        const SizedBox(height: AppConst.padding),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Row(
+            children: [
+              const Text(
+                'Interventi',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: GestureDetector(
+                  child: const Text(
+                    'Mostra tutti',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  onTap: () {
+                    context.read<FeedProvider>().setSelectedSegment(3);
+                  },
+                ),
               ),
             ],
           ),
+        ),
+        const SizedBox(height: AppConst.padding / 1.5),
+        Consumer<OperationProvider>(
+          builder: (context, operationProvider, child) {
+            if (operationProvider.operations.isNotEmpty) {
+              List<Operation> operations = operationProvider.operations;
+              return ListView.separated(
+                shrinkWrap: true,
+                clipBehavior: Clip.none,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: operations.length >= 3 ? 3 : operations.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(height: AppConst.padding),
+                itemBuilder: (context, index) {
+                  Operation operation = operations[index];
+
+                  return TapDebouncer(
+                    onTap: () async {
+                      await OperationApi()
+                          .markOperationAsOpened(operation)
+                          .whenComplete(() {
+                        Navigator.pushNamed(
+                          context,
+                          '/operation_detail',
+                          arguments: OperationArguments(
+                            operation,
+                          ),
+                        );
+                      });
+                    },
+                    builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                      return GestureDetector(
+                        onTap: onTap,
+                        child: Card(
+                          elevation: 7,
+                          shadowColor:
+                              AppColors.secondaryColor.withOpacity(.15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(AppConst.borderRadius),
+                          ),
+                          color: operation.operationOpened == 'false'
+                              ? AppColors.primaryColor
+                              : AppColors.backgroundColor,
+                          child: ListTile(
+                            leading: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.build_rounded,
+                                  color: operation.operationOpened == 'false'
+                                      ? AppColors.labelLightColor
+                                      : AppColors.primaryColor,
+                                ),
+                              ],
+                            ),
+                            minLeadingWidth: 0,
+                            title: Row(
+                              children: [
+                                Text(
+                                  operation.operation!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: operation.operationOpened == 'false'
+                                        ? AppColors.labelLightColor
+                                        : AppColors.labelDarkColor,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Container(
+                                  alignment: Alignment.topRight,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppConst.padding / 1.5,
+                                    vertical: AppConst.padding / 7,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        AppConst.padding / 3),
+                                    color: operation.operationOpened == 'false'
+                                        ? AppColors.labelLightColor
+                                        : AppColors.primaryColor,
+                                  ),
+                                  child: Text(
+                                    operation.operationLastUpdate!.isNotEmpty
+                                        ? 'Aggiornato'
+                                        : operation.operationState == 'false'
+                                            ? 'Aperto'
+                                            : 'Chiuso',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          operation.operationOpened == 'false'
+                                              ? AppColors.primaryColor
+                                              : AppColors.backgroundColor,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            subtitle: Text(
+                              operation.description!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: operation.operationOpened == 'false'
+                                    ? AppColors.labelLightColor
+                                    : AppColors.secondaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else {
+              return const Loader();
+            }
+          },
         ),
       ],
     );

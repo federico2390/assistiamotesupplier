@@ -1,5 +1,6 @@
 import 'package:adminpanel/central.dart';
 import 'package:adminpanel/screens/accounting/accounting_page.dart';
+import 'package:adminpanel/screens/change_palace/change_palace.dart';
 import 'package:adminpanel/screens/feed/feed_page.dart';
 import 'package:adminpanel/screens/feed/widgets/details_page/feed_detail.dart';
 import 'package:adminpanel/screens/feed/widgets/details_page/operation_detail.dart';
@@ -16,7 +17,7 @@ class Routes {
     return {
       '/': (context) => const Central(),
       '/login': (context) => const LoginPage(),
-      '/welcome': (context) => const WelcomePage(),
+      '/welcome': (context) => const Welcome(),
       '/operation': (context) => const OperationPage(),
       '/feed': (context) => const FeedPage(),
       '/feed_detail': (context) => const FeedDetail(),
@@ -25,6 +26,7 @@ class Routes {
       '/accounting': (context) => const AccountingPage(),
       '/gallery': (context) => const GalleryPage(),
       '/setting': (context) => const SettingPage(),
+      '/change_palace': (context) => const ChangePalace(),
     };
   }
 }
