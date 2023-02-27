@@ -180,7 +180,7 @@ class OperationFormState extends State<OperationForm> {
                   UserApi().isLogged == true) {
                 hideKeyboard(context);
 
-                await OperationApi().postOperation(
+                await OperationApi().addOperation(
                   context,
                   formKey,
                   operationTypeController,

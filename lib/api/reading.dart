@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ReadingApi {
-  Future postReading(
+  Future addReading(
     BuildContext context,
     TextEditingController valueController,
   ) async {

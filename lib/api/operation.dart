@@ -28,7 +28,8 @@ class OperationApi {
           Uri.parse(AppConst.operation).replace(host: "adminpanel.buuumit.com"),
           body: {
             'get_operation': 'get_operation',
-            'user_id': palace.userId,
+            'user_id': user.userId,
+            'palace_id': palace.palaceId,
           },
         );
         if (response.statusCode == 200 || response.statusCode == 201) {
@@ -94,7 +95,7 @@ class OperationApi {
     return operations;
   }
 
-  Future postOperation(
+  Future addOperation(
     BuildContext context,
     GlobalKey<FormState> formKey,
     TextEditingController operationTypeController,

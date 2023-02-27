@@ -161,7 +161,7 @@ class _ReadingFormState extends State<ReadingForm> {
               if (formKey.currentState!.validate() &&
                   UserApi().isLogged == true) {
                 hideKeyboard(context);
-                await ReadingApi().postReading(
+                await ReadingApi().addReading(
                   context,
                   valueController,
                 );

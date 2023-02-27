@@ -64,6 +64,8 @@ appBar(BuildContext context) {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              const Icon(Icons.arrow_drop_down_rounded,
+                                  size: 28),
                             ],
                           ),
                           onTap: () {
