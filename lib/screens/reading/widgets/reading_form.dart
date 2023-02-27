@@ -154,10 +154,6 @@ class _ReadingFormState extends State<ReadingForm> {
           ),
           const SizedBox(height: AppConst.padding * 2),
           TapDebouncer(
-            cooldown:
-                formKey.currentState!.validate() && UserApi().isLogged == true
-                    ? null
-                    : const Duration(seconds: 3),
             onTap: () async {
               if (formKey.currentState!.validate() &&
                   UserApi().isLogged == true) {

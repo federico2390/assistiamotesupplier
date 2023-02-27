@@ -39,12 +39,11 @@ class FeedProvider extends ChangeNotifier {
           (b.notificationOpened == 'false' ? 0 : 1));
 
       _feeds = feedList;
-
-      notifyListeners();
-      return _feeds;
     } catch (error) {
       print(error);
     }
+
+    notifyListeners();
     return _feeds;
   }
 

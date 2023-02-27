@@ -38,12 +38,11 @@ class OperationProvider extends ChangeNotifier {
           (b.operationOpened == 'false' ? 0 : 1));
 
       _operations = operationList;
-
-      notifyListeners();
-      return _operations;
     } catch (error) {
       print(error);
     }
+
+    notifyListeners();
     return _operations;
   }
 

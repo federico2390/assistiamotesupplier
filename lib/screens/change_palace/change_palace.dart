@@ -86,7 +86,6 @@ class ChangePalace extends StatelessWidget {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: TapDebouncer(
-              cooldown: const Duration(seconds: 3),
               onTap: () async {
                 if (idx != palaceProvider.selectedPalace) {
                   loaderProvider.setIsSaving(true);

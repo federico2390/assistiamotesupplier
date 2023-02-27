@@ -20,7 +20,11 @@ class ReadingFields extends StatelessWidget {
   TextFormField palaceField() {
     return TextFormField(
       controller: valueController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+        FilteringTextInputFormatter.digitsOnly
+      ],
       textInputAction: TextInputAction.done,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       textCapitalization: TextCapitalization.sentences,
