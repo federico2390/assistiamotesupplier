@@ -48,6 +48,11 @@ class FeedProvider extends ChangeNotifier {
     return _feeds;
   }
 
+  void cancelFeeds() {
+    _feeds.clear();
+    notifyListeners();
+  }
+
   int _selectedSegment = 1;
   int get selectedSegment => _selectedSegment;
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/setting.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/logout_action_sheet.dart';
@@ -88,6 +89,17 @@ class SettingPage extends StatelessWidget {
                   ),
                   SettingsSection(
                     tiles: <SettingsTile>[
+                      SettingsTile(
+                        enabled: false,
+                        title: Text(
+                          'Username',
+                          style: TextStyle(color: AppColors.secondaryColor),
+                        ),
+                        trailing: Text(
+                          context.read<UserProvider>().localuser.userUsername!,
+                          style: TextStyle(color: AppColors.secondaryColor),
+                        ),
+                      ),
                       SettingsTile(
                         enabled: false,
                         title: FutureBuilder(

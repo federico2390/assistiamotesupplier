@@ -47,6 +47,11 @@ class OperationProvider extends ChangeNotifier {
     return _operations;
   }
 
+  void cancelOperations() {
+    _operations.clear();
+    notifyListeners();
+  }
+
   XFile? _image;
   XFile get image => _image!;
 
