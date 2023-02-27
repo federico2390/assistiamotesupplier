@@ -14,6 +14,7 @@ import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class ReadingForm extends StatefulWidget {
   const ReadingForm({super.key});
@@ -152,12 +153,12 @@ class _ReadingFormState extends State<ReadingForm> {
             ],
           ),
           const SizedBox(height: AppConst.padding * 2),
-          Button(
-            text: 'Invia lettura',
-            color: valueController.text.isNotEmpty
-                ? null
-                : AppColors.secondaryColor,
-            onPressed: () async {
+          TapDebouncer(
+            cooldown:
+                formKey.currentState!.validate() && UserApi().isLogged == true
+                    ? null
+                    : const Duration(seconds: 3),
+            onTap: () async {
               if (formKey.currentState!.validate() &&
                   UserApi().isLogged == true) {
                 hideKeyboard(context);
@@ -169,6 +170,14 @@ class _ReadingFormState extends State<ReadingForm> {
                 await Alerts.errorAlert(context,
                     title: 'Ops!', subtitle: 'Completa tutti i campi');
               }
+            },
+            builder: (BuildContext context, TapDebouncerFunc? onTap) {
+              return Button(
+                  text: 'Invia lettura',
+                  color: valueController.text.isNotEmpty
+                      ? null
+                      : AppColors.secondaryColor,
+                  onPressed: onTap);
             },
           ),
         ],
