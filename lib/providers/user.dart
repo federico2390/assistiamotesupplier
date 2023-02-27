@@ -13,6 +13,7 @@ class UserProvider extends ChangeNotifier {
       UserDatabase user = await UserApi().getUser(_localUser.userId!);
       await updateLocalUser(user);
       notifyListeners();
+      return _localUser;
     }
     return _localUser;
   }

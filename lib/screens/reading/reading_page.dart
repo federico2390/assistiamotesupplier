@@ -9,9 +9,7 @@ class ReadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => hideKeyboard(context),
-      child: const Scaffold(
-        body: ReadingForm(),
-      ),
+      child: const ReadingForm(),
     );
   }
 }

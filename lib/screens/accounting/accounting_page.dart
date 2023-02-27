@@ -11,45 +11,44 @@ class AccountingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          InAppWebView(
-            key: GlobalKey(),
-            initialUrlRequest: URLRequest(
-              url: Uri.parse(AppConst.serviceBase),
+    return Stack(
+      children: [
+        InAppWebView(
+          key: GlobalKey(),
+          initialUrlRequest: URLRequest(
+            url: Uri.parse(AppConst.serviceBase),
+          ),
+          initialOptions: InAppWebViewGroupOptions(
+            crossPlatform: InAppWebViewOptions(
+              useShouldOverrideUrlLoading: true,
+              javaScriptCanOpenWindowsAutomatically: true,
+              preferredContentMode: UserPreferredContentMode.DESKTOP,
+              horizontalScrollBarEnabled: false,
+              verticalScrollBarEnabled: false,
+              // clearCache: true,
             ),
-            initialOptions: InAppWebViewGroupOptions(
-              crossPlatform: InAppWebViewOptions(
-                useShouldOverrideUrlLoading: true,
-                javaScriptCanOpenWindowsAutomatically: true,
-                preferredContentMode: UserPreferredContentMode.DESKTOP,
-                horizontalScrollBarEnabled: false,
-                verticalScrollBarEnabled: false,
-                // clearCache: true,
-              ),
-              android: AndroidInAppWebViewOptions(
-                geolocationEnabled: false,
-                initialScale: -1,
-              ),
-              ios: IOSInAppWebViewOptions(
-                enableViewportScale: true,
-                automaticallyAdjustsScrollIndicatorInsets: true,
-              ),
+            android: AndroidInAppWebViewOptions(
+              geolocationEnabled: false,
+              initialScale: -1,
             ),
-            onWebViewCreated: (controller) async {
-              context.read<AccountingProvider>().currentController(controller);
-              await Alerts.loadingAlert(
-                context,
-                title: 'Caricamento',
-                subtitle: 'Non cambiare sezione',
-              );
-            },
-            onLoadStop: (InAppWebViewController controller, Uri? url) async {
-              final user = await context.read<UserProvider>().getLocalUser();
-              await controller.getUrl().then((value) async {
-                if (value!.path.contains("/Utente/Autenticazione") == true) {
-                  await controller.evaluateJavascript(source: '''
+            ios: IOSInAppWebViewOptions(
+              enableViewportScale: true,
+              automaticallyAdjustsScrollIndicatorInsets: true,
+            ),
+          ),
+          onWebViewCreated: (controller) async {
+            context.read<AccountingProvider>().currentController(controller);
+            await Alerts.loadingAlert(
+              context,
+              title: 'Caricamento',
+              subtitle: 'Non cambiare sezione',
+            );
+          },
+          onLoadStop: (InAppWebViewController controller, Uri? url) async {
+            final user = await context.read<UserProvider>().getLocalUser();
+            await controller.getUrl().then((value) async {
+              if (value!.path.contains("/Utente/Autenticazione") == true) {
+                await controller.evaluateJavascript(source: '''
                 document.getElementsByTagName("body")[0].style.display = "none";
                 document.getElementById('studiopa-header-container').style.display = "none";
                 document.getElementById('HomeSlider').style.display = "none";
@@ -57,30 +56,29 @@ class AccountingPage extends StatelessWidget {
                 document.getElementById('Password').value = '${user.userPassword!}';
                 document.getElementById('loginForm').submit();
                 ''');
-                } else if (value == Uri.parse('${AppConst.serviceBase}/')) {
-                  await controller.evaluateJavascript(source: '''
+              } else if (value == Uri.parse('${AppConst.serviceBase}/')) {
+                await controller.evaluateJavascript(source: '''
                 document.getElementsByTagName("body")[0].style.display = "none";
                 ''');
-                } else {
-                  await controller.evaluateJavascript(source: '''
+              } else {
+                await controller.evaluateJavascript(source: '''
                 document.getElementById('studiopa-header-container').style.display = "none";
                 document.getElementById('HomeSlider').style.display = "none";
                 ''');
-                }
-              });
+              }
+            });
 
-              await Alerts.hideAlert();
-            },
-            onUpdateVisitedHistory: (controller, url, androidIsReload) async {
-              await Alerts.loadingAlert(
-                context,
-                title: 'Caricamento',
-                subtitle: 'Non cambiare sezione',
-              );
-            },
-          ),
-        ],
-      ),
+            await Alerts.hideAlert();
+          },
+          onUpdateVisitedHistory: (controller, url, androidIsReload) async {
+            await Alerts.loadingAlert(
+              context,
+              title: 'Caricamento',
+              subtitle: 'Non cambiare sezione',
+            );
+          },
+        ),
+      ],
     );
   }
 }

@@ -32,7 +32,7 @@ class ComunicationSegmentedPage extends StatelessWidget {
             ),
             itemCount: feeds.length,
             separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: AppConst.padding),
+                const SizedBox(height: AppConst.padding / 2),
             itemBuilder: (context, index) {
               Feed feed = feeds[index];
 

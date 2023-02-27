@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +10,7 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/screens/accounting/widgets/top_bar.dart';
+import 'package:adminpanel/screens/change_palace/change_palace.dart';
 import 'package:adminpanel/utils/loader.dart';
 
 appBar(BuildContext context) {
@@ -20,7 +24,7 @@ appBar(BuildContext context) {
         ? AppBar(
             leading: context.read<BottomBarProvider>().currentPageIndex != 3
                 ? Ink(
-                    child: InkWell(
+                    child: GestureDetector(
                       child: const Icon(Icons.settings_rounded),
                       onTap: () {
                         Navigator.pushNamed(context, '/setting');
@@ -41,26 +45,47 @@ appBar(BuildContext context) {
                     future: context.read<PalaceProvider>().getPalaces(context),
                     builder: (context, snapshot) {
                       if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.apartment_rounded, size: 20),
-                            const SizedBox(width: AppConst.padding / 2),
-                            Text(
-                              context
-                                  .read<PalaceProvider>()
-                                  .palaces[context
-                                      .read<PalaceProvider>()
-                                      .selectedPalace]
-                                  .palaceAddress!,
-                              style: TextStyle(
-                                color: AppColors.labelDarkColor,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
+                        return GestureDetector(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.apartment_rounded, size: 20),
+                              const SizedBox(width: AppConst.padding / 2),
+                              Text(
+                                context
+                                    .watch<PalaceProvider>()
+                                    .palaces[context
+                                        .watch<PalaceProvider>()
+                                        .selectedPalace]
+                                    .palaceAddress!,
+                                style: TextStyle(
+                                  color: AppColors.labelDarkColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              Platform.isAndroid
+                                  ? MaterialPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (BuildContext context) {
+                                        return const ChangePalace();
+                                      },
+                                    )
+                                  : CupertinoPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (BuildContext context) {
+                                        return const ChangePalace();
+                                      },
+                                    ),
+                            );
+                          },
                         );
+                      } else if (snapshot.hasData) {
+                        return const AppBarLoader();
                       } else {
                         return const AppBarLoader();
                       }

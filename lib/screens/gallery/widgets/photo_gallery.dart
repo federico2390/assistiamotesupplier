@@ -9,14 +9,9 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class PhotoGallery extends StatefulWidget {
+class PhotoGallery extends StatelessWidget {
   const PhotoGallery({super.key});
 
-  @override
-  State<PhotoGallery> createState() => _PhotoGalleryState();
-}
-
-class _PhotoGalleryState extends State<PhotoGallery> {
   @override
   Widget build(BuildContext context) {
     final arguments =

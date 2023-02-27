@@ -29,9 +29,24 @@ class OperationSegmentedPage extends StatelessWidget {
             ),
             itemCount: operations.length,
             separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: AppConst.padding),
+                const SizedBox(height: AppConst.padding / 2),
             itemBuilder: (context, index) {
               Operation operation = operations[index];
+
+              String labelState = '';
+              if (operation.operationLastUpdate!.isNotEmpty) {
+                if (operation.operationState == 'false') {
+                  labelState = 'Aggiornato';
+                } else {
+                  labelState = 'Chiuso';
+                }
+              } else if (operation.operationLastUpdate!.isEmpty) {
+                if (operation.operationState == 'false') {
+                  labelState = 'Aperto';
+                } else {
+                  labelState = 'Chiuso';
+                }
+              }
 
               return TapDebouncer(
                 onTap: () async {
@@ -102,11 +117,7 @@ class OperationSegmentedPage extends StatelessWidget {
                                     : AppColors.primaryColor,
                               ),
                               child: Text(
-                                operation.operationLastUpdate!.isNotEmpty
-                                    ? 'Aggiornato'
-                                    : operation.operationState == 'false'
-                                        ? 'Aperto'
-                                        : 'Chiuso',
+                                labelState,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

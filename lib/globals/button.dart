@@ -58,9 +58,9 @@ class Button extends StatelessWidget {
                     text!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: accounting == true ? null : FontWeight.bold,
                       color: AppColors.labelLightColor,
-                      fontSize: accounting == true ? 12 : 15,
+                      fontSize: 15,
                     ),
                   ),
             ),

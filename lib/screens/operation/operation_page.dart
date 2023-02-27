@@ -7,11 +7,9 @@ class OperationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => hideKeyboard(context),
-        child: const OperationForm(),
-      ),
+    return GestureDetector(
+      onTap: () => hideKeyboard(context),
+      child: const OperationForm(),
     );
   }
 }

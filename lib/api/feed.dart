@@ -1,6 +1,5 @@
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/feed.dart';
-import 'package:adminpanel/models/palace.dart';
 import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,10 @@ import 'package:provider/provider.dart';
 class FeedApi {
   Future<List<Feed>> getFeeds(BuildContext context) async {
     List<Feed> feed = [];
+
     try {
-      final user = context.read<UserProvider>().localuser;
-      Palace palace = context
+      final user = await context.read<UserProvider>().getLocalUser();
+      final palace = context
           .read<PalaceProvider>()
           .palaces[context.read<PalaceProvider>().selectedPalace];
 

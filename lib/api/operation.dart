@@ -1,6 +1,5 @@
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/models/palace.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/palace.dart';
 import 'package:adminpanel/providers/user.dart';
@@ -18,9 +17,10 @@ class OperationApi {
     List<Operation> operations = [];
 
     try {
-      final user = context.read<UserProvider>().localuser;
+      final user = await context.read<UserProvider>().getLocalUser();
+
       if (user.userId != null && user.userId!.isNotEmpty) {
-        Palace palace = context
+        final palace = context
             .read<PalaceProvider>()
             .palaces[context.read<PalaceProvider>().selectedPalace];
 
@@ -105,7 +105,7 @@ class OperationApi {
       var uuid = const Uuid();
       var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
       final user = await context.read<UserProvider>().getLocalUser();
-      Palace palace = context
+      final palace = context
           .read<PalaceProvider>()
           .palaces[context.read<PalaceProvider>().selectedPalace];
 

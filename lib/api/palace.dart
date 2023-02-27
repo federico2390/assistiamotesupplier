@@ -10,7 +10,7 @@ class PalaceApi {
     List<Palace> palaces = [];
 
     try {
-      final user = context.read<UserProvider>().localuser;
+      final user = await context.read<UserProvider>().getLocalUser();
 
       var response = await http.post(
         Uri.parse(AppConst.palace),

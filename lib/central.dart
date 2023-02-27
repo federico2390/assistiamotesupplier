@@ -25,7 +25,9 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
     NotificationManager.initInfo();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
     context.read<UserProvider>().getUser();
+    // context.read<UserProvider>().getLocalUser();
   }
 
   @override

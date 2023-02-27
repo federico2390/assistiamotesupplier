@@ -78,13 +78,6 @@ class SettingPage extends StatelessWidget {
                   SettingsSection(
                     tiles: <SettingsTile>[
                       SettingsTile.navigation(
-                        leading: const Icon(Icons.change_circle_outlined),
-                        title: const Text('Cambia condominio'),
-                        onPressed: (context) {
-                          Navigator.pushNamed(context, '/change_palace');
-                        },
-                      ),
-                      SettingsTile.navigation(
                         leading: const Icon(Icons.logout_rounded),
                         title: const Text('Esci'),
                         onPressed: (context) {

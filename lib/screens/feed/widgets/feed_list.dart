@@ -13,7 +13,7 @@ import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/operation.dart';
 import 'package:adminpanel/utils/size.dart';
 
 class FeedList extends StatelessWidget {
-  const FeedList({Key? key}) : super(key: key);
+  const FeedList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class FeedList extends StatelessWidget {
               top: 0,
               right: (ScreenSize.width(context) / 3 + AppConst.padding * 2) -
                   AppConst.padding * 1.5,
-              child: FutureBuilder(
+              child: FutureBuilder<List<Feed>>(
                 future: context.read<FeedProvider>().getFeeds(context),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -102,6 +102,8 @@ class FeedList extends StatelessWidget {
                     } else {
                       return const SizedBox();
                     }
+                  } else if (snapshot.hasError) {
+                    return const SizedBox();
                   } else {
                     return const SizedBox();
                   }
@@ -114,7 +116,7 @@ class FeedList extends StatelessWidget {
               top: 0,
               right: (ScreenSize.width(context) / 3 - AppConst.padding * 2) -
                   AppConst.padding * 5,
-              child: FutureBuilder(
+              child: FutureBuilder<List<Operation>>(
                 future:
                     context.read<OperationProvider>().getOperations(context),
                 builder: (context, snapshot) {
@@ -161,6 +163,8 @@ class FeedList extends StatelessWidget {
                     } else {
                       return const SizedBox();
                     }
+                  } else if (snapshot.hasError) {
+                    return const SizedBox();
                   } else {
                     return const SizedBox();
                   }
