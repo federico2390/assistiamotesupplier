@@ -51,7 +51,7 @@ class SettingPage extends StatelessWidget {
                             settingProvider.setting.notification == 'true'
                                 ? true
                                 : false,
-                        leading: const Icon(Icons.notifications_outlined),
+                        leading: const Icon(Icons.notifications_rounded),
                         title: const Text('Comunicazioni'),
                         description: const Text(
                             'Abilitalo se vuoi ricevere tutte le comunicazioni che riguardano te e il tuo condominio.'),
@@ -61,7 +61,7 @@ class SettingPage extends StatelessWidget {
                   SettingsSection(
                     tiles: <SettingsTile>[
                       SettingsTile.navigation(
-                        leading: const Icon(Icons.lock_outline_rounded),
+                        leading: const Icon(Icons.lock_rounded),
                         title: const Text('Informativa privacy'),
                         onPressed: (context) {
                           buildPrivacyPolicyActionSheet(context);
@@ -72,6 +72,13 @@ class SettingPage extends StatelessWidget {
                         title: const Text('Sito web'),
                         onPressed: (context) {
                           launchUrls(AppConst.serviceWebsite);
+                        },
+                      ),
+                      SettingsTile.navigation(
+                        leading: const Icon(Icons.question_answer_rounded),
+                        title: const Text('FAQ'),
+                        onPressed: (context) {
+                          launchUrls(AppConst.serviceFAQ);
                         },
                       ),
                     ],

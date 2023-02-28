@@ -16,18 +16,21 @@ class NotificationManager {
     if (settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional) {
       print('User granted permission');
-      await SettingApi().editNotificationSetting(context, true);
+      await SettingApi()
+          .editNotificationSetting(context, true, isChangeScreen: false);
       context.read<SettingProvider>().setNotificationStatus(true);
     } else {
       print('User declined or hat not accepted permission');
-      await SettingApi().editNotificationSetting(context, false);
+      await SettingApi()
+          .editNotificationSetting(context, false, isChangeScreen: false);
       context.read<SettingProvider>().setNotificationStatus(false);
     }
   }
 
-  static void getToken(BuildContext context) async {
+  static void getToken(BuildContext context, {bool? isChangeScreen}) async {
     await firebaseMessaging.getToken().then((token) async {
-      await SettingApi().saveToken(context, token!);
+      await SettingApi()
+          .saveToken(context, token!, isChangeScreen: isChangeScreen);
       await firebaseMessaging.getInitialMessage();
     });
   }

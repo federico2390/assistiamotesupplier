@@ -21,6 +21,7 @@ class AppConst {
   static const String serviceWebsite = 'https://studiopedico.it';
   static const String servicePrivacyPolicy =
       '$serviceWebsite/privacy-policy-app';
+  static const String serviceFAQ = '$serviceWebsite/faq';
 
   /// Backend
   static const String backendBase = 'https://adminpanel.buuumit.com';

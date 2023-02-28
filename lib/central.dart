@@ -1,14 +1,14 @@
-import 'package:adminpanel/api/setting.dart';
-import 'package:adminpanel/globals/body.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/globals/app_bar.dart';
+import 'package:adminpanel/globals/body.dart';
 import 'package:adminpanel/globals/bottom_bar.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/notification_manager.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Central extends StatefulWidget {
   const Central({super.key});
@@ -21,7 +21,7 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
   @override
   void initState() {
     NotificationManager.requestPermisison(context);
-    NotificationManager.getToken(context);
+    NotificationManager.getToken(context, isChangeScreen: false);
     NotificationManager.initInfo();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -39,22 +39,25 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      checkNotificationPermission(context);
+      checkNotificationPermission(context, isChangeScreen: false);
     }
   }
 
-  checkNotificationPermission(BuildContext context) async {
+  checkNotificationPermission(BuildContext context,
+      {bool? isChangeScreen}) async {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
     NotificationSettings settings = await firebaseMessaging.requestPermission();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional) {
       print('User granted OS permission');
-      await SettingApi().editNotificationSetting(context, true);
+      await SettingApi().editNotificationSetting(context, true,
+          isChangeScreen: isChangeScreen);
       context.read<SettingProvider>().setNotificationStatus(true);
     } else {
       print('User has not granted OS permission');
-      await SettingApi().editNotificationSetting(context, false);
+      await SettingApi().editNotificationSetting(context, false,
+          isChangeScreen: isChangeScreen);
       context.read<SettingProvider>().setNotificationStatus(false);
     }
   }
