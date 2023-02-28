@@ -39,8 +39,8 @@ BottomNavigationBar bottomBar(BuildContext context) {
                             .toList()
                             .isNotEmpty) {
                       return Container(
-                        height: 22,
-                        width: const BoxConstraints(minWidth: 22).minWidth,
+                        height: 20,
+                        width: const BoxConstraints(minWidth: 20).minWidth,
                         decoration: BoxDecoration(
                           border: Border.all(
                               width: 1, color: AppColors.primaryColor),
