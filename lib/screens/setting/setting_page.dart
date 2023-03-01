@@ -99,11 +99,17 @@ class SettingPage extends StatelessWidget {
                       SettingsTile(
                         enabled: false,
                         title: Text(
-                          'Username',
+                          'Utente',
                           style: TextStyle(color: AppColors.secondaryColor),
                         ),
                         trailing: Text(
-                          context.read<UserProvider>().localuser.userUsername!,
+                          context
+                                  .read<UserProvider>()
+                                  .localuser
+                                  .userName!
+                                  .isNotEmpty
+                              ? context.read<UserProvider>().localuser.userName!
+                              : '',
                           style: TextStyle(color: AppColors.secondaryColor),
                         ),
                       ),
