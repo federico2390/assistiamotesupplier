@@ -72,7 +72,7 @@ class Welcome extends StatelessWidget {
                               leading: const Icon(Icons.notifications_rounded),
                               title: const Text('Comunicazioni'),
                               description: const Text(
-                                  'Abilitalo se vuoi ricevere tutte le comunicazioni che riguardano te e il tuo condominio.'),
+                                  'Quando abilitato, riceverai notifiche direttamente sul tuo dispositivo ogni volta che ci saranno nuove comunicazioni.'),
                             ),
                           ],
                         ),

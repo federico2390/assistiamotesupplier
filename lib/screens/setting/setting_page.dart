@@ -1,5 +1,10 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:settings_ui/settings_ui.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/setting.dart';
@@ -8,10 +13,6 @@ import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/logout_action_sheet.dart';
 import 'package:adminpanel/utils/privacy_policy_action_sheet.dart';
-import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:provider/provider.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -54,7 +55,7 @@ class SettingPage extends StatelessWidget {
                         leading: const Icon(Icons.notifications_rounded),
                         title: const Text('Comunicazioni'),
                         description: const Text(
-                            'Abilitalo se vuoi ricevere tutte le comunicazioni che riguardano te e il tuo condominio.'),
+                            'Quando abilitato, riceverai notifiche direttamente sul tuo dispositivo ogni volta che ci saranno nuove comunicazioni.'),
                       ),
                     ],
                   ),
@@ -70,13 +71,21 @@ class SettingPage extends StatelessWidget {
                       SettingsTile.navigation(
                         leading: const Icon(Icons.web_rounded),
                         title: const Text('Sito web'),
+                        description: const Text(
+                            'In questa sezione puoi trovare tutte le informazioni riguardanti la raccolta, l\'uso e la protezione dei tuoi dati personali. Per maggiori informazioni clicca sito web.'),
                         onPressed: (context) {
                           launchUrls(AppConst.serviceWebsite);
                         },
                       ),
+                    ],
+                  ),
+                  SettingsSection(
+                    tiles: <SettingsTile>[
                       SettingsTile.navigation(
                         leading: const Icon(Icons.question_answer_rounded),
                         title: const Text('FAQ'),
+                        description: const Text(
+                            'Nella sezione FAQ puoi trovare risposte alle domande più frequenti degli utenti.'),
                         onPressed: (context) {
                           launchUrls(AppConst.serviceFAQ);
                         },
@@ -110,7 +119,10 @@ class SettingPage extends StatelessWidget {
                                   .isNotEmpty
                               ? context.read<UserProvider>().localuser.userName!
                               : '',
-                          style: TextStyle(color: AppColors.secondaryColor),
+                          style: TextStyle(
+                            color: AppColors.secondaryColor,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       SettingsTile(

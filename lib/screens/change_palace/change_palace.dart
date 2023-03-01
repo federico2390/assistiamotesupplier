@@ -113,7 +113,7 @@ class ChangePalace extends StatelessWidget {
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: TapDebouncer(
               onTap: () async {
-                if (idx != palaceProvider.selectedPalace) {
+                if (idx != null && idx != palaceProvider.selectedPalace) {
                   final palace =
                       palaceProvider.palaces[palaceProvider.selectedPalace];
 

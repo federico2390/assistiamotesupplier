@@ -24,11 +24,11 @@ class OperationForm extends StatefulWidget {
 }
 
 class OperationFormState extends State<OperationForm> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final TextEditingController operationTypeController = TextEditingController();
   final TextEditingController operationController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
