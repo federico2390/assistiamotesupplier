@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class AppConst {
   /// UI
   static const double padding = 16.0;
@@ -24,10 +26,11 @@ class AppConst {
   static const String serviceFAQ = '$serviceWebsite/faq';
 
   /// Backend
-  // static const String devDomain = 'adminpanel.buuumit.com';
+  static const String devDomain = 'adminpanel.buuumit.com';
   static const String prodDomain = 'adminpanel.studiopedico.it';
 
-  static const String backendBase = 'https://$prodDomain';
+  static const String backendBase =
+      'https://${kDebugMode ? AppConst.devDomain : prodDomain}';
   static const String login = '$backendBase/user/service/auth/login.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
