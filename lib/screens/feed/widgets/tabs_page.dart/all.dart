@@ -233,11 +233,21 @@ class AllSegmentedPage extends StatelessWidget {
                     } else {
                       labelState = 'Chiuso';
                     }
+                    if (operation.operationViewed == 'true' &&
+                        operation.operationWorking == 'true' &&
+                        operation.operationState == 'false') {
+                      labelState = 'In corso';
+                    }
                   } else if (operation.operationLastUpdate!.isEmpty) {
                     if (operation.operationState == 'false') {
                       labelState = 'Aperto';
                     } else {
                       labelState = 'Chiuso';
+                    }
+                    if (operation.operationViewed == 'true' &&
+                        operation.operationWorking == 'true' &&
+                        operation.operationState == 'false') {
+                      labelState = 'In corso';
                     }
                   }
 
