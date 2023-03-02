@@ -44,10 +44,7 @@ BottomNavigationBar bottomBar(BuildContext context) {
                         decoration: BoxDecoration(
                           border: Border.all(
                               width: 1, color: AppColors.primaryColor),
-                          color:
-                              context.read<FeedProvider>().selectedSegment != 2
-                                  ? AppColors.primaryColor
-                                  : AppColors.backgroundColor,
+                          color: AppColors.primaryColor,
                           borderRadius:
                               BorderRadius.circular(AppConst.borderRadius * 2),
                         ),
@@ -78,12 +75,7 @@ BottomNavigationBar bottomBar(BuildContext context) {
                                     .toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: context
-                                          .read<FeedProvider>()
-                                          .selectedSegment !=
-                                      2
-                                  ? AppColors.backgroundColor
-                                  : AppColors.primaryColor,
+                              color: AppColors.backgroundColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),
