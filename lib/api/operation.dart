@@ -26,7 +26,7 @@ class OperationApi {
             .palaces[context.read<PalaceProvider>().selectedPalace];
 
         var response = await http.post(
-          Uri.parse(AppConst.operation).replace(host: "adminpanel.buuumit.com"),
+          Uri.parse(AppConst.operation),
           body: {
             'get_operation': 'get_operation',
             'user_id': user.userId,

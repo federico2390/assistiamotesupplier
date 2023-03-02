@@ -24,7 +24,10 @@ class AppConst {
   static const String serviceFAQ = '$serviceWebsite/faq';
 
   /// Backend
-  static const String backendBase = 'https://adminpanel.buuumit.com';
+  // static const String devDomain = 'adminpanel.buuumit.com';
+  static const String prodDomain = 'adminpanel.studiopedico.it';
+
+  static const String backendBase = 'https://$prodDomain';
   static const String login = '$backendBase/user/service/auth/login.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
