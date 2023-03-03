@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class FeedDetail extends StatefulWidget {
   const FeedDetail({super.key});

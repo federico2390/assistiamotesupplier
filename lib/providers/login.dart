@@ -1,5 +1,6 @@
-import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
+
+import 'package:adminpanel/utils/shared_preference.dart';
 
 class LoginProvider extends ChangeNotifier {
   bool hiddenPassword = true;

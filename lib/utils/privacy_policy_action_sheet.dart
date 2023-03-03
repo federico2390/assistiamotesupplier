@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/utils/launcher.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 buildPrivacyPolicyActionSheet(BuildContext context) async {
   Platform.isAndroid

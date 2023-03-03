@@ -1,6 +1,7 @@
+import 'package:http/http.dart' as http;
+
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/supplier.dart';
-import 'package:http/http.dart' as http;
 
 class SupplierApi {
   Future<List<Supplier>> getSuppliersType() async {

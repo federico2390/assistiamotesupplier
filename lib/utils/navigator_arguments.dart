@@ -1,6 +1,7 @@
+import 'package:image_picker/image_picker.dart';
+
 import 'package:adminpanel/models/feed.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:image_picker/image_picker.dart';
 
 class GalleryArguments {
   final List<XFile> gallery;

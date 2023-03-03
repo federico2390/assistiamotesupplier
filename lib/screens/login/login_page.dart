@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:adminpanel/api/login.dart';
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/user.dart';
-import 'package:adminpanel/api/login.dart';
 import 'package:adminpanel/screens/login/widgets/login_form.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

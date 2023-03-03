@@ -1,9 +1,9 @@
-import 'package:adminpanel/utils/modal_popup.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/models/setting.dart';
+import 'package:adminpanel/utils/modal_popup.dart';
 
 class SettingProvider extends ChangeNotifier {
   Setting _setting = Setting();

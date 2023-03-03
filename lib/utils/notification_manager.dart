@@ -1,11 +1,11 @@
-import 'package:adminpanel/providers/setting.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 
 import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/configs/const.dart';
-import 'package:provider/provider.dart';
+import 'package:adminpanel/providers/setting.dart';
 
 class NotificationManager {
   static FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;

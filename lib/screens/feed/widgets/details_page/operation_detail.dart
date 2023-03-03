@@ -1,15 +1,16 @@
-import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/providers/gallery.dart';
-import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
-import 'package:adminpanel/utils/navigator_arguments.dart';
-import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'package:adminpanel/configs/colors.dart';
+import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/providers/gallery.dart';
+import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
+import 'package:adminpanel/utils/navigator_arguments.dart';
+import 'package:adminpanel/utils/size.dart';
 
 class OperationDetail extends StatefulWidget {
   const OperationDetail({super.key});

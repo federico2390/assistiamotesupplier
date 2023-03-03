@@ -1,4 +1,3 @@
-import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/models/palace.dart';
+import 'package:adminpanel/providers/bottom_bar.dart';
 import 'package:adminpanel/providers/feed.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/operation.dart';

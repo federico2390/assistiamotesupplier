@@ -1,5 +1,6 @@
-import 'package:adminpanel/screens/feed/widgets/feed_list.dart';
 import 'package:flutter/material.dart';
+
+import 'package:adminpanel/screens/feed/widgets/feed_list.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({super.key});

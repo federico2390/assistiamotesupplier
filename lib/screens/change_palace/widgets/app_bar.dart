@@ -1,5 +1,6 @@
-import 'package:adminpanel/configs/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'package:adminpanel/configs/colors.dart';
 
 AppBar appBar(BuildContext context) {
   return AppBar(

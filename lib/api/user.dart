@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
-import 'package:http/http.dart' as http;
 
 class UserApi {
   bool get isLogged =>

@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
+
 import 'package:adminpanel/central.dart';
 import 'package:adminpanel/screens/accounting/accounting_page.dart';
 import 'package:adminpanel/screens/change_palace/change_palace.dart';
 import 'package:adminpanel/screens/feed/feed_page.dart';
 import 'package:adminpanel/screens/feed/widgets/details_page/feed_detail.dart';
 import 'package:adminpanel/screens/feed/widgets/details_page/operation_detail.dart';
+import 'package:adminpanel/screens/gallery/gallery_page.dart';
 import 'package:adminpanel/screens/login/login_page.dart';
 import 'package:adminpanel/screens/operation/operation_page.dart';
 import 'package:adminpanel/screens/reading/reading_page.dart';
-import 'package:adminpanel/screens/gallery/gallery_page.dart';
 import 'package:adminpanel/screens/setting/setting_page.dart';
 import 'package:adminpanel/screens/welcome/welcome_page.dart';
-import 'package:flutter/material.dart';
 
 class Routes {
   static Map<String, WidgetBuilder> buildRoutes() {

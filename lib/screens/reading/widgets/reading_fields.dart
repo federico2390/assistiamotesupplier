@@ -1,7 +1,8 @@
-import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/configs/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:adminpanel/configs/colors.dart';
+import 'package:adminpanel/configs/const.dart';
 
 class ReadingFields extends StatelessWidget {
   final TextEditingController valueController;

@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:adminpanel/api/logout.dart';
-import 'package:adminpanel/configs/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:adminpanel/api/logout.dart';
+import 'package:adminpanel/configs/colors.dart';
 
 buildLogoutActionSheet(BuildContext context) async {
   Platform.isAndroid

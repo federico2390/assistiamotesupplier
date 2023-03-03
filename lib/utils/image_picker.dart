@@ -1,14 +1,15 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/utils/alerts.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 buildImagePicker(BuildContext context, provider) async {
   final ImagePicker picker = ImagePicker();

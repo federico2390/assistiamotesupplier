@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/search.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
   final double width;

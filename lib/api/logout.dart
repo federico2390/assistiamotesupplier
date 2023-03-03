@@ -1,3 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
@@ -6,9 +10,6 @@ import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LogoutApi {
   Future logout(BuildContext context) async {

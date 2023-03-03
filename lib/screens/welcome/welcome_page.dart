@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:settings_ui/settings_ui.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
@@ -7,9 +11,6 @@ import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/notification_manager.dart';
 import 'package:adminpanel/utils/size.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});

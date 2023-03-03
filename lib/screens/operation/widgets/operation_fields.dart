@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/supplier.dart';
@@ -5,9 +9,6 @@ import 'package:adminpanel/plugins/dropdown_button/dropdown_button2.dart';
 import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/screens/operation/utils/utils.dart';
 import 'package:adminpanel/utils/size.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class OperationFields extends StatefulWidget {
   final TextEditingController operationTypeController;

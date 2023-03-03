@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:adminpanel/api/supplier.dart';
 import 'package:adminpanel/models/supplier.dart';
-import 'package:flutter/material.dart';
 
 class SupplierProvider extends ChangeNotifier {
   List<Supplier> _suppliersType = [];

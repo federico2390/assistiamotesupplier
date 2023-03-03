@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:adminpanel/configs/colors.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:adminpanel/configs/colors.dart';
 
 buildModalPopup(
     BuildContext context, String title, String subtitle, String action) async {

@@ -1,9 +1,10 @@
-import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/models/palace.dart';
-import 'package:adminpanel/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
+import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/models/palace.dart';
+import 'package:adminpanel/providers/user.dart';
 
 class PalaceApi {
   Future<List<Palace>> getPalaces(BuildContext context) async {

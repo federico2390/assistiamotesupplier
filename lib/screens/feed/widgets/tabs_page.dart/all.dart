@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
+
 import 'package:adminpanel/api/feed.dart';
 import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/configs/colors.dart';
@@ -8,10 +13,6 @@ import 'package:adminpanel/providers/feed.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/utils/loader.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:tap_debouncer/tap_debouncer.dart';
 
 class AllSegmentedPage extends StatelessWidget {
   const AllSegmentedPage({Key? key}) : super(key: key);

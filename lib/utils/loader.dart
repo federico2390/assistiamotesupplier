@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/utils/size.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Loader extends StatelessWidget {
   const Loader({Key? key}) : super(key: key);

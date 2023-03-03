@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
+
 import 'package:adminpanel/api/reading.dart';
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/colors.dart';
@@ -9,12 +13,9 @@ import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/screens/reading/widgets/reading_fields.dart';
 import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/image_picker.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
+import 'package:adminpanel/utils/image_picker.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tap_debouncer/tap_debouncer.dart';
 
 class ReadingForm extends StatefulWidget {
   const ReadingForm({super.key});

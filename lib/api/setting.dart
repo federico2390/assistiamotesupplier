@@ -1,13 +1,14 @@
 import 'dart:convert';
 
-import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/models/setting.dart';
-import 'package:adminpanel/providers/palace.dart';
-import 'package:adminpanel/providers/user.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
+import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/models/setting.dart';
+import 'package:adminpanel/providers/palace.dart';
+import 'package:adminpanel/providers/user.dart';
 
 class SettingApi {
   Future<Setting> getNotificationSetting(BuildContext context) async {
