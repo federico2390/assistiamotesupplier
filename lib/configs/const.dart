@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class AppConst {
   /// UI
   static const double padding = 16.0;
