@@ -30,7 +30,7 @@ class AppConst {
   static const String prodDomain = 'adminpanel.studiopedico.it';
 
   static const String backendBase =
-      'https://${kDebugMode ? AppConst.devDomain : prodDomain}';
+      'https://${!kDebugMode ? AppConst.devDomain : prodDomain}';
   static const String login = '$backendBase/user/service/auth/login.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
