@@ -1,40 +1,49 @@
 {
   "project_info": {
-    "project_number": "121054669898",
-    "project_id": "admin-panel-d87df",
-    "storage_bucket": "admin-panel-d87df.appspot.com"
+    "project_number": "36780231042",
+    "project_id": "studio-pa-db402",
+    "storage_bucket": "studio-pa-db402.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:121054669898:android:3f88438aecb5be86facab3",
+        "mobilesdk_app_id": "1:36780231042:android:45119d34fb23c31e2b679b",
         "android_client_info": {
-          "package_name": "it.federicodesalvatore.adminpanel"
+          "package_name": "com.alessandromontrone.adminpanel"
         }
       },
       "oauth_client": [
         {
-          "client_id": "121054669898-2or6iq0hbrmcln35tkal329vr5ue6sv5.apps.googleusercontent.com",
+          "client_id": "36780231042-dk07emnsjv72l668ot3m26vs6f6d94n3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alessandromontrone.adminpanel",
+            "certificate_hash": "78dadd86f60f654c52de6ce0e4fb4be3df636141"
+          }
+        },
+        {
+          "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB3ev_tPN2PNGtJIZZSm2dGWt_shnEC3E8"
+          "current_key": "AIzaSyDIzB9zNmPuEdKRnlC07uwGXWEkVceD6s0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "121054669898-2or6iq0hbrmcln35tkal329vr5ue6sv5.apps.googleusercontent.com",
+              "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "121054669898-o1ev4lubag0ippm3m6dilnf7sc89729e.apps.googleusercontent.com",
+              "client_id": "36780231042-dug8rtqqqdhm58pent0pt1b7h0490s17.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "it.federicodesalvatore.adminpanel"
+                "bundle_id": "com.alessandromontrone.adminpanel",
+                "app_store_id": "6446088774"
               }
             }
           ]

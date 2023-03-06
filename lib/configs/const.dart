@@ -41,7 +41,7 @@ class AppConst {
   static const String readingMediaFolder = '$backendBase/user/media/';
 
   /// App
-  static const String appId = 'it.federicodesalvatore.adminpanel';
+  static const String appId = 'com.alessandromontrone.adminpanel';
   static const String appName = 'Studio PA';
   static const String appLogo = 'assets/logo.png';
 

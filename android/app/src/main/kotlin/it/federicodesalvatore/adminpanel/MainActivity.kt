@@ -1,4 +1,4 @@
-package it.federicodesalvatore.adminpanel
+package com.alessandromontrone.adminpanel
 
 import io.flutter.embedding.android.FlutterActivity
 

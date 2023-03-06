@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "it.federicodesalvatore.adminpanel"
+        applicationId "com.alessandromontrone.adminpanel"
         minSdkVersion 23
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
