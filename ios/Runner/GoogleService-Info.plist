@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>121054669898-o1ev4lubag0ippm3m6dilnf7sc89729e.apps.googleusercontent.com</string>
+	<string>36780231042-dug8rtqqqdhm58pent0pt1b7h0490s17.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.121054669898-o1ev4lubag0ippm3m6dilnf7sc89729e</string>
+	<string>com.googleusercontent.apps.36780231042-dug8rtqqqdhm58pent0pt1b7h0490s17</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>36780231042-dk07emnsjv72l668ot3m26vs6f6d94n3.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC-l69pXU6HDNIZAPHqMawql1ghrxt5RM4</string>
+	<string>AIzaSyB-I5LSc3h0Az5e8ajmXPxdYIVlVxGdCBA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>121054669898</string>
+	<string>36780231042</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>it.federicodesalvatore.adminpanel</string>
+	<string>com.alessandromontrone.adminpanel</string>
 	<key>PROJECT_ID</key>
-	<string>admin-panel-d87df</string>
+	<string>studio-pa-db402</string>
 	<key>STORAGE_BUCKET</key>
-	<string>admin-panel-d87df.appspot.com</string>
+	<string>studio-pa-db402.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:121054669898:ios:898d0747aa7b466ffacab3</string>
+	<string>1:36780231042:ios:957d36a1bda76e322b679b</string>
 </dict>
 </plist>
