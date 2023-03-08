@@ -114,8 +114,7 @@ class FeedList extends StatelessWidget {
             /// SECOND CIRCLE
             Positioned(
               top: 0,
-              right: (ScreenSize.width(context) / 3 - AppConst.padding * 2) -
-                  AppConst.padding * 5,
+              left: ScreenSize.width(context) - AppConst.padding * 2.5,
               child: FutureBuilder<List<Operation>>(
                 future:
                     context.read<OperationProvider>().getOperations(context),
