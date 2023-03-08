@@ -55,6 +55,17 @@ class OperationFormState extends State<OperationForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isIPad = false;
+
+    if (Platform.isIOS) {
+      final size = MediaQuery.of(context).size;
+      if (size.width > 768) {
+        isIPad = true;
+      } else {
+        isIPad = false;
+      }
+    }
+
     return Form(
       key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -84,8 +95,10 @@ class OperationFormState extends State<OperationForm> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 clipBehavior: Clip.none,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 4, mainAxisSpacing: 4, crossAxisCount: 3),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 4,
+                    crossAxisCount: isIPad == true ? 7 : 3),
                 children:
                     [null, ...context.watch<OperationProvider>().images].map(
                   (image) {

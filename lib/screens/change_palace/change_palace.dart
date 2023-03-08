@@ -111,45 +111,48 @@ class ChangePalace extends StatelessWidget {
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: TapDebouncer(
-              onTap: () async {
-                if (idx != null && idx != palaceProvider.selectedPalace) {
-                  final palace =
-                      palaceProvider.palaces[palaceProvider.selectedPalace];
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(bottom: AppConst.padding),
+              child: TapDebouncer(
+                onTap: () async {
+                  if (idx != null && idx != palaceProvider.selectedPalace) {
+                    final palace =
+                        palaceProvider.palaces[palaceProvider.selectedPalace];
 
-                  loaderProvider.setIsSaving(true);
+                    loaderProvider.setIsSaving(true);
 
-                  feedProvider.cancelFeeds();
-                  operationProvider.cancelOperations();
-                  palaceProvider.setSelectedPalace(idx!);
-                  NotificationManager.getToken(context, isChangeScreen: true);
-                  checkNotificationPermission(context, isChangeScreen: true);
-                  FirstTimeLogged().firstTimeLogged(context, palace.userId!);
-                  context.read<BottomBarProvider>().currentPage(0);
+                    feedProvider.cancelFeeds();
+                    operationProvider.cancelOperations();
+                    palaceProvider.setSelectedPalace(idx!);
+                    NotificationManager.getToken(context, isChangeScreen: true);
+                    checkNotificationPermission(context, isChangeScreen: true);
+                    FirstTimeLogged().firstTimeLogged(context, palace.userId!);
+                    context.read<BottomBarProvider>().currentPage(0);
 
-                  await Alerts.loadingAlert(
-                    context,
-                    title: 'Un momento...',
-                    subtitle: 'Cambio condominio',
+                    await Alerts.loadingAlert(
+                      context,
+                      title: 'Un momento...',
+                      subtitle: 'Cambio condominio',
+                    );
+
+                    Future.delayed(const Duration(seconds: 3), () async {
+                      loaderProvider.setIsSaving(false);
+                      await Alerts.hideAlert();
+                      Navigator.of(context).pop();
+                    });
+                  } else {
+                    await Alerts.errorAlert(context,
+                        title: 'Ops!', subtitle: 'Condominio già selezionato');
+                  }
+                },
+                builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                  return Button(
+                    text: 'Salva',
+                    width: ScreenSize.width(context) - AppConst.padding * 2,
+                    onPressed: onTap,
                   );
-
-                  Future.delayed(const Duration(seconds: 3), () async {
-                    loaderProvider.setIsSaving(false);
-                    await Alerts.hideAlert();
-                    Navigator.of(context).pop();
-                  });
-                } else {
-                  await Alerts.errorAlert(context,
-                      title: 'Ops!', subtitle: 'Condominio già selezionato');
-                }
-              },
-              builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                return Button(
-                  text: 'Salva',
-                  width: ScreenSize.width(context) - AppConst.padding * 2,
-                  onPressed: onTap,
-                );
-              },
+                },
+              ),
             ),
           ),
         );
