@@ -355,6 +355,7 @@ class AllSegmentedPage extends StatelessWidget {
             }
           },
         ),
+        const SizedBox(height: AppConst.padding * 2),
       ],
     );
   }

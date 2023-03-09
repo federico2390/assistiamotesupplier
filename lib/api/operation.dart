@@ -49,6 +49,8 @@ class OperationApi {
               palaceName: operation.palaceName,
               palaceCf: operation.palaceCf,
               palaceAddress: operation.palaceAddress,
+              palaceUtilsName: operation.palaceUtilsName,
+              palaceUtilsNumber: operation.palaceUtilsNumber,
               palaceDescription: operation.palaceDescription,
               userEmail: operation.userEmail,
               userUsername: operation.userUsername,

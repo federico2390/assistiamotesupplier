@@ -21,6 +21,8 @@ class Palace {
     this.palaceName,
     this.palaceCf,
     this.palaceAddress,
+    this.palaceUtilsName,
+    this.palaceUtilsNumber,
     this.palaceDescription,
   });
 
@@ -37,6 +39,8 @@ class Palace {
   String? palaceName;
   dynamic palaceCf;
   String? palaceAddress;
+  String? palaceUtilsName;
+  String? palaceUtilsNumber;
   String? palaceDescription;
 
   factory Palace.fromJson(Map<String, dynamic> json) => Palace(
@@ -53,6 +57,8 @@ class Palace {
         palaceName: json["palace_name"],
         palaceCf: json["palace_cf"],
         palaceAddress: json["palace_address"],
+        palaceUtilsName: json["palace_utils_name"] ?? '',
+        palaceUtilsNumber: json["palace_utils_number"] ?? '',
         palaceDescription: json["palace_description"],
       );
 
@@ -70,6 +76,8 @@ class Palace {
         "palace_name": palaceName,
         "palace_cf": palaceCf,
         "palace_address": palaceAddress,
+        "palace_utils_name": palaceUtilsName ?? '',
+        "palace_utils_number": palaceUtilsNumber ?? '',
         "palace_description": palaceDescription,
       };
 }

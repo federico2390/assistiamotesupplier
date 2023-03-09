@@ -213,6 +213,7 @@ class OperationFormState extends State<OperationForm> {
               );
             },
           ),
+          const SizedBox(height: AppConst.padding * 2),
         ],
       ),
     );
