@@ -21,7 +21,7 @@
     </queries>
 
    <application
-        android:label="adminpanel"
+        android:label="Studio PA"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
