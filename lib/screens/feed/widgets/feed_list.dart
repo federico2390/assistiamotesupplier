@@ -26,6 +26,7 @@ class FeedList extends StatelessWidget {
               width: ScreenSize.width(context),
               child: CupertinoSegmentedControl(
                 selectedColor: AppColors.primaryColor,
+                unselectedColor: AppColors.backgroundColor,
                 borderColor: AppColors.primaryColor,
                 pressedColor: AppColors.tertiaryColor,
                 padding:
