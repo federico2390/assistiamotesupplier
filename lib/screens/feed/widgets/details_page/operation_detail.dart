@@ -169,13 +169,13 @@ class _OperationDetailState extends State<OperationDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Tipologia di intervento',
+                      'Tipo di richiesta',
                       style: TextStyle(
                         color: AppColors.secondaryColor,
                       ),
                     ),
                     Text(
-                      operationArguments.operation.operationType!,
+                      operationArguments.operation.operation!,
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -188,13 +188,13 @@ class _OperationDetailState extends State<OperationDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Tipo di richiesta',
+                      'Tipologia di intervento',
                       style: TextStyle(
                         color: AppColors.secondaryColor,
                       ),
                     ),
                     Text(
-                      operationArguments.operation.operation!,
+                      operationArguments.operation.operationType!,
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -215,9 +215,6 @@ class _OperationDetailState extends State<OperationDetail> {
                     Text(
                       endDateTimeFormat.format(startDateTimeFormat.parse(
                           operationArguments.operation.operationDatetime!)),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
                     ),
                   ],
                 ),
@@ -320,10 +317,42 @@ class _OperationDetailState extends State<OperationDetail> {
                         ),
                       )
                     : const SizedBox(),
-                operationArguments.operation.supplierMedia!.first.isNotEmpty
+                operationArguments.operation.supplierName!.isNotEmpty
                     ? const SizedBox(height: AppConst.padding)
                     : const SizedBox(),
-                operationArguments.operation.supplierMedia!.first.isNotEmpty
+                operationArguments.operation.supplierName!.isNotEmpty
+                    ? Divider(
+                        height: 1,
+                        color: AppColors.secondaryColor,
+                      )
+                    : const SizedBox(),
+                operationArguments.operation.supplierName!.isNotEmpty
+                    ? const SizedBox(height: AppConst.padding)
+                    : const SizedBox(),
+                operationArguments.operation.supplierName!.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fornitore',
+                            style: TextStyle(
+                              color: AppColors.secondaryColor,
+                            ),
+                          ),
+                          Text(
+                            operationArguments.operation.supplierName!,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
+                operationArguments.operation.supplierDescription!.isNotEmpty
+                    ? const SizedBox(height: AppConst.padding)
+                    : const SizedBox(),
+                operationArguments.operation.supplierDescription!.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -335,9 +364,6 @@ class _OperationDetailState extends State<OperationDetail> {
                           ),
                           Text(
                             operationArguments.operation.supplierDescription!,
-                            style: const TextStyle(
-                              fontSize: 15,
-                            ),
                           ),
                         ],
                       )
