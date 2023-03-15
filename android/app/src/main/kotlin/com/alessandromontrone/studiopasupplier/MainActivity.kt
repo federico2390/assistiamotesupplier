@@ -1,4 +1,4 @@
-package com.alessandromontrone.adminpanel
+package com.alessandromontrone.studiopasupplier
 
 import io.flutter.embedding.android.FlutterActivity
 
