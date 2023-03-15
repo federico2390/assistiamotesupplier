@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>36780231042-dug8rtqqqdhm58pent0pt1b7h0490s17.apps.googleusercontent.com</string>
+	<string>36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.36780231042-dug8rtqqqdhm58pent0pt1b7h0490s17</string>
+	<string>com.googleusercontent.apps.36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>36780231042-dk07emnsjv72l668ot3m26vs6f6d94n3.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -21,16 +21,16 @@
 	<key>STORAGE_BUCKET</key>
 	<string>studio-pa-db402.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:36780231042:ios:957d36a1bda76e322b679b</string>
+	<string>1:36780231042:ios:063e936ccb0848ec2b679b</string>
 </dict>
 </plist>
