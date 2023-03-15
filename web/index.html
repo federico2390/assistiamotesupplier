@@ -2,12 +2,10 @@
 <html>
 
 <head>
-  <!-- <base href="/"> -->
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Pannello di controllo fornitori">
 
-  <!-- Mobile meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
   <meta name="apple-mobile-web-app-title" content="Pannello di controllo fornitori">
@@ -21,7 +19,6 @@
   <link rel="preload" href="https://unpkg.com/canvaskit-wasm@0.38.0/bin/canvaskit.wasm" as="fetch"
     crossOrigin="anonymous">
 
-  <!-- Favicon -->
   <link rel="icon" href="icons/favicon.ico" sizes="any">
 
   <title>Pannello di controllo fornitori</title>
@@ -29,17 +26,14 @@
 
 
   <script>
-    // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
   </script>
-  <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
 
 <body>
   <script>
     window.addEventListener('load', function (ev) {
-      // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
