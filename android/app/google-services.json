@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:36780231042:android:45119d34fb23c31e2b679b",
         "android_client_info": {
-          "package_name": "com.alessandromontrone.studiopasupplier"
+          "package_name": "com.alessandromontrone.adminpanel"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "36780231042-dk07emnsjv72l668ot3m26vs6f6d94n3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.alessandromontrone.studiopasupplier",
+            "package_name": "com.alessandromontrone.adminpanel",
             "certificate_hash": "78dadd86f60f654c52de6ce0e4fb4be3df636141"
           }
         },
@@ -39,11 +39,46 @@
               "client_type": 3
             },
             {
-              "client_id": "36780231042-dug8rtqqqdhm58pent0pt1b7h0490s17.apps.googleusercontent.com",
+              "client_id": "36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.alessandromontrone.studiopasupplier",
-                "app_store_id": "6446088774"
+                "bundle_id": "com.alessandromontrone.studiopasupplier"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36780231042:android:8bf24249a851894f2b679b",
+        "android_client_info": {
+          "package_name": "com.alessandromontrone.studiopasupplier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIzB9zNmPuEdKRnlC07uwGXWEkVceD6s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alessandromontrone.studiopasupplier"
               }
             }
           ]
