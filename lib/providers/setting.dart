@@ -24,13 +24,12 @@ class SettingProvider extends ChangeNotifier {
     if (settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional) {
       print('User granted OS permission');
-      await SettingApi()
-          .editNotificationSetting(context, enabled, isChangeScreen: false);
+      await SettingApi().editNotificationSetting(context, enabled);
       if (enabled == true) {
-        print('User subscribed to topic');
+        print('User subscribed to push notifications');
         setNotificationStatus(true);
       } else {
-        print('User unsubscribed from topic');
+        print('User unsubscribed from push notifications');
         setNotificationStatus(false);
       }
     } else {

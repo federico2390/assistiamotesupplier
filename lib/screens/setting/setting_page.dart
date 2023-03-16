@@ -115,9 +115,12 @@ class SettingPage extends StatelessWidget {
                           context
                                   .read<UserProvider>()
                                   .localuser
-                                  .userName!
+                                  .supplierName!
                                   .isNotEmpty
-                              ? context.read<UserProvider>().localuser.userName!
+                              ? context
+                                  .read<UserProvider>()
+                                  .localuser
+                                  .supplierName!
                               : '',
                           style: TextStyle(
                             color: AppColors.secondaryColor,

@@ -12,7 +12,7 @@ class UserApi {
           ? true
           : false;
 
-  Future<UserDatabase> getUser(String userId) async {
+  Future<UserDatabase> getUser(String supplierId) async {
     UserDatabase user = UserDatabase();
 
     try {
@@ -20,7 +20,7 @@ class UserApi {
         Uri.parse(AppConst.user),
         body: {
           "get_users": 'get_users',
-          'user_id': userId,
+          'supplier_id': supplierId,
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {

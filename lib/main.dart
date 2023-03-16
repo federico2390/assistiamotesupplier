@@ -10,18 +10,12 @@ import 'package:provider/provider.dart';
 
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/globals/theme.dart';
-import 'package:adminpanel/providers/accounting.dart';
-import 'package:adminpanel/providers/bottom_bar.dart';
-import 'package:adminpanel/providers/feed.dart';
 import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/providers/palace.dart';
-import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/providers/search.dart';
 import 'package:adminpanel/providers/setting.dart';
-import 'package:adminpanel/providers/supplier.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/routes.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -64,19 +58,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => BottomBarProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => FeedProvider()),
         ChangeNotifierProvider(create: (context) => OperationProvider()),
-        ChangeNotifierProvider(create: (context) => ReadingProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => SettingProvider()),
-        ChangeNotifierProvider(create: (context) => AccountingProvider()),
-        ChangeNotifierProvider(create: (context) => SupplierProvider()),
         ChangeNotifierProvider(create: (context) => LoaderProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
         ChangeNotifierProvider(create: (context) => GalleryProvider()),
-        ChangeNotifierProvider(create: (context) => PalaceProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

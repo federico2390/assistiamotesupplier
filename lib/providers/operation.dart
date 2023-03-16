@@ -78,4 +78,12 @@ class OperationProvider extends ChangeNotifier {
     _images.clear();
     notifyListeners();
   }
+
+  int _selectedSegment = 1;
+  int get selectedSegment => _selectedSegment;
+
+  void setSelectedSegment(int index) {
+    _selectedSegment = index;
+    notifyListeners();
+  }
 }

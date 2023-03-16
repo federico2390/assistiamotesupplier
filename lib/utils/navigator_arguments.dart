@@ -1,6 +1,5 @@
 import 'package:image_picker/image_picker.dart';
 
-import 'package:adminpanel/models/feed.dart';
 import 'package:adminpanel/models/operation.dart';
 
 class GalleryArguments {
@@ -8,12 +7,6 @@ class GalleryArguments {
   final List<String>? images;
 
   GalleryArguments(this.gallery, {this.images});
-}
-
-class FeedArguments {
-  final Feed feed;
-
-  FeedArguments(this.feed);
 }
 
 class OperationArguments {

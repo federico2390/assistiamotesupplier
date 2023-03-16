@@ -32,7 +32,7 @@ class Welcome extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              'Benvenuta/o\n${context.read<UserProvider>().localuser.userName}',
+              'Benvenuta/o\n${context.read<UserProvider>().localuser.supplierName}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,

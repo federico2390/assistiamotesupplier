@@ -22,28 +22,29 @@ class AppConst {
   static const String serviceFAQ = '$serviceWebsite/faq';
 
   /// Backend
-  static const String domain = 'adminpanel.studiopedico.it';
+  static const String domain = 'fornitori.studiopedico.it';
+  static const String backendDomain = 'adminpanel.studiopedico.it';
 
   static const String backendBase = 'https://$domain';
   static const String login = '$backendBase/user/service/auth/login.php';
+  static const String loginBackend =
+      '$backendBase/admin/service/auth/login.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
+  static const String operationBackend =
+      '$backendBase/admin/service/misc/operation.php';
   static const String user = '$backendBase/user/service/misc/user.php';
-  static const String feed = '$backendBase/user/service/misc/feed.php';
-  static const String reading = '$backendBase/user/service/misc/reading.php';
-  static const String palace = '$backendBase/user/service/misc/palace.php';
-  static const String supplier = '$backendBase/user/service/misc/supplier.php';
+  static const String userBackend = '$backendBase/admin/service/misc/user.php';
   static const String setting = '$backendBase/user/service/misc/setting.php';
-  static const String operationMediaFolder = '$backendBase/user/media/';
-  static const String readingMediaFolder = '$backendBase/user/media/';
+  static const String settingBackend =
+      '$backendBase/admin/service/misc/setting.php';
 
   /// App
   static const String appId = 'com.alessandromontrone.studiopasupplier';
-  static const String appName = 'Studio PA';
+  static const String appName = 'PA Fornitori';
   static const String appLogo = 'assets/logo.png';
 
   /// Push Notifications
-  static const String firebaseChannelId = 'studio_pa';
-  static const String firebaseChannelName = 'studio_pa';
-  static const String firebaseTopic = 'allusers';
+  static const String firebaseChannelId = 'studio_pa_fornitori';
+  static const String firebaseChannelName = 'studio_pa_fornitori';
 }

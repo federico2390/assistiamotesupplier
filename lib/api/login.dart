@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:adminpanel/api/first_time_logged.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/user.dart';
@@ -27,27 +26,25 @@ class LoginApi {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: {
-            'username': username.trim(),
-            'password': password.trim(),
+            'login': 'login',
+            'supplier_email': username.trim(),
+            'supplier_cf': password.trim(),
           },
         );
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           final jsonData = json.decode(response.body);
           final UserDatabase user = UserDatabase.fromJson(jsonData[0]);
-          await FirstTimeLogged().firstTimeLogged(context, user.userId!);
 
           await context.read<UserProvider>().addLocalUser(
                 UserDatabase(
-                  userId: user.userId!.trim(),
-                  userEmail: user.userEmail!.trim(),
-                  userName: user.userName!.trim(),
-                  userCf: user.userCf!.trim(),
-                  userUsername: user.userUsername!.trim(),
-                  userPassword: user.userPassword!.trim(),
-                  userToken: user.userToken!.trim(),
+                  supplierId: user.supplierId!.trim(),
+                  supplierEmail: user.supplierEmail!.trim(),
+                  supplierName: user.supplierName!.trim(),
+                  supplierType: user.supplierType!.trim(),
+                  supplierCf: user.supplierCf!.trim(),
+                  supplierToken: user.supplierToken!.trim(),
                   notification: user.notification!.trim(),
-                  firstTimeLogged: user.firstTimeLogged!.trim(),
                 ),
               );
 

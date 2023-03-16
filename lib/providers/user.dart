@@ -9,8 +9,8 @@ class UserProvider extends ChangeNotifier {
   UserDatabase get localuser => _localUser;
 
   Future<UserDatabase> getUser() async {
-    if (_localUser.userId != null) {
-      UserDatabase user = await UserApi().getUser(_localUser.userId!);
+    if (_localUser.supplierId != null) {
+      UserDatabase user = await UserApi().getUser(_localUser.supplierId!);
       await updateLocalUser(user);
       notifyListeners();
       return _localUser;

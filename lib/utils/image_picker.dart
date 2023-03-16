@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/providers/reading.dart';
 import 'package:adminpanel/utils/alerts.dart';
 
 buildImagePicker(BuildContext context, provider) async {
@@ -35,34 +34,18 @@ buildImagePicker(BuildContext context, provider) async {
                         throw error;
                       });
 
-                      if (provider == OperationProvider) {
-                        if (context.read<OperationProvider>().images.length +
-                                selectedImages.length >
-                            3) {
-                          Navigator.pop(context);
-                          await Alerts.errorAlert(context,
-                              title: 'Attenzione', subtitle: 'Max 3 foto');
-                          return;
-                        }
-                        if (selectedImages.isNotEmpty) {
-                          context
-                              .read<OperationProvider>()
-                              .addImages(selectedImages);
-                        }
-                      } else {
-                        if (context.read<ReadingProvider>().images.length +
-                                selectedImages.length >
-                            3) {
-                          Navigator.pop(context);
-                          await Alerts.errorAlert(context,
-                              title: 'Attenzione', subtitle: 'Max 3 foto');
-                          return;
-                        }
-                        if (selectedImages.isNotEmpty) {
-                          context
-                              .read<ReadingProvider>()
-                              .addImages(selectedImages);
-                        }
+                      if (context.read<OperationProvider>().images.length +
+                              selectedImages.length >
+                          3) {
+                        Navigator.pop(context);
+                        await Alerts.errorAlert(context,
+                            title: 'Attenzione', subtitle: 'Max 3 foto');
+                        return;
+                      }
+                      if (selectedImages.isNotEmpty) {
+                        context
+                            .read<OperationProvider>()
+                            .addImages(selectedImages);
                       }
                       Navigator.pop(context);
                     } catch (error) {
@@ -86,15 +69,9 @@ buildImagePicker(BuildContext context, provider) async {
                     });
 
                     if (selectedImages != null) {
-                      if (provider == OperationProvider) {
-                        context
-                            .read<OperationProvider>()
-                            .addImage(selectedImages);
-                      } else {
-                        context
-                            .read<ReadingProvider>()
-                            .addImage(selectedImages);
-                      }
+                      context
+                          .read<OperationProvider>()
+                          .addImage(selectedImages);
                       Navigator.pop(context);
                     }
                   } catch (error) {
@@ -137,34 +114,18 @@ buildImagePicker(BuildContext context, provider) async {
                       throw error;
                     });
 
-                    if (provider == OperationProvider) {
-                      if (context.read<OperationProvider>().images.length +
-                              selectedImages.length >
-                          3) {
-                        Navigator.pop(context);
-                        await Alerts.errorAlert(context,
-                            title: 'Attenzione', subtitle: 'Max 3 foto');
-                        return;
-                      }
-                      if (selectedImages.isNotEmpty) {
-                        context
-                            .read<OperationProvider>()
-                            .addImages(selectedImages);
-                      }
-                    } else {
-                      if (context.read<ReadingProvider>().images.length +
-                              selectedImages.length >
-                          3) {
-                        Navigator.pop(context);
-                        await Alerts.errorAlert(context,
-                            title: 'Attenzione', subtitle: 'Max 3 foto');
-                        return;
-                      }
-                      if (selectedImages.isNotEmpty) {
-                        context
-                            .read<ReadingProvider>()
-                            .addImages(selectedImages);
-                      }
+                    if (context.read<OperationProvider>().images.length +
+                            selectedImages.length >
+                        3) {
+                      Navigator.pop(context);
+                      await Alerts.errorAlert(context,
+                          title: 'Attenzione', subtitle: 'Max 3 foto');
+                      return;
+                    }
+                    if (selectedImages.isNotEmpty) {
+                      context
+                          .read<OperationProvider>()
+                          .addImages(selectedImages);
                     }
                     Navigator.pop(context);
                   } catch (error) {
@@ -193,15 +154,9 @@ buildImagePicker(BuildContext context, provider) async {
                     });
 
                     if (selectedImages != null) {
-                      if (provider == OperationProvider) {
-                        context
-                            .read<OperationProvider>()
-                            .addImage(selectedImages);
-                      } else {
-                        context
-                            .read<ReadingProvider>()
-                            .addImage(selectedImages);
-                      }
+                      context
+                          .read<OperationProvider>()
+                          .addImage(selectedImages);
                       Navigator.pop(context);
                     }
                   } catch (error) {

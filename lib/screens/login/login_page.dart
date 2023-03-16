@@ -50,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
 
     if (rememberData != 0 || rememberData != null) {
       final user = await context.read<UserProvider>().getLocalUser();
-      if (user.userUsername != null && user.userPassword != null) {
-        usernameController.text = user.userUsername!;
-        passwordController.text = user.userPassword!;
+      if (user.supplierEmail != null && user.supplierCf != null) {
+        usernameController.text = user.supplierEmail!;
+        passwordController.text = user.supplierCf!;
       }
     }
 

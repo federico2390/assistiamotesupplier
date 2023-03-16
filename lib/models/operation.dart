@@ -26,30 +26,28 @@ class Operation {
     this.supplierMedia1,
     this.supplierMedia2,
     this.operationDatetime,
+    this.operationLastUpdate,
+    this.operationState,
+    this.operationViewed,
+    this.operationWorking,
+    this.operationOpened,
+    this.requestBy,
     this.palaceName,
     this.palaceCf,
     this.palaceAddress,
     this.palaceUtilsName,
     this.palaceUtilsNumber,
     this.palaceDescription,
-    this.userEmail,
-    this.userUsername,
-    this.userName,
-    this.userCf,
-    this.userPassword,
-    this.userToken,
-    this.notification,
-    this.firstTimeLogged,
-    this.media,
-    this.supplierMedia,
+    this.supplierEmail,
     this.supplierName,
     this.supplierType,
     this.supplierCf,
-    this.operationState,
-    this.operationViewed,
-    this.operationWorking,
-    this.operationOpened,
-    this.operationLastUpdate,
+    this.supplierToken,
+    this.notification,
+    this.yearId,
+    this.yearValue,
+    this.media,
+    this.supplierMedia,
   });
 
   String? operationId;
@@ -66,28 +64,26 @@ class Operation {
   String? supplierMedia1;
   String? supplierMedia2;
   String? operationDatetime;
+  String? operationLastUpdate;
+  String? operationState;
+  String? operationViewed;
+  String? operationWorking;
+  String? operationOpened;
+  String? requestBy;
   String? palaceName;
   String? palaceCf;
   String? palaceAddress;
   String? palaceUtilsName;
   String? palaceUtilsNumber;
   String? palaceDescription;
-  String? userEmail;
-  String? userUsername;
-  String? userName;
-  String? userCf;
-  String? userPassword;
-  String? userToken;
-  String? notification;
-  String? firstTimeLogged;
+  String? supplierEmail;
   String? supplierName;
   String? supplierType;
   String? supplierCf;
-  String? operationState;
-  String? operationViewed;
-  String? operationWorking;
-  String? operationOpened;
-  String? operationLastUpdate;
+  String? supplierToken;
+  String? notification;
+  String? yearId;
+  String? yearValue;
 
   List<String>? media;
   List<String>? supplierMedia;
@@ -107,28 +103,26 @@ class Operation {
         supplierMedia1: json["supplier_media_1"] ?? '',
         supplierMedia2: json["supplier_media_2"] ?? '',
         operationDatetime: json["operation_datetime"] ?? '',
+        operationLastUpdate: json["operation_last_update"] ?? '',
+        operationState: json["operation_state"] ?? '',
+        operationViewed: json["operation_viewed"] ?? '',
+        operationWorking: json["operation_working"] ?? '',
+        operationOpened: json["operation_opened"] ?? '',
+        requestBy: json["request_by"] ?? '',
         palaceName: json["palace_name"] ?? '',
         palaceCf: json["palace_cf"] ?? '',
         palaceAddress: json["palace_address"] ?? '',
         palaceUtilsName: json["palace_utils_name"] ?? '',
         palaceUtilsNumber: json["palace_utils_number"] ?? '',
         palaceDescription: json["palace_description"] ?? '',
-        userEmail: json["user_email"] ?? '',
-        userUsername: json["user_username"] ?? '',
-        userName: json["user_name"] ?? '',
-        userCf: json["user_cf"] ?? '',
-        userPassword: json["user_password"] ?? '',
-        userToken: json["user_token"] ?? '',
-        notification: json["notification"] ?? '',
-        firstTimeLogged: json["first_time_logged"] ?? '',
+        supplierEmail: json["supplier_email"] ?? '',
         supplierName: json["supplier_name"] ?? '',
         supplierType: json["supplier_type"] ?? '',
         supplierCf: json["supplier_cf"] ?? '',
-        operationState: json["operation_state"] ?? '',
-        operationViewed: json["operation_viewed"] ?? '',
-        operationWorking: json["operation_working"] ?? '',
-        operationOpened: json["operation_opened"] ?? '',
-        operationLastUpdate: json["operation_last_update"] ?? '',
+        supplierToken: json["supplier_token"] ?? '',
+        notification: json["notification"] ?? '',
+        yearId: json["year_id"] ?? '',
+        yearValue: json["year_value"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -146,27 +140,25 @@ class Operation {
         "supplier_media_1": supplierMedia1 ?? '',
         "supplier_media_2": supplierMedia2 ?? '',
         "operation_datetime": operationDatetime ?? '',
+        "operation_last_update": operationLastUpdate ?? '',
+        "operation_state": operationState ?? '',
+        "operation_viewed": operationViewed ?? '',
+        "operation_working": operationWorking ?? '',
+        "operation_opened": operationOpened ?? '',
+        "request_by": requestBy ?? '',
         "palace_name": palaceName ?? '',
         "palace_cf": palaceCf ?? '',
         "palace_address": palaceAddress ?? '',
         "palace_utils_name": palaceUtilsName ?? '',
         "palace_utils_number": palaceUtilsNumber ?? '',
         "palace_description": palaceDescription ?? '',
-        "user_email": userEmail ?? '',
-        "user_username": userUsername ?? '',
-        "user_name": userName ?? '',
-        "user_cf": userCf ?? '',
-        "user_password": userPassword ?? '',
-        "user_token": userToken ?? '',
-        "notification": notification ?? '',
-        "first_time_logged": firstTimeLogged ?? '',
+        "supplier_email": supplierEmail ?? '',
         "supplier_name": supplierName ?? '',
         "supplier_type": supplierType ?? '',
         "supplier_cf": supplierCf ?? '',
-        "operation_state": operationState ?? '',
-        "operation_viewed": operationViewed ?? '',
-        "operation_working": operationWorking ?? '',
-        "operation_opened": operationOpened ?? '',
-        "operation_last_update": operationLastUpdate ?? '',
+        "supplier_token": supplierToken ?? '',
+        "notification": notification ?? '',
+        "year_id": yearId ?? '',
+        "year_value": yearValue ?? '',
       };
 }

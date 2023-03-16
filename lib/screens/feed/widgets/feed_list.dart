@@ -3,13 +3,9 @@ import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/models/feed.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/providers/feed.dart';
 import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/all.dart';
-import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/comunication.dart';
-import 'package:adminpanel/screens/feed/widgets/tabs_page.dart/operation.dart';
+import 'package:adminpanel/screens/feed/widgets/operation.dart';
 import 'package:adminpanel/utils/size.dart';
 
 class FeedList extends StatelessWidget {
@@ -33,21 +29,21 @@ class FeedList extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: AppConst.padding),
                 children: const {
                   1: Text(
-                    'Tutti',
+                    'Aperti',
                     style: TextStyle(fontSize: 12),
                   ),
                   2: Text(
-                    'Comunicazioni',
+                    'In corso',
                     style: TextStyle(fontSize: 12),
                   ),
                   3: Text(
-                    'Interventi',
+                    'Chiusi',
                     style: TextStyle(fontSize: 12),
                   ),
                 },
-                groupValue: context.watch<FeedProvider>().selectedSegment,
+                groupValue: context.watch<OperationProvider>().selectedSegment,
                 onValueChanged: (value) {
-                  context.read<FeedProvider>().setSelectedSegment(value);
+                  context.read<OperationProvider>().setSelectedSegment(value);
                 },
               ),
             ),
@@ -57,13 +53,14 @@ class FeedList extends StatelessWidget {
               top: 0,
               right: (ScreenSize.width(context) / 3 + AppConst.padding * 2) -
                   AppConst.padding * 1.5,
-              child: FutureBuilder<List<Feed>>(
-                future: context.read<FeedProvider>().getFeeds(context),
+              child: FutureBuilder<List<Operation>>(
+                future:
+                    context.read<OperationProvider>().getOperations(context),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                    List<Feed> feeds = snapshot.data!;
+                    List<Operation> feeds = snapshot.data!;
                     if (feeds
-                        .where((e) => e.notificationOpened == 'false')
+                        .where((e) => e.operationOpened == 'false')
                         .toList()
                         .isNotEmpty) {
                       return Container(
@@ -72,24 +69,26 @@ class FeedList extends StatelessWidget {
                         decoration: BoxDecoration(
                           border: Border.all(
                               width: 1, color: AppColors.primaryColor),
-                          color:
-                              context.read<FeedProvider>().selectedSegment != 2
-                                  ? AppColors.primaryColor
-                                  : AppColors.backgroundColor,
+                          color: context
+                                      .read<OperationProvider>()
+                                      .selectedSegment !=
+                                  2
+                              ? AppColors.primaryColor
+                              : AppColors.backgroundColor,
                           borderRadius:
                               BorderRadius.circular(AppConst.borderRadius * 2),
                         ),
                         child: Center(
                           child: Text(
                             feeds
-                                .where((e) => e.notificationOpened == 'false')
+                                .where((e) => e.operationOpened == 'false')
                                 .toList()
                                 .length
                                 .toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: context
-                                          .read<FeedProvider>()
+                                          .read<OperationProvider>()
                                           .selectedSegment !=
                                       2
                                   ? AppColors.backgroundColor
@@ -132,10 +131,12 @@ class FeedList extends StatelessWidget {
                         decoration: BoxDecoration(
                           border: Border.all(
                               width: 1, color: AppColors.primaryColor),
-                          color:
-                              context.read<FeedProvider>().selectedSegment != 3
-                                  ? AppColors.primaryColor
-                                  : AppColors.backgroundColor,
+                          color: context
+                                      .read<OperationProvider>()
+                                      .selectedSegment !=
+                                  3
+                              ? AppColors.primaryColor
+                              : AppColors.backgroundColor,
                           borderRadius:
                               BorderRadius.circular(AppConst.borderRadius * 2),
                         ),
@@ -149,7 +150,7 @@ class FeedList extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: context
-                                          .read<FeedProvider>()
+                                          .read<OperationProvider>()
                                           .selectedSegment !=
                                       3
                                   ? AppColors.backgroundColor
@@ -173,12 +174,8 @@ class FeedList extends StatelessWidget {
             ),
           ],
         ),
-        Expanded(
-          child: context.watch<FeedProvider>().selectedSegment == 1
-              ? const AllSegmentedPage()
-              : context.watch<FeedProvider>().selectedSegment == 2
-                  ? const ComunicationSegmentedPage()
-                  : const OperationSegmentedPage(),
+        const Expanded(
+          child: OperationSegmentedPage(),
         ),
       ],
     );
