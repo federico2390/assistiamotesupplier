@@ -21,7 +21,7 @@
     </queries>
 
    <application
-        android:label="Studio PA"
+        android:label="PA Fornitori"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

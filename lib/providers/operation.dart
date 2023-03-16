@@ -8,6 +8,15 @@ import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/models/operation.dart';
 
 class OperationProvider extends ChangeNotifier {
+  List<Operation> _opened = [];
+  List<Operation> get opened => _opened;
+
+  List<Operation> _working = [];
+  List<Operation> get working => _working;
+
+  List<Operation> _closed = [];
+  List<Operation> get closed => _closed;
+
   List<Operation> _operations = [];
   List<Operation> get operations => _operations;
   Future<List<Operation>> getOperations(BuildContext context) async {
@@ -38,6 +47,13 @@ class OperationProvider extends ChangeNotifier {
           (b.operationOpened == 'false' ? 0 : 1));
 
       _operations = operationList;
+      _opened = operationList
+          .where(
+              (e) => e.operationWorking != "true" && e.operationState != "true")
+          .toList();
+      _working =
+          operationList.where((e) => e.operationWorking == "true").toList();
+      _closed = operationList.where((e) => e.operationState == "true").toList();
     } catch (error) {
       print(error);
     }
