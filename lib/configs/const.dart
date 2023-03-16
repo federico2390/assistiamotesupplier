@@ -19,7 +19,7 @@ class AppConst {
   static const String serviceWebsite = 'https://studiopedico.it';
   static const String servicePrivacyPolicy =
       '$serviceWebsite/privacy-policy-app';
-  static const String serviceFAQ = '$serviceWebsite/faq';
+  static const String servicePhone = '0883513748';
 
   /// Backend
   static const String domain = 'fornitori.studiopedico.it';

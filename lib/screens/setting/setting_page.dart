@@ -82,19 +82,6 @@ class SettingPage extends StatelessWidget {
                   SettingsSection(
                     tiles: <SettingsTile>[
                       SettingsTile.navigation(
-                        leading: const Icon(Icons.question_answer_rounded),
-                        title: const Text('FAQ'),
-                        description: const Text(
-                            'Nella sezione FAQ puoi trovare risposte alle domande più frequenti degli utenti.'),
-                        onPressed: (context) {
-                          launchUrls(AppConst.serviceFAQ);
-                        },
-                      ),
-                    ],
-                  ),
-                  SettingsSection(
-                    tiles: <SettingsTile>[
-                      SettingsTile.navigation(
                         leading: const Icon(Icons.logout_rounded),
                         title: const Text('Esci'),
                         onPressed: (context) {
