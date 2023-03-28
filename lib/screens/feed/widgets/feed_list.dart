@@ -44,18 +44,31 @@ class FeedList extends StatelessWidget {
             },
           ),
         ),
-        Expanded(
-          child: context.read<OperationProvider>().selectedSegment == 1
-              ? context.read<OperationProvider>().opened.isNotEmpty
-                  ? const OperationSegmentedPage()
-                  : const Loader()
-              : context.read<OperationProvider>().selectedSegment == 2
-                  ? context.read<OperationProvider>().working.isNotEmpty
-                      ? const OperationSegmentedPage()
-                      : const Loader()
-                  : context.read<OperationProvider>().closed.isNotEmpty
-                      ? const OperationSegmentedPage()
-                      : const Loader(),
+        Consumer<OperationProvider>(
+          builder: (context, operationProvider, child) {
+            return StreamBuilder(
+              stream: operationProvider.getOperations(context).asStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: operationProvider.selectedSegment == 1
+                        ? operationProvider.opened.isNotEmpty
+                            ? const OperationSegmentedPage()
+                            : const Loader()
+                        : operationProvider.selectedSegment == 2
+                            ? operationProvider.working.isNotEmpty
+                                ? const OperationSegmentedPage()
+                                : const Loader()
+                            : operationProvider.closed.isNotEmpty
+                                ? const OperationSegmentedPage()
+                                : const Loader(),
+                  );
+                } else {
+                  return const Loader();
+                }
+              },
+            );
+          },
         ),
       ],
     );

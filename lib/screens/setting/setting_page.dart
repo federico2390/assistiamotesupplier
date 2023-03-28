@@ -28,8 +28,8 @@ class SettingPage extends StatelessWidget {
       appBar: appBar(context),
       body: Consumer<SettingProvider>(
         builder: (context, settingProvider, child) {
-          return FutureBuilder(
-            future: settingProvider.getSetting(context),
+          return StreamBuilder(
+            stream: settingProvider.getSetting(context).asStream(),
             builder: (context, snapshot) {
               return SettingsList(
                 lightTheme: Platform.isAndroid

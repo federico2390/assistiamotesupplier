@@ -17,8 +17,6 @@ class OperationSegmentedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<OperationProvider>(
       builder: (context, operationProvider, child) {
-        operationProvider.getOperations(context);
-
         if (operationProvider.operations.isNotEmpty) {
           List<Operation> operations = operationProvider.selectedSegment == 1
               ? operationProvider.opened
