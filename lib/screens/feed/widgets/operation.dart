@@ -74,7 +74,7 @@ class OperationSegmentedPage extends StatelessWidget {
                       context,
                       '/operation_detail',
                       arguments: OperationArguments(
-                        operation,
+                        operation.operationId!,
                       ),
                     );
                   });

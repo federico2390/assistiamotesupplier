@@ -19,6 +19,7 @@ class OperationProvider extends ChangeNotifier {
 
   List<Operation> _operations = [];
   List<Operation> get operations => _operations;
+
   Future<List<Operation>> getOperations(BuildContext context) async {
     try {
       List<Operation> operationList =
@@ -47,13 +48,27 @@ class OperationProvider extends ChangeNotifier {
           (b.operationOpened == 'false' ? 0 : 1));
 
       _operations = operationList;
+
       _opened = operationList
           .where(
-              (e) => e.operationWorking != "true" && e.operationState != "true")
+            (e) => e.operationWorking == "false" && e.operationState == "false",
+          )
           .toList();
-      _working =
-          operationList.where((e) => e.operationWorking == "true").toList();
-      _closed = operationList.where((e) => e.operationState == "true").toList();
+
+      _working = operationList
+          .where(
+            (e) =>
+                e.operationOpened == 'true' &&
+                e.operationWorking == "true" &&
+                e.operationState == "false",
+          )
+          .toList();
+
+      _closed = operationList
+          .where(
+            (e) => e.operationState == "true",
+          )
+          .toList();
     } catch (error) {
       print(error);
     }

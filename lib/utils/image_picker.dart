@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adminpanel/models/operation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +11,7 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/utils/alerts.dart';
 
-buildImagePicker(BuildContext context, provider) async {
+buildImagePicker(BuildContext context, provider, Operation operation) async {
   final ImagePicker picker = ImagePicker();
 
   Platform.isAndroid
@@ -35,11 +36,14 @@ buildImagePicker(BuildContext context, provider) async {
                       });
 
                       if (context.read<OperationProvider>().images.length +
-                              selectedImages.length >
-                          3) {
+                              selectedImages.length +
+                              operation.supplierMedia!
+                                  .where((e) => e.isNotEmpty)
+                                  .length >
+                          2) {
                         Navigator.pop(context);
                         await Alerts.errorAlert(context,
-                            title: 'Attenzione', subtitle: 'Max 3 foto');
+                            title: 'Attenzione', subtitle: 'Max 2 foto');
                         return;
                       }
                       if (selectedImages.isNotEmpty) {
@@ -115,11 +119,14 @@ buildImagePicker(BuildContext context, provider) async {
                     });
 
                     if (context.read<OperationProvider>().images.length +
-                            selectedImages.length >
-                        3) {
+                            selectedImages.length +
+                            operation.supplierMedia!
+                                .where((e) => e.isNotEmpty)
+                                .length >
+                        2) {
                       Navigator.pop(context);
                       await Alerts.errorAlert(context,
-                          title: 'Attenzione', subtitle: 'Max 3 foto');
+                          title: 'Attenzione', subtitle: 'Max 2 foto');
                       return;
                     }
                     if (selectedImages.isNotEmpty) {

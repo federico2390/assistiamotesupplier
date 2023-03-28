@@ -22,7 +22,7 @@ class AppConst {
   static const String servicePhone = '0883513748';
 
   /// Backend
-  static const String domain = 'fornitori.studiopedico.it';
+  static const String domain = 'adminpanel.studiopedico.it/fornitori';
   static const String backendDomain = 'adminpanel.studiopedico.it';
 
   static const String backendBase = 'https://$domain';
@@ -31,6 +31,8 @@ class AppConst {
       '$backendBase/admin/service/auth/login.php';
   static const String operation =
       '$backendBase/user/service/misc/operation.php';
+  static const String notification =
+      '$backendBase/admin/service/misc/notification.php';
   static const String operationBackend =
       '$backendBase/admin/service/misc/operation.php';
   static const String user = '$backendBase/user/service/misc/user.php';
@@ -47,4 +49,7 @@ class AppConst {
   /// Push Notifications
   static const String firebaseChannelId = 'studio_pa_fornitori';
   static const String firebaseChannelName = 'studio_pa_fornitori';
+  static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
+  static const String firebaseAuthKey =
+      'AAAACJBFyYI:APA91bGKiTsazg3d2YIYRrF4Q2Fvmgf1aYZme_Msluq_Bwb2odZbB6kBvD_LktEAELoUiGP_eSAW4xnQI6MCc6gRr4OBOdnR4zSgatDSGr5T4yOas61hea_HkSfk0l6SuXEi3mwHdWSK';
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static Color backgroundColor =
-      const Color(0xFFFFFFFF); // const Color(0xFFF2F2F4);
+  static Color backgroundColor = const Color(0xFFFFFFFF);
   static Color primaryColor = const Color(0xFF880404);
   static Color secondaryColor = const Color(0xFF9E9E9E);
   static Color tertiaryColor = const Color(0x31990000);
@@ -11,6 +10,7 @@ class AppColors {
   static Color errorColor = const Color(0xFF880404);
   static Color transparentColor = const Color(0x00000000);
   static Color focusedColor = const Color(0xFF000000);
+  static Color attentionColor = const Color(0xFFE28401);
 
   static Map<int, Color> materialPrimaryColor = {
     50: const Color.fromRGBO(136, 4, 4, .1),

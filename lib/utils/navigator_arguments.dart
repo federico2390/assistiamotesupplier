@@ -1,7 +1,5 @@
 import 'package:image_picker/image_picker.dart';
 
-import 'package:adminpanel/models/operation.dart';
-
 class GalleryArguments {
   final List<XFile> gallery;
   final List<String>? images;
@@ -10,7 +8,7 @@ class GalleryArguments {
 }
 
 class OperationArguments {
-  final Operation operation;
+  final String operationId;
 
-  OperationArguments(this.operation);
+  OperationArguments(this.operationId);
 }
