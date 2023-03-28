@@ -365,19 +365,34 @@ class OperationDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      operation.operationState == 'false'
+                      operation.supplierMedia!.any((e) => e.isNotEmpty)
                           ? const SizedBox(height: AppConst.padding)
                           : const SizedBox(),
-                      operation.operationState == 'false'
+                      operation.supplierMedia!.any((e) => e.isNotEmpty)
                           ? Divider(
                               height: 1,
                               color: AppColors.secondaryColor,
                             )
                           : const SizedBox(),
-                      operation.operationState == 'false'
+                      operation.supplierMedia!.any((e) => e.isNotEmpty)
                           ? const SizedBox(height: AppConst.padding)
                           : const SizedBox(),
-                      operation.supplierMedia!.any((e) => e.isNotEmpty)
+                      operation.supplierMedia!.any((e) => e.isEmpty)
+                          ? const SizedBox(height: AppConst.padding)
+                          : const SizedBox(),
+                      operation.supplierMedia!.any((e) => e.isEmpty) &&
+                              operation.operationState == 'false'
+                          ? Divider(
+                              height: 1,
+                              color: AppColors.secondaryColor,
+                            )
+                          : const SizedBox(),
+                      operation.supplierMedia!.any((e) => e.isEmpty) &&
+                              operation.operationState == 'false'
+                          ? const SizedBox(height: AppConst.padding)
+                          : const SizedBox(),
+                      operation.supplierMedia!.any((e) => e.isNotEmpty) &&
+                              operation.operationState == 'false'
                           ? Text(
                               'I tuoi allegati',
                               style: TextStyle(

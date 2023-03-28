@@ -91,6 +91,9 @@ class OperationSegmentedPage extends StatelessWidget {
                         ? AppColors.primaryColor
                         : AppColors.backgroundColor,
                     child: ListTile(
+                      isThreeLine: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: AppConst.padding, vertical: 0),
                       leading: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -146,15 +149,33 @@ class OperationSegmentedPage extends StatelessWidget {
                           )
                         ],
                       ),
-                      subtitle: Text(
-                        operation.description!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: operation.operationOpened == 'false'
-                              ? AppColors.labelLightColor
-                              : AppColors.secondaryColor,
-                        ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: AppConst.padding / 4),
+                          Text(
+                            operation.palaceAddress!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: operation.operationOpened == 'false'
+                                  ? AppColors.labelLightColor
+                                  : AppColors.secondaryColor,
+                            ),
+                          ),
+                          const SizedBox(height: AppConst.padding / 4),
+                          Text(
+                            operation.description!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: operation.operationOpened == 'false'
+                                  ? AppColors.labelLightColor
+                                  : AppColors.secondaryColor,
+                            ),
+                          ),
+                        ],
                       ),
                       onTap: onTap,
                     ),
