@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:adminpanel/configs/colors.dart';
@@ -72,7 +73,19 @@ class OperationDetail extends StatelessWidget {
                               children: [
                                 operation.operationWorking == 'false'
                                     ? TapDebouncer(
-                                        onTap: () async {},
+                                        onTap: () async {
+                                          await OperationApi()
+                                              .markOperationAsWorking(
+                                                  context, operation, 'true')
+                                              .whenComplete(() {
+                                            descriptionController.clear();
+                                            context
+                                                .read<OperationProvider>()
+                                                .removeAllImage();
+                                            hideKeyboard(context);
+                                            Navigator.of(context).pop(context);
+                                          });
+                                        },
                                         builder: (BuildContext context,
                                             TapDebouncerFunc? onTap) {
                                           return Expanded(
@@ -89,7 +102,19 @@ class OperationDetail extends StatelessWidget {
                                     ? const SizedBox(width: AppConst.padding)
                                     : const SizedBox(),
                                 TapDebouncer(
-                                  onTap: () async {},
+                                  onTap: () async {
+                                    await OperationApi()
+                                        .markOperationAsClosed(
+                                            context, operation, 'true')
+                                        .whenComplete(() {
+                                      descriptionController.clear();
+                                      context
+                                          .read<OperationProvider>()
+                                          .removeAllImage();
+                                      hideKeyboard(context);
+                                      Navigator.of(context).pop(context);
+                                    });
+                                  },
                                   builder: (BuildContext context,
                                       TapDebouncerFunc? onTap) {
                                     return Expanded(
@@ -100,7 +125,7 @@ class OperationDetail extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                )
+                                ),
                               ],
                             )
                           : const SizedBox(),
@@ -258,10 +283,25 @@ class OperationDetail extends StatelessWidget {
                               color: AppColors.secondaryColor,
                             ),
                           ),
-                          Text(
+                          ReadMoreText(
                             operation.description!,
+                            trimLines: 1,
+                            colorClickableText: AppColors.labelDarkColor,
+                            trimMode: TrimMode.Line,
+                            trimCollapsedText: '  altro',
+                            trimExpandedText: '   meno',
                             style: const TextStyle(
                               fontSize: 15,
+                            ),
+                            moreStyle: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                            lessStyle: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -325,12 +365,18 @@ class OperationDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppConst.padding),
-                      Divider(
-                        height: 1,
-                        color: AppColors.secondaryColor,
-                      ),
-                      const SizedBox(height: AppConst.padding),
+                      operation.operationState == 'false'
+                          ? const SizedBox(height: AppConst.padding)
+                          : const SizedBox(),
+                      operation.operationState == 'false'
+                          ? Divider(
+                              height: 1,
+                              color: AppColors.secondaryColor,
+                            )
+                          : const SizedBox(),
+                      operation.operationState == 'false'
+                          ? const SizedBox(height: AppConst.padding)
+                          : const SizedBox(),
                       operation.supplierMedia!.any((e) => e.isNotEmpty)
                           ? Text(
                               'I tuoi allegati',
@@ -671,10 +717,26 @@ class OperationDetail extends StatelessWidget {
                                         color: AppColors.secondaryColor,
                                       ),
                                     ),
-                                    Text(
+                                    ReadMoreText(
                                       operation.supplierDescription!,
+                                      trimLines: 1,
+                                      colorClickableText:
+                                          AppColors.labelDarkColor,
+                                      trimMode: TrimMode.Line,
+                                      trimCollapsedText: '  altro',
+                                      trimExpandedText: '   meno',
                                       style: const TextStyle(
                                         fontSize: 15,
+                                      ),
+                                      moreStyle: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                      lessStyle: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ],

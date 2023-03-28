@@ -102,7 +102,7 @@ class NotificationApi {
         print('Push notification sended');
         await Alerts.successAlert(
           context,
-          title: 'Successo',
+          title: 'Salvato',
           subtitle: 'Intervento salvato',
         );
       } else {

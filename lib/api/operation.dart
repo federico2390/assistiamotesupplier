@@ -150,15 +150,11 @@ class OperationApi {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        debugPrint(json.decode(response.data));
-
         List<Token> tokens = [];
 
         try {
           var response = await http.post(
-            Uri.parse(
-              AppConst.operation,
-            ),
+            Uri.parse(AppConst.operation),
             body: {
               'get_tokens': 'get_tokens',
               'operation_id': operation.operationId!.trim(),
@@ -216,6 +212,130 @@ class OperationApi {
       }
     } catch (error) {
       print('ERROR_markOperationAsOpened: $error');
+    }
+  }
+
+  Future markOperationAsWorking(
+    BuildContext context,
+    Operation operation,
+    String operationWorking,
+  ) async {
+    try {
+      var response = await http.post(
+        Uri.parse(AppConst.operation),
+        body: {
+          'mark_as_working': 'mark_as_working',
+          'operation_id': operation.operationId,
+          'operation_working': operationWorking,
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        List<Token> tokens = [];
+
+        try {
+          var response = await http.post(
+            Uri.parse(AppConst.operation),
+            body: {
+              'get_tokens': 'get_tokens',
+              'operation_id': operation.operationId!.trim(),
+            },
+          );
+
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            tokens = tokenFromJson(response.body);
+            if (operation.operation == 'Condominiale') {
+              await NotificationApi().sendToPalace(
+                context: context,
+                title: 'Stato intervento',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
+                operation: operation,
+                tokens: tokens,
+              );
+            } else {
+              await NotificationApi().sendToUser(
+                context: context,
+                title: 'Stato intervento',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
+                operation: operation,
+                tokens: tokens,
+              );
+            }
+          }
+        } catch (error) {
+          print('ERROR_getTokens: $error');
+          await Alerts.hideAlert();
+        }
+      } else {
+        print('Can\'t mark as working Operation');
+        await Alerts.hideAlert();
+      }
+    } catch (error) {
+      print('ERROR_markOperationAsWorking: $error');
+      await Alerts.hideAlert();
+    }
+  }
+
+  Future markOperationAsClosed(
+    BuildContext context,
+    Operation operation,
+    String operationState,
+  ) async {
+    try {
+      var response = await http.post(
+        Uri.parse(AppConst.operation),
+        body: {
+          'mark_as_closed': 'mark_as_closed',
+          'operation_id': operation.operationId,
+          'operation_state': operationState,
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        List<Token> tokens = [];
+
+        try {
+          var response = await http.post(
+            Uri.parse(AppConst.operation),
+            body: {
+              'get_tokens': 'get_tokens',
+              'operation_id': operation.operationId!.trim(),
+            },
+          );
+
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            tokens = tokenFromJson(response.body);
+            if (operation.operation == 'Condominiale') {
+              await NotificationApi().sendToPalace(
+                context: context,
+                title: 'Intervento concluso',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
+                operation: operation,
+                tokens: tokens,
+              );
+            } else {
+              await NotificationApi().sendToUser(
+                context: context,
+                title: 'Intervento concluso',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
+                operation: operation,
+                tokens: tokens,
+              );
+            }
+          }
+        } catch (error) {
+          print('ERROR_getTokens: $error');
+          await Alerts.hideAlert();
+        }
+      } else {
+        print('Can\'t close Operation');
+        await Alerts.hideAlert();
+      }
+    } catch (error) {
+      print('ERROR_markOperationAsClosed: $error');
+      await Alerts.hideAlert();
     }
   }
 }
