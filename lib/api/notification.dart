@@ -14,6 +14,8 @@ class NotificationApi {
     required String message,
     required Operation operation,
     required List<Token> tokens,
+    required String popupTitle,
+    required String popupMessage,
   }) async {
     try {
       var response = await http.post(
@@ -42,15 +44,13 @@ class NotificationApi {
         ),
       );
 
-      await Alerts.hideAlert();
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Push notification sended');
-
+        await Alerts.hideAlert();
         await Alerts.successAlert(
           context,
-          title: 'Successo',
-          subtitle: 'Intervento salvato',
+          title: popupTitle,
+          subtitle: popupMessage,
         );
       } else {
         await Alerts.hideAlert();
@@ -68,6 +68,8 @@ class NotificationApi {
     required String message,
     required Operation operation,
     required List<Token> tokens,
+    required String popupTitle,
+    required String popupMessage,
   }) async {
     try {
       var response = await http.post(
@@ -96,14 +98,13 @@ class NotificationApi {
         ),
       );
 
-      await Alerts.hideAlert();
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Push notification sended');
+        await Alerts.hideAlert();
         await Alerts.successAlert(
           context,
-          title: 'Salvato',
-          subtitle: 'Intervento salvato',
+          title: popupTitle,
+          subtitle: popupMessage,
         );
       } else {
         await Alerts.hideAlert();

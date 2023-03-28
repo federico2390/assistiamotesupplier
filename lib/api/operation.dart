@@ -171,6 +171,8 @@ class OperationApi {
                     'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
                 operation: operation,
                 tokens: tokens,
+                popupTitle: 'Aggiornato',
+                popupMessage: 'Intervento aggiornato',
               );
             } else {
               await NotificationApi().sendToUser(
@@ -180,20 +182,19 @@ class OperationApi {
                     'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
                 operation: operation,
                 tokens: tokens,
+                popupTitle: 'Aggiornato',
+                popupMessage: 'Intervento aggiornato',
               );
             }
           }
         } catch (error) {
           print('ERROR_getTokens: $error');
-          await Alerts.hideAlert();
         }
       } else {
         print('Can\'t edit Operation');
-        await Alerts.hideAlert();
       }
     } catch (error) {
       print('ERROR_editOperation: $error');
-      await Alerts.hideAlert();
     }
   }
 
@@ -251,6 +252,8 @@ class OperationApi {
                     'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
                 operation: operation,
                 tokens: tokens,
+                popupTitle: 'In corso',
+                popupMessage: 'Intervento In corso',
               );
             } else {
               await NotificationApi().sendToUser(
@@ -260,20 +263,19 @@ class OperationApi {
                     'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
                 operation: operation,
                 tokens: tokens,
+                popupTitle: 'In corso',
+                popupMessage: 'Intervento In corso',
               );
             }
           }
         } catch (error) {
           print('ERROR_getTokens: $error');
-          await Alerts.hideAlert();
         }
       } else {
         print('Can\'t mark as working Operation');
-        await Alerts.hideAlert();
       }
     } catch (error) {
       print('ERROR_markOperationAsWorking: $error');
-      await Alerts.hideAlert();
     }
   }
 
@@ -313,6 +315,8 @@ class OperationApi {
                     'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
                 operation: operation,
                 tokens: tokens,
+                popupTitle: 'Chiuso',
+                popupMessage: 'Intervento Chiuso',
               );
             } else {
               await NotificationApi().sendToUser(
@@ -322,20 +326,19 @@ class OperationApi {
                     'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
                 operation: operation,
                 tokens: tokens,
+                popupTitle: 'Chiuso',
+                popupMessage: 'Intervento Chiuso',
               );
             }
           }
         } catch (error) {
           print('ERROR_getTokens: $error');
-          await Alerts.hideAlert();
         }
       } else {
         print('Can\'t close Operation');
-        await Alerts.hideAlert();
       }
     } catch (error) {
       print('ERROR_markOperationAsClosed: $error');
-      await Alerts.hideAlert();
     }
   }
 }

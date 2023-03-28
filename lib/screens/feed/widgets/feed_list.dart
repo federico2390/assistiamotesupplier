@@ -1,3 +1,4 @@
+import 'package:adminpanel/utils/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -43,8 +44,18 @@ class FeedList extends StatelessWidget {
             },
           ),
         ),
-        const Expanded(
-          child: OperationSegmentedPage(),
+        Expanded(
+          child: context.read<OperationProvider>().selectedSegment == 1
+              ? context.read<OperationProvider>().opened.isNotEmpty
+                  ? const OperationSegmentedPage()
+                  : const Loader()
+              : context.read<OperationProvider>().selectedSegment == 2
+                  ? context.read<OperationProvider>().working.isNotEmpty
+                      ? const OperationSegmentedPage()
+                      : const Loader()
+                  : context.read<OperationProvider>().closed.isNotEmpty
+                      ? const OperationSegmentedPage()
+                      : const Loader(),
         ),
       ],
     );
