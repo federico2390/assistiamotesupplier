@@ -61,6 +61,7 @@ class OperationDetail extends StatelessWidget {
             appBar: appBar(context),
             body: Column(
               children: [
+                const SizedBox(height: AppConst.padding / 2),
                 Expanded(
                   child: ListView(
                     shrinkWrap: true,

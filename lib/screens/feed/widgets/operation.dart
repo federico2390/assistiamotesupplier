@@ -1,3 +1,4 @@
+import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -104,8 +105,21 @@ class OperationSegmentedPage extends StatelessWidget {
                         ],
                       ),
                       minLeadingWidth: 0,
-                      title: Row(
+                      title: Text(
+                        operation.palaceAddress!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: operation.operationOpened == 'false'
+                              ? AppColors.labelLightColor
+                              : AppColors.labelDarkColor,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: AppConst.padding / 4),
                           Text(
                             operation.operation!,
                             maxLines: 1,
@@ -114,64 +128,56 @@ class OperationSegmentedPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: operation.operationOpened == 'false'
                                   ? AppColors.labelLightColor
-                                  : AppColors.labelDarkColor,
+                                  : AppColors.secondaryColor,
+                              fontSize: 14,
                             ),
                           ),
-                          const Spacer(),
-                          Container(
-                            alignment: Alignment.topRight,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppConst.padding / 1.5,
-                              vertical: AppConst.padding / 7,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(AppConst.padding / 3),
-                              color: operation.operationOpened == 'false'
-                                  ? AppColors.labelLightColor
-                                  : AppColors.primaryColor,
-                            ),
-                            child: Text(
-                              labelState,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: operation.operationOpened == 'false'
-                                    ? AppColors.primaryColor
-                                    : AppColors.backgroundColor,
-                                fontSize: 12,
+                          const SizedBox(height: AppConst.padding / 4),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: ScreenSize.width(context) / 2,
+                                child: Text(
+                                  operation.description!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: operation.operationOpened == 'false'
+                                        ? AppColors.labelLightColor
+                                        : AppColors.secondaryColor,
+                                  ),
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: AppConst.padding / 4),
-                          Text(
-                            operation.palaceAddress!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: operation.operationOpened == 'false'
-                                  ? AppColors.labelLightColor
-                                  : AppColors.secondaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: AppConst.padding / 4),
-                          Text(
-                            operation.description!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: operation.operationOpened == 'false'
-                                  ? AppColors.labelLightColor
-                                  : AppColors.secondaryColor,
-                            ),
+                              const Spacer(),
+                              const SizedBox(width: AppConst.padding),
+                              Container(
+                                alignment: Alignment.topRight,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppConst.padding / 1.5,
+                                  vertical: AppConst.padding / 7,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      AppConst.padding / 3),
+                                  color: operation.operationOpened == 'false'
+                                      ? AppColors.labelLightColor
+                                      : AppColors.primaryColor,
+                                ),
+                                child: Text(
+                                  labelState,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: operation.operationOpened == 'false'
+                                        ? AppColors.primaryColor
+                                        : AppColors.backgroundColor,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ],
                       ),
