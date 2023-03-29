@@ -245,7 +245,7 @@ class OperationApi {
             if (operation.operation == 'Condominiale') {
               await NotificationApi().sendToPalace(
                 context: context,
-                title: 'Stato intervento',
+                title: 'Intervento in corso',
                 message:
                     'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
                 operation: operation,
@@ -256,7 +256,7 @@ class OperationApi {
             } else {
               await NotificationApi().sendToUser(
                 context: context,
-                title: 'Stato intervento',
+                title: 'Intervento in corso',
                 message:
                     'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
                 operation: operation,
@@ -308,7 +308,7 @@ class OperationApi {
             if (operation.operation == 'Condominiale') {
               await NotificationApi().sendToPalace(
                 context: context,
-                title: 'Intervento concluso',
+                title: 'Intervento chiuso',
                 message:
                     'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
                 operation: operation,
@@ -319,7 +319,7 @@ class OperationApi {
             } else {
               await NotificationApi().sendToUser(
                 context: context,
-                title: 'Intervento concluso',
+                title: 'Intervento chiuso',
                 message:
                     'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
                 operation: operation,

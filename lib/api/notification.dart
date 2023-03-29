@@ -72,6 +72,13 @@ class NotificationApi {
     required String popupMessage,
   }) async {
     try {
+      List<String> tokenList = [];
+      for (var token in tokens) {
+        for (var tk in token.userToken!.split(',')) {
+          tokenList.add(tk);
+        }
+      }
+
       var response = await http.post(
         Uri.parse(AppConst.firebaseBaseurl),
         headers: {
@@ -80,7 +87,7 @@ class NotificationApi {
         },
         body: json.encode(
           {
-            "registration_ids": tokens.map((e) => e.userToken).toList(),
+            "registration_ids": tokenList,
             "notification": {
               "title": title.trim(),
               "body":
