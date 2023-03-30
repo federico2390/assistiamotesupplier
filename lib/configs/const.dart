@@ -6,7 +6,6 @@ class AppConst {
   static const int imagePickerQuality = 70;
   static const double imagePickerHeight = 1280;
   static const double imagePickerWidth = 1280;
-  static const double webLimit = 1264;
 
   /// Setting
   static const String serviceHostPrivacyPolicy =

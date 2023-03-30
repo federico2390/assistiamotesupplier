@@ -92,11 +92,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),
         routes: Routes.buildRoutes(),
-        initialRoute: screenWidth < AppConst.webLimit
-            ? (logged == 0 || logged == null)
-                ? '/login'
-                : '/'
-            : '/error',
+        initialRoute: (logged == 0 || logged == null) ? '/login' : '/',
       ),
     );
   }
