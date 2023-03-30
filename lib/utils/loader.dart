@@ -40,20 +40,27 @@ class Loader extends StatelessWidget {
   }
 }
 
-class AppBarLoader extends StatelessWidget {
-  const AppBarLoader({Key? key}) : super(key: key);
+class SettingLoader extends StatelessWidget {
+  const SettingLoader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: 3,
-        width: ScreenSize.width(context) / 5,
-        child: LinearProgressIndicator(
-          color: AppColors.primaryColor,
-          backgroundColor: AppColors.tertiaryColor,
-        ),
-      ),
+    return Consumer<LoaderProvider>(
+      builder: (context, loaderProvider, child) {
+        Future.delayed(const Duration(seconds: 2), () {
+          loaderProvider.settingSetShowLabel(true);
+        });
+
+        return Center(
+          child: SizedBox(
+            height: 15,
+            width: 15,
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ),
+          ),
+        );
+      },
     );
   }
 }

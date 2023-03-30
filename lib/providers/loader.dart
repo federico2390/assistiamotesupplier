@@ -8,6 +8,13 @@ class LoaderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _settingShowLabel = false;
+  bool get settingShowLabel => _settingShowLabel;
+  void settingSetShowLabel(bool show) {
+    _settingShowLabel = show;
+    notifyListeners();
+  }
+
   bool _isSaving = false;
   bool get isSaving => _isSaving;
   void setIsSaving(bool saving) {

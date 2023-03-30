@@ -94,7 +94,7 @@ class Welcome extends StatelessWidget {
                       },
                     )
                   : const SizedBox(),
-              !kIsWeb ? const Spacer() : const SizedBox(),
+              const Spacer(),
             ],
           ),
         ),
