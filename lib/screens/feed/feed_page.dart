@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adminpanel/screens/feed/widgets/feed_list.dart';
@@ -7,6 +8,9 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FeedList();
+    return WillPopScope(
+      onWillPop: () async => kIsWeb ? false : true,
+      child: const FeedList(),
+    );
   }
 }

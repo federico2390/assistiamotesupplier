@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,32 +63,35 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoginForm(
-        formKey: formKey,
-        usernameController: usernameController,
-        passwordController: passwordController,
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-            left: AppConst.padding, right: AppConst.padding, bottom: 45),
-        child: Button(
-          text: 'Accedi',
-          color: usernameController.text.isNotEmpty &&
-                  passwordController.text.isNotEmpty
-              ? null
-              : AppColors.secondaryColor,
-          onPressed: () async {
-            if (formKey.currentState!.validate() &&
-                UserApi().isLogged == false) {
-              hideKeyboard(context);
-              await LoginApi().login(
-                  context, usernameController.text, passwordController.text);
-            } else {
-              await Alerts.errorAlert(context,
-                  title: 'Ops!', subtitle: 'Completa tutti i campi');
-            }
-          },
+    return WillPopScope(
+      onWillPop: () async => kIsWeb ? false : true,
+      child: Scaffold(
+        body: LoginForm(
+          formKey: formKey,
+          usernameController: usernameController,
+          passwordController: passwordController,
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(
+              left: AppConst.padding, right: AppConst.padding, bottom: 45),
+          child: Button(
+            text: 'Accedi',
+            color: usernameController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty
+                ? null
+                : AppColors.secondaryColor,
+            onPressed: () async {
+              if (formKey.currentState!.validate() &&
+                  UserApi().isLogged == false) {
+                hideKeyboard(context);
+                await LoginApi().login(
+                    context, usernameController.text, passwordController.text);
+              } else {
+                await Alerts.errorAlert(context,
+                    title: 'Ops!', subtitle: 'Completa tutti i campi');
+              }
+            },
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adminpanel/screens/gallery/widgets/app_bar.dart';
@@ -8,11 +9,14 @@ class GalleryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      extendBodyBehindAppBar: true,
-      appBar: appBar(context),
-      body: const PhotoGallery(),
+    return WillPopScope(
+      onWillPop: () async => kIsWeb ? false : true,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        extendBodyBehindAppBar: true,
+        appBar: appBar(context),
+        body: const PhotoGallery(),
+      ),
     );
   }
 }
