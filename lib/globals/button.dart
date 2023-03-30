@@ -71,18 +71,18 @@ class Button extends StatelessWidget {
                 )
           : TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
+                backgroundColor: color,
                 padding: EdgeInsets.zero,
                 elevation: null,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppConst.borderRadiusWeb),
+                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
                 ),
               ),
               onPressed: onPressed,
               child: Container(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppConst.borderRadiusWeb),
+                  borderRadius: BorderRadius.circular(AppConst.borderRadius),
                 ),
                 child: icon ??
                     Text(

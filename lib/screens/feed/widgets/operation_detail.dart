@@ -586,7 +586,7 @@ class OperationDetail extends StatelessWidget {
                                               3) {
                                             await Alerts.errorAlert(context,
                                                 title: 'Attenzione',
-                                                subtitle: 'Max 3 foto');
+                                                subtitle: 'Max 2 foto');
                                             return;
                                           } else {
                                             buildImagePicker(context,
@@ -607,10 +607,16 @@ class OperationDetail extends StatelessWidget {
                                                 Clip.antiAliasWithSaveLayer,
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(8),
+                                                  BorderRadius.circular(
+                                                      AppConst.borderRadius),
                                             ),
-                                            child: Image.file(File(image.path),
-                                                height: 80, fit: BoxFit.cover),
+                                            child: kIsWeb
+                                                ? Image.network(image.path,
+                                                    height: 80,
+                                                    fit: BoxFit.cover)
+                                                : Image.file(File(image.path),
+                                                    height: 80,
+                                                    fit: BoxFit.cover),
                                           ),
                                           onTap: () {
                                             context

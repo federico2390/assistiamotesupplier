@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Image.asset(
               AppConst.appLogo,
               fit: BoxFit.contain,
-              height: ScreenSize.width(context) / 3,
+              height: kIsWeb ? 150 : ScreenSize.width(context) / 3,
               color: AppColors.primaryColor,
             ),
           ),

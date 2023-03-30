@@ -30,7 +30,7 @@ class Welcome extends StatelessWidget {
                 child: Image.asset(
                   AppConst.appLogo,
                   fit: BoxFit.contain,
-                  height: ScreenSize.width(context) / 3,
+                  height: kIsWeb ? 150 : ScreenSize.width(context) / 3,
                   color: AppColors.primaryColor,
                 ),
               ),
