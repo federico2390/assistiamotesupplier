@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adminpanel/configs/const.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -75,6 +76,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = WidgetsBinding.instance.window.physicalSize.width;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
@@ -89,7 +92,11 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),
         routes: Routes.buildRoutes(),
-        initialRoute: (logged == 0 || logged == null) ? '/login' : '/',
+        initialRoute: screenWidth < AppConst.webLimit
+            ? (logged == 0 || logged == null)
+                ? '/login'
+                : '/'
+            : '/error',
       ),
     );
   }

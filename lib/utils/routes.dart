@@ -1,3 +1,4 @@
+import 'package:adminpanel/screens/error/error.dart';
 import 'package:flutter/material.dart';
 
 import 'package:adminpanel/central.dart';
@@ -18,6 +19,7 @@ class Routes {
       '/operation_detail': (context) => const OperationDetail(),
       '/gallery': (context) => const GalleryPage(),
       '/setting': (context) => const SettingPage(),
+      '/error': (context) => const ErrorPage(),
     };
   }
 }
