@@ -377,27 +377,13 @@ class OperationDetail extends StatelessWidget {
                         operation.supplierMedia!.any((e) => e.isNotEmpty)
                             ? const SizedBox(height: AppConst.padding)
                             : const SizedBox(),
-                        operation.supplierMedia!.any((e) => e.isNotEmpty)
+                        operation.supplierMedia!.any((e) => e.isEmpty)
                             ? Divider(
                                 height: 1,
                                 color: AppColors.secondaryColor,
                               )
-                            : const SizedBox(),
-                        operation.supplierMedia!.any((e) => e.isNotEmpty)
-                            ? const SizedBox(height: AppConst.padding)
                             : const SizedBox(),
                         operation.supplierMedia!.any((e) => e.isEmpty)
-                            ? const SizedBox(height: AppConst.padding)
-                            : const SizedBox(),
-                        operation.supplierMedia!.any((e) => e.isEmpty) &&
-                                operation.operationState == 'false'
-                            ? Divider(
-                                height: 1,
-                                color: AppColors.secondaryColor,
-                              )
-                            : const SizedBox(),
-                        operation.supplierMedia!.any((e) => e.isEmpty) &&
-                                operation.operationState == 'false'
                             ? const SizedBox(height: AppConst.padding)
                             : const SizedBox(),
                         operation.supplierMedia!.any((e) => e.isNotEmpty) &&
@@ -607,8 +593,9 @@ class OperationDetail extends StatelessWidget {
                                                 Clip.antiAliasWithSaveLayer,
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppConst.borderRadius),
+                                                  BorderRadius.circular(kIsWeb
+                                                      ? AppConst.borderRadius
+                                                      : 8),
                                             ),
                                             child: kIsWeb
                                                 ? Image.network(image.path,

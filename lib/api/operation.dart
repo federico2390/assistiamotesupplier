@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart';
 
@@ -101,6 +102,8 @@ class OperationApi {
       await Alerts.loadingAlert(context,
           title: 'Attendi...', subtitle: 'Invio la richiesta');
 
+      var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+
       final imageList = context.read<OperationProvider>().images;
 
       List<MultipartFile> multipartImageList = await Future.wait(imageList.map(
@@ -146,6 +149,7 @@ class OperationApi {
                         operation.supplierMedia![0].isNotEmpty
                     ? multipartImageList[0]
                     : '',
+        'operation_last_update': datetimeFormat.format(DateTime.now()),
       });
 
       var response = await Dio().post(

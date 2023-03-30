@@ -1,4 +1,3 @@
-import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -135,8 +134,7 @@ class OperationSegmentedPage extends StatelessWidget {
                           const SizedBox(height: AppConst.padding / 4),
                           Row(
                             children: [
-                              SizedBox(
-                                width: ScreenSize.width(context) / 2,
+                              Expanded(
                                 child: Text(
                                   operation.description!,
                                   maxLines: 1,
@@ -151,7 +149,6 @@ class OperationSegmentedPage extends StatelessWidget {
                               const Spacer(),
                               const SizedBox(width: AppConst.padding),
                               Container(
-                                alignment: Alignment.topRight,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: AppConst.padding / 1.5,
@@ -176,7 +173,7 @@ class OperationSegmentedPage extends StatelessWidget {
                                     fontSize: 12,
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ],
