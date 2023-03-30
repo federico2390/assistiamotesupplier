@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/providers/loader.dart';
-import 'package:adminpanel/utils/size.dart';
 
 class Loader extends StatelessWidget {
   const Loader({Key? key}) : super(key: key);
