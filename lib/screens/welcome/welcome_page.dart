@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -28,6 +29,7 @@ class Welcome extends StatelessWidget {
                 AppConst.appLogo,
                 fit: BoxFit.contain,
                 height: ScreenSize.width(context) / 3,
+                color: AppColors.primaryColor,
               ),
             ),
             const Spacer(),
@@ -39,51 +41,57 @@ class Welcome extends StatelessWidget {
                 color: AppColors.labelDarkColor,
               ),
             ),
-            const Spacer(),
-            Consumer<SettingProvider>(
-              builder: (context, settingProvider, child) {
-                return FutureBuilder(
-                  future: Future.wait([
-                    NotificationManager.requestPermisison(context),
-                    settingProvider.getSetting(context),
-                  ]),
-                  builder: (context, snapshot) {
-                    return SettingsList(
-                      shrinkWrap: true,
-                      contentPadding: EdgeInsets.zero,
-                      lightTheme: SettingsThemeData(
-                        settingsListBackground: AppColors.backgroundColor,
-                      ),
-                      brightness: Brightness.light,
-                      applicationType: Platform.isAndroid
-                          ? ApplicationType.material
-                          : ApplicationType.cupertino,
-                      sections: [
-                        SettingsSection(
-                          tiles: <SettingsTile>[
-                            SettingsTile.switchTile(
-                              onToggle: (value) {
-                                settingProvider.updateNotification(
-                                    context, value);
-                              },
-                              initialValue:
-                                  settingProvider.setting.notification == 'true'
-                                      ? true
-                                      : false,
-                              leading: const Icon(Icons.notifications_rounded),
-                              title: const Text('Comunicazioni'),
-                              description: const Text(
-                                  'Quando abilitato, riceverai notifiche direttamente sul tuo dispositivo ogni volta che ci saranno nuove comunicazioni.'),
+            !kIsWeb ? const Spacer() : const SizedBox(),
+            !kIsWeb
+                ? Consumer<SettingProvider>(
+                    builder: (context, settingProvider, child) {
+                      return FutureBuilder(
+                        future: Future.wait([
+                          NotificationManager.requestPermisison(context),
+                          settingProvider.getSetting(context),
+                        ]),
+                        builder: (context, snapshot) {
+                          return SettingsList(
+                            shrinkWrap: true,
+                            contentPadding: EdgeInsets.zero,
+                            lightTheme: SettingsThemeData(
+                              settingsListBackground: AppColors.backgroundColor,
                             ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
-            const Spacer(),
+                            brightness: Brightness.light,
+                            applicationType: kIsWeb
+                                ? ApplicationType.both
+                                : Platform.isAndroid
+                                    ? ApplicationType.material
+                                    : ApplicationType.cupertino,
+                            sections: [
+                              SettingsSection(
+                                tiles: <SettingsTile>[
+                                  SettingsTile.switchTile(
+                                    onToggle: (value) {
+                                      settingProvider.updateNotification(
+                                          context, value);
+                                    },
+                                    initialValue:
+                                        settingProvider.setting.notification ==
+                                                'true'
+                                            ? true
+                                            : false,
+                                    leading:
+                                        const Icon(Icons.notifications_rounded),
+                                    title: const Text('Comunicazioni'),
+                                    description: const Text(
+                                        'Quando abilitato, riceverai notifiche direttamente sul tuo dispositivo ogni volta che ci saranno nuove comunicazioni.'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  )
+                : const SizedBox(),
+            !kIsWeb ? const Spacer() : const SizedBox(),
           ],
         ),
       ),

@@ -47,6 +47,7 @@ class _LoginFormState extends State<LoginForm> {
               AppConst.appLogo,
               fit: BoxFit.contain,
               height: ScreenSize.width(context) / 3,
+              color: AppColors.primaryColor,
             ),
           ),
           const SizedBox(height: AppConst.padding * 2),
@@ -64,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: 'Nome Utente',
+              labelText: 'Email',
               labelStyle: TextStyle(color: AppColors.secondaryColor),
               alignLabelWithHint: true,
               suffixIcon: widget.usernameController.text.isNotEmpty
@@ -114,7 +115,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: 'Password',
+              labelText: 'C.F./P.IVA',
               labelStyle: TextStyle(color: AppColors.secondaryColor),
               alignLabelWithHint: true,
               suffixIcon: SizedBox(

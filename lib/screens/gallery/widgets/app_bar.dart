@@ -12,7 +12,9 @@ AppBar appBar(BuildContext context) {
         Icons.close_rounded,
         color: AppColors.backgroundColor,
       ),
-      onTap: () => Navigator.of(context).pop(),
+      onTap: () {
+        Navigator.of(context).pop();
+      },
     ),
   );
 }

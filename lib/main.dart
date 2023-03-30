@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -30,21 +31,39 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  if (!kIsWeb) {
+    await Firebase.initializeApp();
+  } else {
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+      apiKey: "AIzaSyDtvKnfTvIdQiNwSsB8QPKdUnLGEiSnTuQ",
+      authDomain: "studio-pa-db402.firebaseapp.com",
+      projectId: "studio-pa-db402",
+      storageBucket: "studio-pa-db402.appspot.com",
+      messagingSenderId: "36780231042",
+      appId: "1:36780231042:web:7cce2fb199be2c2e2b679b",
+    ));
+  }
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  Directory directory = await path_provider.getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
-  Hive.registerAdapter(UserDatabaseAdapter());
+  if (!kIsWeb) {
+    Directory directory =
+        await path_provider.getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
+    Hive.registerAdapter(UserDatabaseAdapter());
+
+    await FlutterAppBadger.isAppBadgeSupported().then((isSupported) async {
+      if (isSupported == true) {
+        await FlutterAppBadger.removeBadge();
+      }
+    });
+  } else {
+    Hive.initFlutter();
+    Hive.registerAdapter(UserDatabaseAdapter());
+  }
 
   await SharedPrefs.init();
   logged = SharedPrefs.getInt('logged');
-
-  await FlutterAppBadger.isAppBadgeSupported().then((isSupported) async {
-    if (isSupported == true) {
-      await FlutterAppBadger.removeBadge();
-    }
-  });
 
   runApp(
     const App(),

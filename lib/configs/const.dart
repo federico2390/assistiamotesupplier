@@ -2,16 +2,11 @@ class AppConst {
   /// UI
   static const double padding = 16.0;
   static const double borderRadius = 16.0;
+  static const double borderRadiusWeb = 100.0;
   static const int imagePickerQuality = 70;
   static const double imagePickerHeight = 1280;
   static const double imagePickerWidth = 1280;
-
-  /// Service
-  static const String serviceBase = 'https://studiopa.cedhousesuite.it';
-  static const Map<String, String> accountingItems = {
-    'Fatture': '$serviceBase/Contabilita/Fatture',
-    'Consuntivo': '$serviceBase/Contabilita/ComparazionePreventivoConsuntivo',
-  };
+  // static const double webLimit = 1264;
 
   /// Setting
   static const String serviceHostPrivacyPolicy =
@@ -22,24 +17,15 @@ class AppConst {
   static const String servicePhone = '0883513748';
 
   /// Backend
-  static const String domain = 'adminpanel.studiopedico.it/fornitori';
-  static const String backendDomain = 'adminpanel.studiopedico.it';
-
+  static const String domain = 'adminpanel.studiopedico.it';
   static const String backendBase = 'https://$domain';
-  static const String login = '$backendBase/user/service/auth/login.php';
-  static const String loginBackend =
-      '$backendBase/admin/service/auth/login.php';
+  static const String login = '$backendBase/fornitori/service/auth/login.php';
   static const String operation =
-      '$backendBase/user/service/misc/operation.php';
-  static const String notification =
-      '$backendBase/admin/service/misc/notification.php';
-  static const String operationBackend =
-      '$backendBase/admin/service/misc/operation.php';
-  static const String user = '$backendBase/user/service/misc/user.php';
-  static const String userBackend = '$backendBase/admin/service/misc/user.php';
-  static const String setting = '$backendBase/user/service/misc/setting.php';
-  static const String settingBackend =
-      '$backendBase/admin/service/misc/setting.php';
+      '$backendBase/fornitori/service/misc/operation.php';
+  static const String setting =
+      '$backendBase/fornitori/service/misc/setting.php';
+  static const String supplier =
+      '$backendBase/fornitori/service/misc/supplier.php';
 
   /// App
   static const String appId = 'com.alessandromontrone.studiopasupplier';

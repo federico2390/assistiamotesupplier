@@ -7,6 +7,7 @@ import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/image_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -43,7 +44,7 @@ class OperationDetail extends StatelessWidget {
 
     bool isIPad = false;
 
-    if (Platform.isIOS) {
+    if (kIsWeb || Platform.isIOS) {
       final size = MediaQuery.of(context).size;
       if (size.width > 768) {
         isIPad = true;

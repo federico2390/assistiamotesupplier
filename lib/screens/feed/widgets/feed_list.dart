@@ -1,4 +1,3 @@
-import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/utils/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -93,9 +92,9 @@ class FeedList extends StatelessWidget {
                 /// SECOND CIRCLE
                 Positioned(
                   top: 0,
-                  right:
-                      (ScreenSize.width(context) / 3 + AppConst.padding * 2) -
-                          AppConst.padding * 1.5,
+                  left: (ScreenSize.width(context) / 2) +
+                      (ScreenSize.width(context) / 6) -
+                      AppConst.padding * 1.7,
                   child: Container(
                     height: 19,
                     width: 19,

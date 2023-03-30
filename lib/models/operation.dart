@@ -44,6 +44,7 @@ class Operation {
     this.supplierCf,
     this.supplierToken,
     this.notification,
+    this.supplierIsLogged,
     this.yearId,
     this.yearValue,
     this.media,
@@ -81,6 +82,7 @@ class Operation {
   String? supplierType;
   String? supplierCf;
   String? supplierToken;
+  String? supplierIsLogged;
   String? notification;
   String? yearId;
   String? yearValue;
@@ -123,6 +125,7 @@ class Operation {
         notification: json["notification"] ?? '',
         yearId: json["year_id"] ?? '',
         yearValue: json["year_value"] ?? '',
+        supplierIsLogged: json["supplier_is_logged"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -160,5 +163,6 @@ class Operation {
         "notification": notification ?? '',
         "year_id": yearId ?? '',
         "year_value": yearValue ?? '',
+        "supplier_is_logged": supplierIsLogged ?? '',
       };
 }

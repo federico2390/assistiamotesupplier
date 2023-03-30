@@ -5,13 +5,15 @@ import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class LoginApi {
-  Future login(BuildContext context, String username, String password) async {
+  Future login(
+      BuildContext context, String supplierEmail, String supplierCf) async {
     try {
       await Alerts.loadingAlert(
         context,
@@ -21,14 +23,16 @@ class LoginApi {
 
       await Future.delayed(const Duration(seconds: 3), () async {
         var response = await http.post(
-          Uri.parse(AppConst.login),
+          kIsWeb
+              ? Uri.parse(AppConst.login).replace(host: AppConst.domain)
+              : Uri.parse(AppConst.login),
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: {
             'login': 'login',
-            'supplier_email': username.trim(),
-            'supplier_cf': password.trim(),
+            'supplier_email': supplierEmail.trim(),
+            'supplier_cf': supplierCf.trim(),
           },
         );
 
@@ -45,6 +49,7 @@ class LoginApi {
                   supplierCf: user.supplierCf!.trim(),
                   supplierToken: user.supplierToken!.trim(),
                   notification: user.notification!.trim(),
+                  supplierIsLogged: user.supplierIsLogged!.trim(),
                 ),
               );
 
@@ -63,7 +68,7 @@ class LoginApi {
       print('ERROR_login: $error');
       await Alerts.hideAlert();
       await Alerts.errorAlert(context,
-          title: 'Errore', subtitle: 'Username o password errati');
+          title: 'Errore', subtitle: 'Email o C.F./P.IVA errati');
     }
   }
 }

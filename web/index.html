@@ -24,6 +24,23 @@
   <title>Pannello di controllo fornitori</title>
   <link rel="manifest" href="manifest.json">
 
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtvKnfTvIdQiNwSsB8QPKdUnLGEiSnTuQ",
+      authDomain: "studio-pa-db402.firebaseapp.com",
+      projectId: "studio-pa-db402",
+      storageBucket: "studio-pa-db402.appspot.com",
+      messagingSenderId: "36780231042",
+      appId: "1:36780231042:web:7cce2fb199be2c2e2b679b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+  </script>
+
+  <script src="/firebase-messaging-sw.js"></script>
+
   <script>
     var serviceWorkerVersion = null;
   </script>

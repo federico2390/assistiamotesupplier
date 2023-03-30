@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:adminpanel/configs/const.dart';
@@ -17,9 +18,11 @@ class UserApi {
 
     try {
       var response = await http.post(
-        Uri.parse(AppConst.user),
+        kIsWeb
+            ? Uri.parse(AppConst.supplier).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.supplier),
         body: {
-          "get_users": 'get_users',
+          "get_supplier": 'get_supplier',
           'supplier_id': supplierId,
         },
       );

@@ -18,6 +18,8 @@ class UserDatabase {
   String? supplierToken;
   @HiveField(6)
   String? notification;
+  @HiveField(7)
+  String? supplierIsLogged;
 
   UserDatabase({
     this.supplierId,
@@ -27,6 +29,7 @@ class UserDatabase {
     this.supplierCf,
     this.supplierToken,
     this.notification,
+    this.supplierIsLogged,
   });
 
   factory UserDatabase.fromJson(Map<String, dynamic> map) {
@@ -38,6 +41,7 @@ class UserDatabase {
       supplierCf: map['supplier_cf'] ?? '',
       supplierToken: map['supplier_token'] ?? '',
       notification: map['notification'] ?? '',
+      supplierIsLogged: map['supplier_is_logged'] ?? '',
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +20,12 @@ class Central extends StatefulWidget {
 class _CentralState extends State<Central> with WidgetsBindingObserver {
   @override
   void initState() {
-    NotificationManager.requestPermisison(context);
-    NotificationManager.getToken(context);
-    NotificationManager.initInfo();
+    if (!kIsWeb) {
+      NotificationManager.requestPermisison(context);
+      NotificationManager.getToken(context);
+      NotificationManager.initInfo();
+    }
+
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
@@ -37,8 +41,10 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      checkNotificationPermission(context);
+    if (!kIsWeb) {
+      if (state == AppLifecycleState.resumed) {
+        checkNotificationPermission(context);
+      }
     }
   }
 
@@ -63,7 +69,6 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
     return Scaffold(
       appBar: appBar(context),
       body: body(context),
-      // bottomNavigationBar: bottomBar(context),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -16,7 +17,9 @@ class SettingApi {
       final user = await context.read<UserProvider>().getLocalUser();
 
       var response = await http.post(
-        Uri.parse(AppConst.setting),
+        kIsWeb
+            ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.setting),
         body: {
           "get_notification": "get_notification",
           "supplier_id": user.supplierId,
@@ -42,7 +45,9 @@ class SettingApi {
       final user = await context.read<UserProvider>().getLocalUser();
 
       await http.post(
-        Uri.parse(AppConst.setting),
+        kIsWeb
+            ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.setting),
         body: {
           "edit_notification": "edit_notification",
           "supplier_id": user.supplierId,
@@ -59,7 +64,9 @@ class SettingApi {
       final user = await context.read<UserProvider>().getLocalUser();
 
       await http.post(
-        Uri.parse(AppConst.setting),
+        kIsWeb
+            ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.setting),
         body: {
           "save_token": "save_token",
           "supplier_id": user.supplierId,

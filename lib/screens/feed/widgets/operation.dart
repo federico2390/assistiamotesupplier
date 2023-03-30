@@ -67,7 +67,7 @@ class OperationSegmentedPage extends StatelessWidget {
               return TapDebouncer(
                 onTap: () async {
                   await OperationApi()
-                      .markOperationAsOpened(operation)
+                      .markOperationAsOpened(context, operation)
                       .whenComplete(() {
                     Navigator.pushNamed(
                       context,

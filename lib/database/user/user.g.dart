@@ -24,13 +24,14 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       supplierCf: fields[4] as String?,
       supplierToken: fields[5] as String?,
       notification: fields[6] as String?,
+      supplierIsLogged: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserDatabase obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.supplierId)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       ..writeByte(5)
       ..write(obj.supplierToken)
       ..writeByte(6)
-      ..write(obj.notification);
+      ..write(obj.notification)
+      ..writeByte(7)
+      ..write(obj.supplierIsLogged);
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:adminpanel/models/token.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -22,7 +23,9 @@ class OperationApi {
 
       if (user.supplierId != null && user.supplierId!.isNotEmpty) {
         var response = await http.post(
-          Uri.parse(AppConst.operation),
+          kIsWeb
+              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+              : Uri.parse(AppConst.operation),
           body: {
             'get_operation': 'get_operation',
             'supplier_email': user.supplierEmail,
@@ -58,6 +61,7 @@ class OperationApi {
               operationWorking: operation.operationWorking,
               operationOpened: operation.operationOpened,
               operationLastUpdate: operation.operationLastUpdate,
+              supplierIsLogged: operation.supplierIsLogged,
               media: [
                 operation.media1!,
                 operation.media2!,
@@ -108,7 +112,9 @@ class OperationApi {
       ));
 
       Future<MultipartFile> getMultipartFileFromUrl(String url) async {
-        final response = await http.get(Uri.parse(url));
+        final response = await http.get(kIsWeb
+            ? Uri.parse(url).replace(host: AppConst.domain)
+            : Uri.parse(url));
         final bytes = response.bodyBytes;
         final contentType = MediaType('image', extension(url));
         final filename = basename(url);
@@ -152,7 +158,9 @@ class OperationApi {
 
         try {
           var response = await http.post(
-            Uri.parse(AppConst.operation),
+            kIsWeb
+                ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+                : Uri.parse(AppConst.operation),
             body: {
               'get_tokens': 'get_tokens',
               'operation_id': operation.operationId!.trim(),
@@ -196,10 +204,13 @@ class OperationApi {
     }
   }
 
-  Future markOperationAsOpened(Operation operation) async {
+  Future markOperationAsOpened(
+      BuildContext context, Operation operation) async {
     try {
       var response = await http.post(
-        Uri.parse(AppConst.operation),
+        kIsWeb
+            ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.operation),
         body: {
           'mark_as_opened': 'mark_as_opened',
           'operation_id': operation.operationId,
@@ -221,7 +232,9 @@ class OperationApi {
   ) async {
     try {
       var response = await http.post(
-        Uri.parse(AppConst.operation),
+        kIsWeb
+            ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.operation),
         body: {
           'mark_as_working': 'mark_as_working',
           'operation_id': operation.operationId,
@@ -233,7 +246,9 @@ class OperationApi {
 
         try {
           var response = await http.post(
-            Uri.parse(AppConst.operation),
+            kIsWeb
+                ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+                : Uri.parse(AppConst.operation),
             body: {
               'get_tokens': 'get_tokens',
               'operation_id': operation.operationId!.trim(),
@@ -284,7 +299,9 @@ class OperationApi {
   ) async {
     try {
       var response = await http.post(
-        Uri.parse(AppConst.operation),
+        kIsWeb
+            ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.operation),
         body: {
           'mark_as_closed': 'mark_as_closed',
           'operation_id': operation.operationId,
@@ -296,7 +313,9 @@ class OperationApi {
 
         try {
           var response = await http.post(
-            Uri.parse(AppConst.operation),
+            kIsWeb
+                ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+                : Uri.parse(AppConst.operation),
             body: {
               'get_tokens': 'get_tokens',
               'operation_id': operation.operationId!.trim(),

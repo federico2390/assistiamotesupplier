@@ -4,6 +4,7 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/models/token.dart';
 import 'package:adminpanel/utils/alerts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,9 @@ class NotificationApi {
   }) async {
     try {
       var response = await http.post(
-        Uri.parse(AppConst.firebaseBaseurl),
+        kIsWeb
+            ? Uri.parse(AppConst.firebaseBaseurl).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.firebaseBaseurl),
         headers: {
           "Authorization": "key=${AppConst.firebaseAuthKey}",
           "Content-Type": "application/json"
@@ -80,7 +83,9 @@ class NotificationApi {
       }
 
       var response = await http.post(
-        Uri.parse(AppConst.firebaseBaseurl),
+        kIsWeb
+            ? Uri.parse(AppConst.firebaseBaseurl).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.firebaseBaseurl),
         headers: {
           "Authorization": "key=${AppConst.firebaseAuthKey}",
           "Content-Type": "application/json"
