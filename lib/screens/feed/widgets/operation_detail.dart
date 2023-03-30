@@ -374,18 +374,22 @@ class OperationDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        operation.supplierMedia!.any((e) => e.isNotEmpty)
-                            ? const SizedBox(height: AppConst.padding)
-                            : const SizedBox(),
-                        operation.supplierMedia!.any((e) => e.isEmpty)
+                        const SizedBox(height: AppConst.padding),
+                        operation.supplierMedia!.any((e) => e.isNotEmpty) &&
+                                operation.operationState == 'true'
                             ? Divider(
                                 height: 1,
                                 color: AppColors.secondaryColor,
                               )
                             : const SizedBox(),
-                        operation.supplierMedia!.any((e) => e.isEmpty)
-                            ? const SizedBox(height: AppConst.padding)
+                        operation.supplierMedia!.any((e) => e.isEmpty) &&
+                                operation.operationState == 'false'
+                            ? Divider(
+                                height: 1,
+                                color: AppColors.secondaryColor,
+                              )
                             : const SizedBox(),
+                        const SizedBox(height: AppConst.padding),
                         operation.supplierMedia!.any((e) => e.isNotEmpty) &&
                                 operation.operationState == 'false'
                             ? Text(
