@@ -71,7 +71,7 @@ class Button extends StatelessWidget {
                 )
           : TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: color,
+                backgroundColor: color ?? AppColors.primaryColor,
                 padding: EdgeInsets.zero,
                 elevation: null,
                 shape: RoundedRectangleBorder(
