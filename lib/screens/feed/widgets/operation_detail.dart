@@ -344,6 +344,25 @@ class OperationDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+                              'Richiedente',
+                              style: TextStyle(
+                                color: AppColors.secondaryColor,
+                              ),
+                            ),
+                            Text(
+                              operation.requestBy!,
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppConst.padding),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
                               'Indirizzo',
                               style: TextStyle(
                                 color: AppColors.secondaryColor,

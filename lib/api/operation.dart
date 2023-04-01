@@ -63,6 +63,7 @@ class OperationApi {
               operationOpened: operation.operationOpened,
               operationLastUpdate: operation.operationLastUpdate,
               supplierIsLogged: operation.supplierIsLogged,
+              requestBy: operation.requestBy,
               media: [
                 operation.media1!,
                 operation.media2!,
