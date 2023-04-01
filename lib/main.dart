@@ -33,20 +33,9 @@ void main() async {
 
   if (!kIsWeb) {
     await Firebase.initializeApp();
-  } else {
-    await Firebase.initializeApp(
-        options: const FirebaseOptions(
-      apiKey: "AIzaSyDtvKnfTvIdQiNwSsB8QPKdUnLGEiSnTuQ",
-      authDomain: "studio-pa-db402.firebaseapp.com",
-      projectId: "studio-pa-db402",
-      storageBucket: "studio-pa-db402.appspot.com",
-      messagingSenderId: "36780231042",
-      appId: "1:36780231042:web:7cce2fb199be2c2e2b679b",
-    ));
-  }
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  if (!kIsWeb) {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
     Directory directory =
         await path_provider.getApplicationDocumentsDirectory();
     Hive.init(directory.path);
@@ -58,6 +47,16 @@ void main() async {
       }
     });
   } else {
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+      apiKey: "AIzaSyDtvKnfTvIdQiNwSsB8QPKdUnLGEiSnTuQ",
+      authDomain: "studio-pa-db402.firebaseapp.com",
+      projectId: "studio-pa-db402",
+      storageBucket: "studio-pa-db402.appspot.com",
+      messagingSenderId: "36780231042",
+      appId: "1:36780231042:web:7cce2fb199be2c2e2b679b",
+    ));
+
     Hive.initFlutter();
     Hive.registerAdapter(UserDatabaseAdapter());
   }

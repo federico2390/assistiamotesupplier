@@ -124,22 +124,24 @@ class SettingPage extends StatelessWidget {
                                 style:
                                     TextStyle(color: AppColors.secondaryColor),
                               ),
-                              description: Text(
-                                context
-                                        .read<UserProvider>()
-                                        .localuser
-                                        .supplierName!
-                                        .isNotEmpty
-                                    ? context
-                                        .read<UserProvider>()
-                                        .localuser
-                                        .supplierName!
-                                    : '',
-                                style: TextStyle(
-                                  color: AppColors.secondaryColor,
-                                  fontSize: 16,
-                                ),
-                              ),
+                              description: kIsWeb
+                                  ? Text(
+                                      context
+                                              .read<UserProvider>()
+                                              .localuser
+                                              .supplierName!
+                                              .isNotEmpty
+                                          ? context
+                                              .read<UserProvider>()
+                                              .localuser
+                                              .supplierName!
+                                          : '',
+                                      style: TextStyle(
+                                        color: AppColors.secondaryColor,
+                                        fontSize: 16,
+                                      ),
+                                    )
+                                  : null,
                               trailing: !kIsWeb
                                   ? Text(
                                       context

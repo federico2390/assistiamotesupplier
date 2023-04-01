@@ -64,6 +64,10 @@ class OperationApi {
               operationLastUpdate: operation.operationLastUpdate,
               supplierIsLogged: operation.supplierIsLogged,
               requestBy: operation.requestBy,
+              yearId: operation.yearId,
+              yearValue: operation.yearValue,
+              supplierToken: operation.supplierToken,
+              supplierEmail: operation.supplierEmail,
               media: [
                 operation.media1!,
                 operation.media2!,

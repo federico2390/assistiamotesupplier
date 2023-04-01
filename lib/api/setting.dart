@@ -70,7 +70,7 @@ class SettingApi {
         body: {
           "save_token": "save_token",
           "supplier_id": user.supplierId,
-          "user_token": token,
+          "supplier_token": token,
         },
       );
     } catch (error) {
