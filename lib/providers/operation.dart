@@ -44,8 +44,8 @@ class OperationProvider extends ChangeNotifier {
       );
 
       operationList.sort((a, b) =>
-          (a.operationOpened == 'false' ? 0 : 1) -
-          (b.operationOpened == 'false' ? 0 : 1));
+          (a.supplierOpened == 'false' ? 0 : 1) -
+          (b.supplierOpened == 'false' ? 0 : 1));
 
       _operations = operationList;
 
@@ -58,7 +58,7 @@ class OperationProvider extends ChangeNotifier {
       _working = operationList
           .where(
             (e) =>
-                e.operationOpened == 'true' &&
+                e.supplierOpened == 'true' &&
                 e.operationWorking == "true" &&
                 e.operationState == "false",
           )

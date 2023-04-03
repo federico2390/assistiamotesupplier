@@ -9,6 +9,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
+import 'package:uuid/uuid.dart';
 
 class PhotoGallery extends StatelessWidget {
   const PhotoGallery({super.key});
@@ -31,7 +32,6 @@ class PhotoGallery extends StatelessWidget {
                     itemCount: arguments.gallery.length,
                     builder: (BuildContext context, int index) {
                       return PhotoViewGalleryPageOptions(
-                        disableGestures: true,
                         key: ValueKey(arguments.gallery[index]),
                         imageProvider:
                             FileImage(File(arguments.gallery[index].path)),
@@ -39,7 +39,8 @@ class PhotoGallery extends StatelessWidget {
                         minScale: PhotoViewComputedScale.contained,
                         maxScale: PhotoViewComputedScale.covered * 2.5,
                         heroAttributes: PhotoViewHeroAttributes(
-                            tag: arguments.gallery[index]),
+                          tag: const Uuid().v4(),
+                        ),
                         scaleStateCycle: (e) {
                           switch (e) {
                             case PhotoViewScaleState.initial:
@@ -105,14 +106,14 @@ class PhotoGallery extends StatelessWidget {
                     itemCount: arguments.images!.length,
                     builder: (BuildContext context, int index) {
                       return PhotoViewGalleryPageOptions(
-                        disableGestures: true,
                         key: ValueKey(arguments.images![index]),
                         imageProvider: NetworkImage(arguments.images![index]),
                         initialScale: PhotoViewComputedScale.contained,
                         minScale: PhotoViewComputedScale.contained,
                         maxScale: PhotoViewComputedScale.covered * 2.5,
                         heroAttributes: PhotoViewHeroAttributes(
-                            tag: arguments.images![index]),
+                          tag: const Uuid().v4(),
+                        ),
                         scaleStateCycle: (e) {
                           switch (e) {
                             case PhotoViewScaleState.initial:

@@ -24,6 +24,7 @@ import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 import 'package:adminpanel/utils/size.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
+import 'package:uuid/uuid.dart';
 
 class OperationDetail extends StatelessWidget {
   const OperationDetail({super.key});
@@ -199,10 +200,8 @@ class OperationDetail extends StatelessWidget {
                                                   .covered,
                                               heroAttributes:
                                                   PhotoViewHeroAttributes(
-                                                      tag: operation.media!
-                                                          .where((e) =>
-                                                              e.isNotEmpty)
-                                                          .toList()[index]),
+                                                tag: const Uuid().v4(),
+                                              ),
                                               scaleStateCycle: (e) {
                                                 switch (e) {
                                                   case PhotoViewScaleState
@@ -466,11 +465,8 @@ class OperationDetail extends StatelessWidget {
                                                   .covered,
                                               heroAttributes:
                                                   PhotoViewHeroAttributes(
-                                                      tag: operation
-                                                          .supplierMedia!
-                                                          .where((e) =>
-                                                              e.isNotEmpty)
-                                                          .toList()[index]),
+                                                tag: const Uuid().v4(),
+                                              ),
                                               scaleStateCycle: (e) {
                                                 switch (e) {
                                                   case PhotoViewScaleState

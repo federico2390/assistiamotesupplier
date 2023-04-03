@@ -60,7 +60,7 @@ class OperationApi {
               operationState: operation.operationState,
               operationViewed: operation.operationViewed,
               operationWorking: operation.operationWorking,
-              operationOpened: operation.operationOpened,
+              supplierOpened: operation.supplierOpened,
               operationLastUpdate: operation.operationLastUpdate,
               supplierIsLogged: operation.supplierIsLogged,
               requestBy: operation.requestBy,

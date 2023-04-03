@@ -30,7 +30,7 @@ class Operation {
     this.operationState,
     this.operationViewed,
     this.operationWorking,
-    this.operationOpened,
+    this.supplierOpened,
     this.requestBy,
     this.palaceName,
     this.palaceCf,
@@ -69,7 +69,7 @@ class Operation {
   String? operationState;
   String? operationViewed;
   String? operationWorking;
-  String? operationOpened;
+  String? supplierOpened;
   String? requestBy;
   String? palaceName;
   String? palaceCf;
@@ -109,7 +109,7 @@ class Operation {
         operationState: json["operation_state"] ?? '',
         operationViewed: json["operation_viewed"] ?? '',
         operationWorking: json["operation_working"] ?? '',
-        operationOpened: json["operation_opened"] ?? '',
+        supplierOpened: json["supplier_opened"] ?? '',
         requestBy: json["request_by"] ?? '',
         palaceName: json["palace_name"] ?? '',
         palaceCf: json["palace_cf"] ?? '',
@@ -147,7 +147,7 @@ class Operation {
         "operation_state": operationState ?? '',
         "operation_viewed": operationViewed ?? '',
         "operation_working": operationWorking ?? '',
-        "operation_opened": operationOpened ?? '',
+        "supplier_opened": supplierOpened ?? '',
         "request_by": requestBy ?? '',
         "palace_name": palaceName ?? '',
         "palace_cf": palaceCf ?? '',

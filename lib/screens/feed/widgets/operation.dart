@@ -85,7 +85,7 @@ class OperationSegmentedPage extends StatelessWidget {
                       borderRadius:
                           BorderRadius.circular(AppConst.borderRadius),
                     ),
-                    color: operation.operationOpened == 'false'
+                    color: operation.supplierOpened == 'false'
                         ? AppColors.primaryColor
                         : AppColors.backgroundColor,
                     child: ListTile(
@@ -97,7 +97,7 @@ class OperationSegmentedPage extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.build_rounded,
-                            color: operation.operationOpened == 'false'
+                            color: operation.supplierOpened == 'false'
                                 ? AppColors.labelLightColor
                                 : AppColors.primaryColor,
                           ),
@@ -110,7 +110,7 @@ class OperationSegmentedPage extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: operation.operationOpened == 'false'
+                          color: operation.supplierOpened == 'false'
                               ? AppColors.labelLightColor
                               : AppColors.labelDarkColor,
                         ),
@@ -125,7 +125,7 @@ class OperationSegmentedPage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: operation.operationOpened == 'false'
+                              color: operation.supplierOpened == 'false'
                                   ? AppColors.labelLightColor
                                   : AppColors.secondaryColor,
                               fontSize: 14,
@@ -140,7 +140,7 @@ class OperationSegmentedPage extends StatelessWidget {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    color: operation.operationOpened == 'false'
+                                    color: operation.supplierOpened == 'false'
                                         ? AppColors.labelLightColor
                                         : AppColors.secondaryColor,
                                   ),
@@ -157,7 +157,7 @@ class OperationSegmentedPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
                                       AppConst.padding / 3),
-                                  color: operation.operationOpened == 'false'
+                                  color: operation.supplierOpened == 'false'
                                       ? AppColors.labelLightColor
                                       : AppColors.primaryColor,
                                 ),
@@ -167,7 +167,7 @@ class OperationSegmentedPage extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    color: operation.operationOpened == 'false'
+                                    color: operation.supplierOpened == 'false'
                                         ? AppColors.primaryColor
                                         : AppColors.backgroundColor,
                                     fontSize: 12,
