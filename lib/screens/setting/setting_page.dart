@@ -15,7 +15,6 @@ import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/logout_action_sheet.dart';
-import 'package:adminpanel/utils/privacy_policy_action_sheet.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -90,7 +89,7 @@ class SettingPage extends StatelessWidget {
                               leading: const Icon(Icons.lock_rounded),
                               title: const Text('Informativa privacy'),
                               onPressed: (context) {
-                                buildPrivacyPolicyActionSheet(context);
+                                launchUrls(AppConst.servicePrivacyPolicy);
                               },
                             ),
                             SettingsTile.navigation(

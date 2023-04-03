@@ -7,8 +7,6 @@ class AppConst {
   static const double imagePickerWidth = 1280;
 
   /// Setting
-  static const String serviceHostPrivacyPolicy =
-      'https://www.cedhousesuite.com/privacy-policy';
   static const String serviceWebsite = 'https://surianogestionicondominiali.it';
   static const String servicePrivacyPolicy =
       '$serviceWebsite/privacy-policy-app';

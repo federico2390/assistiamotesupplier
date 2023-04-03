@@ -30,7 +30,6 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     context.read<UserProvider>().getUser();
-    // context.read<UserProvider>().getLocalUser();
   }
 
   @override

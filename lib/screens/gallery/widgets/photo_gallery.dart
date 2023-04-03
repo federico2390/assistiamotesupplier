@@ -31,6 +31,7 @@ class PhotoGallery extends StatelessWidget {
                     itemCount: arguments.gallery.length,
                     builder: (BuildContext context, int index) {
                       return PhotoViewGalleryPageOptions(
+                        disableGestures: true,
                         key: ValueKey(arguments.gallery[index]),
                         imageProvider:
                             FileImage(File(arguments.gallery[index].path)),
@@ -104,6 +105,7 @@ class PhotoGallery extends StatelessWidget {
                     itemCount: arguments.images!.length,
                     builder: (BuildContext context, int index) {
                       return PhotoViewGalleryPageOptions(
+                        disableGestures: true,
                         key: ValueKey(arguments.images![index]),
                         imageProvider: NetworkImage(arguments.images![index]),
                         initialScale: PhotoViewComputedScale.contained,

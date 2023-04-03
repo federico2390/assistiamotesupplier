@@ -180,6 +180,7 @@ class OperationDetail extends StatelessWidget {
                                           builder: (BuildContext context,
                                               int index) {
                                             return PhotoViewGalleryPageOptions(
+                                              disableGestures: true,
                                               key: ValueKey(operation.media!
                                                   .where((e) => e.isNotEmpty)
                                                   .toList()[index]),
@@ -196,7 +197,6 @@ class OperationDetail extends StatelessWidget {
                                                   .covered,
                                               maxScale: PhotoViewComputedScale
                                                   .covered,
-                                              disableGestures: true,
                                               heroAttributes:
                                                   PhotoViewHeroAttributes(
                                                       tag: operation.media!
@@ -252,7 +252,9 @@ class OperationDetail extends StatelessWidget {
                                           '/gallery',
                                           arguments: GalleryArguments(
                                             [],
-                                            images: operation.media!,
+                                            images: operation.media!
+                                                .where((e) => e.isNotEmpty)
+                                                .toList(),
                                           ),
                                         );
                                       },
@@ -444,15 +446,17 @@ class OperationDetail extends StatelessWidget {
                                           builder: (BuildContext context,
                                               int index) {
                                             return PhotoViewGalleryPageOptions(
+                                              disableGestures: true,
                                               key: ValueKey(operation
                                                   .supplierMedia!
                                                   .where((e) => e.isNotEmpty)
                                                   .toList()[index]),
                                               imageProvider: NetworkImage(
-                                                  operation.supplierMedia!
-                                                      .where(
-                                                          (e) => e.isNotEmpty)
-                                                      .toList()[index]),
+                                                operation.supplierMedia!
+                                                    .where((e) => e.isNotEmpty)
+                                                    .toList()[index]
+                                                    .toString(),
+                                              ),
                                               initialScale:
                                                   PhotoViewComputedScale
                                                       .contained,
@@ -516,7 +520,9 @@ class OperationDetail extends StatelessWidget {
                                           '/gallery',
                                           arguments: GalleryArguments(
                                             [],
-                                            images: operation.supplierMedia!,
+                                            images: operation.supplierMedia!
+                                                .where((e) => e.isNotEmpty)
+                                                .toList(),
                                           ),
                                         );
                                       },
