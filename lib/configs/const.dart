@@ -9,13 +9,14 @@ class AppConst {
   /// Setting
   static const String serviceHostPrivacyPolicy =
       'https://www.cedhousesuite.com/privacy-policy';
-  static const String serviceWebsite = 'https://studiopedico.it';
+  static const String serviceWebsite = 'https://surianogestionicondominiali.it';
   static const String servicePrivacyPolicy =
       '$serviceWebsite/privacy-policy-app';
-  static const String servicePhone = '0883513748';
+  static const String servicePhone = '0883566469';
 
   /// Backend
-  static const String domain = 'adminpanel.studiopedico.it';
+  static const String domain = 'adminpanel.surianogestionicondominiali.it';
+
   static const String backendBase = 'https://$domain';
   static const String login = '$backendBase/fornitori/service/auth/login.php';
   static const String operation =
@@ -26,13 +27,13 @@ class AppConst {
       '$backendBase/fornitori/service/misc/supplier.php';
 
   /// App
-  static const String appId = 'com.alessandromontrone.studiopasupplier';
-  static const String appName = 'PA Fornitori';
+  static const String appId = 'com.alessandromontrone.studiosurianosupplier';
+  static const String appName = 'Suriano Fornitori';
   static const String appLogo = 'assets/logo.png';
 
   /// Push Notifications
-  static const String firebaseChannelId = 'studio_pa_fornitori';
-  static const String firebaseChannelName = 'studio_pa_fornitori';
+  static const String firebaseChannelId = 'studio_suriano';
+  static const String firebaseChannelName = 'studio_suriano';
   static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
   static const String firebaseAuthKey =
       'AAAACJBFyYI:APA91bGKiTsazg3d2YIYRrF4Q2Fvmgf1aYZme_Msluq_Bwb2odZbB6kBvD_LktEAELoUiGP_eSAW4xnQI6MCc6gRr4OBOdnR4zSgatDSGr5T4yOas61hea_HkSfk0l6SuXEi3mwHdWSK';

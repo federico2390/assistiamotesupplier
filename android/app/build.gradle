@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.alessandromontrone.studiopasupplier"
+        applicationId "com.alessandromontrone.studiosurianosupplier"
         minSdkVersion 23
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()

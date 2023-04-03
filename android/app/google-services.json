@@ -42,7 +42,7 @@
               "client_id": "36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.alessandromontrone.studiopasupplier"
+                "bundle_id": "com.alessandromontrone.studiosurianosupplier"
               }
             }
           ]
@@ -53,7 +53,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:36780231042:android:8bf24249a851894f2b679b",
         "android_client_info": {
-          "package_name": "com.alessandromontrone.studiopasupplier"
+          "package_name": "com.alessandromontrone.studiosurianosupplier"
         }
       },
       "oauth_client": [
@@ -78,7 +78,7 @@
               "client_id": "36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.alessandromontrone.studiopasupplier"
+                "bundle_id": "com.alessandromontrone.studiosurianosupplier"
               }
             }
           ]
