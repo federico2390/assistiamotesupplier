@@ -124,7 +124,7 @@ class OperationDetail extends StatelessWidget {
                                         TapDebouncerFunc? onTap) {
                                       return Expanded(
                                         child: Button(
-                                          color: AppColors.primaryColor,
+                                          color: AppColors.errorColor,
                                           text: 'Chiudi',
                                           onPressed: onTap,
                                         ),

@@ -80,7 +80,7 @@ class SearchBarState extends State<SearchBar> {
                 color: AppColors.backgroundColor,
                 icon: Icon(
                   Icons.search,
-                  color: AppColors.errorColor,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ),
