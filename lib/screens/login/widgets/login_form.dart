@@ -48,7 +48,6 @@ class _LoginFormState extends State<LoginForm> {
               AppConst.appLogo,
               fit: BoxFit.contain,
               height: kIsWeb ? 150 : ScreenSize.width(context) / 3,
-              color: AppColors.primaryColor,
             ),
           ),
           const SizedBox(height: AppConst.padding * 2),
