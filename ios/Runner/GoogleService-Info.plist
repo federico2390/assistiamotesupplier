@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com</string>
+	<string>218637504224-ngn1uvm6mgtpkaq0hc6kkvi5n769fhkh.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2</string>
+	<string>com.googleusercontent.apps.218637504224-ngn1uvm6mgtpkaq0hc6kkvi5n769fhkh</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>36780231042-dk07emnsjv72l668ot3m26vs6f6d94n3.apps.googleusercontent.com</string>
+	<string>218637504224-c75gklk85jbukp2j1hi5n18ahd5n216h.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB-I5LSc3h0Az5e8ajmXPxdYIVlVxGdCBA</string>
+	<string>AIzaSyAXQrksmXuaUBhc81KO-1M4Bg4m-scF5Uo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>36780231042</string>
+	<string>218637504224</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.alessandromontrone.studiosurianosupplier</string>
 	<key>PROJECT_ID</key>
-	<string>studio-pa-db402</string>
+	<string>studio-suriano</string>
 	<key>STORAGE_BUCKET</key>
-	<string>studio-pa-db402.appspot.com</string>
+	<string>studio-suriano.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:36780231042:ios:063e936ccb0848ec2b679b</string>
+	<string>1:218637504224:ios:a85df2bf83db8b68bb8a85</string>
 </dict>
 </plist>

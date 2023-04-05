@@ -1,48 +1,57 @@
 {
   "project_info": {
-    "project_number": "36780231042",
-    "project_id": "studio-pa-db402",
-    "storage_bucket": "studio-pa-db402.appspot.com"
+    "project_number": "218637504224",
+    "project_id": "studio-suriano",
+    "storage_bucket": "studio-suriano.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:36780231042:android:45119d34fb23c31e2b679b",
+        "mobilesdk_app_id": "1:218637504224:android:f334c51bcfbd6eabbb8a85",
         "android_client_info": {
-          "package_name": "com.alessandromontrone.adminpanel"
+          "package_name": "com.alessandromontrone.studiosuriano"
         }
       },
       "oauth_client": [
         {
-          "client_id": "36780231042-dk07emnsjv72l668ot3m26vs6f6d94n3.apps.googleusercontent.com",
+          "client_id": "218637504224-c7qh71h4c75pghm5c6tao0h243kd695i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.alessandromontrone.adminpanel",
+            "package_name": "com.alessandromontrone.studiosuriano",
             "certificate_hash": "78dadd86f60f654c52de6ce0e4fb4be3df636141"
           }
         },
         {
-          "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
+          "client_id": "218637504224-hp3i4p24c4aq6av4d6m3d0tiv59q94fs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alessandromontrone.studiosuriano",
+            "certificate_hash": "31e216eb2e4fa0caaa79f81a491fbc873c102199"
+          }
+        },
+        {
+          "client_id": "218637504224-befbj6ct787fn0f1r9f435q7k5qvs715.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIzB9zNmPuEdKRnlC07uwGXWEkVceD6s0"
+          "current_key": "AIzaSyCzWkxRR4vVeLlTq16yaEvR7l0H3Vcg0IE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
+              "client_id": "218637504224-befbj6ct787fn0f1r9f435q7k5qvs715.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com",
+              "client_id": "218637504224-gfdep2gg9l5s9n43savnst83915acgjn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.alessandromontrone.studiosurianosupplier"
+                "bundle_id": "com.alessandromontrone.studiosuriano",
+                "app_store_id": "6446225925"
               }
             }
           ]
@@ -51,34 +60,51 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:36780231042:android:8bf24249a851894f2b679b",
+        "mobilesdk_app_id": "1:218637504224:android:f59135e008f89030bb8a85",
         "android_client_info": {
           "package_name": "com.alessandromontrone.studiosurianosupplier"
         }
       },
       "oauth_client": [
         {
-          "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
+          "client_id": "218637504224-c75gklk85jbukp2j1hi5n18ahd5n216h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alessandromontrone.studiosurianosupplier",
+            "certificate_hash": "78dadd86f60f654c52de6ce0e4fb4be3df636141"
+          }
+        },
+        {
+          "client_id": "218637504224-taq6v935lebvn8ppfo6qfrbm7pm3mnit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alessandromontrone.studiosurianosupplier",
+            "certificate_hash": "31e216eb2e4fa0caaa79f81a491fbc873c102199"
+          }
+        },
+        {
+          "client_id": "218637504224-befbj6ct787fn0f1r9f435q7k5qvs715.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIzB9zNmPuEdKRnlC07uwGXWEkVceD6s0"
+          "current_key": "AIzaSyCzWkxRR4vVeLlTq16yaEvR7l0H3Vcg0IE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "36780231042-pepao6smojpnimipk169odpqbqdvo3d3.apps.googleusercontent.com",
+              "client_id": "218637504224-befbj6ct787fn0f1r9f435q7k5qvs715.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "36780231042-2ll395e3fok8m7n9981loak0j0hfvjo2.apps.googleusercontent.com",
+              "client_id": "218637504224-gfdep2gg9l5s9n43savnst83915acgjn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.alessandromontrone.studiosurianosupplier"
+                "bundle_id": "com.alessandromontrone.studiosuriano",
+                "app_store_id": "6446225925"
               }
             }
           ]
