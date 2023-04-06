@@ -31,7 +31,6 @@ class Welcome extends StatelessWidget {
                   AppConst.appLogo,
                   fit: BoxFit.contain,
                   height: kIsWeb ? 150 : ScreenSize.width(context) / 3,
-                  color: AppColors.primaryColor,
                 ),
               ),
               const Spacer(),
