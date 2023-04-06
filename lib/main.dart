@@ -54,7 +54,7 @@ void main() async {
       projectId: "studio-suriano",
       storageBucket: "studio-suriano.appspot.com",
       messagingSenderId: "218637504224",
-      appId: "1:218637504224:web:3d95f5db4e0efe76bb8a85",
+      appId: "1:218637504224:web:c69cf3bcde8f7a51bb8a85",
     ));
 
     Hive.initFlutter();

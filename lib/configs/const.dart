@@ -14,7 +14,6 @@ class AppConst {
 
   /// Backend
   static const String domain = 'adminpanel.surianogestionicondominiali.it';
-
   static const String backendBase = 'https://$domain';
   static const String login = '$backendBase/fornitori/service/auth/login.php';
   static const String operation =
@@ -30,8 +29,8 @@ class AppConst {
   static const String appLogo = 'assets/logo.png';
 
   /// Push Notifications
-  static const String firebaseChannelId = 'studio_suriano';
-  static const String firebaseChannelName = 'studio_suriano';
+  static const String firebaseChannelId = 'studio_suriano_fornitori';
+  static const String firebaseChannelName = 'studio_suriano_fornitori';
   static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
   static const String firebaseAuthKey =
       'AAAACJBFyYI:APA91bGKiTsazg3d2YIYRrF4Q2Fvmgf1aYZme_Msluq_Bwb2odZbB6kBvD_LktEAELoUiGP_eSAW4xnQI6MCc6gRr4OBOdnR4zSgatDSGr5T4yOas61hea_HkSfk0l6SuXEi3mwHdWSK';
