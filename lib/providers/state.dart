@@ -18,9 +18,10 @@ class StateProvider extends ChangeNotifier {
     final settingProvider = context.read<SettingProvider>();
     final userProvider = context.read<UserProvider>();
 
-    await operationProvider.getOperations(context);
+    await userProvider.getLocalUser();
     await settingProvider.getSetting(context);
     await userProvider.getUser();
+    await operationProvider.getOperations(context);
 
     notifyListeners();
   }
