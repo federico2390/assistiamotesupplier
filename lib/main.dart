@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:adminpanel/providers/state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:provider/provider.dart';
@@ -21,12 +23,13 @@ import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/routes.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
 
-int? logged;
-
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('background title: ${message.notification!.title}');
   print('background body: ${message.notification!.body}');
 }
+
+int? logged;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,16 +50,6 @@ void main() async {
       }
     });
   } else {
-    await Firebase.initializeApp(
-        options: const FirebaseOptions(
-      apiKey: "AIzaSyBENwkhi_FHpHpnS55c7SHrnFFUt5BfQvk",
-      authDomain: "studio-suriano.firebaseapp.com",
-      projectId: "studio-suriano",
-      storageBucket: "studio-suriano.appspot.com",
-      messagingSenderId: "218637504224",
-      appId: "1:218637504224:web:c69cf3bcde8f7a51bb8a85",
-    ));
-
     Hive.initFlutter();
     Hive.registerAdapter(UserDatabaseAdapter());
   }
@@ -83,11 +76,18 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LoaderProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
         ChangeNotifierProvider(create: (context) => GalleryProvider()),
+        ChangeNotifierProvider(create: (context) => StateProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),
         routes: Routes.buildRoutes(),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('it')],
         initialRoute: (logged == 0 || logged == null) ? '/login' : '/',
       ),
     );

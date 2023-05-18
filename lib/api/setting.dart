@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/const.dart';
@@ -16,7 +15,7 @@ class SettingApi {
     try {
       final user = await context.read<UserProvider>().getLocalUser();
 
-      var response = await http.post(
+      var response = await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
             : Uri.parse(AppConst.setting),
@@ -33,6 +32,8 @@ class SettingApi {
       }
     } catch (error) {
       print('ERROR_getNotification: $error');
+    } finally {
+      AppConst().client.close();
     }
     return setting;
   }
@@ -44,7 +45,7 @@ class SettingApi {
     try {
       final user = await context.read<UserProvider>().getLocalUser();
 
-      await http.post(
+      await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
             : Uri.parse(AppConst.setting),
@@ -56,6 +57,8 @@ class SettingApi {
       );
     } catch (error) {
       print('ERROR_editNotification: $error');
+    } finally {
+      AppConst().client.close();
     }
   }
 
@@ -63,7 +66,7 @@ class SettingApi {
     try {
       final user = await context.read<UserProvider>().getLocalUser();
 
-      await http.post(
+      await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
             : Uri.parse(AppConst.setting),
@@ -75,6 +78,8 @@ class SettingApi {
       );
     } catch (error) {
       print('ERROR_saveToken: $error');
+    } finally {
+      AppConst().client.close();
     }
   }
 }

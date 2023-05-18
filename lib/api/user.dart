@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/database/user/user.dart';
@@ -17,7 +16,7 @@ class UserApi {
     UserDatabase user = UserDatabase();
 
     try {
-      var response = await http.post(
+      var response = await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.supplier).replace(host: AppConst.domain)
             : Uri.parse(AppConst.supplier),
@@ -32,6 +31,8 @@ class UserApi {
       }
     } catch (error) {
       print('ERROR_getFeed: $error');
+    } finally {
+      AppConst().client.close();
     }
     return user;
   }

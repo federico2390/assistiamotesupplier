@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:adminpanel/providers/state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,13 @@ class Central extends StatefulWidget {
 class _CentralState extends State<Central> with WidgetsBindingObserver {
   @override
   void initState() {
+    context.read<StateProvider>().buildFuture(context).then((value) {
+      context.read<UserProvider>().timer =
+          Timer.periodic(const Duration(minutes: 5), (_) {
+        context.read<StateProvider>().buildFuture(context);
+      });
+    });
+
     if (!kIsWeb) {
       NotificationManager.requestPermisison(context);
       NotificationManager.getToken(context);
@@ -28,8 +38,6 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
 
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
-    context.read<UserProvider>().getUser();
   }
 
   @override

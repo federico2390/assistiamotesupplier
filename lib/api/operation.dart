@@ -1,11 +1,11 @@
 import 'package:adminpanel/api/notification.dart';
 import 'package:adminpanel/models/token.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class OperationApi {
       final user = await context.read<UserProvider>().getLocalUser();
 
       if (user.supplierId != null && user.supplierId!.isNotEmpty) {
-        var response = await http.post(
+        var response = await AppConst().client.post(
           kIsWeb
               ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
               : Uri.parse(AppConst.operation),
@@ -94,6 +94,8 @@ class OperationApi {
       }
     } catch (error) {
       print('ERROR_getOperations: $error');
+    } finally {
+      AppConst().client.close();
     }
     return operations;
   }
@@ -120,7 +122,7 @@ class OperationApi {
       ));
 
       Future<MultipartFile> getMultipartFileFromUrl(String url) async {
-        final response = await http.get(kIsWeb
+        final response = await AppConst().client.get(kIsWeb
             ? Uri.parse(url).replace(host: AppConst.domain)
             : Uri.parse(url));
         final bytes = response.bodyBytes;
@@ -166,7 +168,7 @@ class OperationApi {
         List<Token> tokens = [];
 
         try {
-          var response = await http.post(
+          var response = await AppConst().client.post(
             kIsWeb
                 ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
                 : Uri.parse(AppConst.operation),
@@ -202,6 +204,8 @@ class OperationApi {
               );
             }
           }
+
+          context.read<StateProvider>().buildFuture(context);
         } catch (error) {
           print('ERROR_getTokens: $error');
         }
@@ -210,13 +214,15 @@ class OperationApi {
       }
     } catch (error) {
       print('ERROR_editOperation: $error');
+    } finally {
+      AppConst().client.close();
     }
   }
 
   Future markOperationAsOpened(
       BuildContext context, Operation operation) async {
     try {
-      var response = await http.post(
+      var response = await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
             : Uri.parse(AppConst.operation),
@@ -226,6 +232,7 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
+        context.read<StateProvider>().buildFuture(context);
       } else {
         print('Can\'t mark as opened Operation');
       }
@@ -240,7 +247,7 @@ class OperationApi {
     String operationWorking,
   ) async {
     try {
-      var response = await http.post(
+      var response = await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
             : Uri.parse(AppConst.operation),
@@ -254,7 +261,7 @@ class OperationApi {
         List<Token> tokens = [];
 
         try {
-          var response = await http.post(
+          var response = await AppConst().client.post(
             kIsWeb
                 ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
                 : Uri.parse(AppConst.operation),
@@ -289,6 +296,7 @@ class OperationApi {
                 popupMessage: 'Intervento In corso',
               );
             }
+            context.read<StateProvider>().buildFuture(context);
           }
         } catch (error) {
           print('ERROR_getTokens: $error');
@@ -298,6 +306,8 @@ class OperationApi {
       }
     } catch (error) {
       print('ERROR_markOperationAsWorking: $error');
+    } finally {
+      AppConst().client.close();
     }
   }
 
@@ -307,7 +317,7 @@ class OperationApi {
     String operationState,
   ) async {
     try {
-      var response = await http.post(
+      var response = await AppConst().client.post(
         kIsWeb
             ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
             : Uri.parse(AppConst.operation),
@@ -321,7 +331,7 @@ class OperationApi {
         List<Token> tokens = [];
 
         try {
-          var response = await http.post(
+          var response = await AppConst().client.post(
             kIsWeb
                 ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
                 : Uri.parse(AppConst.operation),
@@ -356,6 +366,7 @@ class OperationApi {
                 popupMessage: 'Intervento Chiuso',
               );
             }
+            context.read<StateProvider>().buildFuture(context);
           }
         } catch (error) {
           print('ERROR_getTokens: $error');
@@ -365,6 +376,8 @@ class OperationApi {
       }
     } catch (error) {
       print('ERROR_markOperationAsClosed: $error');
+    } finally {
+      AppConst().client.close();
     }
   }
 }

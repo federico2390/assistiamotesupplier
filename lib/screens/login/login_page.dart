@@ -1,17 +1,11 @@
+import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:adminpanel/api/login.dart';
-import 'package:adminpanel/api/user.dart';
-import 'package:adminpanel/configs/colors.dart';
-import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/screens/login/widgets/login_form.dart';
-import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
 
 class LoginPage extends StatefulWidget {
@@ -65,32 +59,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => kIsWeb ? false : true,
-      child: Scaffold(
-        body: LoginForm(
-          formKey: formKey,
-          usernameController: usernameController,
-          passwordController: passwordController,
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(
-              left: AppConst.padding, right: AppConst.padding, bottom: 45),
-          child: Button(
-            text: 'Accedi',
-            color: usernameController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty
-                ? null
-                : AppColors.secondaryColor,
-            onPressed: () async {
-              if (formKey.currentState!.validate() &&
-                  UserApi().isLogged == false) {
-                hideKeyboard(context);
-                await LoginApi().login(
-                    context, usernameController.text, passwordController.text);
-              } else {
-                await Alerts.errorAlert(context,
-                    title: 'Ops!', subtitle: 'Completa tutti i campi');
-              }
-            },
+      child: GestureDetector(
+        onTap: () => hideKeyboard(context),
+        child: Scaffold(
+          body: LoginForm(
+            formKey: formKey,
+            usernameController: usernameController,
+            passwordController: passwordController,
           ),
         ),
       ),

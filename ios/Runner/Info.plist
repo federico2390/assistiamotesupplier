@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>PA Fornitori</string>
+	<string>Suriano Fornitori</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -16,7 +16,7 @@
 	<string>6.0</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-  		<string>tel</string>
+		<string>tel</string>
 	</array>
 	<key>CFBundleLocalizations</key>
 	<array>
@@ -48,11 +48,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Consenti all'app di accedere alla fotocamera per permetterti di inserire allegati.</string>
+	<string>Consenti all&apos;app di accedere alla fotocamera per permetterti di inserire allegati.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Consenti all'app di accedere al microfono per permetterti di inserire allegati.</string>
+	<string>Consenti all&apos;app di accedere al microfono per permetterti di inserire allegati.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Consenti all'app di accedere alla galleria foto per permetterti di inserire allegati.</string>
+	<string>Consenti all&apos;app di accedere alla galleria foto per permetterti di inserire allegati.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

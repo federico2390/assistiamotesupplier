@@ -1,3 +1,8 @@
+import 'package:adminpanel/api/login.dart';
+import 'package:adminpanel/api/user.dart';
+import 'package:adminpanel/globals/button.dart';
+import 'package:adminpanel/utils/alerts.dart';
+import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +11,7 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/login.dart';
 import 'package:adminpanel/utils/size.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -198,6 +204,30 @@ class _LoginFormState extends State<LoginForm> {
             ),
             onTap: () {
               context.read<LoginProvider>().rememberMyData();
+            },
+          ),
+          const SizedBox(height: AppConst.padding * 4),
+          TapDebouncer(
+            onTap: () async {
+              if (widget.formKey.currentState!.validate() &&
+                  UserApi().isLogged == false) {
+                hideKeyboard(context);
+                await LoginApi().login(context, widget.usernameController.text,
+                    widget.passwordController.text);
+              } else {
+                await Alerts.errorAlert(context,
+                    title: 'Ops!', subtitle: 'Completa tutti i campi');
+              }
+            },
+            builder: (BuildContext context, TapDebouncerFunc? onTap) {
+              return Button(
+                text: 'Accedi',
+                color: widget.usernameController.text.isNotEmpty &&
+                        widget.passwordController.text.isNotEmpty
+                    ? null
+                    : AppColors.secondaryColor,
+                onPressed: onTap,
+              );
             },
           ),
         ],

@@ -12,6 +12,7 @@ import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/notification_manager.dart';
 import 'package:adminpanel/utils/size.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -100,11 +101,16 @@ class Welcome extends StatelessWidget {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
               left: AppConst.padding, right: AppConst.padding, bottom: 45),
-          child: Button(
-            text: 'Iniziamo',
-            onPressed: () {
+          child: TapDebouncer(
+            onTap: () async {
               Navigator.pushNamedAndRemoveUntil(
                   context, '/', (Route<dynamic> route) => false);
+            },
+            builder: (BuildContext context, TapDebouncerFunc? onTap) {
+              return Button(
+                text: 'Iniziamo',
+                onPressed: onTap,
+              );
             },
           ),
         ),

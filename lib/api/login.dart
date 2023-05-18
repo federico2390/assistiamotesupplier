@@ -8,7 +8,6 @@ import 'package:adminpanel/utils/shared_preference.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class LoginApi {
@@ -22,7 +21,7 @@ class LoginApi {
       );
 
       await Future.delayed(const Duration(seconds: 3), () async {
-        var response = await http.post(
+        var response = await AppConst().client.post(
           kIsWeb
               ? Uri.parse(AppConst.login).replace(host: AppConst.domain)
               : Uri.parse(AppConst.login),
@@ -69,6 +68,8 @@ class LoginApi {
       await Alerts.hideAlert();
       await Alerts.errorAlert(context,
           title: 'Errore', subtitle: 'Email o C.F./P.IVA errati');
+    } finally {
+      AppConst().client.close();
     }
   }
 }

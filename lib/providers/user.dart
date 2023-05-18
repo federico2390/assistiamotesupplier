@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -5,6 +7,8 @@ import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/database/user/user.dart';
 
 class UserProvider extends ChangeNotifier {
+  Timer? timer;
+
   UserDatabase _localUser = UserDatabase();
   UserDatabase get localuser => _localUser;
 

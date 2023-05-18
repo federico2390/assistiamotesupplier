@@ -1,3 +1,5 @@
+import 'package:http/http.dart' as http;
+
 class AppConst {
   /// UI
   static const double padding = 16.0;
@@ -33,5 +35,8 @@ class AppConst {
   static const String firebaseChannelName = 'studio_suriano_fornitori';
   static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
   static const String firebaseAuthKey =
-      'AAAACJBFyYI:APA91bGKiTsazg3d2YIYRrF4Q2Fvmgf1aYZme_Msluq_Bwb2odZbB6kBvD_LktEAELoUiGP_eSAW4xnQI6MCc6gRr4OBOdnR4zSgatDSGr5T4yOas61hea_HkSfk0l6SuXEi3mwHdWSK';
+      'AAAAMufPjuA:APA91bFbjwpMKqeYoILYs4saRo7ytPDpjc1WU2aBn47tauQgdqLSReJa4Ib3oo5tu03qKvCvNt2SMR0GrSo_fdRvDycGt7zbMIg_RvGTu0CbslSlcjSYwHdJMnh6-6e3bF63ZS7Zf8RO';
+
+  /// HTTP Client
+  var client = http.Client();
 }
