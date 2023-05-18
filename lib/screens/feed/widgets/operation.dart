@@ -1,4 +1,5 @@
 import 'package:adminpanel/providers/state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -87,7 +88,9 @@ class OperationSegmentedPage extends StatelessWidget {
                     builder: (BuildContext context, TapDebouncerFunc? onTap) {
                       return Card(
                         elevation: 7,
-                        shadowColor: AppColors.secondaryColor.withOpacity(.15),
+                        shadowColor: kIsWeb
+                            ? AppColors.secondaryColor.withOpacity(.5)
+                            : AppColors.secondaryColor.withOpacity(.15),
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(AppConst.borderRadius),

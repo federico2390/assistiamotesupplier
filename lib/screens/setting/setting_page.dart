@@ -16,8 +16,19 @@ import 'package:adminpanel/screens/setting/widgets/app_bar.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/logout_action_sheet.dart';
 
-class SettingPage extends StatelessWidget {
+class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
+
+  @override
+  State<SettingPage> createState() => _SettingPageState();
+}
+
+class _SettingPageState extends State<SettingPage> {
+  @override
+  void initState() {
+    context.read<SettingProvider>().getSetting(context);
+    super.initState();
+  }
 
   Future<String> getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -33,163 +44,146 @@ class SettingPage extends StatelessWidget {
         body: Consumer<SettingProvider>(
           builder: (context, settingProvider, child) {
             if (UserApi().isLogged == true) {
-              return StreamBuilder(
-                stream: settingProvider.getSetting(context).asStream(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.data!.notification!.isNotEmpty) {
-                    return SettingsList(
-                      contentPadding: kIsWeb
-                          ? const EdgeInsets.all(AppConst.padding)
-                          : null,
-                      lightTheme: kIsWeb
-                          ? SettingsThemeData(
-                              settingsListBackground: AppColors.backgroundColor,
-                            )
-                          : Platform.isAndroid
-                              ? SettingsThemeData(
-                                  settingsListBackground:
-                                      AppColors.backgroundColor,
-                                )
-                              : null,
-                      brightness: Brightness.light,
-                      applicationType: kIsWeb
-                          ? ApplicationType.both
-                          : Platform.isAndroid
-                              ? ApplicationType.material
-                              : ApplicationType.cupertino,
-                      sections: [
-                        !kIsWeb
-                            ? SettingsSection(
-                                tiles: <SettingsTile>[
-                                  SettingsTile.switchTile(
-                                    onToggle: (value) {
-                                      settingProvider.updateNotification(
-                                          context, value);
-                                    },
-                                    initialValue:
-                                        settingProvider.setting.notification ==
-                                                'true'
-                                            ? true
-                                            : false,
-                                    leading:
-                                        const Icon(Icons.notifications_rounded),
-                                    title: const Text('Comunicazioni'),
-                                    description: const Text(
-                                        'Quando abilitato, riceverai notifiche direttamente sul tuo dispositivo ogni volta che ci saranno nuove comunicazioni.'),
-                                  ),
-                                ],
-                              )
-                            : const SettingsSection(
-                                tiles: [],
-                              ),
-                        SettingsSection(
+              return SettingsList(
+                contentPadding:
+                    kIsWeb ? const EdgeInsets.all(AppConst.padding) : null,
+                lightTheme: kIsWeb
+                    ? SettingsThemeData(
+                        settingsListBackground: AppColors.backgroundColor,
+                      )
+                    : Platform.isAndroid
+                        ? SettingsThemeData(
+                            settingsListBackground: AppColors.backgroundColor,
+                          )
+                        : null,
+                brightness: Brightness.light,
+                applicationType: kIsWeb
+                    ? ApplicationType.both
+                    : Platform.isAndroid
+                        ? ApplicationType.material
+                        : ApplicationType.cupertino,
+                sections: [
+                  !kIsWeb
+                      ? SettingsSection(
                           tiles: <SettingsTile>[
-                            SettingsTile.navigation(
-                              leading: const Icon(Icons.lock_rounded),
-                              title: const Text('Informativa privacy'),
-                              onPressed: (context) {
-                                launchUrls(AppConst.servicePrivacyPolicy);
+                            SettingsTile.switchTile(
+                              onToggle: (value) {
+                                settingProvider.updateNotification(
+                                    context, value);
                               },
-                            ),
-                            SettingsTile.navigation(
-                              leading: const Icon(Icons.web_rounded),
-                              title: const Text('Sito web'),
+                              initialValue:
+                                  settingProvider.setting.notification == 'true'
+                                      ? true
+                                      : false,
+                              leading: const Icon(Icons.notifications_rounded),
+                              title: const Text('Comunicazioni'),
                               description: const Text(
-                                  'In questa sezione puoi trovare tutte le informazioni riguardanti la raccolta, l\'uso e la protezione dei tuoi dati personali. Per maggiori informazioni clicca sito web.'),
-                              onPressed: (context) {
-                                launchUrls(AppConst.serviceWebsite);
-                              },
+                                  'Quando abilitato, riceverai notifiche direttamente sul tuo dispositivo ogni volta che ci saranno nuove comunicazioni.'),
                             ),
                           ],
+                        )
+                      : const SettingsSection(
+                          tiles: [],
                         ),
-                        SettingsSection(
-                          tiles: <SettingsTile>[
-                            SettingsTile.navigation(
-                              leading: const Icon(Icons.logout_rounded),
-                              title: const Text('Esci'),
-                              onPressed: (context) {
-                                buildLogoutActionSheet(context);
-                              },
-                            ),
-                          ],
+                  SettingsSection(
+                    tiles: <SettingsTile>[
+                      SettingsTile.navigation(
+                        leading: const Icon(Icons.lock_rounded),
+                        title: const Text('Informativa privacy'),
+                        onPressed: (context) {
+                          launchUrls(AppConst.servicePrivacyPolicy);
+                        },
+                      ),
+                      SettingsTile.navigation(
+                        leading: const Icon(Icons.web_rounded),
+                        title: const Text('Sito web'),
+                        description: const Text(
+                            'In questa sezione puoi trovare tutte le informazioni riguardanti la raccolta, l\'uso e la protezione dei tuoi dati personali. Per maggiori informazioni clicca sito web.'),
+                        onPressed: (context) {
+                          launchUrls(AppConst.serviceWebsite);
+                        },
+                      ),
+                    ],
+                  ),
+                  SettingsSection(
+                    tiles: <SettingsTile>[
+                      SettingsTile.navigation(
+                        leading: const Icon(Icons.logout_rounded),
+                        title: const Text('Esci'),
+                        onPressed: (context) {
+                          buildLogoutActionSheet(context);
+                        },
+                      ),
+                    ],
+                  ),
+                  SettingsSection(
+                    tiles: <SettingsTile>[
+                      SettingsTile(
+                        enabled: false,
+                        title: Text(
+                          'Utente',
+                          style: TextStyle(color: AppColors.secondaryColor),
                         ),
-                        SettingsSection(
-                          tiles: <SettingsTile>[
-                            SettingsTile(
-                              enabled: false,
-                              title: Text(
-                                'Utente',
+                        description: kIsWeb
+                            ? Text(
+                                context
+                                        .read<UserProvider>()
+                                        .localuser
+                                        .supplierName!
+                                        .isNotEmpty
+                                    ? context
+                                        .read<UserProvider>()
+                                        .localuser
+                                        .supplierName!
+                                    : '',
+                                style: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 16,
+                                ),
+                              )
+                            : null,
+                        trailing: !kIsWeb
+                            ? Text(
+                                context
+                                        .read<UserProvider>()
+                                        .localuser
+                                        .supplierName!
+                                        .isNotEmpty
+                                    ? context
+                                        .read<UserProvider>()
+                                        .localuser
+                                        .supplierName!
+                                    : '',
+                                style: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 16,
+                                ),
+                              )
+                            : null,
+                      ),
+                      SettingsTile(
+                        enabled: false,
+                        title: FutureBuilder(
+                          future: getAppVersion(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                              return Text(
+                                'Versione ${snapshot.data!}',
                                 style:
                                     TextStyle(color: AppColors.secondaryColor),
-                              ),
-                              description: kIsWeb
-                                  ? Text(
-                                      context
-                                              .read<UserProvider>()
-                                              .localuser
-                                              .supplierName!
-                                              .isNotEmpty
-                                          ? context
-                                              .read<UserProvider>()
-                                              .localuser
-                                              .supplierName!
-                                          : '',
-                                      style: TextStyle(
-                                        color: AppColors.secondaryColor,
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  : null,
-                              trailing: !kIsWeb
-                                  ? Text(
-                                      context
-                                              .read<UserProvider>()
-                                              .localuser
-                                              .supplierName!
-                                              .isNotEmpty
-                                          ? context
-                                              .read<UserProvider>()
-                                              .localuser
-                                              .supplierName!
-                                          : '',
-                                      style: TextStyle(
-                                        color: AppColors.secondaryColor,
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            SettingsTile(
-                              enabled: false,
-                              title: FutureBuilder(
-                                future: getAppVersion(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  if (snapshot.hasData &&
-                                      snapshot.data!.isNotEmpty) {
-                                    return Text(
-                                      'Versione ${snapshot.data!}',
-                                      style: TextStyle(
-                                          color: AppColors.secondaryColor),
-                                    );
-                                  }
-                                  return Text(
-                                    '',
-                                    style: TextStyle(
-                                        color: AppColors.secondaryColor),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                              );
+                            }
+                            return Text(
+                              '',
+                              style: TextStyle(color: AppColors.secondaryColor),
+                            );
+                          },
                         ),
-                      ],
-                    );
-                  } else {
-                    return const SettingLoader();
-                  }
-                },
+                      ),
+                    ],
+                  ),
+                ],
               );
             } else {
               return const SettingLoader();
