@@ -9,13 +9,13 @@ class AppConst {
   static const double imagePickerWidth = 1280;
 
   /// Setting
-  static const String serviceWebsite = 'https://surianogestionicondominiali.it';
+  static const String serviceWebsite = 'https://2vcondominio.it';
   static const String servicePrivacyPolicy =
       '$serviceWebsite/privacy-policy-app';
   static const String servicePhone = '0883566469';
 
   /// Backend
-  static const String domain = 'adminpanel.surianogestionicondominiali.it';
+  static const String domain = 'adminpanel.2vcondominio.it';
   static const String backendBase = 'https://$domain';
   static const String login = '$backendBase/fornitori/service/auth/login.php';
   static const String operation =
@@ -26,16 +26,16 @@ class AppConst {
       '$backendBase/fornitori/service/misc/supplier.php';
 
   /// App
-  static const String appId = 'com.alessandromontrone.studiosurianosupplier';
-  static const String appName = 'Suriano Fornitori';
+  static const String appId = 'com.alessandromontrone.duevcondominiosupplier';
+  static const String appName = '2V Fornitori';
   static const String appLogo = 'assets/logo.png';
 
   /// Push Notifications
-  static const String firebaseChannelId = 'studio_suriano_fornitori';
-  static const String firebaseChannelName = 'studio_suriano_fornitori';
+  static const String firebaseChannelId = 'duev_condominio_supplier';
+  static const String firebaseChannelName = 'duev_condominio_supplier';
   static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
   static const String firebaseAuthKey =
-      'AAAAMufPjuA:APA91bFbjwpMKqeYoILYs4saRo7ytPDpjc1WU2aBn47tauQgdqLSReJa4Ib3oo5tu03qKvCvNt2SMR0GrSo_fdRvDycGt7zbMIg_RvGTu0CbslSlcjSYwHdJMnh6-6e3bF63ZS7Zf8RO';
+      'AAAAwWvHD9w:APA91bFc_cklqhK9KBH1CROWoa9F2GVsznTVg0iDsN4jzZPUm5KFE_SU2j8D6J3mPAusYOc7O6wXDwXRDqTWuCgDuAk7eepjwV0jWv3TezWEPGUqpDTQlR1z4rZd4PUp_vaxDL7qAZwM';
 
   /// HTTP Client
   var client = http.Client();

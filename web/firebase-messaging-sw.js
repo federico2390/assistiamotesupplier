@@ -2,12 +2,12 @@ importScripts('https://www.gstatic.com/firebasejs/9.17.2/firebase-app-compat.js'
 importScripts('https://www.gstatic.com/firebasejs/9.17.2/firebase-messaging-compat.js');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBENwkhi_FHpHpnS55c7SHrnFFUt5BfQvk",
-    authDomain: "studio-suriano.firebaseapp.com",
-    projectId: "studio-suriano",
-    storageBucket: "studio-suriano.appspot.com",
-    messagingSenderId: "218637504224",
-    appId: "1:218637504224:web:c69cf3bcde8f7a51bb8a85"
+    apiKey: "AIzaSyBayHY-nuExF9pS84mA50A9nx5Y7zEoUAE",
+    authDomain: "v-condominio.firebaseapp.com",
+    projectId: "v-condominio",
+    storageBucket: "v-condominio.appspot.com",
+    messagingSenderId: "830736895964",
+    appId: "1:830736895964:web:0ba2287daff4a1048a8919"
 };
 
 firebase.initializeApp(firebaseConfig);

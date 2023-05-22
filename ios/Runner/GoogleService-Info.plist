@@ -3,34 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>218637504224-ngn1uvm6mgtpkaq0hc6kkvi5n769fhkh.apps.googleusercontent.com</string>
+	<string>830736895964-kejmn04rm27hah4o7ti4508m7r3j8bsl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.218637504224-ngn1uvm6mgtpkaq0hc6kkvi5n769fhkh</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>218637504224-c75gklk85jbukp2j1hi5n18ahd5n216h.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.830736895964-kejmn04rm27hah4o7ti4508m7r3j8bsl</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAXQrksmXuaUBhc81KO-1M4Bg4m-scF5Uo</string>
+	<string>AIzaSyAAfBPtiqk4rIMHvwaQ6BD2Q-CrDu6jrck</string>
 	<key>GCM_SENDER_ID</key>
-	<string>218637504224</string>
+	<string>830736895964</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.alessandromontrone.studiosurianosupplier</string>
+	<string>com.alessandromontrone.duevcondominiosupplier</string>
 	<key>PROJECT_ID</key>
-	<string>studio-suriano</string>
+	<string>v-condominio</string>
 	<key>STORAGE_BUCKET</key>
-	<string>studio-suriano.appspot.com</string>
+	<string>v-condominio.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:218637504224:ios:a85df2bf83db8b68bb8a85</string>
+	<string>1:830736895964:ios:7652a21f1567ae778a8919</string>
 </dict>
 </plist>

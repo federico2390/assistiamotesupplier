@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alessandromontrone.studiosurianosupplier">
+    package="com.alessandromontrone.duevcondominiosupplier">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
@@ -21,7 +21,7 @@
     </queries>
 
    <application
-        android:label="Suriano Fornitori"
+        android:label="2V Fornitori"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
