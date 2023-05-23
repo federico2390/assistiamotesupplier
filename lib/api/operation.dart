@@ -167,47 +167,42 @@ class OperationApi {
       if (response.statusCode == 200 || response.statusCode == 201) {
         List<Token> tokens = [];
 
-        try {
-          var response = await AppConst().client.post(
-            kIsWeb
-                ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-                : Uri.parse(AppConst.operation),
-            body: {
-              'get_tokens': 'get_tokens',
-              'operation_id': operation.operationId!.trim(),
-            },
-          );
+        var response = await AppConst().client.post(
+          kIsWeb
+              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+              : Uri.parse(AppConst.operation),
+          body: {
+            'get_tokens': 'get_tokens',
+            'operation_id': operation.operationId!.trim(),
+          },
+        );
 
-          if (response.statusCode == 200 || response.statusCode == 201) {
-            tokens = tokenFromJson(response.body);
-            if (operation.operation == 'Condominiale') {
-              await NotificationApi().sendToPalace(
-                context: context,
-                title: 'Richiesta d\'intervento aggiornata',
-                message:
-                    'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
-                operation: operation,
-                tokens: tokens,
-                popupTitle: 'Aggiornato',
-                popupMessage: 'Intervento aggiornato',
-              );
-            } else {
-              await NotificationApi().sendToUser(
-                context: context,
-                title: 'Richiesta d\'intervento aggiornata',
-                message:
-                    'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
-                operation: operation,
-                tokens: tokens,
-                popupTitle: 'Aggiornato',
-                popupMessage: 'Intervento aggiornato',
-              );
-            }
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          tokens = tokenFromJson(response.body);
+
+          if (operation.operation == 'Condominiale') {
+            await NotificationApi().sendToPalace(
+              context: context,
+              title: 'Richiesta d\'intervento aggiornata',
+              message:
+                  'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
+              operation: operation,
+              tokens: tokens,
+              popupTitle: 'Aggiornato',
+              popupMessage: 'Intervento aggiornato',
+            );
+          } else {
+            await NotificationApi().sendToUser(
+              context: context,
+              title: 'Richiesta d\'intervento aggiornata',
+              message:
+                  'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
+              operation: operation,
+              tokens: tokens,
+              popupTitle: 'Aggiornato',
+              popupMessage: 'Intervento aggiornato',
+            );
           }
-
-          context.read<StateProvider>().buildFuture(context);
-        } catch (error) {
-          print('ERROR_getTokens: $error');
         }
       } else {
         print('Can\'t edit Operation');
@@ -216,6 +211,7 @@ class OperationApi {
       print('ERROR_editOperation: $error');
     } finally {
       AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
     }
   }
 

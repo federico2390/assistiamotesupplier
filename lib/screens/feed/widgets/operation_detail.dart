@@ -55,16 +55,15 @@ class OperationDetail extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async => kIsWeb ? false : true,
-      child: Consumer<OperationProvider>(
-        builder: (context, operationProvider, child) {
-          Operation operation = operationProvider.operations.firstWhere(
-              (e) => e.operationId == operationArguments.operationId);
-
-          return GestureDetector(
-            onTap: () => hideKeyboard(context),
-            child: Scaffold(
-              appBar: appBar(context),
-              body: RefreshIndicator(
+      child: GestureDetector(
+        onTap: () => hideKeyboard(context),
+        child: Scaffold(
+          appBar: appBar(context),
+          body: Consumer<OperationProvider>(
+            builder: (context, operationProvider, child) {
+              Operation operation = operationProvider.operations.firstWhere(
+                  (e) => e.operationId == operationArguments.operationId);
+              return RefreshIndicator(
                 color: AppColors.primaryColor,
                 onRefresh: () =>
                     context.read<StateProvider>().buildFuture(context),
@@ -103,8 +102,8 @@ class OperationDetail extends StatelessWidget {
                                                 TapDebouncerFunc? onTap) {
                                               return Expanded(
                                                 child: Button(
-                                                  color: AppColors
-                                                      .attentionColor,
+                                                  color:
+                                                      AppColors.attentionColor,
                                                   text: 'In corso',
                                                   onPressed: onTap,
                                                 ),
@@ -180,8 +179,7 @@ class OperationDetail extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       AppConst.borderRadius)),
-                                          height:
-                                              ScreenSize.width(context) / 2,
+                                          height: ScreenSize.width(context) / 2,
                                           child: PhotoViewGallery.builder(
                                             scrollPhysics:
                                                 const ClampingScrollPhysics(),
@@ -194,8 +192,7 @@ class OperationDetail extends StatelessWidget {
                                               return PhotoViewGalleryPageOptions(
                                                 disableGestures: true,
                                                 key: ValueKey(operation.media!
-                                                    .where(
-                                                        (e) => e.isNotEmpty)
+                                                    .where((e) => e.isNotEmpty)
                                                     .toList()[index]),
                                                 imageProvider: NetworkImage(
                                                   operation.media!
@@ -207,12 +204,10 @@ class OperationDetail extends StatelessWidget {
                                                 initialScale:
                                                     PhotoViewComputedScale
                                                         .contained,
-                                                minScale:
-                                                    PhotoViewComputedScale
-                                                        .covered,
-                                                maxScale:
-                                                    PhotoViewComputedScale
-                                                        .covered,
+                                                minScale: PhotoViewComputedScale
+                                                    .covered,
+                                                maxScale: PhotoViewComputedScale
+                                                    .covered,
                                                 heroAttributes:
                                                     PhotoViewHeroAttributes(
                                                   tag: const Uuid().v4(),
@@ -240,15 +235,14 @@ class OperationDetail extends StatelessWidget {
                                             onPageChanged: (int index) {
                                               userMin = index;
                                             },
-                                            loadingBuilder:
-                                                (context, event) => Center(
+                                            loadingBuilder: (context, event) =>
+                                                Center(
                                               child: SizedBox(
                                                 width: 20.0,
                                                 height: 20.0,
                                                 child:
                                                     CircularProgressIndicator(
-                                                  color:
-                                                      AppColors.primaryColor,
+                                                  color: AppColors.primaryColor,
                                                   value: event == null
                                                       ? 0
                                                       : event.cumulativeBytesLoaded /
@@ -275,8 +269,7 @@ class OperationDetail extends StatelessWidget {
                                           );
                                         },
                                       ),
-                                      const SizedBox(
-                                          height: AppConst.padding),
+                                      const SizedBox(height: AppConst.padding),
                                       Center(
                                         child: AnimatedSmoothIndicator(
                                           activeIndex: userMin,
@@ -453,13 +446,11 @@ class OperationDetail extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       AppConst.borderRadius)),
-                                          height:
-                                              ScreenSize.width(context) / 2,
+                                          height: ScreenSize.width(context) / 2,
                                           child: PhotoViewGallery.builder(
                                             scrollPhysics:
                                                 const ClampingScrollPhysics(),
-                                            itemCount: operation
-                                                .supplierMedia!
+                                            itemCount: operation.supplierMedia!
                                                 .where((e) => e.isNotEmpty)
                                                 .toList()
                                                 .length,
@@ -469,8 +460,7 @@ class OperationDetail extends StatelessWidget {
                                                 disableGestures: true,
                                                 key: ValueKey(operation
                                                     .supplierMedia!
-                                                    .where(
-                                                        (e) => e.isNotEmpty)
+                                                    .where((e) => e.isNotEmpty)
                                                     .toList()[index]),
                                                 imageProvider: NetworkImage(
                                                   operation.supplierMedia!
@@ -482,12 +472,10 @@ class OperationDetail extends StatelessWidget {
                                                 initialScale:
                                                     PhotoViewComputedScale
                                                         .contained,
-                                                minScale:
-                                                    PhotoViewComputedScale
-                                                        .covered,
-                                                maxScale:
-                                                    PhotoViewComputedScale
-                                                        .covered,
+                                                minScale: PhotoViewComputedScale
+                                                    .covered,
+                                                maxScale: PhotoViewComputedScale
+                                                    .covered,
                                                 heroAttributes:
                                                     PhotoViewHeroAttributes(
                                                   tag: const Uuid().v4(),
@@ -515,15 +503,14 @@ class OperationDetail extends StatelessWidget {
                                             onPageChanged: (int index) {
                                               supplierMin = index;
                                             },
-                                            loadingBuilder:
-                                                (context, event) => Center(
+                                            loadingBuilder: (context, event) =>
+                                                Center(
                                               child: SizedBox(
                                                 width: 20.0,
                                                 height: 20.0,
                                                 child:
                                                     CircularProgressIndicator(
-                                                  color:
-                                                      AppColors.primaryColor,
+                                                  color: AppColors.primaryColor,
                                                   value: event == null
                                                       ? 0
                                                       : event.cumulativeBytesLoaded /
@@ -550,8 +537,7 @@ class OperationDetail extends StatelessWidget {
                                           );
                                         },
                                       ),
-                                      const SizedBox(
-                                          height: AppConst.padding),
+                                      const SizedBox(height: AppConst.padding),
                                       Center(
                                         child: AnimatedSmoothIndicator(
                                           activeIndex: supplierMin,
@@ -578,8 +564,7 @@ class OperationDetail extends StatelessWidget {
                               ? const SizedBox(height: AppConst.padding)
                               : const SizedBox(),
                           operation.operationState == 'false' &&
-                                  operation.supplierMedia!
-                                      .any((e) => e.isEmpty)
+                                  operation.supplierMedia!.any((e) => e.isEmpty)
                               ? Text(
                                   'Aggiungi allegati',
                                   style: TextStyle(
@@ -588,19 +573,16 @@ class OperationDetail extends StatelessWidget {
                                 )
                               : const SizedBox(),
                           operation.operationState == 'false' &&
-                                  operation.supplierMedia!
-                                      .any((e) => e.isEmpty)
+                                  operation.supplierMedia!.any((e) => e.isEmpty)
                               ? const SizedBox(height: AppConst.padding / 2)
                               : const SizedBox(),
                           operation.operationState == 'false' &&
-                                  operation.supplierMedia!
-                                      .any((e) => e.isEmpty)
+                                  operation.supplierMedia!.any((e) => e.isEmpty)
                               ? GridView(
                                   padding: const EdgeInsets.only(
                                       bottom: AppConst.padding),
                                   shrinkWrap: true,
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   clipBehavior: Clip.none,
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
@@ -610,9 +592,7 @@ class OperationDetail extends StatelessWidget {
                                               isIPad == true ? 7 : 3),
                                   children: [
                                     null,
-                                    ...context
-                                        .watch<OperationProvider>()
-                                        .images
+                                    ...context.watch<OperationProvider>().images
                                   ].map(
                                     (image) {
                                       if (image == null) {
@@ -628,10 +608,8 @@ class OperationDetail extends StatelessWidget {
                                                   subtitle: 'Max 2 foto');
                                               return;
                                             } else {
-                                              buildImagePicker(
-                                                  context,
-                                                  OperationProvider,
-                                                  operation);
+                                              buildImagePicker(context,
+                                                  OperationProvider, operation);
                                             }
                                           },
                                           builder: (BuildContext context,
@@ -655,25 +633,21 @@ class OperationDetail extends StatelessWidget {
                                         children: [
                                           InkWell(
                                             splashColor: Colors.transparent,
-                                            highlightColor:
-                                                Colors.transparent,
+                                            highlightColor: Colors.transparent,
                                             child: Container(
                                               clipBehavior:
                                                   Clip.antiAliasWithSaveLayer,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        kIsWeb
-                                                            ? AppConst
-                                                                .borderRadius
-                                                            : 8),
+                                                    BorderRadius.circular(kIsWeb
+                                                        ? AppConst.borderRadius
+                                                        : 8),
                                               ),
                                               child: kIsWeb
                                                   ? Image.network(image.path,
                                                       height: 80,
                                                       fit: BoxFit.cover)
-                                                  : Image.file(
-                                                      File(image.path),
+                                                  : Image.file(File(image.path),
                                                       height: 80,
                                                       fit: BoxFit.cover),
                                             ),
@@ -681,8 +655,7 @@ class OperationDetail extends StatelessWidget {
                                               context
                                                   .read<GalleryProvider>()
                                                   .currentMediaIndex(context
-                                                      .read<
-                                                          OperationProvider>()
+                                                      .read<OperationProvider>()
                                                       .images
                                                       .indexOf(image));
 
@@ -691,8 +664,7 @@ class OperationDetail extends StatelessWidget {
                                                 '/gallery',
                                                 arguments: GalleryArguments(
                                                   context
-                                                      .read<
-                                                          OperationProvider>()
+                                                      .read<OperationProvider>()
                                                       .images,
                                                 ),
                                               );
@@ -707,16 +679,13 @@ class OperationDetail extends StatelessWidget {
                                               child: TapDebouncer(
                                                 onTap: () async {
                                                   context
-                                                      .read<
-                                                          OperationProvider>()
+                                                      .read<OperationProvider>()
                                                       .removeImage(image);
                                                 },
-                                                builder: (BuildContext
-                                                        context,
+                                                builder: (BuildContext context,
                                                     TapDebouncerFunc? onTap) {
                                                   return Button(
-                                                    color:
-                                                        AppColors.errorColor,
+                                                    color: AppColors.errorColor,
                                                     icon: const Icon(
                                                       Icons.close_rounded,
                                                       color: Colors.white,
@@ -751,8 +720,7 @@ class OperationDetail extends StatelessWidget {
                                         TextFormField(
                                           controller: descriptionController,
                                           focusNode: descriptionNode,
-                                          keyboardType:
-                                              TextInputType.multiline,
+                                          keyboardType: TextInputType.multiline,
                                           textInputAction:
                                               TextInputAction.newline,
                                           maxLengthEnforcement:
@@ -801,8 +769,8 @@ class OperationDetail extends StatelessWidget {
                                             ),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: AppColors
-                                                      .secondaryColor),
+                                                  color:
+                                                      AppColors.secondaryColor),
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       AppConst.borderRadius),
@@ -811,16 +779,14 @@ class OperationDetail extends StatelessWidget {
                                                 OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 2,
-                                                  color:
-                                                      AppColors.errorColor),
+                                                  color: AppColors.errorColor),
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       AppConst.borderRadius),
                                             ),
                                             errorBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color:
-                                                      AppColors.errorColor),
+                                                  color: AppColors.errorColor),
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       AppConst.borderRadius),
@@ -865,10 +831,8 @@ class OperationDetail extends StatelessWidget {
                                     )
                               : const SizedBox(),
                           operation.operationState == 'false' &&
-                                      operation
-                                          .supplierDescription!.isEmpty ||
-                                  operation.supplierMedia!
-                                      .any((e) => e.isEmpty)
+                                      operation.supplierDescription!.isEmpty ||
+                                  operation.supplierMedia!.any((e) => e.isEmpty)
                               ? const SizedBox(height: AppConst.padding)
                               : const SizedBox(),
                           operation.operationState == 'false'
@@ -929,10 +893,10 @@ class OperationDetail extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }
