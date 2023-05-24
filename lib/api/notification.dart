@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/models/number.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/models/token.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/utils/alerts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,46 +15,37 @@ class NotificationApi {
     required String title,
     required String message,
     required Operation operation,
-    required List<Token> tokens,
+    required Number numbers,
     required String popupTitle,
     required String popupMessage,
   }) async {
     try {
-      var response = await AppConst().client.post(
-            Uri.parse(AppConst.firebaseBaseurl),
-            headers: {
-              "Authorization": "key=${AppConst.firebaseAuthKey}",
-              "Content-Type": "application/json"
-            },
-            body: json.encode(
-              {
-                "registration_ids": tokens.map((e) => e.userToken).toList(),
-                "notification": {
-                  "title": title.trim(),
-                  "body":
-                      'Condominio ${operation.palaceAddress}: ${message.trim()}',
-                  "badge": 1,
-                  "sound": "default",
-                  "content-available": 1,
-                  "apns-priority": 10,
-                  "apns-topic": AppConst.appId,
-                  "apns-push-type": "alert",
-                  "thread-id": AppConst.appId,
-                  "time_to_live": "2419200"
-                }
-              },
-            ),
-          );
+      var whatsappBody = {
+        'send_whatsapp_message': 'send_whatsapp_message',
+        'from': AppConst.clientPhone,
+        'to': numbers,
+        'body':
+            'Condominio ${operation.palaceAddress!.toUpperCase()}\n\n${title.trim()}\n${message.trim()}',
+      };
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Push notification sended');
+      var whatsappResponse = await AppConst().client.post(
+            kIsWeb
+                ? Uri.parse(AppConst.sender).replace(host: AppConst.domain)
+                : Uri.parse(AppConst.sender),
+            body: whatsappBody,
+          );
+      if (whatsappResponse.statusCode == 200 ||
+          whatsappResponse.statusCode == 201) {
         await Alerts.successAlert(
           context,
           title: popupTitle,
           subtitle: popupMessage,
         );
       } else {
-        print('Can\'t send push notification');
+        print('Can\'t send whatsapp message');
+        await Alerts.errorAlert(context,
+            title: 'Non inviato',
+            subtitle: 'Qualcosa è andato storto!\nRiprova tra poco');
       }
     } catch (error) {
       print('ERROR_sendToUser: $error');
@@ -69,53 +61,35 @@ class NotificationApi {
     required String title,
     required String message,
     required Operation operation,
-    required List<Token> tokens,
+    required List<Number> numbers,
     required String popupTitle,
     required String popupMessage,
   }) async {
     try {
-      List<String> tokenList = [];
-      for (var token in tokens) {
-        for (var tk in token.userToken!.split(',')) {
-          tokenList.add(tk);
-        }
-      }
+      var whatsappBody = {
+        'send_whatsapp_messages': 'send_whatsapp_messages',
+        'from': AppConst.clientPhone,
+        'numbers': json.encode(numbers),
+        'body':
+            'Condominio ${operation.palaceAddress!.toUpperCase()}\n\n${title.trim()}\n${message.trim()}',
+      };
 
-      var response = await AppConst().client.post(
-            Uri.parse(AppConst.firebaseBaseurl),
-            headers: {
-              "Authorization": "key=${AppConst.firebaseAuthKey}",
-              "Content-Type": "application/json"
-            },
-            body: json.encode(
-              {
-                "registration_ids": tokenList,
-                "notification": {
-                  "title": title.trim(),
-                  "body":
-                      'Condominio ${operation.palaceAddress}: ${message.trim()}',
-                  "badge": 1,
-                  "sound": "default",
-                  "content-available": 1,
-                  "apns-priority": 10,
-                  "apns-topic": AppConst.appId,
-                  "apns-push-type": "alert",
-                  "thread-id": AppConst.appId,
-                  "time_to_live": "2419200"
-                }
-              },
-            ),
+      var whatsappResponse = await AppConst().client.post(
+            Uri.parse(AppConst.sender).replace(host: AppConst.domain),
+            body: whatsappBody,
           );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Push notification sended');
+      if (whatsappResponse.statusCode == 200 ||
+          whatsappResponse.statusCode == 201) {
         await Alerts.successAlert(
           context,
           title: popupTitle,
           subtitle: popupMessage,
         );
       } else {
-        print('Can\'t send push notification');
+        print('Can\'t send WhatsApp message');
+        await Alerts.errorAlert(context,
+            title: 'Non inviato',
+            subtitle: 'Qualcosa è andato storto!\nRiprova tra poco');
       }
     } catch (error) {
       print('ERROR_sendToPalace: $error');

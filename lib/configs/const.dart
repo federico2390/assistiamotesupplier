@@ -24,11 +24,13 @@ class AppConst {
       '$backendBase/fornitori/service/misc/setting.php';
   static const String supplier =
       '$backendBase/fornitori/service/misc/supplier.php';
+  static const String sender = '$backendBase/sender.php';
 
   /// App
   static const String appId = 'com.alessandromontrone.duevcondominiosupplier';
   static const String appName = '2V Fornitori';
   static const String appLogo = 'assets/logo.png';
+  static const String clientPhone = '+14155238886';
 
   /// Push Notifications
   static const String firebaseChannelId = 'duev_condominio_supplier';

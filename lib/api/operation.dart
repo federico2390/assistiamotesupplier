@@ -1,5 +1,5 @@
-// import 'package:adminpanel/api/notification.dart';
-// import 'package:adminpanel/models/token.dart';
+import 'package:adminpanel/api/notification.dart';
+import 'package:adminpanel/models/number.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -165,48 +165,49 @@ class OperationApi {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        //   List<Token> tokens = [];
+        /// TODO: SEND NOTIFICATION TO USER
+        List<Number> numbers = [];
 
-        //   var response = await AppConst().client.post(
-        //     kIsWeb
-        //         ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-        //         : Uri.parse(AppConst.operation),
-        //     body: {
-        //       'get_tokens': 'get_tokens',
-        //       'operation_id': operation.operationId!.trim(),
-        //     },
-        //   );
+        var response = await AppConst().client.post(
+          kIsWeb
+              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+              : Uri.parse(AppConst.operation),
+          body: {
+            'get_numbers': 'get_numbers',
+            'operation_id': operation.operationId!.trim(),
+          },
+        );
 
-        //   if (response.statusCode == 200 || response.statusCode == 201) {
-        //     tokens = tokenFromJson(response.body);
-        //     if (tokens.isNotEmpty) {
-        //       if (operation.operation == 'Condominiale') {
-        //         await NotificationApi().sendToPalace(
-        //           context: context,
-        //           title: 'Richiesta d\'intervento aggiornata',
-        //           message:
-        //               'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
-        //           operation: operation,
-        //           tokens: tokens,
-        //           popupTitle: 'Aggiornato',
-        //           popupMessage: 'Intervento aggiornato',
-        //         );
-        //       } else {
-        //         await NotificationApi().sendToUser(
-        //           context: context,
-        //           title: 'Richiesta d\'intervento aggiornata',
-        //           message:
-        //               'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
-        //           operation: operation,
-        //           tokens: tokens,
-        //           popupTitle: 'Aggiornato',
-        //           popupMessage: 'Intervento aggiornato',
-        //         );
-        //       }
-        //     } else {
-        //       print('No token found');
-        //     }
-        //   }
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          numbers = numberFromJson(response.body);
+          if (numbers.isNotEmpty) {
+            if (operation.operation == 'Condominiale') {
+              await NotificationApi().sendToPalace(
+                context: context,
+                title: 'Richiesta d\'intervento aggiornata',
+                message:
+                    'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
+                operation: operation,
+                numbers: numbers,
+                popupTitle: 'Aggiornato',
+                popupMessage: 'Intervento aggiornato',
+              );
+            } else {
+              await NotificationApi().sendToUser(
+                context: context,
+                title: 'Richiesta d\'intervento aggiornata',
+                message:
+                    'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
+                operation: operation,
+                numbers: numbers[0],
+                popupTitle: 'Aggiornato',
+                popupMessage: 'Intervento aggiornato',
+              );
+            }
+          } else {
+            print('No token found');
+          }
+        }
       } else {
         print('Can\'t edit Operation');
       }
@@ -214,8 +215,6 @@ class OperationApi {
       print('ERROR_editOperation: $error');
     } finally {
       AppConst().client.close();
-      await context.read<StateProvider>().buildFuture(context);
-      await Alerts.hideAlert();
     }
   }
 
@@ -262,52 +261,49 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // List<Token> tokens = [];
+        /// TODO: SEND NOTIFICATION TO USER
+        List<Number> numbers = [];
 
-        // try {
-        //   var response = await AppConst().client.post(
-        //     kIsWeb
-        //         ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-        //         : Uri.parse(AppConst.operation),
-        //     body: {
-        //       'get_tokens': 'get_tokens',
-        //       'operation_id': operation.operationId!.trim(),
-        //     },
-        //   );
+        var response = await AppConst().client.post(
+          kIsWeb
+              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+              : Uri.parse(AppConst.operation),
+          body: {
+            'get_numbers': 'get_numbers',
+            'operation_id': operation.operationId!.trim(),
+          },
+        );
 
-        //   if (response.statusCode == 200 || response.statusCode == 201) {
-        //     tokens = tokenFromJson(response.body);
-        //     if (tokens.isNotEmpty) {
-        //       if (operation.operation == 'Condominiale') {
-        //         await NotificationApi().sendToPalace(
-        //           context: context,
-        //           title: 'Intervento in corso',
-        //           message:
-        //               'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
-        //           operation: operation,
-        //           tokens: tokens,
-        //           popupTitle: 'In corso',
-        //           popupMessage: 'Intervento In corso',
-        //         );
-        //       } else {
-        //         await NotificationApi().sendToUser(
-        //           context: context,
-        //           title: 'Intervento in corso',
-        //           message:
-        //               'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
-        //           operation: operation,
-        //           tokens: tokens,
-        //           popupTitle: 'In corso',
-        //           popupMessage: 'Intervento In corso',
-        //         );
-        //       }
-        //     } else {
-        //       print('No token found');
-        //     }
-        //   }
-        // } catch (error) {
-        //   print('ERROR_getTokens: $error');
-        // }
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          numbers = numberFromJson(response.body);
+          if (numbers.isNotEmpty) {
+            if (operation.operation == 'Condominiale') {
+              await NotificationApi().sendToPalace(
+                context: context,
+                title: 'Intervento in corso',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
+                operation: operation,
+                numbers: numbers,
+                popupTitle: 'In corso',
+                popupMessage: 'Intervento In corso',
+              );
+            } else {
+              await NotificationApi().sendToUser(
+                context: context,
+                title: 'Intervento in corso',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
+                operation: operation,
+                numbers: numbers[0],
+                popupTitle: 'In corso',
+                popupMessage: 'Intervento In corso',
+              );
+            }
+          } else {
+            print('No token found');
+          }
+        }
       } else {
         print('Can\'t mark as working Operation');
       }
@@ -315,7 +311,6 @@ class OperationApi {
       print('ERROR_markOperationAsWorking: $error');
     } finally {
       AppConst().client.close();
-      await Alerts.hideAlert();
     }
   }
 
@@ -336,52 +331,49 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // List<Token> tokens = [];
+        /// TODO: SEND NOTIFICATION TO USER
+        List<Number> numbers = [];
 
-        // try {
-        //   var response = await AppConst().client.post(
-        //     kIsWeb
-        //         ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-        //         : Uri.parse(AppConst.operation),
-        //     body: {
-        //       'get_tokens': 'get_tokens',
-        //       'operation_id': operation.operationId!.trim(),
-        //     },
-        //   );
+        var response = await AppConst().client.post(
+          kIsWeb
+              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+              : Uri.parse(AppConst.operation),
+          body: {
+            'get_numbers': 'get_numbers',
+            'operation_id': operation.operationId!.trim(),
+          },
+        );
 
-        //   if (response.statusCode == 200 || response.statusCode == 201) {
-        //     tokens = tokenFromJson(response.body);
-        //     if (tokens.isNotEmpty) {
-        //       if (operation.operation == 'Condominiale') {
-        //         await NotificationApi().sendToPalace(
-        //           context: context,
-        //           title: 'Intervento chiuso',
-        //           message:
-        //               'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
-        //           operation: operation,
-        //           tokens: tokens,
-        //           popupTitle: 'Chiuso',
-        //           popupMessage: 'Intervento Chiuso',
-        //         );
-        //       } else {
-        //         await NotificationApi().sendToUser(
-        //           context: context,
-        //           title: 'Intervento chiuso',
-        //           message:
-        //               'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
-        //           operation: operation,
-        //           tokens: tokens,
-        //           popupTitle: 'Chiuso',
-        //           popupMessage: 'Intervento Chiuso',
-        //         );
-        //       }
-        //     } else {
-        //       print('No token found');
-        //     }
-        //   }
-        // } catch (error) {
-        //   print('ERROR_getTokens: $error');
-        // }
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          numbers = numberFromJson(response.body);
+          if (numbers.isNotEmpty) {
+            if (operation.operation == 'Condominiale') {
+              await NotificationApi().sendToPalace(
+                context: context,
+                title: 'Intervento chiuso',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
+                operation: operation,
+                numbers: numbers,
+                popupTitle: 'Chiuso',
+                popupMessage: 'Intervento Chiuso',
+              );
+            } else {
+              await NotificationApi().sendToUser(
+                context: context,
+                title: 'Intervento chiuso',
+                message:
+                    'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
+                operation: operation,
+                numbers: numbers[0],
+                popupTitle: 'Chiuso',
+                popupMessage: 'Intervento Chiuso',
+              );
+            }
+          } else {
+            print('No token found');
+          }
+        }
       } else {
         print('Can\'t close Operation');
       }
@@ -389,7 +381,6 @@ class OperationApi {
       print('ERROR_markOperationAsClosed: $error');
     } finally {
       AppConst().client.close();
-      await Alerts.hideAlert();
     }
   }
 }
