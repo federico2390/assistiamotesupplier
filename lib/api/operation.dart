@@ -165,7 +165,6 @@ class OperationApi {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        /// TODO: SEND NOTIFICATION TO USER
         List<Number> numbers = [];
 
         var response = await AppConst().client.post(
@@ -261,7 +260,6 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        /// TODO: SEND NOTIFICATION TO USER
         List<Number> numbers = [];
 
         var response = await AppConst().client.post(
@@ -331,7 +329,6 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        /// TODO: SEND NOTIFICATION TO USER
         List<Number> numbers = [];
 
         var response = await AppConst().client.post(
