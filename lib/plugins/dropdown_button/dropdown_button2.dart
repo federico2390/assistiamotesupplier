@@ -48,7 +48,7 @@ class _DropdownMenuPainter extends CustomPainter {
                   boxShadow: dropdownDecoration.boxShadow ??
                       kElevationToShadow[elevation],
                 )
-                .createBoxPainter() ??
+                .createBoxPainter(() {}) ??
             BoxDecoration(
               color: color,
               borderRadius: const BorderRadius.all(Radius.circular(2.0)),
@@ -1789,7 +1789,7 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
       items.add(DefaultTextStyle(
         style: _textStyle!.copyWith(color: Theme.of(context).hintColor),
         child: IgnorePointer(
-          ignoringSemantics: false,
+          // ignoringSemantics: false,
           child: _DropdownMenuItemContainer(
             alignment: widget.alignment,
             child: displayedHint,

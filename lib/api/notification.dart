@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/models/token.dart';
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NotificationApi {
   Future sendToUser({
@@ -45,21 +47,20 @@ class NotificationApi {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Push notification sended');
-        await Alerts.hideAlert();
         await Alerts.successAlert(
           context,
           title: popupTitle,
           subtitle: popupMessage,
         );
       } else {
-        await Alerts.hideAlert();
         print('Can\'t send push notification');
       }
     } catch (error) {
-      await Alerts.hideAlert();
       print('ERROR_sendToUser: $error');
     } finally {
       AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
+      await Alerts.hideAlert();
     }
   }
 
@@ -108,21 +109,20 @@ class NotificationApi {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Push notification sended');
-        await Alerts.hideAlert();
         await Alerts.successAlert(
           context,
           title: popupTitle,
           subtitle: popupMessage,
         );
       } else {
-        await Alerts.hideAlert();
         print('Can\'t send push notification');
       }
     } catch (error) {
-      await Alerts.hideAlert();
       print('ERROR_sendToPalace: $error');
     } finally {
       AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
+      await Alerts.hideAlert();
     }
   }
 }

@@ -63,10 +63,7 @@ class OperationProvider extends ChangeNotifier {
 
       _closed = operationList
           .where(
-            (e) =>
-                e.operationViewed == 'true' &&
-                e.operationWorking == "true" &&
-                e.operationState == "true",
+            (e) => e.operationWorking == "true" && e.operationState == "true",
           )
           .toList();
     } catch (error) {
