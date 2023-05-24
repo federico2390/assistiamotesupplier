@@ -199,7 +199,7 @@ class OperationApi {
                 message:
                     'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
                 operation: operation,
-                numbers: numbers[0],
+                number: numbers[0],
                 popupTitle: 'Aggiornato',
                 popupMessage: 'Intervento aggiornato',
               );
@@ -295,7 +295,7 @@ class OperationApi {
                 message:
                     'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
                 operation: operation,
-                numbers: numbers[0],
+                number: numbers[0],
                 popupTitle: 'In corso',
                 popupMessage: 'Intervento In corso',
               );
@@ -365,7 +365,7 @@ class OperationApi {
                 message:
                     'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
                 operation: operation,
-                numbers: numbers[0],
+                number: numbers[0],
                 popupTitle: 'Chiuso',
                 popupMessage: 'Intervento Chiuso',
               );

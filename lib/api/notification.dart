@@ -15,7 +15,7 @@ class NotificationApi {
     required String title,
     required String message,
     required Operation operation,
-    required Number numbers,
+    required Number number,
     required String popupTitle,
     required String popupMessage,
   }) async {
@@ -23,7 +23,7 @@ class NotificationApi {
       var whatsappBody = {
         'send_whatsapp_message': 'send_whatsapp_message',
         'from': AppConst.clientPhone,
-        'to': numbers,
+        'to': number.userNumber,
         'body':
             'Condominio ${operation.palaceAddress!.toUpperCase()}\n\n${title.trim()}\n${message.trim()}',
       };
@@ -66,10 +66,15 @@ class NotificationApi {
     required String popupMessage,
   }) async {
     try {
+      List<String> numbersList = numbers
+          .where((e) => e.userNumber!.isNotEmpty)
+          .map((e) => e.userNumber!)
+          .toList();
+
       var whatsappBody = {
         'send_whatsapp_messages': 'send_whatsapp_messages',
         'from': AppConst.clientPhone,
-        'numbers': json.encode(numbers),
+        'numbers': json.encode(numbersList),
         'body':
             'Condominio ${operation.palaceAddress!.toUpperCase()}\n\n${title.trim()}\n${message.trim()}',
       };
