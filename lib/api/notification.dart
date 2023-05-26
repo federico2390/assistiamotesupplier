@@ -25,7 +25,7 @@ class NotificationApi {
         'from': AppConst.clientPhone,
         'to': number.userNumber,
         'body':
-            'Condominio ${operation.palaceAddress!.toUpperCase()}\n\n${title.trim()}\n${message.trim()}',
+            'Condominio *${operation.palaceAddress!.toUpperCase().trim()}*\n\n*${title.toUpperCase().trim()}*\n\n${message.trim()}',
       };
 
       var whatsappResponse = await AppConst().client.post(
@@ -76,7 +76,7 @@ class NotificationApi {
         'from': AppConst.clientPhone,
         'numbers': json.encode(numbersList),
         'body':
-            'Condominio ${operation.palaceAddress!.toUpperCase()}\n\n${title.trim()}\n${message.trim()}',
+            'Condominio *${operation.palaceAddress!.toUpperCase().trim()}*\n\n*${title.toUpperCase().trim()}*\n\n${message.trim()}',
       };
 
       var whatsappResponse = await AppConst().client.post(
