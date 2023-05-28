@@ -15,25 +15,30 @@ class Loader extends StatelessWidget {
           loaderProvider.setShowLabel(true);
         });
 
-        return loaderProvider.showLabel == false
-            ? Center(
-                child: SizedBox(
-                  height: 15,
-                  width: 15,
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
+        return ListView(
+          clipBehavior: Clip.none,
+          children: [
+            loaderProvider.showLabel == false
+                ? Center(
+                    child: SizedBox(
+                      height: 15,
+                      width: 15,
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      'Nessun elemento trovato',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.secondaryColor,
+                      ),
+                    ),
                   ),
-                ),
-              )
-            : Center(
-                child: Text(
-                  'Nessun elemento trovato',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.secondaryColor,
-                  ),
-                ),
-              );
+          ],
+        );
       },
     );
   }

@@ -1,5 +1,7 @@
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/utils/loader.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/colors.dart';
@@ -129,17 +131,22 @@ class FeedList extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: operationProvider.selectedSegment == 1
-                  ? operationProvider.opened.isNotEmpty
-                      ? const OperationSegmentedPage()
-                      : const Loader()
-                  : operationProvider.selectedSegment == 2
-                      ? operationProvider.working.isNotEmpty
-                          ? const OperationSegmentedPage()
-                          : const Loader()
-                      : operationProvider.closed.isNotEmpty
-                          ? const OperationSegmentedPage()
-                          : const Loader(),
+              child: RefreshIndicator(
+                color: AppColors.primaryColor,
+                onRefresh: () =>
+                    context.read<StateProvider>().buildFuture(context),
+                child: operationProvider.selectedSegment == 1
+                    ? operationProvider.opened.isNotEmpty
+                        ? const OperationSegmentedPage()
+                        : const Loader()
+                    : operationProvider.selectedSegment == 2
+                        ? operationProvider.working.isNotEmpty
+                            ? const OperationSegmentedPage()
+                            : const Loader()
+                        : operationProvider.closed.isNotEmpty
+                            ? const OperationSegmentedPage()
+                            : const Loader(),
+              ),
             ),
           ],
         );
