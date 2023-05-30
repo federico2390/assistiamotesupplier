@@ -157,7 +157,7 @@ class OperationSegmentedPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const Spacer(),
+                                // const Spacer(),
                                 const SizedBox(width: AppConst.padding),
                                 Container(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,

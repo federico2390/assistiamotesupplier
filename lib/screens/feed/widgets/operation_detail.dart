@@ -35,9 +35,6 @@ class OperationDetail extends StatelessWidget {
     final operationArguments =
         ModalRoute.of(context)!.settings.arguments as OperationArguments;
 
-    final TextEditingController descriptionController = TextEditingController();
-    final FocusNode descriptionNode = FocusNode();
-
     var startDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
     var endDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm');
 
@@ -60,57 +57,53 @@ class OperationDetail extends StatelessWidget {
         child: Scaffold(
           appBar: appBar(context),
           body: body(
-              operationArguments,
-              descriptionController,
-              userMin,
-              endDateTimeFormat,
-              startDateTimeFormat,
-              supplierMin,
-              isIPad,
-              descriptionNode),
+            operationArguments,
+            userMin,
+            endDateTimeFormat,
+            startDateTimeFormat,
+            supplierMin,
+            isIPad,
+          ),
         ),
       ),
     );
   }
 
   Consumer<OperationProvider> body(
-      OperationArguments operationArguments,
-      TextEditingController descriptionController,
-      int userMin,
-      DateFormat endDateTimeFormat,
-      DateFormat startDateTimeFormat,
-      int supplierMin,
-      bool isIPad,
-      FocusNode descriptionNode) {
+    OperationArguments operationArguments,
+    int userMin,
+    DateFormat endDateTimeFormat,
+    DateFormat startDateTimeFormat,
+    int supplierMin,
+    bool isIPad,
+  ) {
     return Consumer<OperationProvider>(
       builder: (context, operationProvider, child) {
         Operation operation = operationProvider.operations
             .firstWhere((e) => e.operationId == operationArguments.operationId);
 
         return refreshPage(
-            context,
-            operation,
-            descriptionController,
-            userMin,
-            endDateTimeFormat,
-            startDateTimeFormat,
-            supplierMin,
-            isIPad,
-            descriptionNode);
+          context,
+          operation,
+          userMin,
+          endDateTimeFormat,
+          startDateTimeFormat,
+          supplierMin,
+          isIPad,
+        );
       },
     );
   }
 
   RefreshIndicator refreshPage(
-      BuildContext context,
-      Operation operation,
-      TextEditingController descriptionController,
-      int userMin,
-      DateFormat endDateTimeFormat,
-      DateFormat startDateTimeFormat,
-      int supplierMin,
-      bool isIPad,
-      FocusNode descriptionNode) {
+    BuildContext context,
+    Operation operation,
+    int userMin,
+    DateFormat endDateTimeFormat,
+    DateFormat startDateTimeFormat,
+    int supplierMin,
+    bool isIPad,
+  ) {
     return RefreshIndicator(
       color: AppColors.primaryColor,
       onRefresh: () => context.read<StateProvider>().buildFuture(context),
@@ -124,8 +117,7 @@ class OperationDetail extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: AppConst.padding),
               children: [
                 operation.operationState == 'false'
-                    ? workingAndCloseButtons(
-                        operation, context, descriptionController)
+                    ? workingAndCloseButtons(operation, context)
                     : const SizedBox(),
                 operation.operationState == 'false'
                     ? const SizedBox(height: AppConst.padding)
@@ -297,23 +289,7 @@ class OperationDetail extends StatelessWidget {
                         operation.supplierMedia!.any((e) => e.isEmpty)
                     ? addMedia(isIPad, context, operation)
                     : const SizedBox(),
-                operation.operationState == 'false'
-                    ? operation.supplierDescription!.isEmpty
-                        ? descriptionField(
-                            descriptionController, descriptionNode)
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Descrizione',
-                                style: TextStyle(
-                                  color: AppColors.secondaryColor,
-                                ),
-                              ),
-                              supplierDescription(operation),
-                            ],
-                          )
-                    : const SizedBox(),
+                descriptionField(context),
                 operation.operationState == 'false' &&
                             operation.supplierDescription!.isEmpty ||
                         operation.supplierMedia!.any((e) => e.isEmpty)
@@ -322,7 +298,7 @@ class OperationDetail extends StatelessWidget {
                 operation.operationState == 'false'
                     ? operation.supplierDescription!.isEmpty ||
                             operation.supplierMedia!.any((e) => e.isEmpty)
-                        ? saveButton(descriptionController, context, operation)
+                        ? saveButton(context, operation)
                         : const SizedBox()
                     : const SizedBox(),
                 const SizedBox(height: AppConst.padding * 3)
@@ -432,8 +408,7 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  Column descriptionField(
-      TextEditingController descriptionController, FocusNode descriptionNode) {
+  Column descriptionField(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -445,8 +420,8 @@ class OperationDetail extends StatelessWidget {
         ),
         const SizedBox(height: AppConst.padding),
         TextFormField(
-          controller: descriptionController,
-          focusNode: descriptionNode,
+          controller: context.read<OperationProvider>().descriptionController,
+          focusNode: context.read<OperationProvider>().descriptionNode,
           keyboardType: TextInputType.multiline,
           textInputAction: TextInputAction.newline,
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -465,10 +440,17 @@ class OperationDetail extends StatelessWidget {
             labelText: 'Descrizione',
             labelStyle: TextStyle(color: AppColors.secondaryColor),
             alignLabelWithHint: true,
-            suffixIcon: descriptionController.text.isNotEmpty
+            suffixIcon: context
+                    .watch<OperationProvider>()
+                    .descriptionController
+                    .text
+                    .isNotEmpty
                 ? GestureDetector(
                     onTap: () {
-                      descriptionController.clear();
+                      context
+                          .read<OperationProvider>()
+                          .descriptionController
+                          .clear();
                     },
                     child: Icon(
                       Icons.cancel_rounded,
@@ -522,21 +504,24 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  TapDebouncer saveButton(TextEditingController descriptionController,
-      BuildContext context, Operation operation) {
+  TapDebouncer saveButton(BuildContext context, Operation operation) {
     return TapDebouncer(
       onTap: () async {
-        if (descriptionController.text.isNotEmpty ||
-            context.read<OperationProvider>().images.isNotEmpty &&
+        if (context
+                .watch<OperationProvider>()
+                .descriptionController
+                .text
+                .isNotEmpty ||
+            context.watch<OperationProvider>().images.isNotEmpty &&
                 operation.operationState == 'false') {
           await OperationApi()
               .editOperation(
             context,
             operation,
-            descriptionController.text,
+            context.read<OperationProvider>().descriptionController.text,
           )
               .whenComplete(() {
-            descriptionController.clear();
+            context.read<OperationProvider>().descriptionController.clear();
             context.read<OperationProvider>().removeAllImage();
             hideKeyboard(context);
           });
@@ -544,8 +529,12 @@ class OperationDetail extends StatelessWidget {
       },
       builder: (BuildContext context, TapDebouncerFunc? onTap) {
         return Button(
-          color: descriptionController.text.isNotEmpty ||
-                  context.read<OperationProvider>().images.isNotEmpty &&
+          color: context
+                      .watch<OperationProvider>()
+                      .descriptionController
+                      .text
+                      .isNotEmpty ||
+                  context.watch<OperationProvider>().images.isNotEmpty &&
                       operation.operationState == 'false'
               ? AppColors.primaryColor
               : AppColors.secondaryColor.withOpacity(.5),
@@ -777,8 +766,7 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  Row workingAndCloseButtons(Operation operation, BuildContext context,
-      TextEditingController descriptionController) {
+  Row workingAndCloseButtons(Operation operation, BuildContext context) {
     return Row(
       children: [
         operation.operationWorking == 'false'
@@ -791,7 +779,10 @@ class OperationDetail extends StatelessWidget {
                   await OperationApi()
                       .markOperationAsWorking(context, operation, 'true')
                       .whenComplete(() async {
-                    descriptionController.clear();
+                    context
+                        .read<OperationProvider>()
+                        .descriptionController
+                        .clear();
                     context.read<OperationProvider>().removeAllImage();
                     hideKeyboard(context);
                     Alerts.hideAlert();
@@ -827,7 +818,7 @@ class OperationDetail extends StatelessWidget {
               await OperationApi()
                   .markOperationAsClosed(context, operation, 'true')
                   .whenComplete(() async {
-                descriptionController.clear();
+                context.read<OperationProvider>().descriptionController.clear();
                 context.read<OperationProvider>().removeAllImage();
                 hideKeyboard(context);
                 Alerts.hideAlert();

@@ -114,4 +114,7 @@ class OperationProvider extends ChangeNotifier {
     _selectedSegment = index;
     notifyListeners();
   }
+
+  final TextEditingController descriptionController = TextEditingController();
+  final FocusNode descriptionNode = FocusNode();
 }
