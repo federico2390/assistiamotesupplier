@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
 class GalleryProvider extends ChangeNotifier {
-  int _mediaIndex = 0;
-  int get mediaIndex => _mediaIndex;
+  int _userMediaIndex = 0;
+  int get userMediaIndex => _userMediaIndex;
 
-  void currentMediaIndex(int currentMediaIndex) {
-    _mediaIndex = currentMediaIndex;
+  void userCurrentMediaIndex(int currentMediaIndex) {
+    _userMediaIndex = currentMediaIndex;
+    notifyListeners();
+  }
+
+  int _supplierMediaIndex = 0;
+  int get supplierMediaIndex => _supplierMediaIndex;
+
+  void supplierCurrentMediaIndex(int currentMediaIndex) {
+    _supplierMediaIndex = currentMediaIndex;
     notifyListeners();
   }
 }

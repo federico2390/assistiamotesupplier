@@ -19,22 +19,24 @@ class PhotoGallery extends StatelessWidget {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as GalleryArguments;
 
-    return arguments.gallery.isNotEmpty
+    return arguments.gallery!.isNotEmpty
         ? Stack(
             children: [
               Consumer<GalleryProvider>(
                 builder: (context, galleryProvider, child) {
                   return PhotoViewGallery.builder(
                     pageController: PageController(
-                      initialPage: galleryProvider.mediaIndex,
+                      initialPage: arguments.isSupplierMedia == false
+                          ? galleryProvider.userMediaIndex
+                          : galleryProvider.supplierMediaIndex,
                     ),
                     scrollPhysics: const BouncingScrollPhysics(),
-                    itemCount: arguments.gallery.length,
+                    itemCount: arguments.gallery!.length,
                     builder: (BuildContext context, int index) {
                       return PhotoViewGalleryPageOptions(
-                        key: ValueKey(arguments.gallery[index]),
+                        key: ValueKey(arguments.gallery![index]),
                         imageProvider:
-                            FileImage(File(arguments.gallery[index].path)),
+                            FileImage(File(arguments.gallery![index].path)),
                         initialScale: PhotoViewComputedScale.contained,
                         minScale: PhotoViewComputedScale.contained,
                         maxScale: PhotoViewComputedScale.covered * 2.5,
@@ -55,7 +57,13 @@ class PhotoGallery extends StatelessWidget {
                       );
                     },
                     onPageChanged: (int index) {
-                      context.read<GalleryProvider>().currentMediaIndex(index);
+                      arguments.isSupplierMedia == false
+                          ? context
+                              .read<GalleryProvider>()
+                              .userCurrentMediaIndex(index)
+                          : context
+                              .read<GalleryProvider>()
+                              .supplierCurrentMediaIndex(index);
                     },
                     loadingBuilder: (context, event) => Center(
                       child: SizedBox(
@@ -80,8 +88,10 @@ class PhotoGallery extends StatelessWidget {
                 child: SafeArea(
                   child: Center(
                     child: AnimatedSmoothIndicator(
-                      activeIndex: context.watch<GalleryProvider>().mediaIndex,
-                      count: arguments.gallery.length,
+                      activeIndex: arguments.isSupplierMedia == false
+                          ? context.watch<GalleryProvider>().userMediaIndex
+                          : context.watch<GalleryProvider>().supplierMediaIndex,
+                      count: arguments.gallery!.length,
                       effect: WormEffect(
                         dotWidth: 8,
                         dotHeight: 8,
@@ -100,7 +110,9 @@ class PhotoGallery extends StatelessWidget {
                 builder: (context, galleryProvider, child) {
                   return PhotoViewGallery.builder(
                     pageController: PageController(
-                      initialPage: galleryProvider.mediaIndex,
+                      initialPage: arguments.isSupplierMedia == false
+                          ? galleryProvider.userMediaIndex
+                          : galleryProvider.supplierMediaIndex,
                     ),
                     scrollPhysics: const BouncingScrollPhysics(),
                     itemCount: arguments.images!.length,
@@ -128,7 +140,13 @@ class PhotoGallery extends StatelessWidget {
                       );
                     },
                     onPageChanged: (int index) {
-                      context.read<GalleryProvider>().currentMediaIndex(index);
+                      arguments.isSupplierMedia == false
+                          ? context
+                              .read<GalleryProvider>()
+                              .userCurrentMediaIndex(index)
+                          : context
+                              .read<GalleryProvider>()
+                              .supplierCurrentMediaIndex(index);
                     },
                     loadingBuilder: (context, event) => Center(
                       child: SizedBox(
@@ -147,13 +165,15 @@ class PhotoGallery extends StatelessWidget {
                 },
               ),
               Positioned(
-                bottom: 0,
+                bottom: 20,
                 left: 20,
                 right: 20,
                 child: SafeArea(
                   child: Center(
                     child: AnimatedSmoothIndicator(
-                      activeIndex: context.watch<GalleryProvider>().mediaIndex,
+                      activeIndex: arguments.isSupplierMedia == false
+                          ? context.watch<GalleryProvider>().userMediaIndex
+                          : context.watch<GalleryProvider>().supplierMediaIndex,
                       count: arguments.images!.length,
                       effect: WormEffect(
                         dotWidth: 8,

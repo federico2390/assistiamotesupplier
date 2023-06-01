@@ -1,31 +1,26 @@
 import 'dart:io';
 
-import 'package:adminpanel/api/operation.dart';
-import 'package:adminpanel/globals/button.dart';
-import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/providers/state.dart';
-import 'package:adminpanel/utils/alerts.dart';
-import 'package:adminpanel/utils/hide_keyboard.dart';
-import 'package:adminpanel/utils/image_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
+import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
+import 'package:adminpanel/globals/button.dart';
+import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/providers/gallery.dart';
+import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
+import 'package:adminpanel/utils/alerts.dart';
+import 'package:adminpanel/utils/hide_keyboard.dart';
+import 'package:adminpanel/utils/image_picker.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
-import 'package:adminpanel/utils/size.dart';
-import 'package:tap_debouncer/tap_debouncer.dart';
-import 'package:uuid/uuid.dart';
 
 class OperationDetail extends StatelessWidget {
   const OperationDetail({super.key});
@@ -37,9 +32,6 @@ class OperationDetail extends StatelessWidget {
 
     var startDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
     var endDateTimeFormat = DateFormat('dd/MM/yyyy HH:mm');
-
-    int userMin = 0;
-    int supplierMin = 0;
 
     bool isIPad = false;
 
@@ -58,10 +50,8 @@ class OperationDetail extends StatelessWidget {
           appBar: appBar(context),
           body: body(
             operationArguments,
-            userMin,
             endDateTimeFormat,
             startDateTimeFormat,
-            supplierMin,
             isIPad,
           ),
         ),
@@ -71,10 +61,8 @@ class OperationDetail extends StatelessWidget {
 
   Consumer<OperationProvider> body(
     OperationArguments operationArguments,
-    int userMin,
     DateFormat endDateTimeFormat,
     DateFormat startDateTimeFormat,
-    int supplierMin,
     bool isIPad,
   ) {
     return Consumer<OperationProvider>(
@@ -85,10 +73,8 @@ class OperationDetail extends StatelessWidget {
         return refreshPage(
           context,
           operation,
-          userMin,
           endDateTimeFormat,
           startDateTimeFormat,
-          supplierMin,
           isIPad,
         );
       },
@@ -98,10 +84,8 @@ class OperationDetail extends StatelessWidget {
   RefreshIndicator refreshPage(
     BuildContext context,
     Operation operation,
-    int userMin,
     DateFormat endDateTimeFormat,
     DateFormat startDateTimeFormat,
-    int supplierMin,
     bool isIPad,
   ) {
     return RefreshIndicator(
@@ -143,10 +127,7 @@ class OperationDetail extends StatelessWidget {
                     ? const SizedBox(height: AppConst.padding / 2)
                     : const SizedBox(),
                 operation.media!.isNotEmpty
-                    ? media(context, operation, userMin)
-                    : const SizedBox(),
-                operation.media!.isNotEmpty
-                    ? const SizedBox(height: AppConst.padding)
+                    ? userMedia(context, operation)
                     : const SizedBox(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,10 +248,7 @@ class OperationDetail extends StatelessWidget {
                     ? const SizedBox(height: AppConst.padding / 2)
                     : const SizedBox(),
                 operation.supplierMedia!.any((e) => e.isNotEmpty)
-                    ? supplierMedia(context, operation, supplierMin)
-                    : const SizedBox(),
-                operation.supplierMedia!.any((e) => e.isNotEmpty)
-                    ? const SizedBox(height: AppConst.padding)
+                    ? supplierMedia(context, operation)
                     : const SizedBox(),
                 operation.operationState == 'false' &&
                         operation.supplierMedia!.any((e) => e.isEmpty)
@@ -289,7 +267,20 @@ class OperationDetail extends StatelessWidget {
                         operation.supplierMedia!.any((e) => e.isEmpty)
                     ? addMedia(isIPad, context, operation)
                     : const SizedBox(),
-                descriptionField(context),
+                operation.supplierDescription!.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Descrizione',
+                            style: TextStyle(
+                              color: AppColors.secondaryColor,
+                            ),
+                          ),
+                          supplierDescription(operation),
+                        ],
+                      )
+                    : descriptionField(context),
                 operation.operationState == 'false' &&
                             operation.supplierDescription!.isEmpty ||
                         operation.supplierMedia!.any((e) => e.isEmpty)
@@ -365,14 +356,15 @@ class OperationDetail extends StatelessWidget {
                           height: 80, fit: BoxFit.cover),
                 ),
                 onTap: () {
-                  context.read<GalleryProvider>().currentMediaIndex(
+                  context.read<GalleryProvider>().supplierCurrentMediaIndex(
                       context.read<OperationProvider>().images.indexOf(image));
 
                   Navigator.pushNamed(
                     context,
                     '/gallery',
                     arguments: GalleryArguments(
-                      context.read<OperationProvider>().images,
+                      gallery: context.read<OperationProvider>().images,
+                      isSupplierMedia: true,
                     ),
                   );
                 },
@@ -441,7 +433,7 @@ class OperationDetail extends StatelessWidget {
             labelStyle: TextStyle(color: AppColors.secondaryColor),
             alignLabelWithHint: true,
             suffixIcon: context
-                    .watch<OperationProvider>()
+                    .read<OperationProvider>()
                     .descriptionController
                     .text
                     .isNotEmpty
@@ -508,11 +500,11 @@ class OperationDetail extends StatelessWidget {
     return TapDebouncer(
       onTap: () async {
         if (context
-                .watch<OperationProvider>()
+                .read<OperationProvider>()
                 .descriptionController
                 .text
                 .isNotEmpty ||
-            context.watch<OperationProvider>().images.isNotEmpty &&
+            context.read<OperationProvider>().images.isNotEmpty &&
                 operation.operationState == 'false') {
           await OperationApi()
               .editOperation(
@@ -530,11 +522,11 @@ class OperationDetail extends StatelessWidget {
       builder: (BuildContext context, TapDebouncerFunc? onTap) {
         return Button(
           color: context
-                      .watch<OperationProvider>()
+                      .read<OperationProvider>()
                       .descriptionController
                       .text
                       .isNotEmpty ||
-                  context.watch<OperationProvider>().images.isNotEmpty &&
+                  context.read<OperationProvider>().images.isNotEmpty &&
                       operation.operationState == 'false'
               ? AppColors.primaryColor
               : AppColors.secondaryColor.withOpacity(.5),
@@ -545,105 +537,90 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  SizedBox supplierMedia(
-      BuildContext context, Operation operation, int supplierMin) {
-    return SizedBox(
-      height: ScreenSize.width(context) / 2 + 24,
-      child: Column(
-        children: [
-          GestureDetector(
-            child: Container(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius)),
-              height: ScreenSize.width(context) / 2,
-              child: PhotoViewGallery.builder(
-                scrollPhysics: const ClampingScrollPhysics(),
-                itemCount: operation.supplierMedia!
-                    .where((e) => e.isNotEmpty)
-                    .toList()
-                    .length,
-                builder: (BuildContext context, int index) {
-                  return PhotoViewGalleryPageOptions(
-                    disableGestures: true,
-                    key: ValueKey(operation.supplierMedia!
-                        .where((e) => e.isNotEmpty)
-                        .toList()[index]),
-                    imageProvider: NetworkImage(
-                      operation.supplierMedia!
-                          .where((e) => e.isNotEmpty)
-                          .toList()[index]
-                          .toString(),
-                    ),
-                    initialScale: PhotoViewComputedScale.contained,
-                    minScale: PhotoViewComputedScale.covered,
-                    maxScale: PhotoViewComputedScale.covered,
-                    heroAttributes: PhotoViewHeroAttributes(
-                      tag: const Uuid().v4(),
-                    ),
-                    scaleStateCycle: (e) {
-                      switch (e) {
-                        case PhotoViewScaleState.initial:
-                          return PhotoViewScaleState.covering;
-                        case PhotoViewScaleState.covering:
-                        case PhotoViewScaleState.zoomedIn:
-                        case PhotoViewScaleState.zoomedOut:
-                        case PhotoViewScaleState.originalSize:
-                          return PhotoViewScaleState.initial;
+  GridView supplierMedia(BuildContext context, Operation operation) {
+    return GridView(
+      padding: const EdgeInsets.only(bottom: AppConst.padding),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      clipBehavior: Clip.none,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisSpacing: 4, mainAxisSpacing: 4, crossAxisCount: 3),
+      children: [
+        ...operation.supplierMedia!.where((e) => e.isNotEmpty).toList().toList()
+      ].asMap().entries.map(
+        (entry) {
+          final index = entry.key;
+          final image = entry.value;
+
+          return Stack(
+            clipBehavior: Clip.none,
+            fit: StackFit.expand,
+            children: [
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                child: Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        kIsWeb ? AppConst.borderRadius : 8),
+                  ),
+                  child: Image.network(
+                    key: ValueKey(image),
+                    image,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(
+                          child: SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
                       }
                     },
-                  );
-                },
-                onPageChanged: (int index) {
-                  supplierMin = index;
-                },
-                loadingBuilder: (context, event) => Center(
-                  child: SizedBox(
-                    width: 20.0,
-                    height: 20.0,
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                      value: event == null
-                          ? 0
-                          : event.cumulativeBytesLoaded /
-                              event.expectedTotalBytes!,
-                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Icon(
+                          Icons.error_outline_rounded,
+                          size: 20.0,
+                          color: AppColors.secondaryColor,
+                        ),
+                      );
+                    },
                   ),
                 ),
+                onTap: () {
+                  context
+                      .read<GalleryProvider>()
+                      .supplierCurrentMediaIndex(index);
+                  Navigator.pushNamed(
+                    context,
+                    '/gallery',
+                    arguments: GalleryArguments(
+                      gallery: [],
+                      isSupplierMedia: true,
+                      images: operation.supplierMedia!
+                          .where((e) => e.isNotEmpty)
+                          .toList(),
+                    ),
+                  );
+                },
               ),
-            ),
-            onTap: () {
-              context.read<GalleryProvider>().currentMediaIndex(supplierMin);
-              Navigator.pushNamed(
-                context,
-                '/gallery',
-                arguments: GalleryArguments(
-                  [],
-                  images: operation.supplierMedia!
-                      .where((e) => e.isNotEmpty)
-                      .toList(),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: AppConst.padding),
-          Center(
-            child: AnimatedSmoothIndicator(
-              activeIndex: supplierMin,
-              count: operation.supplierMedia!
-                  .where((e) => e.isNotEmpty)
-                  .toList()
-                  .length,
-              effect: WormEffect(
-                dotWidth: 8,
-                dotHeight: 8,
-                activeDotColor: AppColors.labelDarkColor.withOpacity(.85),
-                dotColor: AppColors.secondaryColor.withOpacity(.5),
-              ),
-            ),
-          ),
-        ],
-      ),
+            ],
+          );
+        },
+      ).toList(),
     );
   }
 
@@ -671,98 +648,88 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  SizedBox media(BuildContext context, Operation operation, int userMin) {
-    return SizedBox(
-      height: ScreenSize.width(context) / 2 + 24,
-      child: Column(
-        children: [
-          GestureDetector(
-            child: Container(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppConst.borderRadius)),
-              height: ScreenSize.width(context) / 2,
-              child: PhotoViewGallery.builder(
-                scrollPhysics: const ClampingScrollPhysics(),
-                itemCount:
-                    operation.media!.where((e) => e.isNotEmpty).toList().length,
-                builder: (BuildContext context, int index) {
-                  return PhotoViewGalleryPageOptions(
-                    disableGestures: true,
-                    key: ValueKey(operation.media!
-                        .where((e) => e.isNotEmpty)
-                        .toList()[index]),
-                    imageProvider: NetworkImage(
-                      operation.media!
-                          .where((e) => e.isNotEmpty)
-                          .toList()[index]
-                          .toString(),
-                    ),
-                    initialScale: PhotoViewComputedScale.contained,
-                    minScale: PhotoViewComputedScale.covered,
-                    maxScale: PhotoViewComputedScale.covered,
-                    heroAttributes: PhotoViewHeroAttributes(
-                      tag: const Uuid().v4(),
-                    ),
-                    scaleStateCycle: (e) {
-                      switch (e) {
-                        case PhotoViewScaleState.initial:
-                          return PhotoViewScaleState.covering;
-                        case PhotoViewScaleState.covering:
-                        case PhotoViewScaleState.zoomedIn:
-                        case PhotoViewScaleState.zoomedOut:
-                        case PhotoViewScaleState.originalSize:
-                          return PhotoViewScaleState.initial;
+  GridView userMedia(BuildContext context, Operation operation) {
+    return GridView(
+      padding: const EdgeInsets.only(bottom: AppConst.padding),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      clipBehavior: Clip.none,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisSpacing: 4, mainAxisSpacing: 4, crossAxisCount: 3),
+      children: [...operation.media!.where((e) => e.isNotEmpty).toList()]
+          .asMap()
+          .entries
+          .map(
+        (entry) {
+          final index = entry.key;
+          final image = entry.value;
+
+          return Stack(
+            clipBehavior: Clip.none,
+            fit: StackFit.expand,
+            children: [
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                child: Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        kIsWeb ? AppConst.borderRadius : 8),
+                  ),
+                  child: Image.network(
+                    key: ValueKey(image),
+                    image,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(
+                          child: SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
                       }
                     },
-                  );
-                },
-                onPageChanged: (int index) {
-                  userMin = index;
-                },
-                loadingBuilder: (context, event) => Center(
-                  child: SizedBox(
-                    width: 20.0,
-                    height: 20.0,
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                      value: event == null
-                          ? 0
-                          : event.cumulativeBytesLoaded /
-                              event.expectedTotalBytes!,
-                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Icon(
+                          Icons.error_outline_rounded,
+                          size: 20.0,
+                          color: AppColors.secondaryColor,
+                        ),
+                      );
+                    },
                   ),
                 ),
+                onTap: () {
+                  context.read<GalleryProvider>().userCurrentMediaIndex(index);
+                  Navigator.pushNamed(
+                    context,
+                    '/gallery',
+                    arguments: GalleryArguments(
+                      gallery: [],
+                      isSupplierMedia: false,
+                      images:
+                          operation.media!.where((e) => e.isNotEmpty).toList(),
+                    ),
+                  );
+                },
               ),
-            ),
-            onTap: () {
-              context.read<GalleryProvider>().currentMediaIndex(userMin);
-              Navigator.pushNamed(
-                context,
-                '/gallery',
-                arguments: GalleryArguments(
-                  [],
-                  images: operation.media!.where((e) => e.isNotEmpty).toList(),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: AppConst.padding),
-          Center(
-            child: AnimatedSmoothIndicator(
-              activeIndex: userMin,
-              count:
-                  operation.media!.where((e) => e.isNotEmpty).toList().length,
-              effect: WormEffect(
-                dotWidth: 8,
-                dotHeight: 8,
-                activeDotColor: AppColors.labelDarkColor.withOpacity(.85),
-                dotColor: AppColors.secondaryColor.withOpacity(.5),
-              ),
-            ),
-          ),
-        ],
-      ),
+            ],
+          );
+        },
+      ).toList(),
     );
   }
 
