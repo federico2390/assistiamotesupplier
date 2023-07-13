@@ -14,10 +14,10 @@ class Setting {
   String? notification;
 
   factory Setting.fromJson(Map<String, dynamic> json) => Setting(
-        notification: json["notification"] ?? '',
+        notification: json["supplier_notification_permission"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
-        "notification": notification ?? '',
+        "supplier_notification_permission": notification ?? '',
       };
 }

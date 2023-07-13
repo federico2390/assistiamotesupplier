@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:adminpanel/providers/geocoding.dart';
+import 'package:adminpanel/providers/signature.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -67,28 +69,35 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => OperationProvider()),
-        ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (context) => SettingProvider()),
-        ChangeNotifierProvider(create: (context) => LoaderProvider()),
-        ChangeNotifierProvider(create: (context) => SearchProvider()),
-        ChangeNotifierProvider(create: (context) => GalleryProvider()),
-        ChangeNotifierProvider(create: (context) => StateProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.theme(),
-        routes: Routes.buildRoutes(),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+    return StreamProvider<UserLocation>(
+      initialData:
+          UserLocation(latitude: 0, longitude: 0, userLocationInMeters: 0),
+      create: (context) => LocationService().locationStream,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => LoginProvider()),
+          ChangeNotifierProvider(create: (context) => OperationProvider()),
+          ChangeNotifierProvider(create: (context) => UserProvider()),
+          ChangeNotifierProvider(create: (context) => SettingProvider()),
+          ChangeNotifierProvider(create: (context) => LoaderProvider()),
+          ChangeNotifierProvider(create: (context) => SearchProvider()),
+          ChangeNotifierProvider(create: (context) => GalleryProvider()),
+          ChangeNotifierProvider(create: (context) => StateProvider()),
+          ChangeNotifierProvider(create: (context) => LocationService()),
+          ChangeNotifierProvider(create: (context) => SignatureProvider()),
         ],
-        supportedLocales: const [Locale('it')],
-        initialRoute: (logged == 0 || logged == null) ? '/login' : '/',
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          routes: Routes.buildRoutes(),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('it')],
+          initialRoute: (logged == 0 || logged == null) ? '/login' : '/',
+        ),
       ),
     );
   }

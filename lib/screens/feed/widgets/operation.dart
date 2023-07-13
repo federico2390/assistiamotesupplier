@@ -21,9 +21,9 @@ class OperationSegmentedPage extends StatelessWidget {
       builder: (context, operationProvider, child) {
         if (operationProvider.operations.isNotEmpty) {
           List<Operation> operations = operationProvider.selectedSegment == 1
-              ? operationProvider.opened
+              ? operationProvider.notAccept
               : operationProvider.selectedSegment == 2
-                  ? operationProvider.working
+                  ? operationProvider.accept
                   : operationProvider.closed;
 
           return SizedBox(
@@ -44,28 +44,8 @@ class OperationSegmentedPage extends StatelessWidget {
                 Operation operation = operations[index];
 
                 String labelState = '';
-                if (operation.operationLastUpdate!.isNotEmpty) {
-                  if (operation.operationState == 'false') {
-                    labelState = 'Aggiornato';
-                  } else {
-                    labelState = 'Chiuso';
-                  }
-                  if (operation.operationViewed == 'true' &&
-                      operation.operationWorking == 'true' &&
-                      operation.operationState == 'false') {
-                    labelState = 'In corso';
-                  }
-                } else if (operation.operationLastUpdate!.isEmpty) {
-                  if (operation.operationState == 'false') {
-                    labelState = 'Aperto';
-                  } else {
-                    labelState = 'Chiuso';
-                  }
-                  if (operation.operationViewed == 'true' &&
-                      operation.operationWorking == 'true' &&
-                      operation.operationState == 'false') {
-                    labelState = 'In corso';
-                  }
+                if (operation.updateDateTime!.isNotEmpty) {
+                  labelState = 'Aggiornata';
                 }
 
                 return TapDebouncer(
@@ -74,7 +54,7 @@ class OperationSegmentedPage extends StatelessWidget {
                         title: 'Attendi...', subtitle: 'Carico l\'intervento');
 
                     await OperationApi()
-                        .markOperationAsOpened(context, operation)
+                        .markOperationAsOpen(context, operation)
                         .whenComplete(() {
                       Alerts.hideAlert();
                       Navigator.pushNamed(
@@ -96,7 +76,7 @@ class OperationSegmentedPage extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(AppConst.borderRadius),
                       ),
-                      color: operation.supplierOpened == 'false'
+                      color: operation.supplierOpen == 'false'
                           ? AppColors.primaryColor
                           : AppColors.backgroundColor,
                       child: ListTile(
@@ -108,7 +88,7 @@ class OperationSegmentedPage extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.build_rounded,
-                              color: operation.supplierOpened == 'false'
+                              color: operation.supplierOpen == 'false'
                                   ? AppColors.labelLightColor
                                   : AppColors.primaryColor,
                             ),
@@ -116,12 +96,12 @@ class OperationSegmentedPage extends StatelessWidget {
                         ),
                         minLeadingWidth: 0,
                         title: Text(
-                          operation.palaceAddress!,
+                          operation.userAddress!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: operation.supplierOpened == 'false'
+                            color: operation.supplierOpen == 'false'
                                 ? AppColors.labelLightColor
                                 : AppColors.labelDarkColor,
                           ),
@@ -131,12 +111,12 @@ class OperationSegmentedPage extends StatelessWidget {
                           children: [
                             const SizedBox(height: AppConst.padding / 4),
                             Text(
-                              operation.operation!,
+                              operation.requestType!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: operation.supplierOpened == 'false'
+                                color: operation.supplierOpen == 'false'
                                     ? AppColors.labelLightColor
                                     : AppColors.secondaryColor,
                                 fontSize: 14,
@@ -151,40 +131,41 @@ class OperationSegmentedPage extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      color: operation.supplierOpened == 'false'
+                                      color: operation.supplierOpen == 'false'
                                           ? AppColors.labelLightColor
                                           : AppColors.secondaryColor,
                                     ),
                                   ),
                                 ),
-                                // const Spacer(),
-                                const SizedBox(width: AppConst.padding),
-                                Container(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: AppConst.padding / 1.5,
-                                    vertical: AppConst.padding / 7,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        AppConst.padding / 3),
-                                    color: operation.supplierOpened == 'false'
-                                        ? AppColors.labelLightColor
-                                        : AppColors.primaryColor,
-                                  ),
-                                  child: Text(
-                                    labelState,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: operation.supplierOpened == 'false'
-                                          ? AppColors.primaryColor
-                                          : AppColors.backgroundColor,
-                                      fontSize: 12,
+                                if (operation.updateDateTime!.isNotEmpty)
+                                  const SizedBox(width: AppConst.padding),
+                                if (operation.updateDateTime!.isNotEmpty)
+                                  Container(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: AppConst.padding / 1.5,
+                                      vertical: AppConst.padding / 7,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          AppConst.padding / 3),
+                                      color: operation.supplierOpen == 'false'
+                                          ? AppColors.labelLightColor
+                                          : AppColors.primaryColor,
+                                    ),
+                                    child: Text(
+                                      labelState,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: operation.supplierOpen == 'false'
+                                            ? AppColors.primaryColor
+                                            : AppColors.backgroundColor,
+                                        fontSize: 12,
+                                      ),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                           ],

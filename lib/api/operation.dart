@@ -1,19 +1,13 @@
-import 'package:adminpanel/api/notification.dart';
-import 'package:adminpanel/models/number.dart';
-import 'package:adminpanel/providers/operation.dart';
-import 'package:adminpanel/providers/state.dart';
-import 'package:adminpanel/utils/alerts.dart';
-import 'package:dio/dio.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:path/path.dart';
 
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/providers/user.dart';
+import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/state.dart';
+import 'package:adminpanel/utils/alerts.dart';
 
 class OperationApi {
   Future<List<Operation>> getOperations(BuildContext context) async {
@@ -33,180 +27,81 @@ class OperationApi {
             'supplier_cf': user.supplierCf,
           },
         );
-
         if (response.statusCode == 200 || response.statusCode == 201) {
-          List<Operation> operationsList = [];
-          for (var operation in operationFromJson(response.body)) {
-            Operation media = Operation(
-              operationId: operation.operationId,
-              palaceId: operation.palaceId,
-              userId: operation.userId,
-              operationType: operation.operationType,
-              operation: operation.operation,
-              description: operation.description,
-              supplierId: operation.supplierId,
-              supplierDescription: operation.supplierDescription,
-              operationDatetime: operation.operationDatetime,
-              palaceName: operation.palaceName,
-              palaceCf: operation.palaceCf,
-              palaceAddress: operation.palaceAddress,
-              palaceUtilsName: operation.palaceUtilsName,
-              palaceUtilsNumber: operation.palaceUtilsNumber,
-              palaceDescription: operation.palaceDescription,
-              supplierName: operation.supplierName,
-              supplierType: operation.supplierType,
-              supplierCf: operation.supplierCf,
-              notification: operation.notification,
-              operationState: operation.operationState,
-              operationViewed: operation.operationViewed,
-              operationWorking: operation.operationWorking,
-              supplierOpened: operation.supplierOpened,
-              operationLastUpdate: operation.operationLastUpdate,
-              supplierIsLogged: operation.supplierIsLogged,
-              requestBy: operation.requestBy,
-              yearId: operation.yearId,
-              yearValue: operation.yearValue,
-              supplierToken: operation.supplierToken,
-              supplierEmail: operation.supplierEmail,
-              media: [
-                operation.media1!,
-                operation.media2!,
-                operation.media3!,
-              ],
-              supplierMedia: [
-                operation.supplierMedia1!,
-                operation.supplierMedia2!,
-              ],
-            );
-            operationsList.add(media);
-          }
-
-          for (var element in operationsList) {
-            for (var i = 0; i < element.media!.length; i++) {
-              element.media!.removeWhere((item) => item.isEmpty);
-            }
-          }
-
-          operations = operationsList;
+          operations = operationFromJson(response.body);
         } else {
           print('Can\'t get Operations');
         }
+      } else {
+        print('User ID not available to get Operations}');
       }
     } catch (error) {
       print('ERROR_getOperations: $error');
     } finally {
       AppConst().client.close();
     }
+
     return operations;
   }
 
   Future editOperation(
     BuildContext context,
     Operation operation,
-    String description,
   ) async {
     try {
       await Alerts.loadingAlert(context,
-          title: 'Attendi...', subtitle: 'Invio la richiesta');
+          title: 'Attendi...', subtitle: 'Modifico la richiesta');
 
-      var datetimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+      bool isMedicoDomicilio =
+          context.read<OperationProvider>().selectedOperation ==
+              'Medico/Specialista a domicilio';
 
-      final imageList = context.read<OperationProvider>().images;
-
-      List<MultipartFile> multipartImageList = await Future.wait(imageList.map(
-        (image) async => MultipartFile.fromBytes(
-          await image.readAsBytes(),
-          contentType: MediaType('image', extension(image.path)),
-          filename: basename(image.path),
-        ),
-      ));
-
-      Future<MultipartFile> getMultipartFileFromUrl(String url) async {
-        final response = await AppConst().client.get(kIsWeb
-            ? Uri.parse(url).replace(host: AppConst.domain)
-            : Uri.parse(url));
-        final bytes = response.bodyBytes;
-        final contentType = MediaType('image', extension(url));
-        final filename = basename(url);
-
-        return MultipartFile.fromBytes(
-          bytes,
-          contentType: contentType,
-          filename: filename,
-        );
-      }
-
-      FormData formData = FormData.fromMap({
+      var requestBody = {
         'edit_operation': 'edit_operation',
-        'operation_id': operation.operationId!.trim(),
-        'supplier_description': operation.supplierDescription!.isNotEmpty
-            ? operation.supplierDescription!
-            : description.trim(),
-        'supplier_media_1': operation.supplierMedia![0].isNotEmpty
-            ? await getMultipartFileFromUrl(operation.supplierMedia![0])
-            : multipartImageList.isNotEmpty &&
-                    operation.supplierMedia![0].isEmpty
-                ? multipartImageList[0]
-                : '',
-        'supplier_media_2': operation.supplierMedia![1].isNotEmpty
-            ? await getMultipartFileFromUrl(operation.supplierMedia![1])
-            : multipartImageList.length == 2
-                ? multipartImageList[1]
-                : multipartImageList.length == 1 &&
-                        operation.supplierMedia![0].isNotEmpty
-                    ? multipartImageList[0]
-                    : '',
-        'operation_last_update': datetimeFormat.format(DateTime.now()),
-      });
+        'operation_id': operation.operationId,
+        'user_id': operation.userId,
+        'request_type': operation.requestType,
+        if (operation.description!.isNotEmpty)
+          'description': operation.description,
+        if (operation.supplierId!.isNotEmpty)
+          'supplier_id': operation.supplierId,
+        'paid': operation.paid,
+        if (operation.cost!.isNotEmpty)
+          if (operation.cost!.trim().contains(','))
+            'cost': operation.cost!.trim().replaceAll(',', '.')
+          else
+            'cost': operation.cost!.trim(),
+        if (operation.price!.isNotEmpty)
+          if (operation.price!.contains(','))
+            'price': operation.price!.trim().replaceAll(',', '.')
+          else
+            'price': operation.price!.trim(),
+        if (operation.visits!.isNotEmpty) 'visits': operation.visits,
+        if (!isMedicoDomicilio) ...{
+          'countryFrom': operation.countryFrom,
+          'regionFrom': operation.regionFrom,
+          'provinceFrom': operation.provinceFrom,
+          'cityFrom': operation.cityFrom,
+          'addressFrom': operation.addressFrom,
+          'countryTo': operation.countryTo,
+          'regionTo': operation.regionTo,
+          'provinceTo': operation.provinceTo,
+          'cityTo': operation.cityTo,
+          'addressTo': operation.addressTo,
+        },
+      };
 
-      var response = await Dio().post(
-        AppConst.operation,
-        data: formData,
-      );
+      var response = await AppConst().client.post(
+            kIsWeb
+                ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+                : Uri.parse(AppConst.operation),
+            body: requestBody,
+          );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        List<Number> numbers = [];
-
-        var response = await AppConst().client.post(
-          kIsWeb
-              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-              : Uri.parse(AppConst.operation),
-          body: {
-            'get_numbers': 'get_numbers',
-            'operation_id': operation.operationId!.trim(),
-          },
-        );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          numbers = numberFromJson(response.body);
-          if (numbers.isNotEmpty) {
-            if (operation.operation == 'Condominiale') {
-              await NotificationApi().sendToPalace(
-                context: context,
-                title: 'Richiesta d\'intervento aggiornata',
-                message:
-                    'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
-                operation: operation,
-                numbers: numbers,
-                popupTitle: 'Aggiornato',
-                popupMessage: 'Intervento aggiornato',
-              );
-            } else {
-              await NotificationApi().sendToUser(
-                context: context,
-                title: 'Richiesta d\'intervento aggiornata',
-                message:
-                    'Il fornitore ha inserito delle informazioni riguardanti il tuo intervento',
-                operation: operation,
-                number: numbers[0],
-                popupTitle: 'Aggiornato',
-                popupMessage: 'Intervento aggiornato',
-              );
-            }
-          } else {
-            print('No number found');
-          }
-        }
+        await Alerts.hideAlert();
+        await Alerts.successAlert(context,
+            title: 'Modificata', subtitle: 'La richiesta è stata modificata');
       } else {
         print('Can\'t edit Operation');
       }
@@ -214,39 +109,13 @@ class OperationApi {
       print('ERROR_editOperation: $error');
     } finally {
       AppConst().client.close();
-    }
-  }
-
-  Future markOperationAsOpened(
-      BuildContext context, Operation operation) async {
-    try {
-      var response = await AppConst().client.post(
-        kIsWeb
-            ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-            : Uri.parse(AppConst.operation),
-        body: {
-          'mark_as_opened': 'mark_as_opened',
-          'operation_id': operation.operationId,
-        },
-      );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Operation mark as opened ');
-      } else {
-        print('Can\'t mark as opened Operation');
-      }
-    } catch (error) {
-      print('ERROR_markOperationAsOpened: $error');
-    } finally {
-      AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);
-      await Alerts.hideAlert();
     }
   }
 
-  Future markOperationAsWorking(
+  Future markOperationAsOpen(
     BuildContext context,
     Operation operation,
-    String operationWorking,
   ) async {
     try {
       var response = await AppConst().client.post(
@@ -254,61 +123,49 @@ class OperationApi {
             ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
             : Uri.parse(AppConst.operation),
         body: {
-          'mark_as_working': 'mark_as_working',
+          'mark_as_open': 'mark_as_open',
           'operation_id': operation.operationId,
-          'operation_working': operationWorking,
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        List<Number> numbers = [];
-
-        var response = await AppConst().client.post(
-          kIsWeb
-              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-              : Uri.parse(AppConst.operation),
-          body: {
-            'get_numbers': 'get_numbers',
-            'operation_id': operation.operationId!.trim(),
-          },
-        );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          numbers = numberFromJson(response.body);
-          if (numbers.isNotEmpty) {
-            if (operation.operation == 'Condominiale') {
-              await NotificationApi().sendToPalace(
-                context: context,
-                title: 'Intervento in corso',
-                message:
-                    'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
-                operation: operation,
-                numbers: numbers,
-                popupTitle: 'In corso',
-                popupMessage: 'Intervento In corso',
-              );
-            } else {
-              await NotificationApi().sendToUser(
-                context: context,
-                title: 'Intervento in corso',
-                message:
-                    'Il fornitore ha cambiato lo stato dell\'intervento a "In corso"',
-                operation: operation,
-                number: numbers[0],
-                popupTitle: 'In corso',
-                popupMessage: 'Intervento In corso',
-              );
-            }
-          } else {
-            print('No number found');
-          }
-        }
+        print('Operation mark as open');
       } else {
-        print('Can\'t mark as working Operation');
+        print('Can\'t mark as viewed Operation');
       }
     } catch (error) {
-      print('ERROR_markOperationAsWorking: $error');
+      print('ERROR_markOperationAsOpenh: $error');
     } finally {
       AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
+    }
+  }
+
+  Future markOperationAsAccept(
+    BuildContext context,
+    Operation operation,
+    String accept,
+  ) async {
+    try {
+      var response = await AppConst().client.post(
+        kIsWeb
+            ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.operation),
+        body: {
+          'mark_as_accept': 'mark_as_accept',
+          'operation_id': operation.operationId,
+          'supplier_accept': accept,
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Operation mark as accept');
+      } else {
+        print('Can\'t mark as accept Operation');
+      }
+    } catch (error) {
+      print('ERROR_markOperationAsAccept: $error');
+    } finally {
+      AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
     }
   }
 
@@ -325,52 +182,15 @@ class OperationApi {
         body: {
           'mark_as_closed': 'mark_as_closed',
           'operation_id': operation.operationId,
-          'operation_state': operationState,
+          'closed': operationState,
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        List<Number> numbers = [];
-
-        var response = await AppConst().client.post(
-          kIsWeb
-              ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
-              : Uri.parse(AppConst.operation),
-          body: {
-            'get_numbers': 'get_numbers',
-            'operation_id': operation.operationId!.trim(),
-          },
+        await Alerts.successAlert(
+          context,
+          title: 'Chiusa',
+          subtitle: 'La richiesta è stata chiusa',
         );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          numbers = numberFromJson(response.body);
-          if (numbers.isNotEmpty) {
-            if (operation.operation == 'Condominiale') {
-              await NotificationApi().sendToPalace(
-                context: context,
-                title: 'Intervento chiuso',
-                message:
-                    'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
-                operation: operation,
-                numbers: numbers,
-                popupTitle: 'Chiuso',
-                popupMessage: 'Intervento Chiuso',
-              );
-            } else {
-              await NotificationApi().sendToUser(
-                context: context,
-                title: 'Intervento chiuso',
-                message:
-                    'Il fornitore ha cambiato lo stato dell\'intervento a "Chiuso"',
-                operation: operation,
-                number: numbers[0],
-                popupTitle: 'Chiuso',
-                popupMessage: 'Intervento Chiuso',
-              );
-            }
-          } else {
-            print('No number found');
-          }
-        }
       } else {
         print('Can\'t close Operation');
       }
@@ -378,6 +198,7 @@ class OperationApi {
       print('ERROR_markOperationAsClosed: $error');
     } finally {
       AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
     }
   }
 }

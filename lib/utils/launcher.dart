@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> launchUrls(String link) async {
@@ -10,4 +12,18 @@ Future<void> launchUrls(String link) async {
       }
     }
   });
+}
+
+launchMap(String address) async {
+  String link = address.replaceAll(' ', '+');
+  if (Platform.isIOS) {
+    link = "maps://http://maps.apple.com/?q=$address";
+  } else if (Platform.isAndroid) {
+    link = "http://maps.google.com/?q=$address";
+  }
+  if (await canLaunchUrl(Uri.parse(link))) {
+    await launchUrl(Uri.parse(link), mode: LaunchMode.externalApplication);
+  } else {
+    print('Non posso aprire il link: $link');
+  }
 }

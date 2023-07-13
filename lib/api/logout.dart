@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/main.dart';
-import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -16,8 +15,6 @@ class LogoutApi {
         await Alerts.errorAlert(context,
             title: 'Un momento...', subtitle: 'Esco dall\'account');
 
-        context.read<OperationProvider>().removeAllImage();
-
         logged = null;
 
         int? rememberData = SharedPrefs.getInt('rememberData');
@@ -27,13 +24,26 @@ class LogoutApi {
         } else {
           await context.read<UserProvider>().updateLocalUser(
                 UserDatabase(
-                  supplierId: '',
+                  supplierId: user.supplierId!.trim(),
                   supplierEmail: user.supplierEmail!,
-                  supplierName: '',
-                  supplierType: '',
+                  supplierName: user.supplierName!.trim(),
+                  supplierPhone: user.supplierPhone!.trim(),
+                  supplierType: user.supplierType!.trim(),
                   supplierCf: user.supplierCf!,
-                  supplierToken: '',
-                  notification: '',
+                  supplierCountry: user.supplierCountry!.trim(),
+                  supplierRegion: user.supplierRegion!.trim(),
+                  supplierProvince: user.supplierProvince!.trim(),
+                  supplierCity: user.supplierCity!.trim(),
+                  supplierAddress: user.supplierAddress!.trim(),
+                  supplierProfilePicture: user.supplierProfilePicture!.trim(),
+                  supplierDeviceToken: user.supplierDeviceToken!.trim(),
+                  supplierNotificationPermission:
+                      user.supplierNotificationPermission!.trim(),
+                  supplierIsLogged: user.supplierIsLogged!.trim(),
+                  verified: user.verified!.trim(),
+                  curriculum: user.curriculum!.trim(),
+                  createdDateTime: user.createdDateTime!.trim(),
+                  coverageArea: user.coverageArea!.trim(),
                 ),
               );
           await SharedPrefs.instance.remove('logged');

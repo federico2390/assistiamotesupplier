@@ -4,7 +4,7 @@ class AppColors {
   static Color backgroundColor = const Color(0xFFFFFFFF);
   static Color primaryColor = const Color(0xFFD21E4B);
   static Color secondaryColor = const Color(0xFF9E9E9E);
-  static Color tertiaryColor = const Color(0x2D6FC104);
+  static Color tertiaryColor = const Color(0x2CD21E4B);
   static Color labelLightColor = const Color(0xFFFFFFFF);
   static Color labelDarkColor = const Color(0xFF000000);
   static Color successColor = const Color(0xFF248A3D);

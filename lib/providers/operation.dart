@@ -1,18 +1,15 @@
-// ignore_for_file: prefer_final_fields
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/models/operation.dart';
 
 class OperationProvider extends ChangeNotifier {
-  List<Operation> _opened = [];
-  List<Operation> get opened => _opened;
+  List<Operation> _notAccept = [];
+  List<Operation> get notAccept => _notAccept;
 
-  List<Operation> _working = [];
-  List<Operation> get working => _working;
+  List<Operation> _accept = [];
+  List<Operation> get accept => _accept;
 
   List<Operation> _closed = [];
   List<Operation> get closed => _closed;
@@ -28,42 +25,42 @@ class OperationProvider extends ChangeNotifier {
       operationList.sort(
         (a, b) => DateTime.parse(
           DateFormat('dd/MM/yyyy HH:mm:ss')
-              .parse(b.operationLastUpdate!.isNotEmpty
-                  ? b.operationLastUpdate!
-                  : b.operationDatetime!)
+              .parse(b.updateDateTime!.isNotEmpty
+                  ? b.updateDateTime!
+                  : b.currentDateTime!)
               .toIso8601String(),
         ).compareTo(
           DateTime.parse(
             DateFormat('dd/MM/yyyy HH:mm:ss')
-                .parse(a.operationLastUpdate!.isNotEmpty
-                    ? a.operationLastUpdate!
-                    : a.operationDatetime!)
+                .parse(a.updateDateTime!.isNotEmpty
+                    ? a.updateDateTime!
+                    : a.currentDateTime!)
                 .toIso8601String(),
           ),
         ),
       );
 
       operationList.sort((a, b) =>
-          (a.supplierOpened == 'false' ? 0 : 1) -
-          (b.supplierOpened == 'false' ? 0 : 1));
+          (a.supplierOpen == 'false' ? 0 : 1) -
+          (b.supplierOpen == 'false' ? 0 : 1));
 
       _operations = operationList;
 
-      _opened = operationList
+      _notAccept = operationList
           .where(
-            (e) => e.operationWorking == "false" && e.operationState == "false",
+            (e) => e.supplierAccept!.isEmpty && e.closed == 'false',
           )
           .toList();
 
-      _working = operationList
+      _accept = operationList
           .where(
-            (e) => e.operationWorking == "true" && e.operationState == "false",
+            (e) => e.supplierAccept == "true" && e.closed == 'false',
           )
           .toList();
 
       _closed = operationList
           .where(
-            (e) => e.operationWorking == "true" && e.operationState == "true",
+            (e) => e.closed == "true",
           )
           .toList();
     } catch (error) {
@@ -79,34 +76,6 @@ class OperationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  XFile? _image;
-  XFile get image => _image!;
-
-  void addImage(XFile selectedImage) {
-    _image = selectedImage;
-    _images.add(_image!);
-    notifyListeners();
-  }
-
-  List<XFile> _images = [];
-  List<XFile> get images => _images;
-
-  void addImages(List<XFile> selectedImages) {
-    _images.addAll(selectedImages);
-    notifyListeners();
-  }
-
-  void removeImage(XFile image) {
-    _images.removeWhere((i) => i == image);
-    notifyListeners();
-  }
-
-  void removeAllImage() {
-    _image = null;
-    _images.clear();
-    notifyListeners();
-  }
-
   int _selectedSegment = 1;
   int get selectedSegment => _selectedSegment;
 
@@ -115,6 +84,53 @@ class OperationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _selectedOperation = 'Medico/Specialista a domicilio';
+  String get selectedOperation => _selectedOperation;
+  void setSelectedOperation(String setOperation) {
+    _selectedOperation = setOperation;
+    notifyListeners();
+  }
+
   final TextEditingController descriptionController = TextEditingController();
   final FocusNode descriptionNode = FocusNode();
+
+  List<TextEditingController> visitsControllers = [];
+  List<FocusNode> visitsFocusNodes = [];
+  void addTextField({
+    String visitsDescription = '',
+    String visitsTime = '',
+    String visitsPrice = '',
+  }) {
+    final visitsController = TextEditingController(text: visitsDescription);
+    final visitsFocusNode = FocusNode();
+    visitsControllers.add(visitsController);
+    visitsFocusNodes.add(visitsFocusNode);
+
+    notifyListeners();
+  }
+
+  void removeTextField(int index) {
+    final removedVisitsController = visitsControllers.removeAt(index);
+    final removedVisitsFocusNode = visitsFocusNodes.removeAt(index);
+    removedVisitsController.dispose();
+    removedVisitsFocusNode.dispose();
+
+    notifyListeners();
+  }
+
+  List<String> concatenateVisitsAndVisitsTimeControllers() {
+    List<String> concatenatedList = [];
+    for (int i = 0; i < visitsControllers.length; i++) {
+      if (visitsControllers[i].text.isNotEmpty) {
+        String concatenatedString = '${visitsControllers[i].text}}';
+        concatenatedList.add(concatenatedString);
+      }
+    }
+    return concatenatedList;
+  }
+
+  void removeAllTextField() {
+    visitsControllers.clear();
+    visitsFocusNodes.clear();
+  }
 }

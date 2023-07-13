@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:adminpanel/providers/signature.dart';
+import 'package:adminpanel/utils/launcher.dart';
+import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:signature/signature.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 
 import 'package:adminpanel/api/operation.dart';
@@ -13,13 +17,11 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/providers/gallery.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
-import 'package:adminpanel/utils/image_picker.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 
 class OperationDetail extends StatelessWidget {
@@ -100,35 +102,36 @@ class OperationDetail extends StatelessWidget {
               clipBehavior: Clip.none,
               padding: const EdgeInsets.symmetric(horizontal: AppConst.padding),
               children: [
-                operation.operationState == 'false'
-                    ? workingAndCloseButtons(operation, context)
-                    : const SizedBox(),
-                operation.operationState == 'false'
-                    ? const SizedBox(height: AppConst.padding)
-                    : const SizedBox(),
-                operation.operationState == 'false'
-                    ? Divider(
-                        height: 1,
-                        color: AppColors.secondaryColor,
-                      )
-                    : const SizedBox(),
-                operation.operationState == 'false'
-                    ? const SizedBox(height: AppConst.padding)
-                    : const SizedBox(),
-                operation.media!.isNotEmpty
-                    ? Text(
-                        'Allegati utente',
-                        style: TextStyle(
-                          color: AppColors.secondaryColor,
-                        ),
-                      )
-                    : const SizedBox(),
-                operation.media!.isNotEmpty
-                    ? const SizedBox(height: AppConst.padding / 2)
-                    : const SizedBox(),
-                operation.media!.isNotEmpty
-                    ? userMedia(context, operation)
-                    : const SizedBox(),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept!.isEmpty)
+                  acceptAnddCancelButtons(operation, context),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept!.isEmpty)
+                  const SizedBox(height: AppConst.padding),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept!.isEmpty)
+                  Divider(
+                    height: 1,
+                    color: AppColors.secondaryColor,
+                  ),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept!.isEmpty)
+                  const SizedBox(height: AppConst.padding),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept == 'true')
+                  closeButton(operation, context),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept == 'true')
+                  const SizedBox(height: AppConst.padding),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept == 'true')
+                  Divider(
+                    height: 1,
+                    color: AppColors.secondaryColor,
+                  ),
+                if (operation.closed == 'false' &&
+                    operation.supplierAccept == 'true')
+                  const SizedBox(height: AppConst.padding),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -157,7 +160,7 @@ class OperationDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      operation.operation!,
+                      operation.requestType!,
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -176,7 +179,7 @@ class OperationDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      operation.requestBy!,
+                      operation.userName!,
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -194,13 +197,20 @@ class OperationDetail extends StatelessWidget {
                         color: AppColors.secondaryColor,
                       ),
                     ),
-                    Text(
-                      operation.palaceAddress!,
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        launchMap(
+                            '${operation.userAddress!} ${operation.userCity!} ${operation.userRegion!} ${operation.userCountry!}');
+                      },
+                      child: Text(
+                        '${operation.userAddress!}, ${operation.userCity!}, ${operation.userRegion!}, ${operation.userCountry!}',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: AppColors.primaryColor,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 const SizedBox(height: AppConst.padding),
@@ -215,58 +225,23 @@ class OperationDetail extends StatelessWidget {
                     ),
                     Text(
                       endDateTimeFormat.format(startDateTimeFormat
-                          .parse(operation.operationDatetime!)),
+                          .parse(operation.createdDateTime!)),
                     ),
                   ],
                 ),
                 const SizedBox(height: AppConst.padding),
-                operation.supplierMedia!.any((e) => e.isNotEmpty) &&
-                        operation.operationState == 'true'
-                    ? Divider(
-                        height: 1,
-                        color: AppColors.secondaryColor,
-                      )
-                    : const SizedBox(),
-                operation.supplierMedia!.any((e) => e.isEmpty) &&
-                        operation.operationState == 'false'
-                    ? Divider(
-                        height: 1,
-                        color: AppColors.secondaryColor,
-                      )
-                    : const SizedBox(),
+                Divider(
+                  height: 1,
+                  color: AppColors.secondaryColor,
+                ),
                 const SizedBox(height: AppConst.padding),
-                operation.supplierMedia!.any((e) => e.isNotEmpty) &&
-                        operation.operationState == 'false'
-                    ? Text(
-                        'I tuoi allegati',
-                        style: TextStyle(
-                          color: AppColors.secondaryColor,
-                        ),
-                      )
-                    : const SizedBox(),
-                operation.supplierMedia!.any((e) => e.isNotEmpty)
-                    ? const SizedBox(height: AppConst.padding / 2)
-                    : const SizedBox(),
-                operation.supplierMedia!.any((e) => e.isNotEmpty)
-                    ? supplierMedia(context, operation)
-                    : const SizedBox(),
-                operation.operationState == 'false' &&
-                        operation.supplierMedia!.any((e) => e.isEmpty)
-                    ? Text(
-                        'Aggiungi allegati',
-                        style: TextStyle(
-                          color: AppColors.secondaryColor,
-                        ),
-                      )
-                    : const SizedBox(),
-                operation.operationState == 'false' &&
-                        operation.supplierMedia!.any((e) => e.isEmpty)
-                    ? const SizedBox(height: AppConst.padding / 2)
-                    : const SizedBox(),
-                operation.operationState == 'false' &&
-                        operation.supplierMedia!.any((e) => e.isEmpty)
-                    ? addMedia(isIPad, context, operation)
-                    : const SizedBox(),
+                signature(operation),
+                const SizedBox(height: AppConst.padding),
+                Divider(
+                  height: 1,
+                  color: AppColors.secondaryColor,
+                ),
+                const SizedBox(height: AppConst.padding),
                 operation.supplierDescription!.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,14 +256,9 @@ class OperationDetail extends StatelessWidget {
                         ],
                       )
                     : descriptionField(context),
-                operation.operationState == 'false' &&
-                            operation.supplierDescription!.isEmpty ||
-                        operation.supplierMedia!.any((e) => e.isEmpty)
-                    ? const SizedBox(height: AppConst.padding)
-                    : const SizedBox(),
-                operation.operationState == 'false'
-                    ? operation.supplierDescription!.isEmpty ||
-                            operation.supplierMedia!.any((e) => e.isEmpty)
+                const SizedBox(height: AppConst.padding),
+                operation.closed == 'false'
+                    ? operation.supplierDescription!.isEmpty
                         ? saveButton(context, operation)
                         : const SizedBox()
                     : const SizedBox(),
@@ -301,102 +271,39 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  GridView addMedia(bool isIPad, BuildContext context, Operation operation) {
-    return GridView(
-      padding: const EdgeInsets.only(bottom: AppConst.padding),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      clipBehavior: Clip.none,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 4,
-          crossAxisCount: isIPad == true ? 7 : 3),
-      children: [null, ...context.watch<OperationProvider>().images].map(
-        (image) {
-          if (image == null) {
-            return TapDebouncer(
-              onTap: () async {
-                if (context.read<OperationProvider>().images.length == 3) {
-                  await Alerts.errorAlert(context,
-                      title: 'Attenzione', subtitle: 'Max 2 foto');
-                  return;
-                } else {
-                  buildImagePicker(context, OperationProvider, operation);
-                }
-              },
-              builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                return Button(
-                  color: AppColors.secondaryColor.withOpacity(.5),
-                  icon: const Icon(
-                    Icons.add_rounded,
-                    size: 44,
-                    color: Colors.white,
-                  ),
-                  onPressed: onTap,
-                );
-              },
-            );
-          }
-          return Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.expand,
-            children: [
-              InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Container(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        kIsWeb ? AppConst.borderRadius : 8),
-                  ),
-                  child: kIsWeb
-                      ? Image.network(image.path, height: 80, fit: BoxFit.cover)
-                      : Image.file(File(image.path),
-                          height: 80, fit: BoxFit.cover),
-                ),
-                onTap: () {
-                  context.read<GalleryProvider>().supplierCurrentMediaIndex(
-                      context.read<OperationProvider>().images.indexOf(image));
+  Consumer<SignatureProvider> signature(Operation operation) {
+    return Consumer<SignatureProvider>(
+      builder: (context, signatureProvider, child) {
+        bool hasSignature = !signatureProvider.isSignatureEmpty;
 
-                  Navigator.pushNamed(
-                    context,
-                    '/gallery',
-                    arguments: GalleryArguments(
-                      gallery: context.read<OperationProvider>().images,
-                      isSupplierMedia: true,
-                    ),
+        print(hasSignature);
+
+        return Column(
+          children: [
+            Signature(
+              controller: signatureProvider.signatureController,
+              width: ScreenSize.width(context),
+              height: ScreenSize.width(context) / 2,
+              backgroundColor: AppColors.secondaryColor.withOpacity(.15),
+            ),
+            if (hasSignature) const SizedBox(height: AppConst.padding),
+            if (hasSignature)
+              TapDebouncer(
+                onTap: () async {
+                  signatureProvider.clearCanvas();
+                },
+                builder: (context, onTap) {
+                  return Button(
+                    width: ScreenSize.width(context),
+                    text: 'Cancella firma',
+                    color: Colors.black,
+                    onPressed: onTap,
                   );
                 },
               ),
-              Positioned(
-                right: 0,
-                top: 0,
-                child: SizedBox(
-                  height: 27,
-                  width: 27,
-                  child: TapDebouncer(
-                    onTap: () async {
-                      context.read<OperationProvider>().removeImage(image);
-                    },
-                    builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                      return Button(
-                        color: AppColors.errorColor,
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        onPressed: onTap,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ).toList(),
+          ],
+        );
+      },
     );
   }
 
@@ -503,18 +410,15 @@ class OperationDetail extends StatelessWidget {
                 .read<OperationProvider>()
                 .descriptionController
                 .text
-                .isNotEmpty ||
-            context.read<OperationProvider>().images.isNotEmpty &&
-                operation.operationState == 'false') {
+                .isNotEmpty &&
+            operation.closed == 'false') {
           await OperationApi()
               .editOperation(
             context,
             operation,
-            context.read<OperationProvider>().descriptionController.text,
           )
               .whenComplete(() {
             context.read<OperationProvider>().descriptionController.clear();
-            context.read<OperationProvider>().removeAllImage();
             hideKeyboard(context);
           });
         }
@@ -525,9 +429,8 @@ class OperationDetail extends StatelessWidget {
                       .read<OperationProvider>()
                       .descriptionController
                       .text
-                      .isNotEmpty ||
-                  context.read<OperationProvider>().images.isNotEmpty &&
-                      operation.operationState == 'false'
+                      .isNotEmpty &&
+                  operation.closed == 'false'
               ? AppColors.primaryColor
               : AppColors.secondaryColor.withOpacity(.5),
           text: 'Salva',
@@ -537,97 +440,10 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  GridView supplierMedia(BuildContext context, Operation operation) {
-    return GridView(
-      padding: const EdgeInsets.only(bottom: AppConst.padding),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      clipBehavior: Clip.none,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 4, mainAxisSpacing: 4, crossAxisCount: 3),
-      children: [
-        ...operation.supplierMedia!.where((e) => e.isNotEmpty).toList().toList()
-      ].asMap().entries.map(
-        (entry) {
-          final index = entry.key;
-          final image = entry.value;
-
-          return Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.expand,
-            children: [
-              InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Container(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        kIsWeb ? AppConst.borderRadius : 8),
-                  ),
-                  child: Image.network(
-                    key: ValueKey(image),
-                    image,
-                    height: 80,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                          child: SizedBox(
-                            width: 20.0,
-                            height: 20.0,
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return Center(
-                        child: Icon(
-                          Icons.error_outline_rounded,
-                          size: 20.0,
-                          color: AppColors.secondaryColor,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                onTap: () {
-                  context
-                      .read<GalleryProvider>()
-                      .supplierCurrentMediaIndex(index);
-                  Navigator.pushNamed(
-                    context,
-                    '/gallery',
-                    arguments: GalleryArguments(
-                      gallery: [],
-                      isSupplierMedia: true,
-                      images: operation.supplierMedia!
-                          .where((e) => e.isNotEmpty)
-                          .toList(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-        },
-      ).toList(),
-    );
-  }
-
   ReadMoreText description(Operation operation) {
     return ReadMoreText(
       operation.description!,
-      trimLines: 1,
+      trimLines: 2,
       colorClickableText: AppColors.labelDarkColor,
       trimMode: TrimMode.Line,
       trimCollapsedText: '  altro',
@@ -648,151 +464,81 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  GridView userMedia(BuildContext context, Operation operation) {
-    return GridView(
-      padding: const EdgeInsets.only(bottom: AppConst.padding),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      clipBehavior: Clip.none,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 4, mainAxisSpacing: 4, crossAxisCount: 3),
-      children: [...operation.media!.where((e) => e.isNotEmpty).toList()]
-          .asMap()
-          .entries
-          .map(
-        (entry) {
-          final index = entry.key;
-          final image = entry.value;
+  Row acceptAnddCancelButtons(Operation operation, BuildContext context) {
+    return Row(
+      children: [
+        TapDebouncer(
+          onTap: () async {
+            await Alerts.loadingAlert(context,
+                title: 'Attendi...', subtitle: 'Accetto la richiesta');
 
-          return Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.expand,
-            children: [
-              InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Container(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        kIsWeb ? AppConst.borderRadius : 8),
-                  ),
-                  child: Image.network(
-                    key: ValueKey(image),
-                    image,
-                    height: 80,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                          child: SizedBox(
-                            width: 20.0,
-                            height: 20.0,
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return Center(
-                        child: Icon(
-                          Icons.error_outline_rounded,
-                          size: 20.0,
-                          color: AppColors.secondaryColor,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                onTap: () {
-                  context.read<GalleryProvider>().userCurrentMediaIndex(index);
-                  Navigator.pushNamed(
-                    context,
-                    '/gallery',
-                    arguments: GalleryArguments(
-                      gallery: [],
-                      isSupplierMedia: false,
-                      images:
-                          operation.media!.where((e) => e.isNotEmpty).toList(),
-                    ),
-                  );
-                },
+            await OperationApi()
+                .markOperationAsAccept(context, operation, 'true')
+                .whenComplete(() async {
+              context.read<OperationProvider>().descriptionController.clear();
+              hideKeyboard(context);
+              Alerts.hideAlert();
+              await context.read<StateProvider>().buildFuture(context);
+              Navigator.of(context).pop(context);
+            });
+          },
+          builder: (BuildContext context, TapDebouncerFunc? onTap) {
+            return Expanded(
+              child: Button(
+                color: AppColors.successColor,
+                text: 'Accetta',
+                onPressed: onTap,
               ),
-            ],
-          );
-        },
-      ).toList(),
+            );
+          },
+        ),
+        const SizedBox(width: AppConst.padding),
+        TapDebouncer(
+          onTap: () async {
+            await Alerts.loadingAlert(context,
+                title: 'Attendi...', subtitle: 'Rifiuto la richiesta');
+
+            await OperationApi()
+                .markOperationAsAccept(context, operation, 'false')
+                .whenComplete(() async {
+              context.read<OperationProvider>().descriptionController.clear();
+              hideKeyboard(context);
+              Alerts.hideAlert();
+              await context.read<StateProvider>().buildFuture(context);
+              Navigator.of(context).pop(context);
+            });
+          },
+          builder: (BuildContext context, TapDebouncerFunc? onTap) {
+            return Expanded(
+              child: Button(
+                color: AppColors.errorColor,
+                text: 'Rifiuta',
+                onPressed: onTap,
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
-  Row workingAndCloseButtons(Operation operation, BuildContext context) {
+  Row closeButton(Operation operation, BuildContext context) {
     return Row(
       children: [
-        operation.operationWorking == 'false'
-            ? TapDebouncer(
-                onTap: () async {
-                  await Alerts.loadingAlert(context,
-                      title: 'Attendi...',
-                      subtitle: 'Segno l\'intervento come in corso');
-
-                  await OperationApi()
-                      .markOperationAsWorking(context, operation, 'true')
-                      .whenComplete(() async {
-                    context
-                        .read<OperationProvider>()
-                        .descriptionController
-                        .clear();
-                    context.read<OperationProvider>().removeAllImage();
-                    hideKeyboard(context);
-                    Alerts.hideAlert();
-                    await context.read<StateProvider>().buildFuture(context);
-                    Navigator.of(context).pop(context);
-                  });
-                },
-                builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                  return Expanded(
-                    child: Button(
-                      color: AppColors.attentionColor,
-                      text: 'In corso',
-                      onPressed: onTap,
-                    ),
-                  );
-                },
-              )
-            : const SizedBox(),
-        operation.operationWorking == 'false'
-            ? const SizedBox(width: AppConst.padding)
-            : const SizedBox(),
         TapDebouncer(
           onTap: () async {
-            if (operation.operationWorking == 'false') {
-              await Alerts.errorAlert(context,
-                  title: 'Attenzione',
-                  subtitle: 'Devi prima segnare l\'intervento come In corso');
-            } else {
-              await Alerts.loadingAlert(context,
-                  title: 'Attendi...',
-                  subtitle: 'Segno l\'intervento come chiuso');
+            await Alerts.loadingAlert(context,
+                title: 'Attendi...', subtitle: 'Chiudo la richiesta');
 
-              await OperationApi()
-                  .markOperationAsClosed(context, operation, 'true')
-                  .whenComplete(() async {
-                context.read<OperationProvider>().descriptionController.clear();
-                context.read<OperationProvider>().removeAllImage();
-                hideKeyboard(context);
-                Alerts.hideAlert();
-                await context.read<StateProvider>().buildFuture(context);
-                Navigator.of(context).pop(context);
-              });
-            }
+            await OperationApi()
+                .markOperationAsClosed(context, operation, 'true')
+                .whenComplete(() async {
+              context.read<OperationProvider>().descriptionController.clear();
+              hideKeyboard(context);
+              Alerts.hideAlert();
+              await context.read<StateProvider>().buildFuture(context);
+              Navigator.of(context).pop(context);
+            });
           },
           builder: (BuildContext context, TapDebouncerFunc? onTap) {
             return Expanded(

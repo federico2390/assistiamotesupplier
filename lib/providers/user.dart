@@ -16,6 +16,7 @@ class UserProvider extends ChangeNotifier {
     if (_localUser.supplierId != null) {
       UserDatabase user = await UserApi().getUser(_localUser.supplierId!);
       await updateLocalUser(user);
+
       notifyListeners();
       return _localUser;
     }
@@ -23,39 +24,50 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<UserDatabase> getLocalUser() async {
-    final box = await Hive.openBox<UserDatabase>('user');
-    _localUser = box.values.isNotEmpty ? box.values.first : UserDatabase();
-
+    try {
+      final box = await Hive.openBox<UserDatabase>('user');
+      _localUser = box.values.isNotEmpty ? box.values.first : UserDatabase();
+    } catch (error) {
+      print('ERROR_getLocalUser');
+    }
     notifyListeners();
     return _localUser;
   }
 
   addLocalUser(UserDatabase user) async {
-    var box = await Hive.openBox<UserDatabase>('user');
-    await box.add(user);
-
-    getLocalUser();
+    try {
+      var box = await Hive.openBox<UserDatabase>('user');
+      await box.add(user);
+      await getLocalUser();
+    } catch (error) {
+      print('ERROR_addLocalUser');
+    }
     notifyListeners();
   }
 
   updateLocalUser(UserDatabase user) async {
-    final box = Hive.box<UserDatabase>('user');
-    await box.clear().whenComplete(() async {
-      await box.putAll({'user': user});
-
-      getLocalUser();
-      notifyListeners();
-    });
+    try {
+      final box = Hive.box<UserDatabase>('user');
+      await box.clear().whenComplete(() async {
+        await box.putAll({'user': user});
+        await getLocalUser();
+      });
+    } catch (error) {
+      print('ERROR_updateLocalUser');
+    }
+    notifyListeners();
   }
 
   Future deleteLocalUser() async {
-    final box = Hive.box<UserDatabase>('user');
-    await box.deleteFromDisk().then((value) async {
-      _localUser = UserDatabase();
-
-      getLocalUser();
-      notifyListeners();
-      return _localUser;
-    });
+    try {
+      final box = Hive.box<UserDatabase>('user');
+      await box.deleteFromDisk().then((value) async {
+        _localUser = UserDatabase();
+        await getLocalUser();
+      });
+    } catch (error) {
+      print('ERROR_updateLocalUser');
+    }
+    notifyListeners();
   }
 }

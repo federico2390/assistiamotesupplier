@@ -20,18 +20,29 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       supplierId: fields[0] as String?,
       supplierEmail: fields[1] as String?,
       supplierName: fields[2] as String?,
-      supplierType: fields[3] as String?,
-      supplierCf: fields[4] as String?,
-      supplierToken: fields[5] as String?,
-      notification: fields[6] as String?,
-      supplierIsLogged: fields[7] as String?,
+      supplierPhone: fields[3] as String?,
+      supplierType: fields[4] as String?,
+      supplierCf: fields[5] as String?,
+      supplierCountry: fields[6] as String?,
+      supplierRegion: fields[7] as String?,
+      supplierProvince: fields[8] as String?,
+      supplierCity: fields[9] as String?,
+      supplierAddress: fields[10] as String?,
+      supplierProfilePicture: fields[11] as String?,
+      supplierDeviceToken: fields[12] as String?,
+      supplierNotificationPermission: fields[13] as String?,
+      supplierIsLogged: fields[14] as String?,
+      verified: fields[15] as String?,
+      curriculum: fields[16] as String?,
+      createdDateTime: fields[17] as String?,
+      coverageArea: fields[18] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserDatabase obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.supplierId)
       ..writeByte(1)
@@ -39,15 +50,37 @@ class UserDatabaseAdapter extends TypeAdapter<UserDatabase> {
       ..writeByte(2)
       ..write(obj.supplierName)
       ..writeByte(3)
-      ..write(obj.supplierType)
+      ..write(obj.supplierPhone)
       ..writeByte(4)
-      ..write(obj.supplierCf)
+      ..write(obj.supplierType)
       ..writeByte(5)
-      ..write(obj.supplierToken)
+      ..write(obj.supplierCf)
       ..writeByte(6)
-      ..write(obj.notification)
+      ..write(obj.supplierCountry)
       ..writeByte(7)
-      ..write(obj.supplierIsLogged);
+      ..write(obj.supplierRegion)
+      ..writeByte(8)
+      ..write(obj.supplierProvince)
+      ..writeByte(9)
+      ..write(obj.supplierCity)
+      ..writeByte(10)
+      ..write(obj.supplierAddress)
+      ..writeByte(11)
+      ..write(obj.supplierProfilePicture)
+      ..writeByte(12)
+      ..write(obj.supplierDeviceToken)
+      ..writeByte(13)
+      ..write(obj.supplierNotificationPermission)
+      ..writeByte(14)
+      ..write(obj.supplierIsLogged)
+      ..writeByte(15)
+      ..write(obj.verified)
+      ..writeByte(16)
+      ..write(obj.curriculum)
+      ..writeByte(17)
+      ..write(obj.createdDateTime)
+      ..writeByte(18)
+      ..write(obj.coverageArea);
   }
 
   @override

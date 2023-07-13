@@ -9,7 +9,6 @@ appBar(BuildContext context) {
       child: GestureDetector(
         child: const Icon(Icons.arrow_back_rounded),
         onTap: () {
-          context.read<OperationProvider>().removeAllImage();
           context.read<OperationProvider>().descriptionController.clear();
           Navigator.of(context).pop();
         },

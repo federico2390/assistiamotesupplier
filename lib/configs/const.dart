@@ -16,7 +16,6 @@ class AppConst {
 
   /// Backend
   static const String domain = 'demo.buuumit.com';
-
   static const String backendBase = 'https://$domain';
   static const String login = '$backendBase/operatore/service/auth/login.php';
   static const String operation =
@@ -25,7 +24,6 @@ class AppConst {
       '$backendBase/operatore/service/misc/setting.php';
   static const String supplier =
       '$backendBase/operatore/service/misc/supplier.php';
-  static const String sender = '$backendBase/sender.php';
 
   /// App
   static const String appId = 'com.alessandromontrone.assistiamotesupplier';

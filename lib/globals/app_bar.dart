@@ -16,7 +16,7 @@ appBar(BuildContext context) {
             ),
           ),
           title: const Text(
-            'Interventi',
+            'Richieste',
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,

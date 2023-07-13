@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:adminpanel/providers/state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:adminpanel/api/setting.dart';
 import 'package:adminpanel/globals/app_bar.dart';
 import 'package:adminpanel/globals/body.dart';
 import 'package:adminpanel/providers/setting.dart';
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/notification_manager.dart';
 
@@ -36,6 +36,10 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
       NotificationManager.initInfo();
     }
 
+    // if (mounted) {
+    //   _checkPermission();
+    // }
+
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -51,6 +55,7 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
     if (!kIsWeb) {
       if (state == AppLifecycleState.resumed) {
         checkNotificationPermission(context);
+        // _checkPermission();
       }
     }
   }
@@ -70,6 +75,54 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
       context.read<SettingProvider>().setNotificationStatus(false);
     }
   }
+
+  // _checkPermission() async {
+  //   var location = Location();
+  //   bool serviceStatus = await location.serviceEnabled();
+  //   if (serviceStatus == true) {
+  //     await location.hasPermission().then((value) async {
+  //       if (value == PermissionStatus.granted) {
+  //         if (context.read<LocationService>().locationServiceDistance! > 50) {
+  //           if (ModalRoute.of(context)!.isCurrent) {
+  //             Navigator.of(context).push(
+  //               MaterialPageRoute(
+  //                 fullscreenDialog: true,
+  //                 settings: const RouteSettings(name: 'noservice'),
+  //                 builder: (context) =>
+  //                     NoService(serviceStatus: serviceStatus, permission: true),
+  //               ),
+  //             );
+  //           }
+  //         }
+  //       } else if (value == PermissionStatus.denied ||
+  //           value == PermissionStatus.deniedForever) {
+  //         if (ModalRoute.of(context)!.isCurrent) {
+  //           Navigator.of(context).push(
+  //             MaterialPageRoute(
+  //               fullscreenDialog: true,
+  //               settings: const RouteSettings(name: 'noservice'),
+  //               builder: (context) =>
+  //                   NoService(serviceStatus: serviceStatus, permission: false),
+  //             ),
+  //           );
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     if (!mounted) return;
+
+  //     if (ModalRoute.of(context)!.isCurrent) {
+  //       Navigator.of(context).push(
+  //         MaterialPageRoute(
+  //           fullscreenDialog: true,
+  //           settings: const RouteSettings(name: 'noservice'),
+  //           builder: (context) =>
+  //               NoService(serviceStatus: serviceStatus, permission: false),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

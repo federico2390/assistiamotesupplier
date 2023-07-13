@@ -52,7 +52,7 @@ class SettingApi {
         body: {
           "edit_notification": "edit_notification",
           "supplier_id": user.supplierId,
-          "notification": notification.toString(),
+          "supplier_notification_permission": notification.toString(),
         },
       );
     } catch (error) {
@@ -73,7 +73,7 @@ class SettingApi {
         body: {
           "save_token": "save_token",
           "supplier_id": user.supplierId,
-          "supplier_token": token,
+          "supplier_device_token": token,
         },
       );
     } catch (error) {

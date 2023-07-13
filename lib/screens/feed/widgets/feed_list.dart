@@ -1,5 +1,3 @@
-import 'package:adminpanel/providers/state.dart';
-import 'package:adminpanel/utils/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/operation.dart';
+import 'package:adminpanel/utils/loader.dart';
 import 'package:adminpanel/utils/size.dart';
 
 class FeedList extends StatelessWidget {
@@ -33,15 +33,15 @@ class FeedList extends StatelessWidget {
                         horizontal: AppConst.padding),
                     children: const {
                       1: Text(
-                        'Aperti',
+                        'Da accettare',
                         style: TextStyle(fontSize: 12),
                       ),
                       2: Text(
-                        'In corso',
+                        'Accettate',
                         style: TextStyle(fontSize: 12),
                       ),
                       3: Text(
-                        'Chiusi',
+                        'Chiuse',
                         style: TextStyle(fontSize: 12),
                       ),
                     },
@@ -74,7 +74,7 @@ class FeedList extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        operationProvider.opened.length.toString(),
+                        operationProvider.notAccept.length.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: context
@@ -112,7 +112,7 @@ class FeedList extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        operationProvider.working.length.toString(),
+                        operationProvider.accept.length.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: context
@@ -136,11 +136,11 @@ class FeedList extends StatelessWidget {
                 onRefresh: () =>
                     context.read<StateProvider>().buildFuture(context),
                 child: operationProvider.selectedSegment == 1
-                    ? operationProvider.opened.isNotEmpty
+                    ? operationProvider.notAccept.isNotEmpty
                         ? const OperationSegmentedPage()
                         : const Loader()
                     : operationProvider.selectedSegment == 2
-                        ? operationProvider.working.isNotEmpty
+                        ? operationProvider.accept.isNotEmpty
                             ? const OperationSegmentedPage()
                             : const Loader()
                         : operationProvider.closed.isNotEmpty
