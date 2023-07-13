@@ -6,7 +6,7 @@ import 'package:adminpanel/configs/colors.dart';
 class AppTheme {
   static ThemeData theme() {
     MaterialColor primaryColor =
-        MaterialColor(0xFF98CB00, AppColors.materialPrimaryColor);
+        MaterialColor(0xFFD21E4B, AppColors.materialPrimaryColor);
 
     return ThemeData(
       primarySwatch: primaryColor,

@@ -29,7 +29,7 @@ appBar(BuildContext context) {
                 child: GestureDetector(
                   child: const Icon(Icons.phone_rounded),
                   onTap: () async {
-                    await launchUrls('tel:${AppConst.servicePhone}');
+                    await launchUrls('tel:${AppConst.clientPhone}');
                   },
                 ),
               ),

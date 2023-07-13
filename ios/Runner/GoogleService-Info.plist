@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.alessandromontrone.duevcondominiosupplier</string>
+	<string>com.alessandromontrone.assistiamotesupplier</string>
 	<key>PROJECT_ID</key>
 	<string>v-condominio</string>
 	<key>STORAGE_BUCKET</key>

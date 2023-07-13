@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>2V Fornitori</string>
+	<string>Assistiamo Te</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -48,11 +48,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Consenti all'app di accedere alla fotocamera per permetterti di inserire allegati.</string>
+	<string>Consenti all&apos;app di accedere alla fotocamera per permetterti di inserire allegati.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Consenti all'app di accedere al microfono per permetterti di inserire allegati.</string>
+	<string>Consenti all&apos;app di accedere al microfono per permetterti di inserire allegati.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Consenti all'app di accedere alla galleria foto per permetterti di inserire allegati.</string>
+	<string>Consenti all&apos;app di accedere alla galleria foto per permetterti di inserire allegati.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -74,5 +74,13 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
 </dict>
 </plist>

@@ -7,37 +7,38 @@ class AppConst {
   static const int imagePickerQuality = 70;
   static const double imagePickerHeight = 1280;
   static const double imagePickerWidth = 1280;
+  static const double latitude = 0;
+  static const double longitude = 0;
 
   /// Setting
-  static const String serviceWebsite = 'https://2vcondominio.it';
-  static const String servicePrivacyPolicy =
-      '$serviceWebsite/privacy-policy-app';
-  static const String servicePhone = '0883566469';
+  static const String serviceWebsite = 'https://assistiamote.it';
+  static const String servicePrivacyPolicy = '$serviceWebsite/privacy-policy';
 
   /// Backend
-  static const String domain = 'adminpanel.2vcondominio.it';
+  static const String domain = 'demo.buuumit.com';
+
   static const String backendBase = 'https://$domain';
-  static const String login = '$backendBase/fornitori/service/auth/login.php';
+  static const String login = '$backendBase/operatore/service/auth/login.php';
   static const String operation =
-      '$backendBase/fornitori/service/misc/operation.php';
+      '$backendBase/operatore/service/misc/operation.php';
   static const String setting =
-      '$backendBase/fornitori/service/misc/setting.php';
+      '$backendBase/operatore/service/misc/setting.php';
   static const String supplier =
-      '$backendBase/fornitori/service/misc/supplier.php';
+      '$backendBase/operatore/service/misc/supplier.php';
   static const String sender = '$backendBase/sender.php';
 
   /// App
-  static const String appId = 'com.alessandromontrone.duevcondominiosupplier';
-  static const String appName = '2V Fornitori';
+  static const String appId = 'com.alessandromontrone.assistiamotesupplier';
+  static const String appName = 'Assistiamo Te';
   static const String appLogo = 'assets/logo.png';
-  static const String clientPhone = '+14155238886';
+  static const String clientPhone = '+390804038868';
 
   /// Push Notifications
-  static const String firebaseChannelId = 'duev_condominio_supplier';
-  static const String firebaseChannelName = 'duev_condominio_supplier';
+  static const String firebaseChannelId = 'assistiamo_te_supplier';
+  static const String firebaseChannelName = 'assistiamo_te_supplier';
   static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
   static const String firebaseAuthKey =
-      'AAAAwWvHD9w:APA91bFc_cklqhK9KBH1CROWoa9F2GVsznTVg0iDsN4jzZPUm5KFE_SU2j8D6J3mPAusYOc7O6wXDwXRDqTWuCgDuAk7eepjwV0jWv3TezWEPGUqpDTQlR1z4rZd4PUp_vaxDL7qAZwM';
+      'AAAAWbet338:APA91bHzNrK_GLkAWrahFpnoUQdxO3NSWi7MfJKBvW9wgj15W9rjKN9LmnUEPjUKN1ScukVMI2YJ4zXDmfgjNHxQk9A5MFu0hLl0Ap0QfiMdsjzqH_LpJchDEcljVhm0w04_YL-gx6Vj';
 
   /// HTTP Client
   var client = http.Client();

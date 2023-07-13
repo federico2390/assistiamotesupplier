@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:830736895964:android:8f857698049f78c48a8919",
         "android_client_info": {
-          "package_name": "com.alessandromontrone.duevcondominiosupplier"
+          "package_name": "com.alessandromontrone.assistiamotesupplier"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "830736895964-4e8padmnfl8cf5j22kd17ssdjvqqcvio.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.alessandromontrone.duevcondominiosupplier",
+            "package_name": "com.alessandromontrone.assistiamotesupplier",
             "certificate_hash": "78dadd86f60f654c52de6ce0e4fb4be3df636141"
           }
         },

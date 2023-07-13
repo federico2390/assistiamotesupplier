@@ -1,4 +1,4 @@
-package com.alessandromontrone.duevcondominiosupplier
+package com.alessandromontrone.assistiamotesupplier
 
 import io.flutter.embedding.android.FlutterActivity
 

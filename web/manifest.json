@@ -1,6 +1,6 @@
 {
-    "name": "Pannello di controllo fornitori",
-    "short_name": "Pannello di controllo fornitori",
+    "name": "Pannello di controllo operatore",
+    "short_name": "Pannello di controllo operatore",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FFFFFF",
