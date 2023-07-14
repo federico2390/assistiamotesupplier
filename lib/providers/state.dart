@@ -1,3 +1,4 @@
+import 'package:adminpanel/providers/notification.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/user.dart';
@@ -17,10 +18,12 @@ class StateProvider extends ChangeNotifier {
     final operationProvider = context.read<OperationProvider>();
     final settingProvider = context.read<SettingProvider>();
     final userProvider = context.read<UserProvider>();
+    final notificationProvider = context.read<NotificationProvider>();
 
     await userProvider.getLocalUser();
     // await userProvider.getUser();
     await operationProvider.getOperations(context);
+    await notificationProvider.getNotifications(context);
     await settingProvider.getSetting(context);
     notifyListeners();
   }

@@ -24,6 +24,9 @@ class AppConst {
       '$backendBase/operatore/service/misc/setting.php';
   static const String supplier =
       '$backendBase/operatore/service/misc/supplier.php';
+  static const String notification =
+      '$backendBase/operatore/service/misc/notification.php';
+  static const String sign = '$backendBase/operatore/service/misc/sign.php';
 
   /// App
   static const String appId = 'com.alessandromontrone.assistiamotesupplier';

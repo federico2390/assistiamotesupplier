@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:adminpanel/api/user.dart';
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/utils/launcher.dart';
 
 appBar(BuildContext context) {
   return UserApi().isLogged == true
@@ -27,9 +26,9 @@ appBar(BuildContext context) {
               padding: const EdgeInsets.only(right: AppConst.padding),
               child: Ink(
                 child: GestureDetector(
-                  child: const Icon(Icons.phone_rounded),
-                  onTap: () async {
-                    await launchUrls('tel:${AppConst.clientPhone}');
+                  child: const Icon(Icons.notifications),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/notification');
                   },
                 ),
               ),

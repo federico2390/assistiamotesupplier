@@ -1,15 +1,11 @@
 import 'dart:io';
 
-import 'package:adminpanel/providers/signature.dart';
-import 'package:adminpanel/utils/launcher.dart';
-import 'package:adminpanel/utils/size.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-import 'package:signature/signature.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 
 import 'package:adminpanel/api/operation.dart';
@@ -22,6 +18,7 @@ import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
+import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
 
 class OperationDetail extends StatelessWidget {
@@ -136,24 +133,6 @@ class OperationDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Descrizione',
-                      style: TextStyle(
-                        color: AppColors.secondaryColor,
-                      ),
-                    ),
-                    description(operation),
-                  ],
-                ),
-                const SizedBox(height: AppConst.padding),
-                Divider(
-                  height: 1,
-                  color: AppColors.secondaryColor,
-                ),
-                const SizedBox(height: AppConst.padding),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
                       'Tipo di richiesta',
                       style: TextStyle(
                         color: AppColors.secondaryColor,
@@ -188,32 +167,99 @@ class OperationDetail extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppConst.padding),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Indirizzo',
-                      style: TextStyle(
-                        color: AppColors.secondaryColor,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        launchMap(
-                            '${operation.userAddress!} ${operation.userCity!} ${operation.userRegion!} ${operation.userCountry!}');
-                      },
-                      child: Text(
-                        '${operation.userAddress!}, ${operation.userCity!}, ${operation.userRegion!}, ${operation.userCountry!}',
+                if (operation.countryFrom!.isEmpty &&
+                    operation.regionFrom!.isEmpty &&
+                    operation.provinceFrom!.isEmpty &&
+                    operation.cityFrom!.isEmpty &&
+                    operation.addressFrom!.isEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Indirizzo',
                         style: TextStyle(
-                          fontSize: 17,
-                          color: AppColors.primaryColor,
-                          decoration: TextDecoration.underline,
+                          color: AppColors.secondaryColor,
                         ),
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: AppConst.padding),
+                      GestureDetector(
+                        onTap: () {
+                          launchMap(
+                              '${operation.userAddress!} ${operation.userCity!} ${operation.userRegion!} ${operation.userCountry!}');
+                        },
+                        child: Text(
+                          '${operation.userAddress!}, ${operation.userCity!}, ${operation.userRegion!}, ${operation.userCountry!}',
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: AppColors.primaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                if (operation.countryFrom!.isEmpty &&
+                    operation.regionFrom!.isEmpty &&
+                    operation.provinceFrom!.isEmpty &&
+                    operation.cityFrom!.isEmpty &&
+                    operation.addressFrom!.isEmpty)
+                  const SizedBox(height: AppConst.padding),
+                if (operation.countryFrom!.isNotEmpty &&
+                    operation.regionFrom!.isNotEmpty &&
+                    operation.provinceFrom!.isNotEmpty &&
+                    operation.cityFrom!.isNotEmpty &&
+                    operation.addressFrom!.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Indirizzo di partenza',
+                        style: TextStyle(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          launchMap(
+                              '${operation.addressFrom!} ${operation.cityFrom!} ${operation.regionFrom!} ${operation.countryFrom!}');
+                        },
+                        child: Text(
+                          '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.regionFrom!}, ${operation.countryFrom!}',
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: AppColors.primaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppConst.padding),
+                      Text(
+                        'Indirizzo di arrivo',
+                        style: TextStyle(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          launchMap(
+                              '${operation.addressTo!} ${operation.cityTo!} ${operation.regionTo!} ${operation.countryTo!}');
+                        },
+                        child: Text(
+                          '${operation.addressTo!}, ${operation.cityTo!}, ${operation.regionTo!}, ${operation.countryTo!}',
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: AppColors.primaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                if (operation.countryFrom!.isNotEmpty &&
+                    operation.regionFrom!.isNotEmpty &&
+                    operation.provinceFrom!.isNotEmpty &&
+                    operation.cityFrom!.isNotEmpty &&
+                    operation.addressFrom!.isNotEmpty)
+                  const SizedBox(height: AppConst.padding),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -235,13 +281,34 @@ class OperationDetail extends StatelessWidget {
                   color: AppColors.secondaryColor,
                 ),
                 const SizedBox(height: AppConst.padding),
-                signature(operation),
-                const SizedBox(height: AppConst.padding),
-                Divider(
-                  height: 1,
-                  color: AppColors.secondaryColor,
-                ),
-                const SizedBox(height: AppConst.padding),
+                if (operation.visits!.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Servizi',
+                        style: TextStyle(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      const SizedBox(height: AppConst.padding / 2),
+                      visits(
+                        context,
+                        operation,
+                        endDateTimeFormat,
+                        startDateTimeFormat,
+                      ),
+                    ],
+                  ),
+                if (operation.visits!.isNotEmpty)
+                  const SizedBox(height: AppConst.padding),
+                if (operation.visits!.isNotEmpty)
+                  Divider(
+                    height: 1,
+                    color: AppColors.secondaryColor,
+                  ),
+                if (operation.visits!.isNotEmpty)
+                  const SizedBox(height: AppConst.padding),
                 operation.supplierDescription!.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +323,12 @@ class OperationDetail extends StatelessWidget {
                         ],
                       )
                     : descriptionField(context),
-                const SizedBox(height: AppConst.padding),
+                const SizedBox(height: AppConst.padding * 2),
+                Divider(
+                  height: 1,
+                  color: AppColors.secondaryColor,
+                ),
+                const SizedBox(height: AppConst.padding * 2),
                 operation.closed == 'false'
                     ? operation.supplierDescription!.isEmpty
                         ? saveButton(context, operation)
@@ -271,48 +343,12 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  Consumer<SignatureProvider> signature(Operation operation) {
-    return Consumer<SignatureProvider>(
-      builder: (context, signatureProvider, child) {
-        bool hasSignature = !signatureProvider.isSignatureEmpty;
-
-        print(hasSignature);
-
-        return Column(
-          children: [
-            Signature(
-              controller: signatureProvider.signatureController,
-              width: ScreenSize.width(context),
-              height: ScreenSize.width(context) / 2,
-              backgroundColor: AppColors.secondaryColor.withOpacity(.15),
-            ),
-            if (hasSignature) const SizedBox(height: AppConst.padding),
-            if (hasSignature)
-              TapDebouncer(
-                onTap: () async {
-                  signatureProvider.clearCanvas();
-                },
-                builder: (context, onTap) {
-                  return Button(
-                    width: ScreenSize.width(context),
-                    text: 'Cancella firma',
-                    color: Colors.black,
-                    onPressed: onTap,
-                  );
-                },
-              ),
-          ],
-        );
-      },
-    );
-  }
-
   Column descriptionField(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Inserisci una descrizione di fine lavoro',
+          'Inserisci una descrizione di fine servizio',
           style: TextStyle(
             color: AppColors.secondaryColor,
           ),
@@ -334,7 +370,7 @@ class OperationDetail extends StatelessWidget {
             return null;
           },
           maxLines: null,
-          maxLength: 1000,
+          maxLength: null,
           decoration: InputDecoration(
             labelText: 'Descrizione',
             labelStyle: TextStyle(color: AppColors.secondaryColor),
@@ -382,7 +418,7 @@ class OperationDetail extends StatelessWidget {
   ReadMoreText supplierDescription(Operation operation) {
     return ReadMoreText(
       operation.supplierDescription!,
-      trimLines: 1,
+      trimLines: 2,
       colorClickableText: AppColors.labelDarkColor,
       trimMode: TrimMode.Line,
       trimCollapsedText: '  altro',
@@ -440,27 +476,102 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  ReadMoreText description(Operation operation) {
-    return ReadMoreText(
-      operation.description!,
-      trimLines: 2,
-      colorClickableText: AppColors.labelDarkColor,
-      trimMode: TrimMode.Line,
-      trimCollapsedText: '  altro',
-      trimExpandedText: '   meno',
-      style: const TextStyle(
-        fontSize: 15,
-      ),
-      moreStyle: TextStyle(
-        color: AppColors.primaryColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 12,
-      ),
-      lessStyle: TextStyle(
-        color: AppColors.primaryColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 12,
-      ),
+  Widget visits(
+    BuildContext context,
+    Operation operation,
+    DateFormat endDateTimeFormat,
+    DateFormat startDateTimeFormat,
+  ) {
+    List<String> description = [];
+    List<String> time = [];
+    List<String> price = [];
+
+    operation.visits!.split(',').forEach((visitsList) {
+      List<String> visits = visitsList.split('§');
+
+      description.add(visits.isNotEmpty ? visits[0] : '');
+      time.add(visits.length > 1 ? visits[1] : '');
+      price.add(visits.length > 2 ? visits[2] : '');
+    });
+
+    int itemCount = description.length;
+
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: itemCount,
+      separatorBuilder: (context, index) =>
+          const SizedBox(height: AppConst.padding),
+      itemBuilder: (context, index) {
+        String desc = description[index];
+        String tim = time[index];
+
+        return Card(
+          elevation: 7,
+          shadowColor: kIsWeb
+              ? AppColors.secondaryColor.withOpacity(.5)
+              : AppColors.secondaryColor.withOpacity(.15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConst.borderRadius),
+          ),
+          color: AppColors.backgroundColor,
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: AppConst.padding, vertical: 0),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.medical_services_rounded,
+                  color: AppColors.primaryColor,
+                ),
+              ],
+            ),
+            minLeadingWidth: 0,
+            title: Text(
+              desc,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.labelDarkColor,
+              ),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: AppConst.padding / 4),
+                Text(
+                  endDateTimeFormat.format(startDateTimeFormat.parse(tim)),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: AppColors.secondaryColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            trailing: Icon(
+              Icons.arrow_forward,
+              size: 20,
+              color: AppColors.secondaryColor.withOpacity(.5),
+            ),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/visit',
+                arguments: VisitArguments(
+                  operation: operation,
+                  visitDescription: desc,
+                  visitDateTime: tim,
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 

@@ -87,7 +87,7 @@ class OperationSegmentedPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.build_rounded,
+                              Icons.medical_services_rounded,
                               color: operation.supplierOpen == 'false'
                                   ? AppColors.labelLightColor
                                   : AppColors.primaryColor,

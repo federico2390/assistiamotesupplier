@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:adminpanel/providers/geocoding.dart';
+import 'package:adminpanel/providers/notification.dart';
 import 'package:adminpanel/providers/signature.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -85,6 +86,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => StateProvider()),
           ChangeNotifierProvider(create: (context) => LocationService()),
           ChangeNotifierProvider(create: (context) => SignatureProvider()),
+          ChangeNotifierProvider(create: (context) => NotificationProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

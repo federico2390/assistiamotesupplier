@@ -1,3 +1,4 @@
+import 'package:adminpanel/models/operation.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GalleryArguments {
@@ -18,4 +19,16 @@ class OperationArguments {
   OperationArguments(
     this.operationId,
   );
+}
+
+class VisitArguments {
+  final Operation? operation;
+  final String? visitDescription;
+  final String? visitDateTime;
+
+  VisitArguments({
+    this.operation,
+    this.visitDescription,
+    this.visitDateTime,
+  });
 }

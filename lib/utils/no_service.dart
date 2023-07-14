@@ -6,10 +6,12 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/geocoding.dart';
 
 class NoService extends StatefulWidget {
-  final bool? serviceStatus;
-  final bool? permission;
   const NoService({Key? key, this.permission, this.serviceStatus})
       : super(key: key);
+
+  final bool? serviceStatus;
+  final bool? permission;
+
   @override
   State<NoService> createState() => _NoServiceState();
 }
@@ -110,8 +112,9 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
                           fontSize: 15)),
                   Text(
                       permission == true && serviceStatus == true
-                          ? 'Al momento il servizio di consegna a domicilio non copre la tua zona.'
-                          : 'Assicurati che il GPS del tuo dispositivo sia attivo e che l\'app abbia il consenso ad utilizzarlo. Se così non fosse, abilità la tua app nelle impostazioni sulla posizione del tuo dispositivo.',
+                          ? 'La tua posizione non coincide con l\'indirizzo della richiesta.'
+                          : 'Assicurati che il GPS del tuo dispositivo sia attivo e che l\'app abbia il consenso ad utilizzarlo. '
+                              'Se così non fosse, abilità la tua app nelle impostazioni sulla posizione del tuo dispositivo.',
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.grey)),
                 ],

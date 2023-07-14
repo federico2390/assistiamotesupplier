@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:adminpanel/central.dart';
 import 'package:adminpanel/screens/feed/feed_page.dart';
 import 'package:adminpanel/screens/feed/widgets/operation_detail.dart';
+import 'package:adminpanel/screens/feed/widgets/service_detail.dart';
 import 'package:adminpanel/screens/gallery/gallery_page.dart';
 import 'package:adminpanel/screens/login/login_page.dart';
+import 'package:adminpanel/screens/notification/notification_page.dart';
 import 'package:adminpanel/screens/setting/setting_page.dart';
 import 'package:adminpanel/screens/welcome/welcome_page.dart';
 
@@ -18,6 +20,8 @@ class Routes {
       '/operation_detail': (context) => const OperationDetail(),
       '/gallery': (context) => const GalleryPage(),
       '/setting': (context) => const SettingPage(),
+      '/visit': (context) => const VisitDetail(),
+      '/notification': (context) => const NotificationPage(),
     };
   }
 }
