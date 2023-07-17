@@ -47,6 +47,9 @@ class OperationSegmentedPage extends StatelessWidget {
                 if (operation.updateDateTime!.isNotEmpty) {
                   labelState = 'Aggiornata';
                 }
+                if (operation.closed == 'true') {
+                  labelState = 'Chiuso';
+                }
 
                 return TapDebouncer(
                   onTap: () async {

@@ -1,9 +1,5 @@
 import 'dart:io';
 
-import 'package:adminpanel/providers/geocoding.dart';
-import 'package:adminpanel/providers/notification.dart';
-import 'package:adminpanel/providers/signature.dart';
-import 'package:adminpanel/providers/state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -13,15 +9,20 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:adminpanel/database/user/user.dart';
 import 'package:adminpanel/globals/theme.dart';
 import 'package:adminpanel/providers/gallery.dart';
+import 'package:adminpanel/providers/geocoding.dart';
 import 'package:adminpanel/providers/loader.dart';
 import 'package:adminpanel/providers/login.dart';
+import 'package:adminpanel/providers/notification.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/search.dart';
 import 'package:adminpanel/providers/setting.dart';
+import 'package:adminpanel/providers/signature.dart';
+import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/routes.dart';
 import 'package:adminpanel/utils/shared_preference.dart';
@@ -59,6 +60,7 @@ void main() async {
 
   await SharedPrefs.init();
   logged = SharedPrefs.getInt('logged');
+  timeago.setLocaleMessages('it', timeago.ItMessages());
 
   runApp(
     const App(),

@@ -25,10 +25,12 @@ class VisitArguments {
   final Operation? operation;
   final String? visitDescription;
   final String? visitDateTime;
+  final int? visitIndex;
 
   VisitArguments({
     this.operation,
     this.visitDescription,
     this.visitDateTime,
+    this.visitIndex,
   });
 }

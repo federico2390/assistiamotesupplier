@@ -27,7 +27,7 @@ class VisitDetail extends StatefulWidget {
 class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   @override
   void initState() {
-    _checkPermission();
+    // _checkPermission();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -42,7 +42,7 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (!kIsWeb) {
       if (state == AppLifecycleState.resumed) {
-        _checkPermission();
+        // _checkPermission();
       }
     }
   }
@@ -151,7 +151,7 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
           },
         ),
       ),
-      title: Text(visitArguments.visitDescription!),
+      title: const Text('Firma'),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: AppConst.padding),
@@ -162,20 +162,22 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
                 color: AppColors.primaryColor,
               ),
               onTap: () async {
-                final byteImage = await context
-                    .read<SignatureProvider>()
-                    .signatureController
-                    .toPngBytes();
+                final byteImage =
+                    await context.read<SignatureProvider>().export();
 
-                await SignApi().uploadSign(
-                  context,
-                  visitArguments.operation!,
-                  byteImage!,
-                );
+                if (byteImage != null) {
+                  await SignApi().uploadSign(
+                    context,
+                    visitArguments.operation!,
+                    byteImage,
+                  );
+                } else {
+                  print('Errore nell\'ottenere i dati dell\'immagine.');
+                }
               },
             ),
           ),
-        ),
+        )
       ],
     );
   }

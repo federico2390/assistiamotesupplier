@@ -1,12 +1,12 @@
-import 'package:adminpanel/providers/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/state.dart';
+import 'package:adminpanel/providers/user.dart';
 import 'package:adminpanel/utils/alerts.dart';
 
 class OperationApi {
@@ -48,47 +48,17 @@ class OperationApi {
     BuildContext context,
     Operation operation,
   ) async {
+    var dateTime = DateFormat('dd/MM/yyyy HH:mm:ss');
+
     try {
       await Alerts.loadingAlert(context,
           title: 'Attendi...', subtitle: 'Modifico la richiesta');
 
-      bool isMedicoDomicilio =
-          context.read<OperationProvider>().selectedOperation ==
-              'Medico/Specialista a domicilio';
-
       var requestBody = {
         'edit_operation': 'edit_operation',
         'operation_id': operation.operationId,
-        'user_id': operation.userId,
-        'request_type': operation.requestType,
-        if (operation.description!.isNotEmpty)
-          'description': operation.description,
-        if (operation.supplierId!.isNotEmpty)
-          'supplier_id': operation.supplierId,
-        'paid': operation.paid,
-        if (operation.cost!.isNotEmpty)
-          if (operation.cost!.trim().contains(','))
-            'cost': operation.cost!.trim().replaceAll(',', '.')
-          else
-            'cost': operation.cost!.trim(),
-        if (operation.price!.isNotEmpty)
-          if (operation.price!.contains(','))
-            'price': operation.price!.trim().replaceAll(',', '.')
-          else
-            'price': operation.price!.trim(),
-        if (operation.visits!.isNotEmpty) 'visits': operation.visits,
-        if (!isMedicoDomicilio) ...{
-          'countryFrom': operation.countryFrom,
-          'regionFrom': operation.regionFrom,
-          'provinceFrom': operation.provinceFrom,
-          'cityFrom': operation.cityFrom,
-          'addressFrom': operation.addressFrom,
-          'countryTo': operation.countryTo,
-          'regionTo': operation.regionTo,
-          'provinceTo': operation.provinceTo,
-          'cityTo': operation.cityTo,
-          'addressTo': operation.addressTo,
-        },
+        'supplier_description': operation.supplierDescription,
+        'updateDateTime': dateTime.format(DateTime.now()),
       };
 
       var response = await AppConst().client.post(

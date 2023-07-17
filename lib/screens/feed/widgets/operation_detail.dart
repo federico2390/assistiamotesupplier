@@ -323,18 +323,22 @@ class OperationDetail extends StatelessWidget {
                         ],
                       )
                     : descriptionField(context),
+                if (operation.closed == 'false')
+                  if (operation.supplierDescription!.isEmpty)
+                    const SizedBox(height: AppConst.padding * 2),
+                if (operation.closed == 'false')
+                  if (operation.supplierDescription!.isEmpty)
+                    Divider(
+                      height: 1,
+                      color: AppColors.secondaryColor,
+                    ),
                 const SizedBox(height: AppConst.padding * 2),
-                Divider(
-                  height: 1,
-                  color: AppColors.secondaryColor,
-                ),
-                const SizedBox(height: AppConst.padding * 2),
-                operation.closed == 'false'
-                    ? operation.supplierDescription!.isEmpty
-                        ? saveButton(context, operation)
-                        : const SizedBox()
-                    : const SizedBox(),
-                const SizedBox(height: AppConst.padding * 3)
+                if (operation.closed == 'false')
+                  if (operation.supplierDescription!.isEmpty)
+                    saveButton(context, operation),
+                if (operation.closed == 'false')
+                  if (operation.supplierDescription!.isEmpty)
+                    const SizedBox(height: AppConst.padding * 3)
               ],
             ),
           ),
@@ -376,10 +380,15 @@ class OperationDetail extends StatelessWidget {
             labelStyle: TextStyle(color: AppColors.secondaryColor),
             alignLabelWithHint: true,
             suffixIcon: context
-                    .read<OperationProvider>()
-                    .descriptionController
-                    .text
-                    .isNotEmpty
+                        .read<OperationProvider>()
+                        .descriptionController
+                        .text
+                        .isNotEmpty ||
+                    context
+                            .read<OperationProvider>()
+                            .descriptionController
+                            .text !=
+                        ''
                 ? GestureDetector(
                     onTap: () {
                       context
@@ -447,16 +456,25 @@ class OperationDetail extends StatelessWidget {
                 .descriptionController
                 .text
                 .isNotEmpty &&
-            operation.closed == 'false') {
+            operation.closed == 'false' &&
+            operation.supplierAccept! == 'true') {
           await OperationApi()
               .editOperation(
             context,
-            operation,
+            Operation(
+              operationId: operation.operationId,
+              supplierDescription:
+                  context.read<OperationProvider>().descriptionController.text,
+            ),
           )
               .whenComplete(() {
             context.read<OperationProvider>().descriptionController.clear();
             hideKeyboard(context);
           });
+        } else {
+          Alerts.errorAlert(context,
+              title: 'Attenzione',
+              subtitle: 'Devi prima accettare la richiesta');
         }
       },
       builder: (BuildContext context, TapDebouncerFunc? onTap) {
@@ -466,7 +484,8 @@ class OperationDetail extends StatelessWidget {
                       .descriptionController
                       .text
                       .isNotEmpty &&
-                  operation.closed == 'false'
+                  operation.closed == 'false' &&
+                  operation.supplierAccept! == 'true'
               ? AppColors.primaryColor
               : AppColors.secondaryColor.withOpacity(.5),
           text: 'Salva',
@@ -522,10 +541,14 @@ class OperationDetail extends StatelessWidget {
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.medical_services_rounded,
-                  color: AppColors.primaryColor,
-                ),
+                Icon(Icons.medical_services_rounded,
+                    color:
+                        // operation.signedUrl!.isEmpty &&
+                        //         operation.signedDateTime!.isEmpty
+                        //     ?
+                        AppColors.primaryColor
+                    // : AppColors.secondaryColor.withOpacity(.5),
+                    ),
               ],
             ),
             minLeadingWidth: 0,
@@ -534,9 +557,14 @@ class OperationDetail extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColors.labelDarkColor,
-              ),
+                  fontWeight: FontWeight.bold,
+                  color:
+                      // operation.signedUrl!.isEmpty &&
+                      //         operation.signedDateTime!.isEmpty
+                      //     ?
+                      AppColors.labelDarkColor
+                  // : AppColors.secondaryColor.withOpacity(.5),
+                  ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -547,27 +575,44 @@ class OperationDetail extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: AppColors.secondaryColor,
+                    color:
+                        //  operation.signedUrl!.isEmpty &&
+                        //         operation.signedDateTime!.isEmpty
+                        //     ?
+                        AppColors.secondaryColor,
+                    // : AppColors.secondaryColor.withOpacity(.5),
                     fontSize: 14,
                   ),
                 ),
               ],
             ),
-            trailing: Icon(
-              Icons.arrow_forward,
-              size: 20,
-              color: AppColors.secondaryColor.withOpacity(.5),
-            ),
+            trailing: operation.signedUrl!.isEmpty &&
+                    operation.signedDateTime!.isEmpty
+                ? Icon(
+                    Icons.arrow_forward,
+                    size: 20,
+                    color: AppColors.secondaryColor.withOpacity(.5),
+                  )
+                : null,
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/visit',
-                arguments: VisitArguments(
-                  operation: operation,
-                  visitDescription: desc,
-                  visitDateTime: tim,
-                ),
-              );
+              if (operation.signedUrl!.isEmpty &&
+                  operation.signedDateTime!.isEmpty &&
+                  operation.supplierAccept == 'true') {
+                Navigator.pushNamed(
+                  context,
+                  '/visit',
+                  arguments: VisitArguments(
+                    operation: operation,
+                    visitDescription: desc,
+                    visitDateTime: tim,
+                    visitIndex: index,
+                  ),
+                );
+              } else {
+                Alerts.errorAlert(context,
+                    title: 'Attenzione',
+                    subtitle: 'Devi prima accettare la richiesta');
+              }
             },
           ),
         );
