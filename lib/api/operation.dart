@@ -33,7 +33,7 @@ class OperationApi {
           print('Can\'t get Operations');
         }
       } else {
-        print('User ID not available to get Operations}');
+        print('User ID not available to get Operations');
       }
     } catch (error) {
       print('ERROR_getOperations: $error');

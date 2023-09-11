@@ -25,6 +25,7 @@ class Operation {
   String? currentDateTime;
   String? updateDateTime;
   String? domain;
+  String? fromPlatform;
   String? adminOpen;
   String? supplierId;
   String? supplierDescription;
@@ -34,11 +35,11 @@ class Operation {
   String? requestId;
   String? paid;
   String? cost;
-  String? price;
-  String? invoiceId;
+  String? invoiceSended;
   String? visits;
   String? signedUrl;
   String? signedDateTime;
+  String? vatPercentage;
   String? userName;
   String? userEmail;
   String? userPhone;
@@ -62,6 +63,7 @@ class Operation {
   String? supplierPhone;
   String? supplierType;
   String? supplierCf;
+  String? supplierVat;
   String? supplierCountry;
   String? supplierRegion;
   String? supplierProvince;
@@ -75,6 +77,13 @@ class Operation {
   String? curriculum;
   String? createdDateTime;
   String? coverageArea;
+  String? supplierCost;
+  String? signedContract;
+  String? signedContractUrl;
+  String? supplierDoc1;
+  String? supplierDoc2;
+  String? supplierDoc3;
+  String? supplierDoc4;
   String? settingId;
   String? settingYear;
 
@@ -97,6 +106,7 @@ class Operation {
     this.currentDateTime,
     this.updateDateTime,
     this.domain,
+    this.fromPlatform,
     this.adminOpen,
     this.supplierId,
     this.supplierDescription,
@@ -106,11 +116,11 @@ class Operation {
     this.requestId,
     this.paid,
     this.cost,
-    this.price,
-    this.invoiceId,
+    this.invoiceSended,
     this.visits,
     this.signedUrl,
     this.signedDateTime,
+    this.vatPercentage,
     this.userName,
     this.userEmail,
     this.userPhone,
@@ -134,6 +144,7 @@ class Operation {
     this.supplierPhone,
     this.supplierType,
     this.supplierCf,
+    this.supplierVat,
     this.supplierCountry,
     this.supplierRegion,
     this.supplierProvince,
@@ -147,83 +158,99 @@ class Operation {
     this.curriculum,
     this.createdDateTime,
     this.coverageArea,
+    this.supplierCost,
+    this.signedContract,
+    this.signedContractUrl,
+    this.supplierDoc1,
+    this.supplierDoc2,
+    this.supplierDoc3,
+    this.supplierDoc4,
     this.settingId,
     this.settingYear,
   });
 
-  factory Operation.fromJson(Map<String, dynamic> json) => Operation(
-        operationId: json["operation_id"] ?? '',
-        userId: json["user_id"] ?? '',
-        countryFrom: json["countryFrom"] ?? '',
-        regionFrom: json["regionFrom"] ?? '',
-        provinceFrom: json["provinceFrom"] ?? '',
-        cityFrom: json["cityFrom"] ?? '',
-        addressFrom: json["addressFrom"] ?? '',
-        countryTo: json["countryTo"] ?? '',
-        regionTo: json["regionTo"] ?? '',
-        provinceTo: json["provinceTo"] ?? '',
-        cityTo: json["cityTo"] ?? '',
-        addressTo: json["addressTo"] ?? '',
-        requestType: json["request_type"] ?? '',
-        description: json["description"] ?? '',
-        consent: json["consent"] ?? '',
-        currentDateTime: json["currentDateTime"] ?? '',
-        updateDateTime: json["updateDateTime"] ?? '',
-        domain: json["domain"] ?? '',
-        adminOpen: json["admin_open"] ?? '',
-        supplierId: json["supplier_id"] ?? '',
-        supplierDescription: json["supplier_description"] ?? '',
-        supplierOpen: json["supplier_open"] ?? '',
-        supplierAccept: json["supplier_accept"] ?? '',
-        closed: json["closed"] ?? '',
-        requestId: json["request_id"] ?? '',
-        paid: json["paid"] ?? '',
-        cost: json["cost"] ?? '',
-        price: json["price"] ?? '',
-        invoiceId: json["invoice_id"] ?? '',
-        visits: json["visits"] ?? '',
-        signedUrl: json["signed_url"] ?? '',
-        signedDateTime: json["signed_dateTime"] ?? '',
-        userName: json["user_name"] ?? '',
-        userEmail: json["user_email"] ?? '',
-        userPhone: json["user_phone"] ?? '',
-        userCountry: json["user_country"] ?? '',
-        userRegion: json["user_region"] ?? '',
-        userProvince: json["user_province"] ?? '',
-        userCity: json["user_city"] ?? '',
-        userAddress: json["user_address"] ?? '',
-        userInvoiceName: json["user_invoice_name"] ?? '',
-        userInvoiceCf: json["user_invoice_cf"] ?? '',
-        userInvoiceVat: json["user_invoice_vat"] ?? '',
-        userInvoiceCountry: json["user_invoice_country"] ?? '',
-        userInvoiceProvince: json["user_invoice_province"] ?? '',
-        userInvoiceCity: json["user_invoice_city"] ?? '',
-        userInvoiceAddress: json["user_invoice_address"] ?? '',
-        userInvoiceCap: json["user_invoice_cap"] ?? '',
-        userInvoiceSdi: json["user_invoice_sdi"] ?? '',
-        userInvoicePec: json["user_invoice_pec"] ?? '',
-        supplierEmail: json["supplier_email"] ?? '',
-        supplierName: json["supplier_name"] ?? '',
-        supplierPhone: json["supplier_phone"] ?? '',
-        supplierType: json["supplier_type"] ?? '',
-        supplierCf: json["supplier_cf"] ?? '',
-        supplierCountry: json["supplier_country"] ?? '',
-        supplierRegion: json["supplier_region"] ?? '',
-        supplierProvince: json["supplier_province"] ?? '',
-        supplierCity: json["supplier_city"] ?? '',
-        supplierAddress: json["supplier_address"] ?? '',
-        supplierProfilePicture: json["supplier_profile_picture"] ?? '',
-        supplierDeviceToken: json["supplier_device_token"] ?? '',
-        supplierNotificationPermission:
-            json["supplier_notification_permission"] ?? '',
-        supplierIsLogged: json["supplier_is_logged"] ?? '',
-        verified: json["verified"] ?? '',
-        curriculum: json["curriculum"] ?? '',
-        createdDateTime: json["createdDateTime"] ?? '',
-        coverageArea: json["coverage_area"] ?? '',
-        settingId: json["setting_id"] ?? '',
-        settingYear: json["setting_year"] ?? '',
-      );
+  Operation.fromJson(Map<String, dynamic> json) {
+    operationId = json['operation_id'] ?? '';
+    userId = json['user_id'] ?? '';
+    countryFrom = json['countryFrom'] ?? '';
+    regionFrom = json['regionFrom'] ?? '';
+    provinceFrom = json['provinceFrom'] ?? '';
+    cityFrom = json['cityFrom'] ?? '';
+    addressFrom = json['addressFrom'] ?? '';
+    countryTo = json['countryTo'] ?? '';
+    regionTo = json['regionTo'] ?? '';
+    provinceTo = json['provinceTo'] ?? '';
+    cityTo = json['cityTo'] ?? '';
+    addressTo = json['addressTo'] ?? '';
+    requestType = json['request_type'] ?? '';
+    description = json['description'] ?? '';
+    consent = json['consent'] ?? '';
+    currentDateTime = json['currentDateTime'] ?? '';
+    updateDateTime = json['updateDateTime'] ?? '';
+    domain = json['domain'] ?? '';
+    fromPlatform = json['fromPlatform'] ?? '';
+    adminOpen = json['admin_open'] ?? '';
+    supplierId = json['supplier_id'] ?? '';
+    supplierDescription = json['supplier_description'] ?? '';
+    supplierOpen = json['supplier_open'] ?? '';
+    supplierAccept = json['supplier_accept'] ?? '';
+    closed = json['closed'] ?? '';
+    requestId = json['request_id'] ?? '';
+    paid = json['paid'] ?? '';
+    cost = json['cost'] ?? '';
+    invoiceSended = json['invoice_sended'] ?? '';
+    visits = json['visits'] ?? '';
+    signedUrl = json['signed_url'] ?? '';
+    signedDateTime = json['signed_dateTime'] ?? '';
+    vatPercentage = json['vat_percentage'] ?? '';
+    userName = json['user_name'] ?? '';
+    userEmail = json['user_email'] ?? '';
+    userPhone = json['user_phone'] ?? '';
+    userCountry = json['user_country'] ?? '';
+    userRegion = json['user_region'] ?? '';
+    userProvince = json['user_province'] ?? '';
+    userCity = json['user_city'] ?? '';
+    userAddress = json['user_address'] ?? '';
+    userInvoiceName = json['user_invoice_name'] ?? '';
+    userInvoiceCf = json['user_invoice_cf'] ?? '';
+    userInvoiceVat = json['user_invoice_vat'] ?? '';
+    userInvoiceCountry = json['user_invoice_country'] ?? '';
+    userInvoiceProvince = json['user_invoice_province'] ?? '';
+    userInvoiceCity = json['user_invoice_city'] ?? '';
+    userInvoiceAddress = json['user_invoice_address'] ?? '';
+    userInvoiceCap = json['user_invoice_cap'] ?? '';
+    userInvoiceSdi = json['user_invoice_sdi'] ?? '';
+    userInvoicePec = json['user_invoice_pec'] ?? '';
+    supplierEmail = json['supplier_email'] ?? '';
+    supplierName = json['supplier_name'] ?? '';
+    supplierPhone = json['supplier_phone'] ?? '';
+    supplierType = json['supplier_type'] ?? '';
+    supplierCf = json['supplier_cf'] ?? '';
+    supplierVat = json['supplier_vat'] ?? '';
+    supplierCountry = json['supplier_country'] ?? '';
+    supplierRegion = json['supplier_region'] ?? '';
+    supplierProvince = json['supplier_province'] ?? '';
+    supplierCity = json['supplier_city'] ?? '';
+    supplierAddress = json['supplier_address'] ?? '';
+    supplierProfilePicture = json['supplier_profile_picture'] ?? '';
+    supplierDeviceToken = json['supplier_device_token'] ?? '';
+    supplierNotificationPermission =
+        json['supplier_notification_permission'] ?? '';
+    supplierIsLogged = json['supplier_is_logged'] ?? '';
+    verified = json['verified'] ?? '';
+    curriculum = json['curriculum'] ?? '';
+    createdDateTime = json['createdDateTime'] ?? '';
+    coverageArea = json['coverage_area'] ?? '';
+    supplierCost = json['supplier_cost'] ?? '';
+    signedContract = json['signed_contract'] ?? '';
+    signedContractUrl = json['signed_contract_url'] ?? '';
+    supplierDoc1 = json['supplier_doc_1'] ?? '';
+    supplierDoc2 = json['supplier_doc_2'] ?? '';
+    supplierDoc3 = json['supplier_doc_3'] ?? '';
+    supplierDoc4 = json['supplier_doc_4'] ?? '';
+    settingId = json['setting_id'] ?? '';
+    settingYear = json['setting_year'] ?? '';
+  }
 
   Map<String, dynamic> toJson() => {
         "operation_id": operationId ?? '',
@@ -244,6 +271,7 @@ class Operation {
         "currentDateTime": currentDateTime ?? '',
         "updateDateTime": updateDateTime ?? '',
         "domain": domain ?? '',
+        "fromPlatform": fromPlatform ?? '',
         "admin_open": adminOpen ?? '',
         "supplier_id": supplierId ?? '',
         "supplier_description": supplierDescription ?? '',
@@ -253,11 +281,11 @@ class Operation {
         "request_id": requestId ?? '',
         "paid": paid ?? '',
         "cost": cost ?? '',
-        "price": price ?? '',
-        "invoice_id": invoiceId ?? '',
+        "invoice_sended": invoiceSended ?? '',
         "visits": visits ?? '',
         "signed_url": signedUrl ?? '',
         "signed_dateTime": signedDateTime ?? '',
+        "vat_percentage": vatPercentage ?? '',
         "user_name": userName ?? '',
         "user_email": userEmail ?? '',
         "user_phone": userPhone ?? '',
@@ -281,6 +309,7 @@ class Operation {
         "supplier_phone": supplierPhone ?? '',
         "supplier_type": supplierType ?? '',
         "supplier_cf": supplierCf ?? '',
+        "supplier_vat": supplierVat ?? '',
         "supplier_country": supplierCountry ?? '',
         "supplier_region": supplierRegion ?? '',
         "supplier_province": supplierProvince ?? '',
@@ -295,6 +324,13 @@ class Operation {
         "curriculum": curriculum ?? '',
         "createdDateTime": createdDateTime ?? '',
         "coverage_area": coverageArea ?? '',
+        "supplier_cost": supplierCost ?? '',
+        "signed_contract": signedContract ?? '',
+        "signed_contract_url": signedContractUrl ?? '',
+        "supplier_doc_1": supplierDoc1 ?? '',
+        "supplier_doc_2": supplierDoc2 ?? '',
+        "supplier_doc_3": supplierDoc3 ?? '',
+        "supplier_doc_4": supplierDoc4 ?? '',
         "setting_id": settingId ?? '',
         "setting_year": settingYear ?? '',
       };

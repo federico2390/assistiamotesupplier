@@ -15,9 +15,9 @@ class Notifications {
     this.notificationToUser,
     this.notificationDatetime,
     this.notificationType,
+    this.notificationOpen,
     this.notificationRemainderDatetime1,
     this.notificationRemainderDatetime2,
-    this.notificationOpen,
   });
 
   String? notificationId;
@@ -26,9 +26,9 @@ class Notifications {
   String? notificationToUser;
   String? notificationDatetime;
   String? notificationType;
+  String? notificationOpen;
   String? notificationRemainderDatetime1;
   String? notificationRemainderDatetime2;
-  String? notificationOpen;
 
   factory Notifications.fromJson(Map<String, dynamic> json) => Notifications(
         notificationId: json["notification_id"] ?? '',
@@ -37,11 +37,11 @@ class Notifications {
         notificationToUser: json["notification_to_user"] ?? '',
         notificationDatetime: json["notification_datetime"] ?? '',
         notificationType: json["notification_type"] ?? '',
+        notificationOpen: json["notification_open"] ?? '',
         notificationRemainderDatetime1:
             json["notification_remainder_datetime_1"] ?? '',
         notificationRemainderDatetime2:
             json["notification_remainder_datetime_2"] ?? '',
-        notificationOpen: json["notification_open"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,10 +51,10 @@ class Notifications {
         "notification_to_user": notificationToUser ?? '',
         "notification_datetime": notificationDatetime ?? '',
         "notification_type": notificationType ?? '',
+        "notification_open": notificationOpen ?? '',
         "notification_remainder_datetime_1":
             notificationRemainderDatetime1 ?? '',
         "notification_remainder_datetime_2":
             notificationRemainderDatetime2 ?? '',
-        "notification_open": notificationOpen ?? '',
       };
 }

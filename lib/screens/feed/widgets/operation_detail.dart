@@ -101,7 +101,7 @@ class OperationDetail extends StatelessWidget {
               children: [
                 if (operation.closed == 'false' &&
                     operation.supplierAccept!.isEmpty)
-                  acceptAnddCancelButtons(operation, context),
+                  acceptAndCancelButtons(operation, context),
                 if (operation.closed == 'false' &&
                     operation.supplierAccept!.isEmpty)
                   const SizedBox(height: AppConst.padding),
@@ -586,33 +586,22 @@ class OperationDetail extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: operation.signedUrl!.isEmpty &&
-                    operation.signedDateTime!.isEmpty
-                ? Icon(
-                    Icons.arrow_forward,
-                    size: 20,
-                    color: AppColors.secondaryColor.withOpacity(.5),
-                  )
-                : null,
+            trailing: Icon(
+              Icons.arrow_forward,
+              size: 20,
+              color: AppColors.secondaryColor.withOpacity(.5),
+            ),
             onTap: () {
-              if (operation.signedUrl!.isEmpty &&
-                  operation.signedDateTime!.isEmpty &&
-                  operation.supplierAccept == 'true') {
-                Navigator.pushNamed(
-                  context,
-                  '/visit',
-                  arguments: VisitArguments(
-                    operation: operation,
-                    visitDescription: desc,
-                    visitDateTime: tim,
-                    visitIndex: index,
-                  ),
-                );
-              } else {
-                Alerts.errorAlert(context,
-                    title: 'Attenzione',
-                    subtitle: 'Devi prima accettare la richiesta');
-              }
+              Navigator.pushNamed(
+                context,
+                '/visit',
+                arguments: VisitArguments(
+                  operation: operation,
+                  visitDescription: desc,
+                  visitDateTime: tim,
+                  visitIndex: index,
+                ),
+              );
             },
           ),
         );
@@ -620,7 +609,7 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  Row acceptAnddCancelButtons(Operation operation, BuildContext context) {
+  Row acceptAndCancelButtons(Operation operation, BuildContext context) {
     return Row(
       children: [
         TapDebouncer(
