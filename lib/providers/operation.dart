@@ -48,7 +48,7 @@ class OperationProvider extends ChangeNotifier {
 
       _notAccept = operationList
           .where(
-            (e) => e.supplierAccept!.isEmpty && e.closed == 'false',
+            (e) => e.supplierAccept == 'false' && e.closed == 'false',
           )
           .toList();
 
@@ -93,6 +93,9 @@ class OperationProvider extends ChangeNotifier {
 
   final TextEditingController descriptionController = TextEditingController();
   final FocusNode descriptionNode = FocusNode();
+
+  final TextEditingController dateController = TextEditingController();
+  final FocusNode dateNode = FocusNode();
 
   List<TextEditingController> visitsControllers = [];
   List<FocusNode> visitsFocusNodes = [];

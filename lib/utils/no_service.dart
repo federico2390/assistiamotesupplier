@@ -100,7 +100,7 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
                   const EdgeInsets.symmetric(horizontal: AppConst.padding * 3),
               child: Column(
                 children: [
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppConst.padding),
                   Text(
                       permission == true && serviceStatus == true
                           ? 'Servizio non disponibile'
@@ -110,6 +110,7 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15)),
+                  const SizedBox(height: AppConst.padding / 2),
                   Text(
                       permission == true && serviceStatus == true
                           ? 'La tua posizione non coincide con l\'indirizzo della richiesta.'

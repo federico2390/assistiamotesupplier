@@ -13,6 +13,7 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/models/operation.dart';
+import 'package:adminpanel/models/visits.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
@@ -281,7 +282,7 @@ class OperationDetail extends StatelessWidget {
                   color: AppColors.secondaryColor,
                 ),
                 const SizedBox(height: AppConst.padding),
-                if (operation.visits!.isNotEmpty)
+                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -300,14 +301,14 @@ class OperationDetail extends StatelessWidget {
                       ),
                     ],
                   ),
-                if (operation.visits!.isNotEmpty)
+                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
                   const SizedBox(height: AppConst.padding),
-                if (operation.visits!.isNotEmpty)
+                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
                   Divider(
                     height: 1,
                     color: AppColors.secondaryColor,
                   ),
-                if (operation.visits!.isNotEmpty)
+                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
                   const SizedBox(height: AppConst.padding),
                 operation.supplierDescription!.isNotEmpty
                     ? Column(
@@ -501,19 +502,72 @@ class OperationDetail extends StatelessWidget {
     DateFormat endDateTimeFormat,
     DateFormat startDateTimeFormat,
   ) {
-    List<String> description = [];
-    List<String> time = [];
-    List<String> price = [];
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+    List<Visits> visits = [];
 
-    operation.visits!.split(',').forEach((visitsList) {
-      List<String> visits = visitsList.split('§');
+    if (operation.visits!.isNotEmpty) {
+      List<String> visitList =
+          operation.visits?.split(',') ?? [operation.visits!];
+      List<String> signedUrlList =
+          operation.signedUrl?.split(',') ?? [operation.signedUrl!];
+      List<String> signedDateTimeList =
+          operation.signedDateTime?.split(',') ?? [operation.signedDateTime!];
 
-      description.add(visits.isNotEmpty ? visits[0] : '');
-      time.add(visits.length > 1 ? visits[1] : '');
-      price.add(visits.length > 2 ? visits[2] : '');
-    });
+      for (int i = 0; i < visitList.length; i++) {
+        var visitFields = visitList[i].split('§');
 
-    int itemCount = description.length;
+        String visitsDescription = visitFields.isNotEmpty ? visitFields[0] : '';
+        DateTime? visitsTime;
+        double visitsPrice = 0.0;
+        DateTime? visitsSignedDateTime;
+
+        if (visitFields.length >= 2) {
+          try {
+            var parsedDate = dateFormat.parse(visitFields[1]);
+            visitsTime = parsedDate;
+          } catch (e) {
+            visitsPrice = double.parse(visitFields[1]);
+          }
+        }
+
+        if (visitFields.length == 3) {
+          visitsPrice = double.parse(visitFields[2]);
+        }
+
+        String? signedUrl = signedUrlList.length > i ? signedUrlList[i] : null;
+
+        try {
+          var parsedDate = dateFormat.parse(signedDateTimeList[i]);
+          visitsSignedDateTime = parsedDate;
+        } catch (e) {
+          // print(e);
+        }
+
+        visits.add(
+          Visits(
+            name: visitsDescription,
+            time: visitsTime,
+            price: visitsPrice,
+            signedUrl: signedUrl,
+            signedDateTime: visitsSignedDateTime,
+          ),
+        );
+      }
+    } else {
+      visits.add(
+        Visits(
+          name: operation.requestType,
+          time: dateFormat.parse(operation.currentDateTime!),
+          price: double.parse(operation.cost!),
+          signedUrl: operation.signedUrl!,
+          signedDateTime: operation.signedDateTime!.isNotEmpty
+              ? dateFormat.parse(operation.signedDateTime!)
+              : null,
+        ),
+      );
+    }
+
+    int itemCount = visits.length;
 
     return ListView.separated(
       shrinkWrap: true,
@@ -523,8 +577,7 @@ class OperationDetail extends StatelessWidget {
       separatorBuilder: (context, index) =>
           const SizedBox(height: AppConst.padding),
       itemBuilder: (context, index) {
-        String desc = description[index];
-        String tim = time[index];
+        Visits visit = visits[index];
 
         return Card(
           elevation: 7,
@@ -541,68 +594,64 @@ class OperationDetail extends StatelessWidget {
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.medical_services_rounded,
-                    color:
-                        // operation.signedUrl!.isEmpty &&
-                        //         operation.signedDateTime!.isEmpty
-                        //     ?
-                        AppColors.primaryColor
-                    // : AppColors.secondaryColor.withOpacity(.5),
-                    ),
+                Icon(
+                  Icons.medical_services_rounded,
+                  color: visit.signedUrl == null
+                      ? AppColors.primaryColor
+                      : AppColors.secondaryColor.withOpacity(.5),
+                ),
               ],
             ),
             minLeadingWidth: 0,
             title: Text(
-              desc,
+              visit.name!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color:
-                      // operation.signedUrl!.isEmpty &&
-                      //         operation.signedDateTime!.isEmpty
-                      //     ?
-                      AppColors.labelDarkColor
-                  // : AppColors.secondaryColor.withOpacity(.5),
-                  ),
+                fontWeight: FontWeight.bold,
+                color: visit.signedUrl == null
+                    ? AppColors.labelDarkColor
+                    : AppColors.secondaryColor.withOpacity(.5),
+              ),
             ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: AppConst.padding / 4),
-                Text(
-                  endDateTimeFormat.format(startDateTimeFormat.parse(tim)),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color:
-                        //  operation.signedUrl!.isEmpty &&
-                        //         operation.signedDateTime!.isEmpty
-                        //     ?
-                        AppColors.secondaryColor,
-                    // : AppColors.secondaryColor.withOpacity(.5),
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
+            subtitle: visit.time != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: AppConst.padding / 4),
+                      Text(
+                        endDateTimeFormat.format(visit.time!),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: visit.signedUrl == null
+                              ? AppColors.secondaryColor
+                              : AppColors.secondaryColor.withOpacity(.5),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  )
+                : null,
             trailing: Icon(
               Icons.arrow_forward,
               size: 20,
               color: AppColors.secondaryColor.withOpacity(.5),
             ),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/visit',
-                arguments: VisitArguments(
-                  operation: operation,
-                  visitDescription: desc,
-                  visitDateTime: tim,
-                  visitIndex: index,
-                ),
-              );
-            },
+            onTap: visit.signedUrl == null
+                ? () {
+                    Navigator.pushNamed(
+                      context,
+                      '/visit',
+                      arguments: VisitArguments(
+                        operation: operation,
+                        visitDescription: visit.name,
+                        visitDateTime: dateFormat.format(visit.time!),
+                        visitIndex: index,
+                      ),
+                    );
+                  }
+                : null,
           ),
         );
       },
