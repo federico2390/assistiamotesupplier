@@ -506,19 +506,21 @@ class OperationDetail extends StatelessWidget {
     List<Visits> visits = [];
 
     if (operation.visits!.isNotEmpty) {
-      List<String> visitList =
-          operation.visits?.split(',') ?? [operation.visits!];
-      List<String> signedUrlList =
-          operation.signedUrl?.split(',') ?? [operation.signedUrl!];
-      List<String> signedDateTimeList =
-          operation.signedDateTime?.split(',') ?? [operation.signedDateTime!];
+      List<String> visitList = operation.visits!.contains(',')
+          ? operation.visits!.split(',')
+          : [operation.visits!];
+      List<String> signedUrlList = operation.signedUrl!.contains(',')
+          ? operation.signedUrl!.split(',')
+          : [operation.signedUrl!];
+      List<String> signedDateTimeList = operation.signedDateTime!.contains(',')
+          ? operation.signedDateTime!.split(',')
+          : [operation.signedDateTime!];
 
       for (int i = 0; i < visitList.length; i++) {
         var visitFields = visitList[i].split('§');
 
-        String visitsDescription = visitFields.isNotEmpty ? visitFields[0] : '';
+        String visitsDescription = visitFields[0];
         DateTime? visitsTime;
-        double visitsPrice = 0.0;
         DateTime? visitsSignedDateTime;
 
         if (visitFields.length >= 2) {
@@ -526,12 +528,8 @@ class OperationDetail extends StatelessWidget {
             var parsedDate = dateFormat.parse(visitFields[1]);
             visitsTime = parsedDate;
           } catch (e) {
-            visitsPrice = double.parse(visitFields[1]);
+            // print(e);
           }
-        }
-
-        if (visitFields.length == 3) {
-          visitsPrice = double.parse(visitFields[2]);
         }
 
         String? signedUrl = signedUrlList.length > i ? signedUrlList[i] : null;
@@ -547,7 +545,6 @@ class OperationDetail extends StatelessWidget {
           Visits(
             name: visitsDescription,
             time: visitsTime,
-            price: visitsPrice,
             signedUrl: signedUrl,
             signedDateTime: visitsSignedDateTime,
           ),
@@ -558,7 +555,6 @@ class OperationDetail extends StatelessWidget {
         Visits(
           name: operation.requestType,
           time: dateFormat.parse(operation.currentDateTime!),
-          price: double.parse(operation.cost!),
           signedUrl: operation.signedUrl!,
           signedDateTime: operation.signedDateTime!.isNotEmpty
               ? dateFormat.parse(operation.signedDateTime!)
@@ -596,7 +592,7 @@ class OperationDetail extends StatelessWidget {
               children: [
                 Icon(
                   Icons.medical_services_rounded,
-                  color: visit.signedUrl == null
+                  color: visit.signedUrl == null || visit.signedUrl!.isEmpty
                       ? AppColors.primaryColor
                       : AppColors.secondaryColor.withOpacity(.5),
                 ),
@@ -609,7 +605,7 @@ class OperationDetail extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: visit.signedUrl == null
+                color: visit.signedUrl == null || visit.signedUrl!.isEmpty
                     ? AppColors.labelDarkColor
                     : AppColors.secondaryColor.withOpacity(.5),
               ),
@@ -624,7 +620,8 @@ class OperationDetail extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: visit.signedUrl == null
+                          color: visit.signedUrl == null ||
+                                  visit.signedUrl!.isEmpty
                               ? AppColors.secondaryColor
                               : AppColors.secondaryColor.withOpacity(.5),
                           fontSize: 14,
@@ -638,7 +635,7 @@ class OperationDetail extends StatelessWidget {
               size: 20,
               color: AppColors.secondaryColor.withOpacity(.5),
             ),
-            onTap: visit.signedUrl == null
+            onTap: visit.signedUrl == null || visit.signedUrl!.isEmpty
                 ? () {
                     Navigator.pushNamed(
                       context,

@@ -101,14 +101,9 @@ class OperationProvider extends ChangeNotifier {
   List<FocusNode> visitsFocusNodes = [];
   void addTextField({
     String visitsDescription = '',
-    String visitsTime = '',
-    String visitsPrice = '',
   }) {
     final visitsController = TextEditingController(text: visitsDescription);
-    final visitsFocusNode = FocusNode();
     visitsControllers.add(visitsController);
-    visitsFocusNodes.add(visitsFocusNode);
-
     notifyListeners();
   }
 
@@ -117,7 +112,6 @@ class OperationProvider extends ChangeNotifier {
     final removedVisitsFocusNode = visitsFocusNodes.removeAt(index);
     removedVisitsController.dispose();
     removedVisitsFocusNode.dispose();
-
     notifyListeners();
   }
 
