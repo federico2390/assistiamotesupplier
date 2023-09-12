@@ -293,6 +293,8 @@ class OperationDetail extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: AppConst.padding / 2),
+                      supplierSetVisitsDate(context, operation),
+                      const SizedBox(height: AppConst.padding),
                       visits(
                         context,
                         operation,
@@ -496,6 +498,87 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
+  setVisitsDate(BuildContext context, Operation operation) async {
+    DateTime dateTime = DateTime.now();
+
+    final selectedDate = await showDatePicker(
+      context: context,
+      initialDate: dateTime,
+      firstDate: dateTime,
+      currentDate: dateTime,
+      lastDate: dateTime.add(const Duration(days: 365)),
+      cancelText: 'Annulla',
+      confirmText: 'Conferma',
+    );
+
+    if (selectedDate != null && dateTime != selectedDate) {
+      context.read<OperationProvider>().setSelectedDate(selectedDate);
+    }
+  }
+
+  TextFormField supplierSetVisitsDate(
+      BuildContext context, Operation operation) {
+    return TextFormField(
+      readOnly: true,
+      controller: context.read<OperationProvider>().dateTimeController,
+      focusNode: context.read<OperationProvider>().dateTimeNode,
+      keyboardType: TextInputType.datetime,
+      textInputAction: TextInputAction.next,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+      textCapitalization: TextCapitalization.sentences,
+      enableInteractiveSelection: true,
+      selectionControls: MaterialTextSelectionControls(),
+      onTap: () {
+        setVisitsDate(context, operation);
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Il campo non può essere vuoto';
+        }
+        return null;
+      },
+      maxLines: null,
+      maxLength: null,
+      decoration: InputDecoration(
+        labelText: 'Data della visita',
+        labelStyle: TextStyle(color: AppColors.secondaryColor),
+        alignLabelWithHint: true,
+        suffixIcon: context
+                    .read<OperationProvider>()
+                    .dateTimeController
+                    .text
+                    .isNotEmpty ||
+                context.read<OperationProvider>().dateTimeController.text != ''
+            ? GestureDetector(
+                onTap: () {
+                  context.read<OperationProvider>().dateTimeController.clear();
+                },
+                child: Icon(
+                  Icons.cancel_rounded,
+                  color: AppColors.secondaryColor,
+                ),
+              )
+            : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.secondaryColor),
+          borderRadius: BorderRadius.circular(AppConst.borderRadius),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.secondaryColor),
+          borderRadius: BorderRadius.circular(AppConst.borderRadius),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.errorColor),
+          borderRadius: BorderRadius.circular(AppConst.borderRadius),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.errorColor),
+          borderRadius: BorderRadius.circular(AppConst.borderRadius),
+        ),
+      ),
+    );
+  }
+
   Widget visits(
     BuildContext context,
     Operation operation,
@@ -637,6 +720,7 @@ class OperationDetail extends StatelessWidget {
             ),
             onTap: visit.signedUrl == null || visit.signedUrl!.isEmpty
                 ? () {
+                    /// TODO: visitDateTime dà null perchè manca la data della visita, orenderla dal campo di testo che va inserito
                     Navigator.pushNamed(
                       context,
                       '/visit',

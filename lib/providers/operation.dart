@@ -91,6 +91,14 @@ class OperationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  final TextEditingController dateTimeController = TextEditingController();
+  final FocusNode dateTimeNode = FocusNode();
+  void setSelectedDate(DateTime selectedDate) {
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+    dateController.text = dateFormat.format(selectedDate);
+    notifyListeners();
+  }
+
   final TextEditingController descriptionController = TextEditingController();
   final FocusNode descriptionNode = FocusNode();
 
