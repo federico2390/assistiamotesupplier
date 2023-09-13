@@ -1,3 +1,4 @@
+import 'package:adminpanel/models/visits.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -166,6 +167,37 @@ class OperationApi {
       }
     } catch (error) {
       print('ERROR_markOperationAsClosed: $error');
+    } finally {
+      AppConst().client.close();
+      await context.read<StateProvider>().buildFuture(context);
+    }
+  }
+
+  Future setVisitsDateTime(
+    BuildContext context,
+    Operation operation,
+    String selectedDateTime,
+    Visits visit,
+  ) async {
+    try {
+      var response = await AppConst().client.post(
+        kIsWeb
+            ? Uri.parse(AppConst.operation).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.operation),
+        body: {
+          'set_visit_datetime': 'set_visit_datetime',
+          'operation_id': operation.operationId,
+          'selectedDateTime': selectedDateTime,
+          'visit_name': visit.name,
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('DateTime setted to Visits');
+      } else {
+        print('Can\'t set DateTime to Visits');
+      }
+    } catch (error) {
+      print('ERROR_setVisitsDateTime: $error');
     } finally {
       AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);

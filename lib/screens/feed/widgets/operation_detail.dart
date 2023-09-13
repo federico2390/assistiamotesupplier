@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,7 @@ import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
+import 'package:adminpanel/utils/size.dart';
 
 class OperationDetail extends StatelessWidget {
   const OperationDetail({super.key});
@@ -101,19 +103,19 @@ class OperationDetail extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: AppConst.padding),
               children: [
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept!.isEmpty)
+                    operation.supplierAccept == 'false')
                   acceptAndCancelButtons(operation, context),
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept!.isEmpty)
+                    operation.supplierAccept == 'false')
                   const SizedBox(height: AppConst.padding),
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept!.isEmpty)
+                    operation.supplierAccept == 'false')
                   Divider(
                     height: 1,
                     color: AppColors.secondaryColor,
                   ),
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept!.isEmpty)
+                    operation.supplierAccept == 'false')
                   const SizedBox(height: AppConst.padding),
                 if (operation.closed == 'false' &&
                     operation.supplierAccept == 'true')
@@ -293,8 +295,6 @@ class OperationDetail extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: AppConst.padding / 2),
-                      supplierSetVisitsDate(context, operation),
-                      const SizedBox(height: AppConst.padding),
                       visits(
                         context,
                         operation,
@@ -498,38 +498,144 @@ class OperationDetail extends StatelessWidget {
     );
   }
 
-  setVisitsDate(BuildContext context, Operation operation) async {
-    DateTime dateTime = DateTime.now();
+  _showMaterialDatePicker(
+      BuildContext context, Operation operation, Visits visit) async {
+    DateTime now = DateTime.now();
+    TimeOfDay timeNow = TimeOfDay.now();
+    DateTime? selectedDateTime;
 
     final selectedDate = await showDatePicker(
       context: context,
-      initialDate: dateTime,
-      firstDate: dateTime,
-      currentDate: dateTime,
-      lastDate: dateTime.add(const Duration(days: 365)),
+      initialDate: now,
+      firstDate: now,
+      lastDate: now.add(const Duration(days: 365)),
+      currentDate: now,
       cancelText: 'Annulla',
       confirmText: 'Conferma',
+      initialDatePickerMode: DatePickerMode.day,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
     );
 
-    if (selectedDate != null && dateTime != selectedDate) {
-      context.read<OperationProvider>().setSelectedDate(selectedDate);
+    if (selectedDate != null) {
+      final selectedTime = await showTimePicker(
+        context: context,
+        initialTime: timeNow,
+        helpText: 'Aiuto',
+        hourLabelText: 'Ore',
+        minuteLabelText: 'Minuti',
+        cancelText: 'Annulla',
+        confirmText: 'Conferma',
+        errorInvalidText: 'Data non valida',
+      );
+
+      if (selectedTime != null) {
+        final dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+
+        selectedDateTime = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
+
+        final selectedDT = dateFormat.format(selectedDateTime);
+        OperationApi()
+            .setVisitsDateTime(context, operation, selectedDT, visit)
+            .then(
+              (value) => Navigator.of(context).pop(),
+            );
+      }
     }
   }
 
+  _showCupertinoDatePicker(
+      BuildContext context, Operation operation, Visits visit) async {
+    DateTime now = DateTime.now();
+    DateTime? selectedDateTime;
+
+    return await showCupertinoModalPopup(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        height: ScreenSize.height(context) / 3,
+        decoration: BoxDecoration(
+          color: AppColors.backgroundColor,
+          borderRadius: BorderRadius.circular(AppConst.borderRadius),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                CupertinoButton(
+                  child: Text(
+                    'Annulla',
+                    style: TextStyle(
+                      color: AppColors.secondaryColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                const Spacer(),
+                CupertinoButton(
+                  child: const Text(
+                    'Conferma',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    final dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+                    if (selectedDateTime != null) {
+                      final selectedDate = dateFormat.format(selectedDateTime!);
+                      OperationApi().setVisitsDateTime(
+                          context, operation, selectedDate, visit);
+                    } else {
+                      final selectedDate = dateFormat.format(now);
+                      OperationApi().setVisitsDateTime(
+                          context, operation, selectedDate, visit);
+                    }
+
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+            Expanded(
+              child: CupertinoDatePicker(
+                initialDateTime: now,
+                minimumDate: now,
+                use24hFormat: true,
+                onDateTimeChanged: (val) {
+                  selectedDateTime = val;
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   TextFormField supplierSetVisitsDate(
-      BuildContext context, Operation operation) {
+      BuildContext context, Operation operation, Visits visit) {
     return TextFormField(
       readOnly: true,
       controller: context.read<OperationProvider>().dateTimeController,
       focusNode: context.read<OperationProvider>().dateTimeNode,
       keyboardType: TextInputType.datetime,
       textInputAction: TextInputAction.next,
-      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-      textCapitalization: TextCapitalization.sentences,
       enableInteractiveSelection: true,
       selectionControls: MaterialTextSelectionControls(),
       onTap: () {
-        setVisitsDate(context, operation);
+        if (Platform.isAndroid) {
+          _showMaterialDatePicker(context, operation, visit);
+        } else {
+          _showCupertinoDatePicker(context, operation, visit);
+        }
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -537,8 +643,6 @@ class OperationDetail extends StatelessWidget {
         }
         return null;
       },
-      maxLines: null,
-      maxLength: null,
       decoration: InputDecoration(
         labelText: 'Data della visita',
         labelStyle: TextStyle(color: AppColors.secondaryColor),
@@ -667,72 +771,87 @@ class OperationDetail extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppConst.borderRadius),
           ),
           color: AppColors.backgroundColor,
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-                horizontal: AppConst.padding, vertical: 0),
-            leading: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.medical_services_rounded,
-                  color: visit.signedUrl == null || visit.signedUrl!.isEmpty
-                      ? AppColors.primaryColor
-                      : AppColors.secondaryColor.withOpacity(.5),
+          child: Column(
+            children: [
+              if (visit.time == null) const SizedBox(height: AppConst.padding),
+              if (visit.time == null)
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppConst.padding),
+                  child: supplierSetVisitsDate(context, operation, visit),
                 ),
-              ],
-            ),
-            minLeadingWidth: 0,
-            title: Text(
-              visit.name!,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: visit.signedUrl == null || visit.signedUrl!.isEmpty
-                    ? AppColors.labelDarkColor
-                    : AppColors.secondaryColor.withOpacity(.5),
+              if (visit.time == null)
+                const SizedBox(height: AppConst.padding / 2),
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: AppConst.padding),
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.medical_services_rounded,
+                      color: visit.signedUrl == null || visit.signedUrl!.isEmpty
+                          ? AppColors.primaryColor
+                          : AppColors.secondaryColor.withOpacity(.5),
+                    ),
+                  ],
+                ),
+                minLeadingWidth: 0,
+                title: Text(
+                  visit.name!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: visit.signedUrl == null || visit.signedUrl!.isEmpty
+                        ? AppColors.labelDarkColor
+                        : AppColors.secondaryColor.withOpacity(.5),
+                  ),
+                ),
+                subtitle: visit.time != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: AppConst.padding / 4),
+                          Text(
+                            endDateTimeFormat.format(visit.time!),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: visit.signedUrl == null ||
+                                      visit.signedUrl!.isEmpty
+                                  ? AppColors.secondaryColor
+                                  : AppColors.secondaryColor.withOpacity(.5),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      )
+                    : null,
+                trailing: Icon(
+                  Icons.arrow_forward,
+                  size: 20,
+                  color: AppColors.secondaryColor.withOpacity(.5),
+                ),
+                onTap: visit.signedUrl == null ||
+                        visit.signedUrl!.isEmpty && visit.time != null
+                    ? () {
+                        Navigator.pushNamed(
+                          context,
+                          '/visit',
+                          arguments: VisitArguments(
+                            operation: operation,
+                            visitDescription: visit.name,
+                            visitDateTime: dateFormat.format(visit.time!),
+                            visitIndex: index,
+                          ),
+                        );
+                      }
+                    : null,
               ),
-            ),
-            subtitle: visit.time != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: AppConst.padding / 4),
-                      Text(
-                        endDateTimeFormat.format(visit.time!),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: visit.signedUrl == null ||
-                                  visit.signedUrl!.isEmpty
-                              ? AppColors.secondaryColor
-                              : AppColors.secondaryColor.withOpacity(.5),
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  )
-                : null,
-            trailing: Icon(
-              Icons.arrow_forward,
-              size: 20,
-              color: AppColors.secondaryColor.withOpacity(.5),
-            ),
-            onTap: visit.signedUrl == null || visit.signedUrl!.isEmpty
-                ? () {
-                    /// TODO: visitDateTime dà null perchè manca la data della visita, orenderla dal campo di testo che va inserito
-                    Navigator.pushNamed(
-                      context,
-                      '/visit',
-                      arguments: VisitArguments(
-                        operation: operation,
-                        visitDescription: visit.name,
-                        visitDateTime: dateFormat.format(visit.time!),
-                        visitIndex: index,
-                      ),
-                    );
-                  }
-                : null,
+              if (visit.time == null)
+                const SizedBox(height: AppConst.padding / 2.5),
+            ],
           ),
         );
       },
