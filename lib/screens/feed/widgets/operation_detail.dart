@@ -837,36 +837,46 @@ class OperationDetail extends StatelessWidget {
                   size: 20,
                   color: AppColors.secondaryColor.withOpacity(.5),
                 ),
-                onTap: (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
-                        visit.time != null
-                    ? () {
-                        Navigator.pushNamed(
-                          context,
-                          '/visit',
-                          arguments: VisitArguments(
-                            operation: operation,
-                            visitDescription: visit.name,
-                            visitDateTime:
-                                startDateTimeFormat.format(visit.time!),
-                            visitIndex: index,
-                          ),
-                        );
-                      }
-                    : (visit.signedUrl != null)
-                        ? () async {
-                            await Alerts.errorAlert(
+                onTap: (operation.closed == 'false' &&
+                        operation.supplierAccept! == 'true')
+                    ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
+                            visit.time != null
+                        ? () {
+                            Navigator.pushNamed(
                               context,
-                              title: 'Attenzione',
-                              subtitle: 'Hai già firmato questa visita',
+                              '/visit',
+                              arguments: VisitArguments(
+                                operation: operation,
+                                visitDescription: visit.name,
+                                visitDateTime:
+                                    startDateTimeFormat.format(visit.time!),
+                                visitIndex: index,
+                              ),
                             );
                           }
-                        : () async {
-                            await Alerts.errorAlert(
-                              context,
-                              title: 'Attenzione',
-                              subtitle: 'Devi inserire la data della visita',
-                            );
-                          },
+                        : (visit.signedUrl != null)
+                            ? () async {
+                                await Alerts.errorAlert(
+                                  context,
+                                  title: 'Attenzione',
+                                  subtitle: 'Hai già firmato questa visita',
+                                );
+                              }
+                            : () async {
+                                await Alerts.errorAlert(
+                                  context,
+                                  title: 'Attenzione',
+                                  subtitle:
+                                      'Devi inserire la data della visita',
+                                );
+                              }
+                    : () async {
+                        await Alerts.errorAlert(
+                          context,
+                          title: 'Attenzione',
+                          subtitle: 'Devi prima accettare la visita',
+                        );
+                      },
               ),
               if (visit.time == null)
                 const SizedBox(height: AppConst.padding / 2.5),
