@@ -364,6 +364,14 @@ class OperationDetail extends StatelessWidget {
             color: AppColors.secondaryColor,
           ),
         ),
+        Text(
+          'Attenzione: Una volta che contrassegnerai la visita come chiusa, '
+          'non sarai più in grado di inserire ulteriori informazioni.',
+          style: TextStyle(
+            color: AppColors.secondaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: AppConst.padding),
         TextFormField(
           controller: context.read<OperationProvider>().descriptionController,
@@ -494,7 +502,7 @@ class OperationDetail extends StatelessWidget {
                   operation.supplierAccept! == 'true'
               ? AppColors.primaryColor
               : AppColors.secondaryColor.withOpacity(.5),
-          text: 'Salva',
+          text: 'Salva descrizione',
           onPressed: onTap,
         );
       },
