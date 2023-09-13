@@ -27,9 +27,9 @@ class VisitDetail extends StatefulWidget {
 class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   @override
   void initState() {
-    // _checkPermission();
-    super.initState();
+    _checkPermission();
     WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
@@ -42,7 +42,7 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (!kIsWeb) {
       if (state == AppLifecycleState.resumed) {
-        // _checkPermission();
+        _checkPermission();
       }
     }
   }

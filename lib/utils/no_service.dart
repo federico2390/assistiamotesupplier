@@ -88,6 +88,18 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Ink(
+          child: GestureDetector(
+            child: const Icon(Icons.close),
+            onTap: () {
+              Navigator.of(context).popUntil((route) {
+                return route.settings.name == '/operation_detail';
+              });
+            },
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

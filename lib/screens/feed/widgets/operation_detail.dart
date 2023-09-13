@@ -689,7 +689,6 @@ class OperationDetail extends StatelessWidget {
     DateFormat endDateTimeFormat,
     DateFormat startDateTimeFormat,
   ) {
-    final dateFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
     List<Visits> visits = [];
 
     if (operation.visits!.isNotEmpty) {
@@ -712,7 +711,7 @@ class OperationDetail extends StatelessWidget {
 
         if (visitFields.length >= 2) {
           try {
-            var parsedDate = dateFormat.parse(visitFields[1]);
+            var parsedDate = startDateTimeFormat.parse(visitFields[1]);
             visitsTime = parsedDate;
           } catch (e) {
             // print(e);
@@ -722,7 +721,7 @@ class OperationDetail extends StatelessWidget {
         String? signedUrl = signedUrlList.length > i ? signedUrlList[i] : null;
 
         try {
-          var parsedDate = dateFormat.parse(signedDateTimeList[i]);
+          var parsedDate = startDateTimeFormat.parse(signedDateTimeList[i]);
           visitsSignedDateTime = parsedDate;
         } catch (e) {
           // print(e);
@@ -741,10 +740,10 @@ class OperationDetail extends StatelessWidget {
       visits.add(
         Visits(
           name: operation.requestType,
-          time: dateFormat.parse(operation.currentDateTime!),
+          time: startDateTimeFormat.parse(operation.currentDateTime!),
           signedUrl: operation.signedUrl!,
           signedDateTime: operation.signedDateTime!.isNotEmpty
-              ? dateFormat.parse(operation.signedDateTime!)
+              ? startDateTimeFormat.parse(operation.signedDateTime!)
               : null,
         ),
       );
@@ -790,7 +789,9 @@ class OperationDetail extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.medical_services_rounded,
-                      color: visit.signedUrl == null || visit.signedUrl!.isEmpty
+                      color: (visit.signedUrl == null ||
+                                  visit.signedUrl!.isEmpty) &&
+                              visit.time != null
                           ? AppColors.primaryColor
                           : AppColors.secondaryColor.withOpacity(.5),
                     ),
@@ -803,9 +804,11 @@ class OperationDetail extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: visit.signedUrl == null || visit.signedUrl!.isEmpty
-                        ? AppColors.labelDarkColor
-                        : AppColors.secondaryColor.withOpacity(.5),
+                    color:
+                        (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
+                                visit.time != null
+                            ? AppColors.labelDarkColor
+                            : AppColors.secondaryColor.withOpacity(.5),
                   ),
                 ),
                 subtitle: visit.time != null
@@ -818,8 +821,9 @@ class OperationDetail extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: visit.signedUrl == null ||
-                                      visit.signedUrl!.isEmpty
+                              color: (visit.signedUrl == null ||
+                                          visit.signedUrl!.isEmpty) &&
+                                      visit.time != null
                                   ? AppColors.secondaryColor
                                   : AppColors.secondaryColor.withOpacity(.5),
                               fontSize: 14,
@@ -833,8 +837,8 @@ class OperationDetail extends StatelessWidget {
                   size: 20,
                   color: AppColors.secondaryColor.withOpacity(.5),
                 ),
-                onTap: visit.signedUrl == null ||
-                        visit.signedUrl!.isEmpty && visit.time != null
+                onTap: (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
+                        visit.time != null
                     ? () {
                         Navigator.pushNamed(
                           context,
@@ -842,12 +846,19 @@ class OperationDetail extends StatelessWidget {
                           arguments: VisitArguments(
                             operation: operation,
                             visitDescription: visit.name,
-                            visitDateTime: dateFormat.format(visit.time!),
+                            visitDateTime:
+                                startDateTimeFormat.format(visit.time!),
                             visitIndex: index,
                           ),
                         );
                       }
-                    : null,
+                    : () async {
+                        await Alerts.errorAlert(
+                          context,
+                          title: 'Attenzione',
+                          subtitle: 'Devi inserire la data della visita',
+                        );
+                      },
               ),
               if (visit.time == null)
                 const SizedBox(height: AppConst.padding / 2.5),
