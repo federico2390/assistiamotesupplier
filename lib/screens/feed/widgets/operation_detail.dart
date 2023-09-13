@@ -303,39 +303,43 @@ class OperationDetail extends StatelessWidget {
                       ),
                     ],
                   ),
-                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
+                if (operation.visits!.isNotEmpty ||
+                    operation.cost!.isNotEmpty && operation.closed == 'false')
                   const SizedBox(height: AppConst.padding),
-                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
+                if (operation.visits!.isNotEmpty ||
+                    operation.cost!.isNotEmpty && operation.closed == 'false')
                   Divider(
                     height: 1,
                     color: AppColors.secondaryColor,
                   ),
-                if (operation.visits!.isNotEmpty || operation.cost!.isNotEmpty)
+                if (operation.visits!.isNotEmpty ||
+                    operation.cost!.isNotEmpty && operation.closed == 'false')
                   const SizedBox(height: AppConst.padding),
-                operation.supplierDescription!.isNotEmpty
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Descrizione',
-                            style: TextStyle(
-                              color: AppColors.secondaryColor,
-                            ),
-                          ),
-                          supplierDescription(operation),
-                        ],
-                      )
-                    : descriptionField(context),
+                if (operation.supplierDescription!.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Descrizione',
+                        style: TextStyle(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      supplierDescription(operation),
+                    ],
+                  )
+                else if (operation.closed == 'false')
+                  descriptionField(context),
                 if (operation.closed == 'false')
                   if (operation.supplierDescription!.isEmpty)
-                    const SizedBox(height: AppConst.padding * 2),
-                if (operation.closed == 'false')
-                  if (operation.supplierDescription!.isEmpty)
-                    Divider(
-                      height: 1,
-                      color: AppColors.secondaryColor,
-                    ),
-                const SizedBox(height: AppConst.padding * 2),
+                    const SizedBox(height: AppConst.padding),
+                // if (operation.closed == 'false')
+                //   if (operation.supplierDescription!.isEmpty)
+                //     Divider(
+                //       height: 1,
+                //       color: AppColors.secondaryColor,
+                //     ),
+                // const SizedBox(height: AppConst.padding * 2),
                 if (operation.closed == 'false')
                   if (operation.supplierDescription!.isEmpty)
                     saveButton(context, operation),
@@ -476,8 +480,7 @@ class OperationDetail extends StatelessWidget {
           });
         } else {
           Alerts.errorAlert(context,
-              title: 'Attenzione',
-              subtitle: 'Devi prima accettare la richiesta');
+              title: 'Attenzione', subtitle: 'Devi inserire una descrizione');
         }
       },
       builder: (BuildContext context, TapDebouncerFunc? onTap) {
@@ -789,11 +792,13 @@ class OperationDetail extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.medical_services_rounded,
-                      color: (visit.signedUrl == null ||
-                                  visit.signedUrl!.isEmpty) &&
-                              visit.time != null
-                          ? AppColors.primaryColor
-                          : AppColors.secondaryColor.withOpacity(.5),
+                      color: (operation.closed == 'true')
+                          ? AppColors.secondaryColor.withOpacity(.5)
+                          : (visit.signedUrl == null ||
+                                      visit.signedUrl!.isEmpty) &&
+                                  visit.time != null
+                              ? AppColors.primaryColor
+                              : AppColors.secondaryColor.withOpacity(.5),
                     ),
                   ],
                 ),
@@ -804,8 +809,10 @@ class OperationDetail extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color:
-                        (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
+                    color: (operation.closed == 'true')
+                        ? AppColors.secondaryColor.withOpacity(.5)
+                        : (visit.signedUrl == null ||
+                                    visit.signedUrl!.isEmpty) &&
                                 visit.time != null
                             ? AppColors.labelDarkColor
                             : AppColors.secondaryColor.withOpacity(.5),
@@ -821,22 +828,30 @@ class OperationDetail extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: (visit.signedUrl == null ||
-                                          visit.signedUrl!.isEmpty) &&
-                                      visit.time != null
-                                  ? AppColors.secondaryColor
-                                  : AppColors.secondaryColor.withOpacity(.5),
+                              color: (operation.closed == 'true')
+                                  ? AppColors.secondaryColor.withOpacity(.5)
+                                  : (visit.signedUrl == null ||
+                                              visit.signedUrl!.isEmpty) &&
+                                          visit.time != null
+                                      ? AppColors.secondaryColor
+                                      : AppColors.secondaryColor
+                                          .withOpacity(.5),
                               fontSize: 14,
                             ),
                           ),
                         ],
                       )
                     : null,
-                trailing: Icon(
-                  Icons.arrow_forward,
-                  size: 20,
-                  color: AppColors.secondaryColor.withOpacity(.5),
-                ),
+                trailing: (operation.closed == 'true')
+                    ? null
+                    : (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
+                            visit.time != null
+                        ? Icon(
+                            Icons.arrow_forward,
+                            size: 20,
+                            color: AppColors.secondaryColor.withOpacity(.5),
+                          )
+                        : null,
                 onTap: (operation.closed == 'false' &&
                         operation.supplierAccept! == 'true')
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
@@ -870,13 +885,21 @@ class OperationDetail extends StatelessWidget {
                                       'Devi inserire la data della visita',
                                 );
                               }
-                    : () async {
-                        await Alerts.errorAlert(
-                          context,
-                          title: 'Attenzione',
-                          subtitle: 'Devi prima accettare la visita',
-                        );
-                      },
+                    : (operation.closed == 'true')
+                        ? () async {
+                            await Alerts.errorAlert(
+                              context,
+                              title: 'Attenzione',
+                              subtitle: 'Hai già firmato questa visita',
+                            );
+                          }
+                        : () async {
+                            await Alerts.errorAlert(
+                              context,
+                              title: 'Attenzione',
+                              subtitle: 'Devi prima accettare la visita',
+                            );
+                          },
               ),
               if (visit.time == null)
                 const SizedBox(height: AppConst.padding / 2.5),
