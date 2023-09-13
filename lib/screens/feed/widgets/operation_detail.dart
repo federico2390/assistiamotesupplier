@@ -852,13 +852,21 @@ class OperationDetail extends StatelessWidget {
                           ),
                         );
                       }
-                    : () async {
-                        await Alerts.errorAlert(
-                          context,
-                          title: 'Attenzione',
-                          subtitle: 'Devi inserire la data della visita',
-                        );
-                      },
+                    : (visit.signedUrl != null)
+                        ? () async {
+                            await Alerts.errorAlert(
+                              context,
+                              title: 'Attenzione',
+                              subtitle: 'Hai già firmato questa visita',
+                            );
+                          }
+                        : () async {
+                            await Alerts.errorAlert(
+                              context,
+                              title: 'Attenzione',
+                              subtitle: 'Devi inserire la data della visita',
+                            );
+                          },
               ),
               if (visit.time == null)
                 const SizedBox(height: AppConst.padding / 2.5),
