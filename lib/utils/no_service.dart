@@ -52,6 +52,9 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
       case AppLifecycleState.detached:
         print('###appLifeCycleState detached');
         break;
+      case AppLifecycleState.hidden:
+        print('###appLifeCycleState hidden');
+        break;
     }
   }
 
