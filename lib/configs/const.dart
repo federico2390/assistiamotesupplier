@@ -15,7 +15,7 @@ class AppConst {
   static const String servicePrivacyPolicy = '$serviceWebsite/privacy-policy';
 
   /// Backend
-  static const String domain = 'demo.buuumit.com';
+  static const String domain = 'adminpanel-assistiamote.it';
   static const String backendBase = 'https://$domain';
   static const String login = '$backendBase/operatore/service/auth/login.php';
   static const String operation =
