@@ -2,33 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>830736895964-kejmn04rm27hah4o7ti4508m7r3j8bsl.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.830736895964-kejmn04rm27hah4o7ti4508m7r3j8bsl</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAAfBPtiqk4rIMHvwaQ6BD2Q-CrDu6jrck</string>
+	<string>AIzaSyDB4S3V8xs8abDY43I4sSxKjUDvaWpQeLw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>830736895964</string>
+	<string>385333714815</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.alessandromontrone.assistiamotesupplier</string>
 	<key>PROJECT_ID</key>
-	<string>v-condominio</string>
+	<string>assistiamote-2e06f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>v-condominio.appspot.com</string>
+	<string>assistiamote-2e06f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:830736895964:ios:7652a21f1567ae778a8919</string>
+	<string>1:385333714815:ios:f78ff909cbc0c776e9c44a</string>
 </dict>
 </plist>
