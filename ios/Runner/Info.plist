@@ -47,12 +47,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Consenti all&apos;app di accedere alla fotocamera per permetterti di inserire allegati.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Consenti all&apos;app di accedere al microfono per permetterti di inserire allegati.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Consenti all&apos;app di accedere alla galleria foto per permetterti di inserire allegati.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
