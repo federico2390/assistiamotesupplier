@@ -90,53 +90,56 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Ink(
-          child: GestureDetector(
-            child: const Icon(Icons.close),
-            onTap: () {
-              Navigator.of(context).popUntil((route) {
-                return route.settings.name == '/operation_detail';
-              });
-            },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Ink(
+            child: GestureDetector(
+              child: const Icon(Icons.close),
+              onTap: () {
+                Navigator.of(context).popUntil((route) {
+                  return route.settings.name == '/operation_detail';
+                });
+              },
+            ),
           ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset('assets/misc/search.png',
-                width: MediaQuery.of(context).size.width / 1.75),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppConst.padding * 3),
-              child: Column(
-                children: [
-                  const SizedBox(height: AppConst.padding),
-                  Text(
-                      permission == true && serviceStatus == true
-                          ? 'Servizio non disponibile'
-                          : 'Non posso determinare la tua posiszione',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15)),
-                  const SizedBox(height: AppConst.padding / 2),
-                  Text(
-                      permission == true && serviceStatus == true
-                          ? 'La tua posizione non coincide con l\'indirizzo della richiesta.'
-                          : 'Assicurati che il GPS del tuo dispositivo sia attivo e che l\'app abbia il consenso ad utilizzarlo. '
-                              'Se così non fosse, abilità la tua app nelle impostazioni sulla posizione del tuo dispositivo.',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.grey)),
-                ],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('assets/misc/search.png',
+                  width: MediaQuery.of(context).size.width / 1.75),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppConst.padding * 3),
+                child: Column(
+                  children: [
+                    const SizedBox(height: AppConst.padding),
+                    Text(
+                        permission == true && serviceStatus == true
+                            ? 'Servizio non disponibile'
+                            : 'Non posso determinare la tua posiszione',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15)),
+                    const SizedBox(height: AppConst.padding / 2),
+                    Text(
+                        permission == true && serviceStatus == true
+                            ? 'La tua posizione non coincide con l\'indirizzo della richiesta.'
+                            : 'Assicurati che il GPS del tuo dispositivo sia attivo e che l\'app abbia il consenso ad utilizzarlo. '
+                                'Se così non fosse, abilità la tua app nelle impostazioni sulla posizione del tuo dispositivo.',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.grey)),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
