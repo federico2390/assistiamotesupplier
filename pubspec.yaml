@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
   app_settings: ^5.1.1
   cupertino_icons: ^1.0.5
-  dio: ^5.3.3
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   http: ^1.1.0
@@ -24,16 +23,11 @@ dependencies:
   firebase_messaging_web: ^3.3.0
   flutter_app_badger: ^1.5.0
   flutter_local_notifications: ^15.1.1
-  http_parser: ^4.0.2
-  image_picker: ^1.0.4
-  image_picker_ios: ^0.8.6+1
   intl: ^0.18.0
   package_info_plus:
   path_provider: ^2.0.12
-  photo_view: ^0.14.0
   provider: ^6.0.5
   readmore: ^2.2.0
-  rxdart: ^0.27.7
   settings_ui: ^2.0.2
   shared_preferences: ^2.0.17
   signature: ^5.4.0
@@ -42,7 +36,6 @@ dependencies:
   tap_debouncer: ^2.0.2
   timeago: ^3.5.0
   url_launcher: ^6.1.7
-  uuid: ^3.0.7
 
   # Geocoding
   geolocator: ^10.1.0
