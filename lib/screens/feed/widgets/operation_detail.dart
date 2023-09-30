@@ -551,11 +551,7 @@ class OperationDetail extends StatelessWidget {
         );
 
         final selectedDT = dateFormat.format(selectedDateTime);
-        OperationApi()
-            .setVisitsDateTime(context, operation, selectedDT, visit)
-            .then(
-              (value) => Navigator.of(context).pop(),
-            );
+        OperationApi().setVisitsDateTime(context, operation, selectedDT, visit);
       }
     }
   }
