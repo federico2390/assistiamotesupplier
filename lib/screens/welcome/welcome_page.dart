@@ -31,7 +31,7 @@ class Welcome extends StatelessWidget {
                 child: Image.asset(
                   AppConst.appLogo,
                   fit: BoxFit.contain,
-                  height: kIsWeb ? 150 : ScreenSize.width(context) / 3,
+                  width: kIsWeb ? 150 : ScreenSize.width(context) / 1.5,
                 ),
               ),
               const Spacer(),

@@ -25,7 +25,8 @@ buildModalPopup(
                   ),
                   onTap: () async {
                     Navigator.pop(context);
-                    await AppSettings.openNotificationSettings();
+                    await AppSettings.openAppSettings(
+                        type: AppSettingsType.notification);
                   },
                 ),
                 ListTile(
@@ -56,7 +57,8 @@ buildModalPopup(
                     ),
                     onTap: () async {
                       Navigator.pop(context);
-                      await AppSettings.openNotificationSettings();
+                      await AppSettings.openAppSettings(
+                          type: AppSettingsType.notification);
                     },
                   ),
                   ListTile(
@@ -94,7 +96,8 @@ buildModalPopup(
                     isDefaultAction: true,
                     onPressed: () async {
                       Navigator.pop(context);
-                      await AppSettings.openNotificationSettings();
+                      await AppSettings.openAppSettings(
+                          type: AppSettingsType.notification);
                     },
                     child: Text(
                       action,
