@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:adminpanel/providers/location.dart';
+import 'package:adminpanel/utils/no_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -860,18 +863,60 @@ class OperationDetail extends StatelessWidget {
                         operation.supplierAccept! == 'true')
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
                             visit.time != null
-                        ? () {
-                            Navigator.pushNamed(
+                        ? () async {
+                            await Alerts.hideAlert();
+                            await Alerts.loadingAlert(
                               context,
-                              '/visit',
-                              arguments: VisitArguments(
-                                operation: operation,
-                                visitDescription: visit.name,
-                                visitDateTime:
-                                    startDateTimeFormat.format(visit.time!),
-                                visitIndex: index,
-                              ),
+                              title: 'Attendi',
+                              subtitle: 'Determino la tua posizione',
                             );
+
+                            final locationProvider =
+                                Provider.of<LocationProvider>(context,
+                                    listen: false);
+                            locationProvider
+                                .checkLocationPermission()
+                                .then((permisison) async {
+                              print('sdsa__ $permisison');
+
+                              if (!permisison.isGranted) {
+                                if (locationProvider.distance > 50) {
+                                  await Alerts.hideAlert();
+                                  if (ModalRoute.of(context)!.isCurrent) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        fullscreenDialog: true,
+                                        settings: const RouteSettings(
+                                            name: 'noservice'),
+                                        builder: (context) => const NoService(),
+                                      ),
+                                    );
+                                  }
+                                }
+                              } else if (permisison.isGranted &&
+                                  locationProvider.distance < 50) {
+                                await Alerts.hideAlert();
+                                Navigator.pushNamed(
+                                  context,
+                                  '/visit',
+                                  arguments: VisitArguments(
+                                    operation: operation,
+                                    visitDescription: visit.name,
+                                    visitDateTime:
+                                        startDateTimeFormat.format(visit.time!),
+                                    visitIndex: index,
+                                  ),
+                                );
+                              } else {
+                                await Alerts.hideAlert();
+                                await Alerts.errorAlert(
+                                  context,
+                                  title: 'Attenzione',
+                                  subtitle:
+                                      'Non riesco a determinare la tua posisiozne',
+                                );
+                              }
+                            });
                           }
                         : (visit.signedUrl != null)
                             ? () async {

@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/const.dart';
-import 'package:adminpanel/providers/geocoding.dart';
+import 'package:adminpanel/providers/location.dart';
 
 class NoService extends StatefulWidget {
-  const NoService({Key? key, this.permission, this.serviceStatus})
-      : super(key: key);
-
-  final bool? serviceStatus;
-  final bool? permission;
+  const NoService({Key? key}) : super(key: key);
 
   @override
   State<NoService> createState() => _NoServiceState();
 }
 
 class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
-  bool? serviceStatus = false;
-  bool? permission = false;
-
   @override
   void initState() {
-    serviceStatus = widget.serviceStatus;
-    permission = widget.permission;
-    _checkPermission();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -59,37 +49,19 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
   }
 
   _checkPermission() async {
-    var location = Location();
-    serviceStatus = await location.serviceEnabled();
-    if (serviceStatus == true) {
-      await location.hasPermission().then((value) async {
-        if (value == PermissionStatus.granted) {
-          if (context.read<LocationService>().locationServiceDistance! > 50) {
-            setState(() {
-              serviceStatus = true;
-              permission = true;
-            });
-          } else {
-            Navigator.of(context).pop();
-          }
-        } else if (value == PermissionStatus.denied ||
-            value == PermissionStatus.deniedForever) {
-          setState(() {
-            serviceStatus = true;
-            permission = false;
-          });
-        }
-      });
-    } else {
-      setState(() {
-        serviceStatus = false;
-        permission = false;
-      });
-    }
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+    locationProvider.checkLocationPermission().then((permisison) {
+      if (permisison.isGranted && locationProvider.distance < 50) {
+        Navigator.of(context).pop();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _checkPermission();
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -112,29 +84,22 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
             children: [
               Image.asset('assets/misc/search.png',
                   width: MediaQuery.of(context).size.width / 1.75),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppConst.padding * 3),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppConst.padding * 3),
                 child: Column(
                   children: [
-                    const SizedBox(height: AppConst.padding),
-                    Text(
-                        permission == true && serviceStatus == true
-                            ? 'Servizio non disponibile'
-                            : 'Non posso determinare la tua posiszione',
+                    SizedBox(height: AppConst.padding),
+                    Text('Servizio non disponibile',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 15)),
-                    const SizedBox(height: AppConst.padding / 2),
+                    SizedBox(height: AppConst.padding / 2),
                     Text(
-                        permission == true && serviceStatus == true
-                            ? 'La tua posizione non coincide con l\'indirizzo della richiesta.'
-                            : 'Assicurati che il GPS del tuo dispositivo sia attivo e che l\'app abbia il consenso ad utilizzarlo. '
-                                'Se così non fosse, abilità la tua app nelle impostazioni sulla posizione del tuo dispositivo.',
+                        'Assicurati che il GPS del tuo dispositivo sia attivo e che la tua posizione sia nelle immediate vicinanze dell\'indirizzo.',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.grey)),
+                        style: TextStyle(color: Colors.grey)),
                   ],
                 ),
               ),

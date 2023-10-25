@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -10,7 +10,7 @@ import 'package:adminpanel/configs/colors.dart';
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/models/operation.dart';
-import 'package:adminpanel/providers/geocoding.dart';
+import 'package:adminpanel/providers/location.dart';
 import 'package:adminpanel/providers/signature.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
@@ -48,51 +48,23 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   }
 
   _checkPermission() async {
-    var location = Location();
-    bool serviceStatus = await location.serviceEnabled();
-    if (serviceStatus == true) {
-      await location.hasPermission().then((value) async {
-        if (value == PermissionStatus.granted) {
-          if (context.read<LocationService>().locationServiceDistance! > 50) {
-            if (ModalRoute.of(context)!.isCurrent) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  settings: const RouteSettings(name: 'noservice'),
-                  builder: (context) =>
-                      NoService(serviceStatus: serviceStatus, permission: true),
-                ),
-              );
-            }
-          }
-        } else if (value == PermissionStatus.denied ||
-            value == PermissionStatus.deniedForever) {
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+    locationProvider.checkLocationPermission().then((permisison) {
+      if (!permisison.isGranted) {
+        if (locationProvider.distance > 50) {
           if (ModalRoute.of(context)!.isCurrent) {
             Navigator.of(context).push(
               MaterialPageRoute(
                 fullscreenDialog: true,
                 settings: const RouteSettings(name: 'noservice'),
-                builder: (context) =>
-                    NoService(serviceStatus: serviceStatus, permission: false),
+                builder: (context) => const NoService(),
               ),
             );
           }
         }
-      });
-    } else {
-      if (!mounted) return;
-
-      if (ModalRoute.of(context)!.isCurrent) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            settings: const RouteSettings(name: 'noservice'),
-            builder: (context) =>
-                NoService(serviceStatus: serviceStatus, permission: false),
-          ),
-        );
       }
-    }
+    });
   }
 
   @override
@@ -111,7 +83,12 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
           body: body(visitArguments, size),
           bottomNavigationBar: SafeArea(
             maintainBottomViewPadding: true,
-            minimum: const EdgeInsets.symmetric(horizontal: AppConst.padding),
+            minimum: const EdgeInsets.fromLTRB(
+              AppConst.padding,
+              0,
+              AppConst.padding,
+              AppConst.padding,
+            ),
             child: TapDebouncer(
               onTap: () async {
                 context.read<SignatureProvider>().clearCanvas();

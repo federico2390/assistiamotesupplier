@@ -7,8 +7,6 @@ class AppConst {
   static const int imagePickerQuality = 70;
   static const double imagePickerHeight = 1280;
   static const double imagePickerWidth = 1280;
-  static const double latitude = 0;
-  static const double longitude = 0;
 
   /// Setting
   static const String serviceWebsite = 'https://assistiamote.it';
