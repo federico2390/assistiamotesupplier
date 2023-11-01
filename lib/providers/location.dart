@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -6,17 +8,19 @@ import 'package:permission_handler/permission_handler.dart';
 
 class LocationProvider extends ChangeNotifier {
   Position? _currentLocation;
-  String _address = "";
   double _distance = 0;
+  String _visitAddress = "";
 
   Position? get currentLocation => _currentLocation;
-  String get address => _address;
   double get distance => _distance;
+  String get visitAddress => _visitAddress;
 
-  Future<PermissionStatus> checkLocationPermission() async {
+  Future<PermissionStatus> checkLocationPermission(String address) async {
     final status = await Permission.location.status;
 
     if (status.isGranted) {
+      _visitAddress = address;
+
       await getCurrentLocation();
     } else if (status.isDenied || status.isPermanentlyDenied) {
       await Permission.location.request();
@@ -31,12 +35,7 @@ class LocationProvider extends ChangeNotifier {
         desiredAccuracy: LocationAccuracy.best,
       );
 
-      final List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-
       _currentLocation = position;
-      _address = placemarks[0].name ?? "";
-      print('sdsa__ $_address');
 
       await updateDistance();
     } catch (error) {
@@ -47,7 +46,8 @@ class LocationProvider extends ChangeNotifier {
   }
 
   Future<void> updateDistance() async {
-    final List<Location> locations = await locationFromAddress(_address);
+    final List<Location> locations = await locationFromAddress(_visitAddress);
+
     if (locations.isNotEmpty) {
       final double distanceInMeters = Geolocator.distanceBetween(
         _currentLocation!.latitude,
@@ -55,12 +55,18 @@ class LocationProvider extends ChangeNotifier {
         locations[0].latitude,
         locations[0].longitude,
       );
-      _distance = distanceInMeters / 1000;
+
+      _distance = distanceInMeters.ceilToDouble() / 1000;
+
+      print('sdsa__Address: $_visitAddress');
+      print('sdsa__Current Location: $_currentLocation');
+      print('sdsa__Destination Latitude: ${locations[0].latitude}');
+      print('sdsa__Destination Longitude: ${locations[0].longitude}');
+      print('sdsa__Distance: $_distance kilometers');
     } else {
       _distance = 0;
     }
 
-    print('sdsa__ $_distance');
     notifyListeners();
   }
 }

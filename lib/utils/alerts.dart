@@ -1,3 +1,4 @@
+import 'package:adminpanel/configs/const.dart';
 import 'package:flutter/material.dart';
 import 'package:status_alert/status_alert.dart';
 
@@ -20,6 +21,7 @@ class Alerts {
       title: title,
       subtitle: subtitle,
       configuration: const IconConfiguration(icon: Icons.done_rounded),
+      padding: const EdgeInsets.all(AppConst.padding),
       maxWidth: 260,
     );
   }
@@ -33,6 +35,7 @@ class Alerts {
       title: title,
       subtitle: subtitle,
       configuration: const IconConfiguration(icon: Icons.update_rounded),
+      padding: const EdgeInsets.all(AppConst.padding),
       maxWidth: 260,
     );
   }
@@ -46,6 +49,7 @@ class Alerts {
       title: title,
       subtitle: subtitle,
       configuration: const IconConfiguration(icon: Icons.error_outline_rounded),
+      padding: const EdgeInsets.all(AppConst.padding),
       maxWidth: 260,
     );
   }

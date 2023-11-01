@@ -173,11 +173,11 @@ class OperationDetail extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppConst.padding),
-                if (operation.countryFrom!.isEmpty &&
-                    operation.regionFrom!.isEmpty &&
-                    operation.provinceFrom!.isEmpty &&
-                    operation.cityFrom!.isEmpty &&
-                    operation.addressFrom!.isEmpty)
+                if (operation.userCountry!.isNotEmpty &&
+                    operation.userRegion!.isNotEmpty &&
+                    operation.userProvince!.isNotEmpty &&
+                    operation.userCity!.isNotEmpty &&
+                    operation.userAddress!.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -190,10 +190,10 @@ class OperationDetail extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           launchMap(
-                              '${operation.userAddress!} ${operation.userCity!} ${operation.userRegion!} ${operation.userCountry!}');
+                              '${operation.userAddress!} ${operation.userCity!} ${operation.userProvince!} ${operation.userRegion!} ${operation.userCountry!}');
                         },
                         child: Text(
-                          '${operation.userAddress!}, ${operation.userCity!}, ${operation.userRegion!}, ${operation.userCountry!}',
+                          '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}',
                           style: TextStyle(
                             fontSize: 17,
                             color: AppColors.primaryColor,
@@ -203,11 +203,11 @@ class OperationDetail extends StatelessWidget {
                       )
                     ],
                   ),
-                if (operation.countryFrom!.isEmpty &&
-                    operation.regionFrom!.isEmpty &&
-                    operation.provinceFrom!.isEmpty &&
-                    operation.cityFrom!.isEmpty &&
-                    operation.addressFrom!.isEmpty)
+                if (operation.userCountry!.isNotEmpty &&
+                    operation.userRegion!.isNotEmpty &&
+                    operation.userProvince!.isNotEmpty &&
+                    operation.userCity!.isNotEmpty &&
+                    operation.userAddress!.isNotEmpty)
                   const SizedBox(height: AppConst.padding),
                 if (operation.countryFrom!.isNotEmpty &&
                     operation.regionFrom!.isNotEmpty &&
@@ -226,10 +226,10 @@ class OperationDetail extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           launchMap(
-                              '${operation.addressFrom!} ${operation.cityFrom!} ${operation.regionFrom!} ${operation.countryFrom!}');
+                              '${operation.addressFrom!} ${operation.cityFrom!} ${operation.provinceFrom!} ${operation.regionFrom!} ${operation.countryFrom!}');
                         },
                         child: Text(
-                          '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.regionFrom!}, ${operation.countryFrom!}',
+                          '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.countryFrom!}',
                           style: TextStyle(
                             fontSize: 17,
                             color: AppColors.primaryColor,
@@ -247,10 +247,10 @@ class OperationDetail extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           launchMap(
-                              '${operation.addressTo!} ${operation.cityTo!} ${operation.regionTo!} ${operation.countryTo!}');
+                              '${operation.addressTo!} ${operation.cityTo!} ${operation.provinceTo!} ${operation.regionTo!} ${operation.countryTo!}');
                         },
                         child: Text(
-                          '${operation.addressTo!}, ${operation.cityTo!}, ${operation.regionTo!}, ${operation.countryTo!}',
+                          '${operation.addressTo!}, ${operation.cityTo!}, ${operation.provinceTo!}, ${operation.regionTo!}, ${operation.countryTo!}',
                           style: TextStyle(
                             fontSize: 17,
                             color: AppColors.primaryColor,
@@ -864,59 +864,130 @@ class OperationDetail extends StatelessWidget {
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
                             visit.time != null
                         ? () async {
-                            await Alerts.hideAlert();
-                            await Alerts.loadingAlert(
-                              context,
-                              title: 'Attendi',
-                              subtitle: 'Determino la tua posizione',
-                            );
+                            if (operation.userCountry!.isNotEmpty &&
+                                operation.userRegion!.isNotEmpty &&
+                                operation.userProvince!.isNotEmpty &&
+                                operation.userCity!.isNotEmpty &&
+                                operation.userAddress!.isNotEmpty) {
+                              await Alerts.hideAlert();
+                              await Alerts.loadingAlert(
+                                context,
+                                title: 'Attendi',
+                                subtitle: 'Determino la tua posizione',
+                              );
 
-                            final locationProvider =
-                                Provider.of<LocationProvider>(context,
-                                    listen: false);
-                            locationProvider
-                                .checkLocationPermission()
-                                .then((permisison) async {
-                              print('sdsa__ $permisison');
-
-                              if (!permisison.isGranted) {
-                                if (locationProvider.distance > 50) {
-                                  await Alerts.hideAlert();
-                                  if (ModalRoute.of(context)!.isCurrent) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        fullscreenDialog: true,
-                                        settings: const RouteSettings(
-                                            name: 'noservice'),
-                                        builder: (context) => const NoService(),
-                                      ),
-                                    );
+                              final locationProvider =
+                                  Provider.of<LocationProvider>(context,
+                                      listen: false);
+                              locationProvider
+                                  .checkLocationPermission(
+                                      '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
+                                  .then((permisison) async {
+                                if (!permisison.isGranted) {
+                                  if (locationProvider.distance > 50) {
+                                    await Alerts.hideAlert();
+                                    if (ModalRoute.of(context)!.isCurrent) {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          fullscreenDialog: true,
+                                          settings: const RouteSettings(
+                                              name: 'noservice'),
+                                          builder: (context) =>
+                                              const NoService(),
+                                        ),
+                                      );
+                                    }
                                   }
+                                } else if (permisison.isGranted &&
+                                    locationProvider.distance < 50) {
+                                  await Alerts.hideAlert();
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/visit',
+                                    arguments: VisitArguments(
+                                      operation: operation,
+                                      visitDescription: visit.name,
+                                      visitDateTime: startDateTimeFormat
+                                          .format(visit.time!),
+                                      visitIndex: index,
+                                    ),
+                                  );
+                                } else {
+                                  await Alerts.hideAlert();
+                                  await Alerts.errorAlert(
+                                    context,
+                                    title: 'Attenzione',
+                                    subtitle:
+                                        'Non riesco a determinare la tua posisiozne',
+                                  );
                                 }
-                              } else if (permisison.isGranted &&
-                                  locationProvider.distance < 50) {
-                                await Alerts.hideAlert();
-                                Navigator.pushNamed(
-                                  context,
-                                  '/visit',
-                                  arguments: VisitArguments(
-                                    operation: operation,
-                                    visitDescription: visit.name,
-                                    visitDateTime:
-                                        startDateTimeFormat.format(visit.time!),
-                                    visitIndex: index,
-                                  ),
-                                );
-                              } else {
-                                await Alerts.hideAlert();
-                                await Alerts.errorAlert(
-                                  context,
-                                  title: 'Attenzione',
-                                  subtitle:
-                                      'Non riesco a determinare la tua posisiozne',
-                                );
-                              }
-                            });
+                              });
+                            } else if (operation.regionFrom!.isNotEmpty &&
+                                operation.regionFrom!.isNotEmpty &&
+                                operation.provinceFrom!.isNotEmpty &&
+                                operation.cityFrom!.isNotEmpty &&
+                                operation.addressFrom!.isNotEmpty) {
+                              await Alerts.hideAlert();
+                              await Alerts.loadingAlert(
+                                context,
+                                title: 'Attendi',
+                                subtitle: 'Determino la tua posizione',
+                              );
+
+                              final locationProvider =
+                                  Provider.of<LocationProvider>(context,
+                                      listen: false);
+                              locationProvider
+                                  .checkLocationPermission(
+                                      '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
+                                  .then((permisison) async {
+                                if (!permisison.isGranted) {
+                                  if (locationProvider.distance > 50) {
+                                    await Alerts.hideAlert();
+                                    if (ModalRoute.of(context)!.isCurrent) {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          fullscreenDialog: true,
+                                          settings: const RouteSettings(
+                                              name: 'noservice'),
+                                          builder: (context) =>
+                                              const NoService(),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                } else if (permisison.isGranted &&
+                                    locationProvider.distance < 50) {
+                                  await Alerts.hideAlert();
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/visit',
+                                    arguments: VisitArguments(
+                                      operation: operation,
+                                      visitDescription: visit.name,
+                                      visitDateTime: startDateTimeFormat
+                                          .format(visit.time!),
+                                      visitIndex: index,
+                                    ),
+                                  );
+                                } else {
+                                  await Alerts.hideAlert();
+                                  await Alerts.errorAlert(
+                                    context,
+                                    title: 'Attenzione',
+                                    subtitle:
+                                        'Non riesco a determinare la tua posisiozne',
+                                  );
+                                }
+                              });
+                            } else {
+                              await Alerts.errorAlert(
+                                context,
+                                title: 'Attenzione',
+                                subtitle:
+                                    'Firma non accessibile\nL\'indirizzo è assente',
+                              );
+                            }
                           }
                         : (visit.signedUrl != null)
                             ? () async {

@@ -27,7 +27,6 @@ class VisitDetail extends StatefulWidget {
 class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   @override
   void initState() {
-    _checkPermission();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -48,9 +47,14 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   }
 
   _checkPermission() async {
+    final visitArguments =
+        ModalRoute.of(context)!.settings.arguments as VisitArguments;
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    locationProvider.checkLocationPermission().then((permisison) {
+    locationProvider
+        .checkLocationPermission(
+            '${visitArguments.operation!.userAddress!}, ${visitArguments.operation!.userCity!}, ${visitArguments.operation!.userProvince!}, ${visitArguments.operation!.userRegion!}, ${visitArguments.operation!.userCountry!}')
+        .then((permisison) {
       if (!permisison.isGranted) {
         if (locationProvider.distance > 50) {
           if (ModalRoute.of(context)!.isCurrent) {

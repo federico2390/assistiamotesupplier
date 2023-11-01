@@ -42,11 +42,11 @@ class LoginApi {
           await context.read<UserProvider>().addLocalUser(
                 UserDatabase(
                   supplierId: user.supplierId!.trim(),
-                  supplierEmail: user.supplierEmail!.trim(),
+                  supplierEmail: supplierEmail.trim(),
                   supplierName: user.supplierName!.trim(),
                   supplierPhone: user.supplierPhone!.trim(),
                   supplierType: user.supplierType!.trim(),
-                  supplierCf: user.supplierCf!.trim(),
+                  supplierCf: supplierCf.trim(),
                   supplierCountry: user.supplierCountry!.trim(),
                   supplierRegion: user.supplierRegion!.trim(),
                   supplierProvince: user.supplierProvince!.trim(),

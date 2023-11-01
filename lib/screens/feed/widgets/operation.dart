@@ -99,11 +99,15 @@ class OperationSegmentedPage extends StatelessWidget {
                         ),
                         minLeadingWidth: 0,
                         title: Text(
-                          operation.userAddress!,
+                          operation.userAddress!.isNotEmpty
+                              ? operation.userAddress!
+                              : 'Nessuno indirizzo',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: operation.userAddress!.isNotEmpty
+                                ? FontWeight.bold
+                                : null,
                             color: operation.supplierOpen == 'false'
                                 ? AppColors.labelLightColor
                                 : AppColors.labelDarkColor,
@@ -130,7 +134,9 @@ class OperationSegmentedPage extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    operation.description!,
+                                    operation.description!.isNotEmpty
+                                        ? operation.description!
+                                        : 'Nessuna descrizione',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

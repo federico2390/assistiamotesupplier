@@ -6,13 +6,11 @@ import 'package:adminpanel/configs/const.dart';
 appBar(BuildContext context) {
   return UserApi().isLogged == true
       ? AppBar(
-          leading: Ink(
-            child: GestureDetector(
-              child: const Icon(Icons.settings_rounded),
-              onTap: () {
-                Navigator.pushNamed(context, '/setting');
-              },
-            ),
+          leading: GestureDetector(
+            child: const Icon(Icons.settings_rounded),
+            onTap: () {
+              Navigator.pushNamed(context, '/setting');
+            },
           ),
           title: const Text(
             'Richieste',
@@ -24,13 +22,11 @@ appBar(BuildContext context) {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: AppConst.padding),
-              child: Ink(
-                child: GestureDetector(
-                  child: const Icon(Icons.notifications),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/notification');
-                  },
-                ),
+              child: GestureDetector(
+                child: const Icon(Icons.notifications),
+                onTap: () {
+                  Navigator.pushNamed(context, '/notification');
+                },
               ),
             ),
           ],

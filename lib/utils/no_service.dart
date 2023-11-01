@@ -51,7 +51,9 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
   _checkPermission() async {
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    locationProvider.checkLocationPermission().then((permisison) {
+    locationProvider
+        .checkLocationPermission(locationProvider.visitAddress)
+        .then((permisison) {
       if (permisison.isGranted && locationProvider.distance < 50) {
         Navigator.of(context).pop();
       }
