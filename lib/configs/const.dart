@@ -27,7 +27,7 @@ class AppConst {
   static const String sign = '$backendBase/operatore/service/misc/sign.php';
 
   /// App
-  static const String appId = 'com.alessandromontrone.assistiamotesupplier';
+  static const String appId = 'com.assistiamote.app';
   static const String appName = 'Assistiamo Te';
   static const String appLogo = 'assets/logo.png';
   static const String clientPhone = '+390804038868';

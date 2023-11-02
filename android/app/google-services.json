@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:385333714815:android:220977a15b13d1e0e9c44a",
+        "mobilesdk_app_id": "1:385333714815:android:97f88d75f2884b2be9c44a",
         "android_client_info": {
-          "package_name": "com.alessandromontrone.assistiamotesupplier"
+          "package_name": "com.assistiamote.app"
         }
       },
       "oauth_client": [

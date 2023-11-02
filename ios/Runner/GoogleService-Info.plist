@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.alessandromontrone.assistiamotesupplier</string>
+	<string>com.assistiamote.app</string>
 	<key>PROJECT_ID</key>
 	<string>assistiamote-2e06f</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:385333714815:ios:f78ff909cbc0c776e9c44a</string>
+	<string>1:385333714815:ios:3925e9752487186be9c44a</string>
 </dict>
 </plist>

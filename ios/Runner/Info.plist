@@ -47,6 +47,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Consenti all'app di determinare la tua distanza dall'indirizzo.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Consenti all'app di determinare la tua distanza dall'indirizzo.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Consenti all'app di determinare la tua distanza dall'indirizzo.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Consenti all'app di determinare la tua distanza dall'indirizzo.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -68,13 +76,5 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Consenti all&apos;app di determinare la tua distanza dall&apos;appartamento.</string>
 </dict>
 </plist>
