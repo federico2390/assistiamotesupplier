@@ -883,8 +883,8 @@ class OperationDetail extends StatelessWidget {
                                   .checkLocationPermission(
                                       '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
                                   .then((permisison) async {
-                                if (!permisison.isGranted) {
-                                  if (locationProvider.distance > 50) {
+                                if (permisison.isGranted) {
+                                  if (locationProvider.distance > 50.0) {
                                     await Alerts.hideAlert();
                                     if (ModalRoute.of(context)!.isCurrent) {
                                       Navigator.of(context).push(
@@ -897,21 +897,20 @@ class OperationDetail extends StatelessWidget {
                                         ),
                                       );
                                     }
+                                  } else if (locationProvider.distance < 50.0) {
+                                    await Alerts.hideAlert();
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/visit',
+                                      arguments: VisitArguments(
+                                        operation: operation,
+                                        visitDescription: visit.name,
+                                        visitDateTime: startDateTimeFormat
+                                            .format(visit.time!),
+                                        visitIndex: index,
+                                      ),
+                                    );
                                   }
-                                } else if (permisison.isGranted &&
-                                    locationProvider.distance < 50) {
-                                  await Alerts.hideAlert();
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/visit',
-                                    arguments: VisitArguments(
-                                      operation: operation,
-                                      visitDescription: visit.name,
-                                      visitDateTime: startDateTimeFormat
-                                          .format(visit.time!),
-                                      visitIndex: index,
-                                    ),
-                                  );
                                 } else {
                                   await Alerts.hideAlert();
                                   await Alerts.errorAlert(
@@ -941,8 +940,8 @@ class OperationDetail extends StatelessWidget {
                                   .checkLocationPermission(
                                       '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
                                   .then((permisison) async {
-                                if (!permisison.isGranted) {
-                                  if (locationProvider.distance > 50) {
+                                if (permisison.isGranted) {
+                                  if (locationProvider.distance > 50.0) {
                                     await Alerts.hideAlert();
                                     if (ModalRoute.of(context)!.isCurrent) {
                                       Navigator.of(context).push(
@@ -955,21 +954,20 @@ class OperationDetail extends StatelessWidget {
                                         ),
                                       );
                                     }
+                                  } else if (locationProvider.distance < 50.0) {
+                                    await Alerts.hideAlert();
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/visit',
+                                      arguments: VisitArguments(
+                                        operation: operation,
+                                        visitDescription: visit.name,
+                                        visitDateTime: startDateTimeFormat
+                                            .format(visit.time!),
+                                        visitIndex: index,
+                                      ),
+                                    );
                                   }
-                                } else if (permisison.isGranted &&
-                                    locationProvider.distance < 50) {
-                                  await Alerts.hideAlert();
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/visit',
-                                    arguments: VisitArguments(
-                                      operation: operation,
-                                      visitDescription: visit.name,
-                                      visitDateTime: startDateTimeFormat
-                                          .format(visit.time!),
-                                      visitIndex: index,
-                                    ),
-                                  );
                                 } else {
                                   await Alerts.hideAlert();
                                   await Alerts.errorAlert(

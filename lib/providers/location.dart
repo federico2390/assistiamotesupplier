@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -33,6 +31,7 @@ class LocationProvider extends ChangeNotifier {
     try {
       final Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
+        forceAndroidLocationManager: true,
       );
 
       _currentLocation = position;
@@ -56,13 +55,13 @@ class LocationProvider extends ChangeNotifier {
         locations[0].longitude,
       );
 
-      _distance = distanceInMeters.ceilToDouble() / 1000;
+      _distance = distanceInMeters.ceilToDouble();
 
-      print('sdsa__Address: $_visitAddress');
-      print('sdsa__Current Location: $_currentLocation');
-      print('sdsa__Destination Latitude: ${locations[0].latitude}');
-      print('sdsa__Destination Longitude: ${locations[0].longitude}');
-      print('sdsa__Distance: $_distance kilometers');
+      print('geo__Address: $_visitAddress');
+      print('geo__Current Location: $_currentLocation');
+      print('geo__Destination Latitude: ${locations[0].latitude}');
+      print('geo__Destination Longitude: ${locations[0].longitude}');
+      print('geo__Distance: $_distance meters');
     } else {
       _distance = 0;
     }

@@ -1,3 +1,4 @@
+import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +16,14 @@ class NoService extends StatefulWidget {
 class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -53,9 +54,18 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
         Provider.of<LocationProvider>(context, listen: false);
     locationProvider
         .checkLocationPermission(locationProvider.visitAddress)
-        .then((permisison) {
-      if (permisison.isGranted && locationProvider.distance < 50) {
-        Navigator.of(context).pop();
+        .then((permisison) async {
+      if (permisison.isGranted) {
+        if (locationProvider.distance < 50.0) {
+          Navigator.of(context).pop();
+        }
+      } else {
+        await Alerts.hideAlert();
+        await Alerts.errorAlert(
+          context,
+          title: 'Attenzione',
+          subtitle: 'Non riesco a determinare la tua posisiozne',
+        );
       }
     });
   }

@@ -1,3 +1,4 @@
+import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -39,10 +40,24 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!kIsWeb) {
-      if (state == AppLifecycleState.resumed) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive:
+        print('###appLifeCycleState inactive');
+        break;
+      case AppLifecycleState.resumed:
+        print('###appLifeCycleState resumed');
         _checkPermission();
-      }
+        break;
+      case AppLifecycleState.paused:
+        print('###appLifeCycleState paused');
+        break;
+      case AppLifecycleState.detached:
+        print('###appLifeCycleState detached');
+        break;
+      case AppLifecycleState.hidden:
+        print('###appLifeCycleState hidden');
+        break;
     }
   }
 
@@ -54,9 +69,9 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
     locationProvider
         .checkLocationPermission(
             '${visitArguments.operation!.userAddress!}, ${visitArguments.operation!.userCity!}, ${visitArguments.operation!.userProvince!}, ${visitArguments.operation!.userRegion!}, ${visitArguments.operation!.userCountry!}')
-        .then((permisison) {
-      if (!permisison.isGranted) {
-        if (locationProvider.distance > 50) {
+        .then((permisison) async {
+      if (permisison.isGranted) {
+        if (locationProvider.distance > 50.0) {
           if (ModalRoute.of(context)!.isCurrent) {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -67,6 +82,13 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
             );
           }
         }
+      } else {
+        await Alerts.hideAlert();
+        await Alerts.errorAlert(
+          context,
+          title: 'Attenzione',
+          subtitle: 'Non riesco a determinare la tua posisiozne',
+        );
       }
     });
   }
