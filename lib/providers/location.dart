@@ -14,16 +14,19 @@ class LocationProvider extends ChangeNotifier {
   String get visitAddress => _visitAddress;
 
   Future<bool> checkLocationPermission(String address) async {
-    final status = await Permission.location.status;
+    final request = await Permission.location.status;
 
-    if (status.isGranted) {
+    if (request.isGranted) {
       _visitAddress = address;
 
       await getCurrentLocation();
       return true;
-    } else if (status.isDenied || status.isPermanentlyDenied) {
-      final request = await Permission.location.request();
-      if (request.isGranted) {
+    } else if (request.isDenied || request.isPermanentlyDenied) {
+      final requestAgain = await Permission.location.request();
+      if (requestAgain.isGranted) {
+        _visitAddress = address;
+
+        await getCurrentLocation();
         return true;
       } else {
         return false;
