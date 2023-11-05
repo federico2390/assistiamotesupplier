@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:adminpanel/providers/location.dart';
-import 'package:adminpanel/utils/no_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +16,7 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/models/visits.dart';
+import 'package:adminpanel/providers/location.dart';
 import 'package:adminpanel/providers/operation.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
@@ -25,6 +24,7 @@ import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
 import 'package:adminpanel/utils/launcher.dart';
 import 'package:adminpanel/utils/navigator_arguments.dart';
+import 'package:adminpanel/utils/no_service.dart';
 import 'package:adminpanel/utils/size.dart';
 
 class OperationDetail extends StatelessWidget {

@@ -23,6 +23,9 @@ class Central extends StatefulWidget {
 class _CentralState extends State<Central> with WidgetsBindingObserver {
   @override
   void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
     context.read<StateProvider>().buildFuture(context).then((value) {
       context.read<UserProvider>().timer =
           Timer.periodic(const Duration(minutes: 5), (_) {
@@ -35,9 +38,6 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
       NotificationManager.getToken(context);
       NotificationManager.initInfo();
     }
-
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override

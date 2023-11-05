@@ -1,10 +1,10 @@
-import 'package:adminpanel/utils/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/location.dart';
+import 'package:adminpanel/utils/alerts.dart';
 
 class NoService extends StatefulWidget {
   const NoService({Key? key}) : super(key: key);
