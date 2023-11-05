@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -883,7 +882,7 @@ class OperationDetail extends StatelessWidget {
                                   .checkLocationPermission(
                                       '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
                                   .then((permisison) async {
-                                if (permisison.isGranted) {
+                                if (permisison == true) {
                                   if (locationProvider.distance > 50.0) {
                                     await Alerts.hideAlert();
                                     if (ModalRoute.of(context)!.isCurrent) {
@@ -940,7 +939,7 @@ class OperationDetail extends StatelessWidget {
                                   .checkLocationPermission(
                                       '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
                                   .then((permisison) async {
-                                if (permisison.isGranted) {
+                                if (permisison == true) {
                                   if (locationProvider.distance > 50.0) {
                                     await Alerts.hideAlert();
                                     if (ModalRoute.of(context)!.isCurrent) {

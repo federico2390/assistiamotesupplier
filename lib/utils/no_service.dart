@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/const.dart';
@@ -55,7 +54,7 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
     locationProvider
         .checkLocationPermission(locationProvider.visitAddress)
         .then((permisison) async {
-      if (permisison.isGranted) {
+      if (permisison == true) {
         if (locationProvider.distance < 50.0) {
           Navigator.of(context).pop();
         }

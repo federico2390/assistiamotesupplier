@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -70,7 +69,7 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
         .checkLocationPermission(
             '${visitArguments.operation!.userAddress!}, ${visitArguments.operation!.userCity!}, ${visitArguments.operation!.userProvince!}, ${visitArguments.operation!.userRegion!}, ${visitArguments.operation!.userCountry!}')
         .then((permisison) async {
-      if (permisison.isGranted) {
+      if (permisison == true) {
         if (locationProvider.distance > 50.0) {
           if (ModalRoute.of(context)!.isCurrent) {
             Navigator.of(context).push(
