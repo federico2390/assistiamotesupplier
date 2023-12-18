@@ -24,7 +24,8 @@ class StateProvider extends ChangeNotifier {
     // await userProvider.getUser();
     await operationProvider.getOperations(context);
     await notificationProvider.getNotifications(context);
-    await settingProvider.getSetting(context);
+    await settingProvider.getSetting();
+    await settingProvider.getNotificationSetting(context);
     notifyListeners();
   }
 }

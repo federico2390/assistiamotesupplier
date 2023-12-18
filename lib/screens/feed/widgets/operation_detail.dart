@@ -17,6 +17,7 @@ import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/models/visits.dart';
 import 'package:adminpanel/providers/location.dart';
 import 'package:adminpanel/providers/operation.dart';
+import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/state.dart';
 import 'package:adminpanel/screens/feed/widgets/top_bar.dart';
 import 'package:adminpanel/utils/alerts.dart';
@@ -883,7 +884,13 @@ class OperationDetail extends StatelessWidget {
                                       '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
                                   .then((permisison) async {
                                 if (permisison == true) {
-                                  if (locationProvider.distance > 50.0) {
+                                  final settingProvider =
+                                      Provider.of<SettingProvider>(context,
+                                          listen: false);
+
+                                  if (locationProvider.distance >
+                                      double.parse(settingProvider
+                                          .setting.settingsMeters!)) {
                                     await Alerts.hideAlert();
                                     if (ModalRoute.of(context)!.isCurrent) {
                                       Navigator.of(context).push(
@@ -940,7 +947,13 @@ class OperationDetail extends StatelessWidget {
                                       '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
                                   .then((permisison) async {
                                 if (permisison == true) {
-                                  if (locationProvider.distance > 50.0) {
+                                  final settingProvider =
+                                      Provider.of<SettingProvider>(context,
+                                          listen: false);
+
+                                  if (locationProvider.distance >
+                                      double.parse(settingProvider
+                                          .setting.settingsMeters!)) {
                                     await Alerts.hideAlert();
                                     if (ModalRoute.of(context)!.isCurrent) {
                                       Navigator.of(context).push(

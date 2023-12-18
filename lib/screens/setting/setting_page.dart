@@ -26,7 +26,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
-    context.read<SettingProvider>().getSetting(context);
+    context.read<SettingProvider>().getNotificationSetting(context);
     super.initState();
   }
 
@@ -71,10 +71,11 @@ class _SettingPageState extends State<SettingPage> {
                                 settingProvider.updateNotification(
                                     context, value);
                               },
-                              initialValue:
-                                  settingProvider.setting.notification == 'true'
-                                      ? true
-                                      : false,
+                              initialValue: settingProvider
+                                          .notificationSetting.notification ==
+                                      'true'
+                                  ? true
+                                  : false,
                               leading: const Icon(Icons.notifications_rounded),
                               title: const Text('Comunicazioni'),
                               description: const Text(

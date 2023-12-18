@@ -1,19 +1,39 @@
 import 'dart:convert';
 
-List<Setting> settingFromJson(String str) =>
-    List<Setting>.from(json.decode(str).map((x) => Setting.fromJson(x)));
-
-String settingToJson(List<Setting> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class Setting {
   Setting({
+    this.settingId,
+    this.settingYear,
+    this.settingsMeters,
+  });
+
+  String? settingId;
+  String? settingYear;
+  String? settingsMeters;
+
+  factory Setting.fromJson(Map<String, dynamic> json) => Setting(
+        settingId: json["setting_id"] ?? '',
+        settingYear: json["setting_year"] ?? '',
+        settingsMeters: json["settings_meters"] ?? '',
+      );
+}
+
+List<NotificationSetting> notificationSettingFromJson(String str) =>
+    List<NotificationSetting>.from(
+        json.decode(str).map((x) => NotificationSetting.fromJson(x)));
+
+String notificationSettingToJson(List<NotificationSetting> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class NotificationSetting {
+  NotificationSetting({
     this.notification,
   });
 
   String? notification;
 
-  factory Setting.fromJson(Map<String, dynamic> json) => Setting(
+  factory NotificationSetting.fromJson(Map<String, dynamic> json) =>
+      NotificationSetting(
         notification: json["supplier_notification_permission"] ?? '',
       );
 

@@ -9,8 +9,34 @@ import 'package:adminpanel/models/setting.dart';
 import 'package:adminpanel/providers/user.dart';
 
 class SettingApi {
-  Future<Setting> getNotificationSetting(BuildContext context) async {
+  Future<Setting> getSettings() async {
     Setting setting = Setting();
+
+    try {
+      var response = await AppConst().client.post(
+        kIsWeb
+            ? Uri.parse(AppConst.setting).replace(host: AppConst.domain)
+            : Uri.parse(AppConst.setting),
+        body: {
+          'get_settings': 'get_settings',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        setting = Setting.fromJson(json.decode(response.body)[0]);
+      } else {
+        print('Can\'t get Settings');
+      }
+    } catch (error) {
+      print('ERROR_getSettings: $error');
+    } finally {
+      AppConst().client.close();
+    }
+    return setting;
+  }
+
+  Future<NotificationSetting> getNotificationSetting(
+      BuildContext context) async {
+    NotificationSetting setting = NotificationSetting();
 
     try {
       final user = await context.read<UserProvider>().getLocalUser();
@@ -26,7 +52,7 @@ class SettingApi {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonData = json.decode(response.body);
-        setting = Setting.fromJson(jsonData[0]);
+        setting = NotificationSetting.fromJson(jsonData[0]);
       } else {
         print('Can\'t get Setting');
       }

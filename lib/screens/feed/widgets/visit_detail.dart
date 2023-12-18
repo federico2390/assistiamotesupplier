@@ -10,6 +10,7 @@ import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/globals/button.dart';
 import 'package:adminpanel/models/operation.dart';
 import 'package:adminpanel/providers/location.dart';
+import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/providers/signature.dart';
 import 'package:adminpanel/utils/alerts.dart';
 import 'package:adminpanel/utils/hide_keyboard.dart';
@@ -70,7 +71,11 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
             '${visitArguments.operation!.userAddress!}, ${visitArguments.operation!.userCity!}, ${visitArguments.operation!.userProvince!}, ${visitArguments.operation!.userRegion!}, ${visitArguments.operation!.userCountry!}')
         .then((permisison) async {
       if (permisison == true) {
-        if (locationProvider.distance > 50.0) {
+        final settingProvider =
+            Provider.of<SettingProvider>(context, listen: false);
+
+        if (locationProvider.distance >
+            double.parse(settingProvider.setting.settingsMeters!)) {
           if (ModalRoute.of(context)!.isCurrent) {
             Navigator.of(context).push(
               MaterialPageRoute(

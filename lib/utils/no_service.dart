@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:adminpanel/configs/const.dart';
 import 'package:adminpanel/providers/location.dart';
+import 'package:adminpanel/providers/setting.dart';
 import 'package:adminpanel/utils/alerts.dart';
 
 class NoService extends StatefulWidget {
@@ -55,7 +56,11 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
         .checkLocationPermission(locationProvider.visitAddress)
         .then((permisison) async {
       if (permisison == true) {
-        if (locationProvider.distance < 50.0) {
+        final settingProvider =
+            Provider.of<SettingProvider>(context, listen: false);
+
+        if (locationProvider.distance <
+            double.parse(settingProvider.setting.settingsMeters!)) {
           Navigator.of(context).pop();
         }
       } else {

@@ -50,7 +50,7 @@ class Welcome extends StatelessWidget {
                         return FutureBuilder(
                           future: Future.wait([
                             NotificationManager.requestPermisison(context),
-                            settingProvider.getSetting(context),
+                            settingProvider.getNotificationSetting(context),
                           ]),
                           builder: (context, snapshot) {
                             return SettingsList(
@@ -75,7 +75,8 @@ class Welcome extends StatelessWidget {
                                             context, value);
                                       },
                                       initialValue: settingProvider
-                                                  .setting.notification ==
+                                                  .notificationSetting
+                                                  .notification ==
                                               'true'
                                           ? true
                                           : false,

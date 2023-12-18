@@ -9,12 +9,24 @@ class SettingProvider extends ChangeNotifier {
   Setting _setting = Setting();
   Setting get setting => _setting;
 
-  Future<Setting> getSetting(BuildContext context) async {
-    Setting getNotificationSetting =
-        await SettingApi().getNotificationSetting(context);
-    _setting = getNotificationSetting;
+  Future<Setting> getSetting() async {
+    Setting getSetting = await SettingApi().getSettings();
+    _setting = getSetting;
+
     notifyListeners();
     return _setting;
+  }
+
+  NotificationSetting _notificationSetting = NotificationSetting();
+  NotificationSetting get notificationSetting => _notificationSetting;
+
+  Future<NotificationSetting> getNotificationSetting(
+      BuildContext context) async {
+    NotificationSetting getNotificationSetting =
+        await SettingApi().getNotificationSetting(context);
+    _notificationSetting = getNotificationSetting;
+    notifyListeners();
+    return _notificationSetting;
   }
 
   updateNotification(BuildContext context, bool enabled) async {
@@ -46,7 +58,7 @@ class SettingProvider extends ChangeNotifier {
   }
 
   void setNotificationStatus(bool status) {
-    _setting.notification = status == true ? 'true' : 'false';
+    _notificationSetting.notification = status == true ? 'true' : 'false';
     notifyListeners();
   }
 }
