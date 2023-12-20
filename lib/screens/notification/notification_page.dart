@@ -8,8 +8,8 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => kIsWeb ? false : true,
+    return PopScope(
+      onPopInvoked: (value) async => kIsWeb ? false : true,
       child: const NotificationList(),
     );
   }

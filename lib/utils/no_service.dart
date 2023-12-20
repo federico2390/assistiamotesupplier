@@ -78,8 +78,8 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     _checkPermission();
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      onPopInvoked: (value) async => false,
       child: Scaffold(
         appBar: AppBar(
           leading: Ink(

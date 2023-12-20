@@ -37,8 +37,8 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => kIsWeb ? false : true,
+    return PopScope(
+      onPopInvoked: (value) async => kIsWeb ? false : true,
       child: Scaffold(
         appBar: appBar(context),
         body: Consumer<SettingProvider>(

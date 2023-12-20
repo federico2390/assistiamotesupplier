@@ -47,8 +47,8 @@ class OperationDetail extends StatelessWidget {
       }
     }
 
-    return WillPopScope(
-      onWillPop: () async => kIsWeb ? false : true,
+    return PopScope(
+      onPopInvoked: (value) async => kIsWeb ? false : true,
       child: GestureDetector(
         onTap: () => hideKeyboard(context),
         child: Scaffold(
@@ -864,139 +864,156 @@ class OperationDetail extends StatelessWidget {
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
                             visit.time != null
                         ? () async {
-                            if (operation.userCountry!.isNotEmpty &&
-                                operation.userRegion!.isNotEmpty &&
-                                operation.userProvince!.isNotEmpty &&
-                                operation.userCity!.isNotEmpty &&
-                                operation.userAddress!.isNotEmpty) {
+                            if (operation.fromAmb == 'false') {
                               await Alerts.hideAlert();
-                              await Alerts.loadingAlert(
+                              Navigator.pushNamed(
                                 context,
-                                title: 'Attendi',
-                                subtitle: 'Determino la tua posizione',
+                                '/visit',
+                                arguments: VisitArguments(
+                                  operation: operation,
+                                  visitDescription: visit.name,
+                                  visitDateTime:
+                                      startDateTimeFormat.format(visit.time!),
+                                  visitIndex: index,
+                                ),
                               );
-
-                              final locationProvider =
-                                  Provider.of<LocationProvider>(context,
-                                      listen: false);
-                              locationProvider
-                                  .checkLocationPermission(
-                                      '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
-                                  .then((permisison) async {
-                                if (permisison == true) {
-                                  final settingProvider =
-                                      Provider.of<SettingProvider>(context,
-                                          listen: false);
-
-                                  if (locationProvider.distance >
-                                      double.parse(settingProvider
-                                          .setting.settingsMeters!)) {
-                                    await Alerts.hideAlert();
-                                    if (ModalRoute.of(context)!.isCurrent) {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          fullscreenDialog: true,
-                                          settings: const RouteSettings(
-                                              name: 'noservice'),
-                                          builder: (context) =>
-                                              const NoService(),
-                                        ),
-                                      );
-                                    }
-                                  } else if (locationProvider.distance < 50.0) {
-                                    await Alerts.hideAlert();
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/visit',
-                                      arguments: VisitArguments(
-                                        operation: operation,
-                                        visitDescription: visit.name,
-                                        visitDateTime: startDateTimeFormat
-                                            .format(visit.time!),
-                                        visitIndex: index,
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  await Alerts.hideAlert();
-                                  await Alerts.errorAlert(
-                                    context,
-                                    title: 'Attenzione',
-                                    subtitle:
-                                        'Non riesco a determinare la tua posisiozne',
-                                  );
-                                }
-                              });
-                            } else if (operation.regionFrom!.isNotEmpty &&
-                                operation.regionFrom!.isNotEmpty &&
-                                operation.provinceFrom!.isNotEmpty &&
-                                operation.cityFrom!.isNotEmpty &&
-                                operation.addressFrom!.isNotEmpty) {
-                              await Alerts.hideAlert();
-                              await Alerts.loadingAlert(
-                                context,
-                                title: 'Attendi',
-                                subtitle: 'Determino la tua posizione',
-                              );
-
-                              final locationProvider =
-                                  Provider.of<LocationProvider>(context,
-                                      listen: false);
-                              locationProvider
-                                  .checkLocationPermission(
-                                      '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
-                                  .then((permisison) async {
-                                if (permisison == true) {
-                                  final settingProvider =
-                                      Provider.of<SettingProvider>(context,
-                                          listen: false);
-
-                                  if (locationProvider.distance >
-                                      double.parse(settingProvider
-                                          .setting.settingsMeters!)) {
-                                    await Alerts.hideAlert();
-                                    if (ModalRoute.of(context)!.isCurrent) {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          fullscreenDialog: true,
-                                          settings: const RouteSettings(
-                                              name: 'noservice'),
-                                          builder: (context) =>
-                                              const NoService(),
-                                        ),
-                                      );
-                                    }
-                                  } else if (locationProvider.distance < 50.0) {
-                                    await Alerts.hideAlert();
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/visit',
-                                      arguments: VisitArguments(
-                                        operation: operation,
-                                        visitDescription: visit.name,
-                                        visitDateTime: startDateTimeFormat
-                                            .format(visit.time!),
-                                        visitIndex: index,
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  await Alerts.hideAlert();
-                                  await Alerts.errorAlert(
-                                    context,
-                                    title: 'Attenzione',
-                                    subtitle:
-                                        'Non riesco a determinare la tua posisiozne',
-                                  );
-                                }
-                              });
                             } else {
-                              await Alerts.errorAlert(
-                                context,
-                                title: 'Attenzione',
-                                subtitle:
-                                    'Firma non accessibile\nL\'indirizzo è assente',
-                              );
+                              if (operation.userCountry!.isNotEmpty &&
+                                  operation.userRegion!.isNotEmpty &&
+                                  operation.userProvince!.isNotEmpty &&
+                                  operation.userCity!.isNotEmpty &&
+                                  operation.userAddress!.isNotEmpty) {
+                                await Alerts.hideAlert();
+                                await Alerts.loadingAlert(
+                                  context,
+                                  title: 'Attendi',
+                                  subtitle: 'Determino la tua posizione',
+                                );
+
+                                final locationProvider =
+                                    Provider.of<LocationProvider>(context,
+                                        listen: false);
+                                locationProvider
+                                    .checkLocationPermission(
+                                        '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
+                                    .then((permisison) async {
+                                  if (permisison == true) {
+                                    final settingProvider =
+                                        Provider.of<SettingProvider>(context,
+                                            listen: false);
+
+                                    if (locationProvider.distance >
+                                        double.parse(settingProvider
+                                            .setting.settingsMeters!)) {
+                                      await Alerts.hideAlert();
+                                      if (ModalRoute.of(context)!.isCurrent) {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            fullscreenDialog: true,
+                                            settings: const RouteSettings(
+                                                name: 'noservice'),
+                                            builder: (context) =>
+                                                const NoService(),
+                                          ),
+                                        );
+                                      }
+                                    } else if (locationProvider.distance <
+                                        50.0) {
+                                      await Alerts.hideAlert();
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/visit',
+                                        arguments: VisitArguments(
+                                          operation: operation,
+                                          visitDescription: visit.name,
+                                          visitDateTime: startDateTimeFormat
+                                              .format(visit.time!),
+                                          visitIndex: index,
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    await Alerts.hideAlert();
+                                    await Alerts.errorAlert(
+                                      context,
+                                      title: 'Attenzione',
+                                      subtitle:
+                                          'Non riesco a determinare la tua posisiozne',
+                                    );
+                                  }
+                                });
+                              } else if (operation.regionFrom!.isNotEmpty &&
+                                  operation.regionFrom!.isNotEmpty &&
+                                  operation.provinceFrom!.isNotEmpty &&
+                                  operation.cityFrom!.isNotEmpty &&
+                                  operation.addressFrom!.isNotEmpty) {
+                                await Alerts.hideAlert();
+                                await Alerts.loadingAlert(
+                                  context,
+                                  title: 'Attendi',
+                                  subtitle: 'Determino la tua posizione',
+                                );
+
+                                final locationProvider =
+                                    Provider.of<LocationProvider>(context,
+                                        listen: false);
+                                locationProvider
+                                    .checkLocationPermission(
+                                        '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
+                                    .then((permisison) async {
+                                  if (permisison == true) {
+                                    final settingProvider =
+                                        Provider.of<SettingProvider>(context,
+                                            listen: false);
+
+                                    if (locationProvider.distance >
+                                        double.parse(settingProvider
+                                            .setting.settingsMeters!)) {
+                                      await Alerts.hideAlert();
+                                      if (ModalRoute.of(context)!.isCurrent) {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            fullscreenDialog: true,
+                                            settings: const RouteSettings(
+                                                name: 'noservice'),
+                                            builder: (context) =>
+                                                const NoService(),
+                                          ),
+                                        );
+                                      }
+                                    } else if (locationProvider.distance <
+                                        50.0) {
+                                      await Alerts.hideAlert();
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/visit',
+                                        arguments: VisitArguments(
+                                          operation: operation,
+                                          visitDescription: visit.name,
+                                          visitDateTime: startDateTimeFormat
+                                              .format(visit.time!),
+                                          visitIndex: index,
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    await Alerts.hideAlert();
+                                    await Alerts.errorAlert(
+                                      context,
+                                      title: 'Attenzione',
+                                      subtitle:
+                                          'Non riesco a determinare la tua posisiozne',
+                                    );
+                                  }
+                                });
+                              } else {
+                                await Alerts.errorAlert(
+                                  context,
+                                  title: 'Attenzione',
+                                  subtitle:
+                                      'Firma non accessibile\nL\'indirizzo è assente',
+                                );
+                              }
                             }
                           }
                         : (visit.signedUrl != null)

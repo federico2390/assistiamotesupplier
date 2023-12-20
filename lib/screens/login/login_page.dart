@@ -57,8 +57,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => kIsWeb ? false : true,
+    return PopScope(
+      onPopInvoked: (value) async => kIsWeb ? false : true,
       child: GestureDetector(
         onTap: () => hideKeyboard(context),
         child: Scaffold(

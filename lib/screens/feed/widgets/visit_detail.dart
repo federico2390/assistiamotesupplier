@@ -104,8 +104,8 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
 
     final double size = ScreenSize.width(context);
 
-    return WillPopScope(
-      onWillPop: () async => kIsWeb ? false : true,
+    return PopScope(
+      onPopInvoked: (value) async => kIsWeb ? false : true,
       child: GestureDetector(
         onTap: () => hideKeyboard(context),
         child: Scaffold(
