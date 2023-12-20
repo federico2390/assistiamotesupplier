@@ -64,37 +64,39 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   _checkPermission() async {
     final visitArguments =
         ModalRoute.of(context)!.settings.arguments as VisitArguments;
-    final locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
-    locationProvider
-        .checkLocationPermission(
-            '${visitArguments.operation!.userAddress!}, ${visitArguments.operation!.userCity!}, ${visitArguments.operation!.userProvince!}, ${visitArguments.operation!.userRegion!}, ${visitArguments.operation!.userCountry!}')
-        .then((permisison) async {
-      if (permisison == true) {
-        final settingProvider =
-            Provider.of<SettingProvider>(context, listen: false);
+    if (visitArguments.operation!.fromAmb == 'false') {
+      final locationProvider =
+          Provider.of<LocationProvider>(context, listen: false);
+      locationProvider
+          .checkLocationPermission(
+              '${visitArguments.operation!.userAddress!}, ${visitArguments.operation!.userCity!}, ${visitArguments.operation!.userProvince!}, ${visitArguments.operation!.userRegion!}, ${visitArguments.operation!.userCountry!}')
+          .then((permisison) async {
+        if (permisison == true) {
+          final settingProvider =
+              Provider.of<SettingProvider>(context, listen: false);
 
-        if (locationProvider.distance >
-            double.parse(settingProvider.setting.settingsMeters!)) {
-          if (ModalRoute.of(context)!.isCurrent) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                fullscreenDialog: true,
-                settings: const RouteSettings(name: 'noservice'),
-                builder: (context) => const NoService(),
-              ),
-            );
+          if (locationProvider.distance >
+              double.parse(settingProvider.setting.settingsMeters!)) {
+            if (ModalRoute.of(context)!.isCurrent) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  settings: const RouteSettings(name: 'noservice'),
+                  builder: (context) => const NoService(),
+                ),
+              );
+            }
           }
+        } else {
+          await Alerts.hideAlert();
+          await Alerts.errorAlert(
+            context,
+            title: 'Attenzione',
+            subtitle: 'Non riesco a determinare la tua posisiozne',
+          );
         }
-      } else {
-        await Alerts.hideAlert();
-        await Alerts.errorAlert(
-          context,
-          title: 'Attenzione',
-          subtitle: 'Non riesco a determinare la tua posisiozne',
-        );
-      }
-    });
+      });
+    }
   }
 
   @override
