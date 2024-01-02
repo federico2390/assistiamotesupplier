@@ -28,7 +28,7 @@ class UserProvider extends ChangeNotifier {
       final box = await Hive.openBox<UserDatabase>('user');
       _localUser = box.values.isNotEmpty ? box.values.first : UserDatabase();
     } catch (error) {
-      print('ERROR_getLocalUser');
+      debugPrint('ERROR_getLocalUser');
     }
     notifyListeners();
     return _localUser;
@@ -40,7 +40,7 @@ class UserProvider extends ChangeNotifier {
       await box.add(user);
       await getLocalUser();
     } catch (error) {
-      print('ERROR_addLocalUser');
+      debugPrint('ERROR_addLocalUser');
     }
     notifyListeners();
   }
@@ -53,7 +53,7 @@ class UserProvider extends ChangeNotifier {
         await getLocalUser();
       });
     } catch (error) {
-      print('ERROR_updateLocalUser');
+      debugPrint('ERROR_updateLocalUser');
     }
     notifyListeners();
   }
@@ -66,7 +66,7 @@ class UserProvider extends ChangeNotifier {
         await getLocalUser();
       });
     } catch (error) {
-      print('ERROR_updateLocalUser');
+      debugPrint('ERROR_updateLocalUser');
     }
     notifyListeners();
   }

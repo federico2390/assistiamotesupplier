@@ -31,13 +31,13 @@ class OperationApi {
         if (response.statusCode == 200 || response.statusCode == 201) {
           operations = operationFromJson(response.body);
         } else {
-          print('Can\'t get Operations');
+          debugPrint('Can\'t get Operations');
         }
       } else {
-        print('User ID not available to get Operations');
+        debugPrint('User ID not available to get Operations');
       }
     } catch (error) {
-      print('ERROR_getOperations: $error');
+      debugPrint('ERROR_getOperations: $error');
     } finally {
       AppConst().client.close();
     }
@@ -74,10 +74,10 @@ class OperationApi {
         await Alerts.successAlert(context,
             title: 'Modificata', subtitle: 'La richiesta è stata modificata');
       } else {
-        print('Can\'t edit Operation');
+        debugPrint('Can\'t edit Operation');
       }
     } catch (error) {
-      print('ERROR_editOperation: $error');
+      debugPrint('ERROR_editOperation: $error');
     } finally {
       AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);
@@ -99,12 +99,12 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Operation mark as open');
+        debugPrint('Operation mark as open');
       } else {
-        print('Can\'t mark as viewed Operation');
+        debugPrint('Can\'t mark as viewed Operation');
       }
     } catch (error) {
-      print('ERROR_markOperationAsOpenh: $error');
+      debugPrint('ERROR_markOperationAsOpenh: $error');
     } finally {
       AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);
@@ -128,12 +128,12 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Operation mark as accept');
+        debugPrint('Operation mark as accept');
       } else {
-        print('Can\'t mark as accept Operation');
+        debugPrint('Can\'t mark as accept Operation');
       }
     } catch (error) {
-      print('ERROR_markOperationAsAccept: $error');
+      debugPrint('ERROR_markOperationAsAccept: $error');
     } finally {
       AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);
@@ -163,10 +163,10 @@ class OperationApi {
           subtitle: 'La richiesta è stata chiusa',
         );
       } else {
-        print('Can\'t close Operation');
+        debugPrint('Can\'t close Operation');
       }
     } catch (error) {
-      print('ERROR_markOperationAsClosed: $error');
+      debugPrint('ERROR_markOperationAsClosed: $error');
     } finally {
       AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);
@@ -192,12 +192,12 @@ class OperationApi {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('DateTime setted to Visits');
+        debugPrint('DateTime setted to Visits');
       } else {
-        print('Can\'t set DateTime to Visits');
+        debugPrint('Can\'t set DateTime to Visits');
       }
     } catch (error) {
-      print('ERROR_setVisitsDateTime: $error');
+      debugPrint('ERROR_setVisitsDateTime: $error');
     } finally {
       AppConst().client.close();
       await context.read<StateProvider>().buildFuture(context);

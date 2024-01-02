@@ -29,8 +29,8 @@ import 'package:adminpanel/utils/shared_preference.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('background title: ${message.notification!.title}');
-  print('background body: ${message.notification!.body}');
+  debugPrint('background title: ${message.notification!.title}');
+  debugPrint('background body: ${message.notification!.body}');
 }
 
 int? logged;

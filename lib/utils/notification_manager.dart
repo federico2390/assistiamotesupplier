@@ -15,11 +15,11 @@ class NotificationManager {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional) {
-      print('User granted permission');
+      debugPrint('User granted permission');
       await SettingApi().editNotificationSetting(context, true);
       context.read<SettingProvider>().setNotificationStatus(true);
     } else {
-      print('User declined or hat not accepted permission');
+      debugPrint('User declined or hat not accepted permission');
       await SettingApi().editNotificationSetting(context, false);
       context.read<SettingProvider>().setNotificationStatus(false);
     }
@@ -78,7 +78,7 @@ class NotificationManager {
           // payload: message.data['title'],
         );
       } catch (error) {
-        print('ERROR_initInfo: $error');
+        debugPrint('ERROR_initInfo: $error');
       }
     });
   }

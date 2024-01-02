@@ -31,20 +31,20 @@ class _NoServiceState extends State<NoService> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.inactive:
-        print('###appLifeCycleState inactive');
+        debugPrint('###appLifeCycleState inactive');
         break;
       case AppLifecycleState.resumed:
-        print('###appLifeCycleState resumed');
+        debugPrint('###appLifeCycleState resumed');
         _checkPermission();
         break;
       case AppLifecycleState.paused:
-        print('###appLifeCycleState paused');
+        debugPrint('###appLifeCycleState paused');
         break;
       case AppLifecycleState.detached:
-        print('###appLifeCycleState detached');
+        debugPrint('###appLifeCycleState detached');
         break;
       case AppLifecycleState.hidden:
-        print('###appLifeCycleState hidden');
+        debugPrint('###appLifeCycleState hidden');
         break;
     }
   }

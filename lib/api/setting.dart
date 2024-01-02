@@ -24,10 +24,10 @@ class SettingApi {
       if (response.statusCode == 200 || response.statusCode == 201) {
         setting = Setting.fromJson(json.decode(response.body)[0]);
       } else {
-        print('Can\'t get Settings');
+        debugPrint('Can\'t get Settings');
       }
     } catch (error) {
-      print('ERROR_getSettings: $error');
+      debugPrint('ERROR_getSettings: $error');
     } finally {
       AppConst().client.close();
     }
@@ -54,10 +54,10 @@ class SettingApi {
         final jsonData = json.decode(response.body);
         setting = NotificationSetting.fromJson(jsonData[0]);
       } else {
-        print('Can\'t get Setting');
+        debugPrint('Can\'t get Setting');
       }
     } catch (error) {
-      print('ERROR_getNotification: $error');
+      debugPrint('ERROR_getNotification: $error');
     } finally {
       AppConst().client.close();
     }
@@ -82,7 +82,7 @@ class SettingApi {
         },
       );
     } catch (error) {
-      print('ERROR_editNotification: $error');
+      debugPrint('ERROR_editNotification: $error');
     } finally {
       AppConst().client.close();
     }
@@ -103,7 +103,7 @@ class SettingApi {
         },
       );
     } catch (error) {
-      print('ERROR_saveToken: $error');
+      debugPrint('ERROR_saveToken: $error');
     } finally {
       AppConst().client.close();
     }

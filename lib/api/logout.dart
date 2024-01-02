@@ -56,10 +56,10 @@ class LogoutApi {
               context, '/login', (Route<dynamic> route) => false);
         });
       } catch (error) {
-        print('ERROR_logout: ${error.toString()}');
+        debugPrint('ERROR_logout: ${error.toString()}');
       }
     } else {
-      print('ERROR User not found');
+      debugPrint('ERROR User not found');
 
       await Alerts.errorAlert(context,
           title: 'Errore', subtitle: 'Per favore riprova');

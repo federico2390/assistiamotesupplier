@@ -30,7 +30,7 @@ class UserApi {
         user = UserDatabase.fromJson(jsonData[0]);
       }
     } catch (error) {
-      print('ERROR_getFeed: $error');
+      debugPrint('ERROR_getFeed: $error');
     } finally {
       AppConst().client.close();
     }

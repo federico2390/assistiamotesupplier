@@ -40,10 +40,10 @@ class SignApi {
           subtitle: 'Firma salvata',
         );
       } else {
-        print('Can\'t Upload Sign');
+        debugPrint('Can\'t Upload Sign');
       }
     } catch (error) {
-      print('ERROR_muploadSign: $error');
+      debugPrint('ERROR_muploadSign: $error');
     } finally {
       AppConst().client.close();
       context.read<SignatureProvider>().clearCanvas();

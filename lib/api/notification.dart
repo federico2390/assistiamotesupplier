@@ -22,10 +22,10 @@ class NotificationApi {
       if (response.statusCode == 200 || response.statusCode == 201) {
         notification = notificationsFromJson(response.body);
       } else {
-        print('Can\'t get Notifications');
+        debugPrint('Can\'t get Notifications');
       }
     } catch (error) {
-      print('ERROR_getNotifications: $error');
+      debugPrint('ERROR_getNotifications: $error');
     } finally {
       AppConst().client.close();
     }

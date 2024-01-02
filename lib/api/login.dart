@@ -74,9 +74,9 @@ class LoginApi {
         }
       });
     } on PlatformException catch (error) {
-      print('PlatformException_login: $error');
+      debugPrint('PlatformException_login: $error');
     } catch (error) {
-      print('ERROR_login: $error');
+      debugPrint('ERROR_login: $error');
       await Alerts.hideAlert();
       await Alerts.errorAlert(context,
           title: 'Errore', subtitle: 'Email o C.F./P.IVA errati');

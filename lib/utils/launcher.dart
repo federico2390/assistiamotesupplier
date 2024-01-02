@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> launchUrls(String link) async {
@@ -8,7 +9,7 @@ Future<void> launchUrls(String link) async {
   canLaunchUrl(url).then((bool result) async {
     if (result == true) {
       if (!await launchUrl(url)) {
-        print('Non posso aprire il link: $url');
+        debugPrint('Non posso aprire il link: $url');
       }
     }
   });
@@ -24,6 +25,6 @@ launchMap(String address) async {
   if (await canLaunchUrl(Uri.parse(link))) {
     await launchUrl(Uri.parse(link), mode: LaunchMode.externalApplication);
   } else {
-    print('Non posso aprire il link: $link');
+    debugPrint('Non posso aprire il link: $link');
   }
 }

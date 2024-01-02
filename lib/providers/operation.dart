@@ -64,7 +64,7 @@ class OperationProvider extends ChangeNotifier {
           )
           .toList();
     } catch (error) {
-      print(error);
+      debugPrint(error.toString());
     }
 
     notifyListeners();

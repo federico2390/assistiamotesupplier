@@ -61,11 +61,11 @@ class _CentralState extends State<Central> with WidgetsBindingObserver {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional) {
-      print('User granted OS permission');
+      debugPrint('User granted OS permission');
       await SettingApi().editNotificationSetting(context, true);
       context.read<SettingProvider>().setNotificationStatus(true);
     } else {
-      print('User has not granted OS permission');
+      debugPrint('User has not granted OS permission');
       await SettingApi().editNotificationSetting(context, false);
       context.read<SettingProvider>().setNotificationStatus(false);
     }

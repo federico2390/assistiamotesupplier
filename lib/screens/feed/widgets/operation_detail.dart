@@ -740,7 +740,7 @@ class OperationDetail extends StatelessWidget {
             var parsedDate = startDateTimeFormat.parse(visitFields[1]);
             visitsTime = parsedDate;
           } catch (e) {
-            // print(e);
+            // debugPrint(e);
           }
         }
 
@@ -750,7 +750,7 @@ class OperationDetail extends StatelessWidget {
           var parsedDate = startDateTimeFormat.parse(signedDateTimeList[i]);
           visitsSignedDateTime = parsedDate;
         } catch (e) {
-          // print(e);
+          // debugPrintPrintPrintPrintPrintPrintPrint(e);
         }
 
         visits.add(

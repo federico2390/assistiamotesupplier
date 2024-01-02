@@ -47,7 +47,7 @@ class LocationProvider extends ChangeNotifier {
 
       await updateDistance();
     } catch (error) {
-      print('getCurrentLocation_ $error');
+      debugPrint('getCurrentLocation_ $error');
     }
 
     notifyListeners();
@@ -66,11 +66,11 @@ class LocationProvider extends ChangeNotifier {
 
       _distance = distanceInMeters.ceilToDouble();
 
-      print('geo__Address: $_visitAddress');
-      print('geo__Current Location: $_currentLocation');
-      print('geo__Destination Latitude: ${locations[0].latitude}');
-      print('geo__Destination Longitude: ${locations[0].longitude}');
-      print('geo__Distance: $_distance meters');
+      debugPrint('geo__Address: $_visitAddress');
+      debugPrint('geo__Current Location: $_currentLocation');
+      debugPrint('geo__Destination Latitude: ${locations[0].latitude}');
+      debugPrint('geo__Destination Longitude: ${locations[0].longitude}');
+      debugPrint('geo__Distance: $_distance meters');
     } else {
       _distance = 0;
     }

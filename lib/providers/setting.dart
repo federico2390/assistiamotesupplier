@@ -35,17 +35,17 @@ class SettingProvider extends ChangeNotifier {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized ||
         settings.authorizationStatus == AuthorizationStatus.provisional) {
-      print('User granted OS permission');
+      debugPrint('User granted OS permission');
       await SettingApi().editNotificationSetting(context, enabled);
       if (enabled == true) {
-        print('User subscribed to push notifications');
+        debugPrint('User subscribed to push notifications');
         setNotificationStatus(true);
       } else {
-        print('User unsubscribed from push notifications');
+        debugPrint('User unsubscribed from push notifications');
         setNotificationStatus(false);
       }
     } else {
-      print('User declined or hat not accepted permission');
+      debugPrint('User declined or hat not accepted permission');
       buildModalPopup(
         context,
         'Attenzione',
