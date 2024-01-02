@@ -21,7 +21,7 @@ class OperationSegmentedPage extends StatelessWidget {
       builder: (context, operationProvider, child) {
         if (operationProvider.operations.isNotEmpty) {
           List<Operation> operations = operationProvider.selectedSegment == 1
-              ? operationProvider.notAccept
+              ? operationProvider.idle
               : operationProvider.selectedSegment == 2
                   ? operationProvider.accept
                   : operationProvider.closed;
@@ -101,13 +101,17 @@ class OperationSegmentedPage extends StatelessWidget {
                         title: Text(
                           operation.userAddress!.isNotEmpty
                               ? operation.userAddress!
-                              : 'Nessuno indirizzo',
+                              : operation.addressFrom!.isNotEmpty
+                                  ? operation.addressFrom!
+                                  : 'Nessuno indirizzo',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontWeight: operation.userAddress!.isNotEmpty
                                 ? FontWeight.bold
-                                : null,
+                                : operation.addressFrom!.isNotEmpty
+                                    ? FontWeight.bold
+                                    : null,
                             color: operation.supplierOpen == 'false'
                                 ? AppColors.labelLightColor
                                 : AppColors.labelDarkColor,

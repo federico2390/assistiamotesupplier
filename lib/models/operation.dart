@@ -88,6 +88,7 @@ class Operation {
     this.note,
     this.paidSupplier,
     this.fromAmb,
+    this.requestTypeService,
   });
 
   String? operationId;
@@ -170,6 +171,7 @@ class Operation {
   String? note;
   String? paidSupplier;
   String? fromAmb;
+  String? requestTypeService;
 
   factory Operation.fromJson(Map<String, dynamic> json) => Operation(
         operationId: json["operation_id"] ?? '',
@@ -253,6 +255,7 @@ class Operation {
         note: json["note"] ?? '',
         paidSupplier: json["paid_supplier"] ?? '',
         fromAmb: json["fromAmb"] ?? '',
+        requestTypeService: json["request_type_service"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -337,5 +340,6 @@ class Operation {
         "note": note ?? '',
         "paid_supplier": paidSupplier ?? '',
         "fromAmb": fromAmb ?? '',
+        "request_type_service": requestTypeService ?? '',
       };
 }

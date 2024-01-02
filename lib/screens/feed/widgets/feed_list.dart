@@ -74,7 +74,7 @@ class FeedList extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        operationProvider.notAccept.length.toString(),
+                        operationProvider.idle.length.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: context
@@ -136,7 +136,7 @@ class FeedList extends StatelessWidget {
                 onRefresh: () =>
                     context.read<StateProvider>().buildFuture(context),
                 child: operationProvider.selectedSegment == 1
-                    ? operationProvider.notAccept.isNotEmpty
+                    ? operationProvider.idle.isNotEmpty
                         ? const OperationSegmentedPage()
                         : const Loader()
                     : operationProvider.selectedSegment == 2

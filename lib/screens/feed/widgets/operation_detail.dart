@@ -106,19 +106,19 @@ class OperationDetail extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: AppConst.padding),
               children: [
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept == 'false')
+                    operation.supplierAccept!.isEmpty)
                   acceptAndCancelButtons(operation, context),
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept == 'false')
+                    operation.supplierAccept!.isEmpty)
                   const SizedBox(height: AppConst.padding),
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept == 'false')
+                    operation.supplierAccept!.isEmpty)
                   Divider(
                     height: 1,
                     color: AppColors.secondaryColor,
                   ),
                 if (operation.closed == 'false' &&
-                    operation.supplierAccept == 'false')
+                    operation.supplierAccept!.isEmpty)
                   const SizedBox(height: AppConst.padding),
                 if (operation.closed == 'false' &&
                     operation.supplierAccept == 'true')
@@ -237,7 +237,22 @@ class OperationDetail extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppConst.padding),
+                    ],
+                  ),
+                if (operation.countryTo!.isNotEmpty &&
+                    operation.regionTo!.isNotEmpty &&
+                    operation.provinceTo!.isNotEmpty &&
+                    operation.cityTo!.isNotEmpty &&
+                    operation.addressTo!.isNotEmpty)
+                  const SizedBox(height: AppConst.padding),
+                if (operation.countryTo!.isNotEmpty &&
+                    operation.regionTo!.isNotEmpty &&
+                    operation.provinceTo!.isNotEmpty &&
+                    operation.cityTo!.isNotEmpty &&
+                    operation.addressTo!.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
                         'Indirizzo di arrivo',
                         style: TextStyle(
@@ -260,6 +275,7 @@ class OperationDetail extends StatelessWidget {
                       )
                     ],
                   ),
+
                 if (operation.countryFrom!.isNotEmpty &&
                     operation.regionFrom!.isNotEmpty &&
                     operation.provinceFrom!.isNotEmpty &&
@@ -864,7 +880,8 @@ class OperationDetail extends StatelessWidget {
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
                             visit.time != null
                         ? () async {
-                            if (operation.fromAmb == 'false') {
+                            if (operation.requestTypeService !=
+                                'Trasporto sanitario') {
                               await Alerts.hideAlert();
                               Navigator.pushNamed(
                                 context,
@@ -918,7 +935,8 @@ class OperationDetail extends StatelessWidget {
                                         );
                                       }
                                     } else if (locationProvider.distance <
-                                        50.0) {
+                                        double.parse(settingProvider
+                                            .setting.settingsMeters!)) {
                                       await Alerts.hideAlert();
                                       Navigator.pushNamed(
                                         context,
@@ -982,7 +1000,8 @@ class OperationDetail extends StatelessWidget {
                                         );
                                       }
                                     } else if (locationProvider.distance <
-                                        50.0) {
+                                        double.parse(settingProvider
+                                            .setting.settingsMeters!)) {
                                       await Alerts.hideAlert();
                                       Navigator.pushNamed(
                                         context,
@@ -1072,7 +1091,7 @@ class OperationDetail extends StatelessWidget {
               hideKeyboard(context);
               Alerts.hideAlert();
               await context.read<StateProvider>().buildFuture(context);
-              Navigator.of(context).pop(context);
+              // Navigator.of(context).pop(context);
             });
           },
           builder: (BuildContext context, TapDebouncerFunc? onTap) {
@@ -1130,7 +1149,7 @@ class OperationDetail extends StatelessWidget {
               hideKeyboard(context);
               Alerts.hideAlert();
               await context.read<StateProvider>().buildFuture(context);
-              Navigator.of(context).pop(context);
+              // Navigator.of(context).pop(context);
             });
           },
           builder: (BuildContext context, TapDebouncerFunc? onTap) {

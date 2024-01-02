@@ -5,8 +5,8 @@ import 'package:adminpanel/api/operation.dart';
 import 'package:adminpanel/models/operation.dart';
 
 class OperationProvider extends ChangeNotifier {
-  List<Operation> _notAccept = [];
-  List<Operation> get notAccept => _notAccept;
+  List<Operation> _idle = [];
+  List<Operation> get idle => _idle;
 
   List<Operation> _accept = [];
   List<Operation> get accept => _accept;
@@ -46,9 +46,9 @@ class OperationProvider extends ChangeNotifier {
 
       _operations = operationList;
 
-      _notAccept = operationList
+      _idle = operationList
           .where(
-            (e) => e.supplierAccept == 'false' && e.closed == 'false',
+            (e) => e.supplierAccept!.isEmpty && e.closed == 'false',
           )
           .toList();
 

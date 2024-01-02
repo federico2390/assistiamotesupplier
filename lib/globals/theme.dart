@@ -9,6 +9,7 @@ class AppTheme {
         MaterialColor(0xFFD21E4B, AppColors.materialPrimaryColor);
 
     return ThemeData(
+      useMaterial3: false,
       primarySwatch: primaryColor,
       scaffoldBackgroundColor: AppColors.backgroundColor,
       splashColor: AppColors.transparentColor,
