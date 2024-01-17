@@ -1,3 +1,4 @@
+import 'package:adminpanel/configs/const.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -59,6 +60,16 @@ class SettingProvider extends ChangeNotifier {
 
   void setNotificationStatus(bool status) {
     _notificationSetting.notification = status == true ? 'true' : 'false';
+    setPush(status);
     notifyListeners();
+  }
+
+  void setPush(bool status) async {
+    if (status == true) {
+      await FirebaseMessaging.instance.subscribeToTopic(AppConst.firebaseTopic);
+    } else {
+      await FirebaseMessaging.instance
+          .unsubscribeFromTopic(AppConst.firebaseTopic);
+    }
   }
 }
