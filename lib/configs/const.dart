@@ -35,9 +35,7 @@ class AppConst {
   /// Push Notifications
   static const String firebaseChannelId = 'assistiamo_te_supplier';
   static const String firebaseChannelName = 'assistiamo_te_supplier';
-  static const String firebaseBaseurl = 'https://fcm.googleapis.com/fcm/send';
-  static const String firebaseAuthKey =
-      'AAAAWbet338:APA91bHzNrK_GLkAWrahFpnoUQdxO3NSWi7MfJKBvW9wgj15W9rjKN9LmnUEPjUKN1ScukVMI2YJ4zXDmfgjNHxQk9A5MFu0hLl0Ap0QfiMdsjzqH_LpJchDEcljVhm0w04_YL-gx6Vj';
+  static const String firebaseTopic = 'assistiamoteoperatori';
 
   /// HTTP Client
   var client = http.Client();
