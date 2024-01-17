@@ -67,9 +67,11 @@ class SettingProvider extends ChangeNotifier {
   void setPush(bool status) async {
     if (status == true) {
       await FirebaseMessaging.instance.subscribeToTopic(AppConst.firebaseTopic);
+      debugPrint('User subscribed to topic');
     } else {
       await FirebaseMessaging.instance
           .unsubscribeFromTopic(AppConst.firebaseTopic);
+      debugPrint('User unsubscribed from topic');
     }
   }
 }
