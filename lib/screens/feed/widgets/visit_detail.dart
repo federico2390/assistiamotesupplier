@@ -64,7 +64,7 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
   _checkPermission() async {
     final visitArguments =
         ModalRoute.of(context)!.settings.arguments as VisitArguments;
-    if (visitArguments.operation!.requestTypeService != 'Trasporto sanitario') {
+    if (visitArguments.operation!.requestTypeService == 'Trasporto sanitario') {
       final locationProvider =
           Provider.of<LocationProvider>(context, listen: false);
       locationProvider

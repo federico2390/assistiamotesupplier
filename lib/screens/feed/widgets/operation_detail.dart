@@ -880,7 +880,7 @@ class OperationDetail extends StatelessWidget {
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
                             visit.time != null
                         ? () async {
-                            if (operation.requestTypeService !=
+                            if (operation.requestTypeService ==
                                 'Trasporto sanitario') {
                               await Alerts.hideAlert();
                               Navigator.pushNamed(
