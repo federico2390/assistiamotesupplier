@@ -715,6 +715,7 @@ class OperationDetail extends StatelessWidget {
     DateFormat endDateTimeFormat,
     DateFormat startDateTimeFormat,
   ) {
+    final dateFormat = DateFormat('dd/MM/yyyy');
     List<Visits> visits = [];
 
     if (operation.visits!.isNotEmpty) {
@@ -774,6 +775,12 @@ class OperationDetail extends StatelessWidget {
         ),
       );
     }
+
+    visits.sort((a, b) {
+      DateTime aDateTime = a.time ?? a.signedDateTime ?? DateTime(0);
+      DateTime bDateTime = b.time ?? b.signedDateTime ?? DateTime(0);
+      return aDateTime.compareTo(bDateTime);
+    });
 
     int itemCount = visits.length;
 
@@ -880,159 +887,167 @@ class OperationDetail extends StatelessWidget {
                     ? (visit.signedUrl == null || visit.signedUrl!.isEmpty) &&
                             visit.time != null
                         ? () async {
-                            if (operation.requestTypeService ==
-                                'Trasporto sanitario') {
-                              await Alerts.hideAlert();
-                              Navigator.pushNamed(
-                                context,
-                                '/visit',
-                                arguments: VisitArguments(
-                                  operation: operation,
-                                  visitDescription: visit.name,
-                                  visitDateTime:
-                                      startDateTimeFormat.format(visit.time!),
-                                  visitIndex: index,
-                                ),
-                              );
-                            } else {
-                              if (operation.userCountry!.isNotEmpty &&
-                                  operation.userRegion!.isNotEmpty &&
-                                  operation.userProvince!.isNotEmpty &&
-                                  operation.userCity!.isNotEmpty &&
-                                  operation.userAddress!.isNotEmpty) {
+                            var now = DateTime.now();
+                            if (now.isAfter(visits.last.time!)) {
+                              if (operation.requestTypeService ==
+                                  'Trasporto sanitario') {
                                 await Alerts.hideAlert();
-                                await Alerts.loadingAlert(
+                                Navigator.pushNamed(
                                   context,
-                                  title: 'Attendi',
-                                  subtitle: 'Determino la tua posizione',
+                                  '/visit',
+                                  arguments: VisitArguments(
+                                    operation: operation,
+                                    visitDescription: visit.name,
+                                    visitDateTime:
+                                        startDateTimeFormat.format(visit.time!),
+                                    visitIndex: index,
+                                  ),
                                 );
-
-                                final locationProvider =
-                                    Provider.of<LocationProvider>(context,
-                                        listen: false);
-                                locationProvider
-                                    .checkLocationPermission(
-                                        '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
-                                    .then((permisison) async {
-                                  if (permisison == true) {
-                                    final settingProvider =
-                                        Provider.of<SettingProvider>(context,
-                                            listen: false);
-
-                                    if (locationProvider.distance >
-                                        double.parse(settingProvider
-                                            .setting.settingsMeters!)) {
-                                      await Alerts.hideAlert();
-                                      if (ModalRoute.of(context)!.isCurrent) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            fullscreenDialog: true,
-                                            settings: const RouteSettings(
-                                                name: 'noservice'),
-                                            builder: (context) =>
-                                                const NoService(),
-                                          ),
-                                        );
-                                      }
-                                    } else if (locationProvider.distance <
-                                        double.parse(settingProvider
-                                            .setting.settingsMeters!)) {
-                                      await Alerts.hideAlert();
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/visit',
-                                        arguments: VisitArguments(
-                                          operation: operation,
-                                          visitDescription: visit.name,
-                                          visitDateTime: startDateTimeFormat
-                                              .format(visit.time!),
-                                          visitIndex: index,
-                                        ),
-                                      );
-                                    }
-                                  } else {
-                                    await Alerts.hideAlert();
-                                    await Alerts.errorAlert(
-                                      context,
-                                      title: 'Attenzione',
-                                      subtitle:
-                                          'Non riesco a determinare la tua posisiozne',
-                                    );
-                                  }
-                                });
-                              } else if (operation.regionFrom!.isNotEmpty &&
-                                  operation.regionFrom!.isNotEmpty &&
-                                  operation.provinceFrom!.isNotEmpty &&
-                                  operation.cityFrom!.isNotEmpty &&
-                                  operation.addressFrom!.isNotEmpty) {
-                                await Alerts.hideAlert();
-                                await Alerts.loadingAlert(
-                                  context,
-                                  title: 'Attendi',
-                                  subtitle: 'Determino la tua posizione',
-                                );
-
-                                final locationProvider =
-                                    Provider.of<LocationProvider>(context,
-                                        listen: false);
-                                locationProvider
-                                    .checkLocationPermission(
-                                        '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
-                                    .then((permisison) async {
-                                  if (permisison == true) {
-                                    final settingProvider =
-                                        Provider.of<SettingProvider>(context,
-                                            listen: false);
-
-                                    if (locationProvider.distance >
-                                        double.parse(settingProvider
-                                            .setting.settingsMeters!)) {
-                                      await Alerts.hideAlert();
-                                      if (ModalRoute.of(context)!.isCurrent) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            fullscreenDialog: true,
-                                            settings: const RouteSettings(
-                                                name: 'noservice'),
-                                            builder: (context) =>
-                                                const NoService(),
-                                          ),
-                                        );
-                                      }
-                                    } else if (locationProvider.distance <
-                                        double.parse(settingProvider
-                                            .setting.settingsMeters!)) {
-                                      await Alerts.hideAlert();
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/visit',
-                                        arguments: VisitArguments(
-                                          operation: operation,
-                                          visitDescription: visit.name,
-                                          visitDateTime: startDateTimeFormat
-                                              .format(visit.time!),
-                                          visitIndex: index,
-                                        ),
-                                      );
-                                    }
-                                  } else {
-                                    await Alerts.hideAlert();
-                                    await Alerts.errorAlert(
-                                      context,
-                                      title: 'Attenzione',
-                                      subtitle:
-                                          'Non riesco a determinare la tua posisiozne',
-                                    );
-                                  }
-                                });
                               } else {
-                                await Alerts.errorAlert(
-                                  context,
+                                if (operation.userCountry!.isNotEmpty &&
+                                    operation.userRegion!.isNotEmpty &&
+                                    operation.userProvince!.isNotEmpty &&
+                                    operation.userCity!.isNotEmpty &&
+                                    operation.userAddress!.isNotEmpty) {
+                                  await Alerts.hideAlert();
+                                  await Alerts.loadingAlert(
+                                    context,
+                                    title: 'Attendi',
+                                    subtitle: 'Determino la tua posizione',
+                                  );
+
+                                  final locationProvider =
+                                      Provider.of<LocationProvider>(context,
+                                          listen: false);
+                                  locationProvider
+                                      .checkLocationPermission(
+                                          '${operation.userAddress!}, ${operation.userCity!}, ${operation.userProvince!}, ${operation.userRegion!}, ${operation.userCountry!}')
+                                      .then((permisison) async {
+                                    if (permisison == true) {
+                                      final settingProvider =
+                                          Provider.of<SettingProvider>(context,
+                                              listen: false);
+
+                                      if (locationProvider.distance >
+                                          double.parse(settingProvider
+                                              .setting.settingsMeters!)) {
+                                        await Alerts.hideAlert();
+                                        if (ModalRoute.of(context)!.isCurrent) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              fullscreenDialog: true,
+                                              settings: const RouteSettings(
+                                                  name: 'noservice'),
+                                              builder: (context) =>
+                                                  const NoService(),
+                                            ),
+                                          );
+                                        }
+                                      } else if (locationProvider.distance <
+                                          double.parse(settingProvider
+                                              .setting.settingsMeters!)) {
+                                        await Alerts.hideAlert();
+                                        Navigator.pushNamed(
+                                          context,
+                                          '/visit',
+                                          arguments: VisitArguments(
+                                            operation: operation,
+                                            visitDescription: visit.name,
+                                            visitDateTime: startDateTimeFormat
+                                                .format(visit.time!),
+                                            visitIndex: index,
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      await Alerts.hideAlert();
+                                      await Alerts.errorAlert(
+                                        context,
+                                        title: 'Attenzione',
+                                        subtitle:
+                                            'Non riesco a determinare la tua posisiozne',
+                                      );
+                                    }
+                                  });
+                                } else if (operation.regionFrom!.isNotEmpty &&
+                                    operation.regionFrom!.isNotEmpty &&
+                                    operation.provinceFrom!.isNotEmpty &&
+                                    operation.cityFrom!.isNotEmpty &&
+                                    operation.addressFrom!.isNotEmpty) {
+                                  await Alerts.hideAlert();
+                                  await Alerts.loadingAlert(
+                                    context,
+                                    title: 'Attendi',
+                                    subtitle: 'Determino la tua posizione',
+                                  );
+
+                                  final locationProvider =
+                                      Provider.of<LocationProvider>(context,
+                                          listen: false);
+                                  locationProvider
+                                      .checkLocationPermission(
+                                          '${operation.addressFrom!}, ${operation.cityFrom!}, ${operation.provinceFrom!}, ${operation.regionFrom!}, ${operation.regionFrom!}')
+                                      .then((permisison) async {
+                                    if (permisison == true) {
+                                      final settingProvider =
+                                          Provider.of<SettingProvider>(context,
+                                              listen: false);
+
+                                      if (locationProvider.distance >
+                                          double.parse(settingProvider
+                                              .setting.settingsMeters!)) {
+                                        await Alerts.hideAlert();
+                                        if (ModalRoute.of(context)!.isCurrent) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              fullscreenDialog: true,
+                                              settings: const RouteSettings(
+                                                  name: 'noservice'),
+                                              builder: (context) =>
+                                                  const NoService(),
+                                            ),
+                                          );
+                                        }
+                                      } else if (locationProvider.distance <
+                                          double.parse(settingProvider
+                                              .setting.settingsMeters!)) {
+                                        await Alerts.hideAlert();
+                                        Navigator.pushNamed(
+                                          context,
+                                          '/visit',
+                                          arguments: VisitArguments(
+                                            operation: operation,
+                                            visitDescription: visit.name,
+                                            visitDateTime: startDateTimeFormat
+                                                .format(visit.time!),
+                                            visitIndex: index,
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      await Alerts.hideAlert();
+                                      await Alerts.errorAlert(
+                                        context,
+                                        title: 'Attenzione',
+                                        subtitle:
+                                            'Non riesco a determinare la tua posisiozne',
+                                      );
+                                    }
+                                  });
+                                } else {
+                                  await Alerts.errorAlert(
+                                    context,
+                                    title: 'Attenzione',
+                                    subtitle:
+                                        'Firma non accessibile\nL\'indirizzo è assente',
+                                  );
+                                }
+                              }
+                            } else {
+                              await Alerts.errorAlert(context,
                                   title: 'Attenzione',
                                   subtitle:
-                                      'Firma non accessibile\nL\'indirizzo è assente',
-                                );
-                              }
+                                      'Firma accessibile dal ${dateFormat.format(visit.time!)}');
                             }
                           }
                         : (visit.signedUrl != null)
@@ -1135,22 +1150,99 @@ class OperationDetail extends StatelessWidget {
   }
 
   Row closeButton(Operation operation, BuildContext context) {
+    var dateTimeFormat = DateFormat('dd/MM/yyyy HH:mm:ss');
+    var dateFormat = DateFormat('dd/MM/yyyy');
+    var now = DateTime.now();
+
+    List<Visits> visits = [];
+
+    if (operation.visits!.isNotEmpty) {
+      List<String> visitList = operation.visits!.contains(',')
+          ? operation.visits!.split(',')
+          : [operation.visits!];
+      List<String> signedUrlList = operation.signedUrl!.contains(',')
+          ? operation.signedUrl!.split(',')
+          : [operation.signedUrl!];
+      List<String> signedDateTimeList = operation.signedDateTime!.contains(',')
+          ? operation.signedDateTime!.split(',')
+          : [operation.signedDateTime!];
+
+      for (int i = 0; i < visitList.length; i++) {
+        var visitFields = visitList[i].split('§');
+
+        String visitsDescription = visitFields[0];
+        DateTime? visitsTime;
+        DateTime? visitsSignedDateTime;
+
+        if (visitFields.length >= 2) {
+          try {
+            var parsedDate = dateTimeFormat.parse(visitFields[1]);
+            visitsTime = parsedDate;
+          } catch (e) {
+            // debugPrint(e);
+          }
+        }
+
+        String? signedUrl = signedUrlList.length > i ? signedUrlList[i] : null;
+
+        try {
+          var parsedDate = dateTimeFormat.parse(signedDateTimeList[i]);
+          visitsSignedDateTime = parsedDate;
+        } catch (e) {
+          // debugPrintPrintPrintPrintPrintPrintPrint(e);
+        }
+
+        visits.add(
+          Visits(
+            name: visitsDescription,
+            time: visitsTime,
+            signedUrl: signedUrl,
+            signedDateTime: visitsSignedDateTime,
+          ),
+        );
+      }
+    } else {
+      visits.add(
+        Visits(
+          name: operation.requestType,
+          time: dateTimeFormat.parse(operation.currentDateTime!),
+          signedUrl: operation.signedUrl!,
+          signedDateTime: operation.signedDateTime!.isNotEmpty
+              ? dateTimeFormat.parse(operation.signedDateTime!)
+              : null,
+        ),
+      );
+    }
+
+    visits.sort((a, b) {
+      DateTime aDateTime = a.time ?? a.signedDateTime ?? DateTime(0);
+      DateTime bDateTime = b.time ?? b.signedDateTime ?? DateTime(0);
+      return aDateTime.compareTo(bDateTime);
+    });
+
     return Row(
       children: [
         TapDebouncer(
           onTap: () async {
-            await Alerts.loadingAlert(context,
-                title: 'Attendi...', subtitle: 'Chiudo la richiesta');
+            if (now.isAfter(visits.last.time!)) {
+              await Alerts.loadingAlert(context,
+                  title: 'Attendi...', subtitle: 'Chiudo la richiesta');
 
-            await OperationApi()
-                .markOperationAsClosed(context, operation, 'true')
-                .whenComplete(() async {
-              context.read<OperationProvider>().descriptionController.clear();
-              hideKeyboard(context);
-              Alerts.hideAlert();
-              await context.read<StateProvider>().buildFuture(context);
-              // Navigator.of(context).pop(context);
-            });
+              await OperationApi()
+                  .markOperationAsClosed(context, operation, 'true')
+                  .whenComplete(() async {
+                context.read<OperationProvider>().descriptionController.clear();
+                hideKeyboard(context);
+                Alerts.hideAlert();
+                await context.read<StateProvider>().buildFuture(context);
+                // Navigator.of(context).pop(context);
+              });
+            } else {
+              await Alerts.errorAlert(context,
+                  title: 'Attenzione',
+                  subtitle:
+                      'Potrai chiuderla dal ${dateFormat.format(visits.last.time!)}');
+            }
           },
           builder: (BuildContext context, TapDebouncerFunc? onTap) {
             return Expanded(

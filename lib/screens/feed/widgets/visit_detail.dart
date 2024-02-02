@@ -123,13 +123,24 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
             ),
             child: TapDebouncer(
               onTap: () async {
-                context.read<SignatureProvider>().clearCanvas();
+                final byteImage =
+                    await context.read<SignatureProvider>().export();
+
+                if (byteImage != null) {
+                  await SignApi().uploadSign(
+                    context,
+                    visitArguments.operation!,
+                    byteImage,
+                  );
+                } else {
+                  debugPrint('Errore nell\'ottenere i dati dell\'immagine.');
+                }
               },
               builder: (context, onTap) {
                 return Button(
                   width: ScreenSize.width(context),
-                  text: 'Cancella firma',
-                  color: Colors.black,
+                  text: 'Salva firma',
+                  color: AppColors.primaryColor,
                   onPressed: onTap,
                 );
               },
@@ -167,22 +178,11 @@ class _VisitDetailState extends State<VisitDetail> with WidgetsBindingObserver {
           child: Ink(
             child: GestureDetector(
               child: Icon(
-                Icons.save_rounded,
-                color: AppColors.primaryColor,
+                Icons.delete_forever_rounded,
+                color: AppColors.labelDarkColor,
               ),
               onTap: () async {
-                final byteImage =
-                    await context.read<SignatureProvider>().export();
-
-                if (byteImage != null) {
-                  await SignApi().uploadSign(
-                    context,
-                    visitArguments.operation!,
-                    byteImage,
-                  );
-                } else {
-                  debugPrint('Errore nell\'ottenere i dati dell\'immagine.');
-                }
+                context.read<SignatureProvider>().clearCanvas();
               },
             ),
           ),
