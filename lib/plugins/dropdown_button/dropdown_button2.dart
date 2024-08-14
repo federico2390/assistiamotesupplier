@@ -1210,7 +1210,7 @@ class DropdownButton2<T> extends StatefulWidget {
   final Color? buttonHighlightColor;
 
   /// The overlay color of the button's Inkwell
-  final MaterialStateProperty<Color?>? buttonOverlayColor;
+  final WidgetStateProperty<Color?>? buttonOverlayColor;
 
   /// The padding of menu items
   final EdgeInsetsGeometry? itemPadding;
@@ -1752,7 +1752,7 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
     if (result == null) {
       // If there's no MediaQuery, then use the window aspect to determine
       // orientation.
-      final Size size = WidgetsBinding.instance.window.physicalSize;
+      final Size size = View.of(context).physicalSize;
       result = size.width > size.height
           ? Orientation.landscape
           : Orientation.portrait;
@@ -1897,10 +1897,10 @@ class DropdownButton2State<T> extends State<DropdownButton2<T>>
     }
 
     final MouseCursor effectiveMouseCursor =
-        MaterialStateProperty.resolveAs<MouseCursor>(
-      MaterialStateMouseCursor.clickable,
-      <MaterialState>{
-        if (!_enabled) MaterialState.disabled,
+        WidgetStateProperty.resolveAs<MouseCursor>(
+      WidgetStateMouseCursor.clickable,
+      <WidgetState>{
+        if (!_enabled) WidgetState.disabled,
       },
     );
 
@@ -1991,7 +1991,7 @@ class DropdownButtonFormField2<T> extends FormField<T> {
     int? buttonElevation,
     Color? buttonSplashColor,
     Color? buttonHighlightColor,
-    MaterialStateProperty<Color?>? buttonOverlayColor,
+    WidgetStateProperty<Color?>? buttonOverlayColor,
     EdgeInsetsGeometry? itemPadding,
     Color? itemSplashColor,
     Color? itemHighlightColor,
